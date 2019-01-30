@@ -1,0 +1,73 @@
+<wc-loading-overlay [visible]='loading'></wc-loading-overlay>
+<wc-dashboard-header [title]="'License Manager'"></wc-dashboard-header>
+
+<div class="row spread">
+
+    <div class="flex-toolbar" style="display:flex;align-items: center;">
+        <div>
+            <label>&nbsp;</label>
+            <kendo-buttongroup look="flat">
+                <button kendoButton [toggleable]="false" (click)="uploadSlideDownPanelEx.toggle()" ><fa-icon [icon]="faFileImport"></fa-icon>Import License</button>
+            </kendo-buttongroup>
+        </div>
+    </div>
+
+    <div class="flex-cmd">
+        <kendo-buttongroup look="flat">
+            <button kendoButton [toggleable]="false" [icon]="'refresh'" (click)="onRefreshClicked()">Refresh</button>
+        </kendo-buttongroup>
+    </div>
+
+</div>
+
+<div class="row fill">
+
+    <div>
+
+        <wc-upload-panel #uploadSlideDownPanelEx (upload)="uploadLicense($event)" (uploadError)="onUploadError($event)"></wc-upload-panel>
+
+        <kendo-grid #datagrid [data]="_licenses" 
+                [navigable]="false"> 
+
+                <kendo-grid-column
+                    field="productName" title="Product Name" >
+                </kendo-grid-column>
+
+                <kendo-grid-column
+                    field="productVersion" title="Product Version" width="360">
+                </kendo-grid-column>
+
+                <kendo-grid-column
+                    field="issueDate" title="Issue Date" width="360" format="{0:dd/MM/yyyy HH:mm:ss}">
+                </kendo-grid-column>
+
+                <kendo-grid-column
+                    field="expiryDate" title="Expiry Date" width="360" format="{0:dd/MM/yyyy HH:mm:ss}">
+                </kendo-grid-column>
+
+                <kendo-grid-column title="" width="150" minResizableWidth="140">
+                    <ng-template kendoGridCellTemplate let-dataItem let-columnIndex="columnIndex" let-rowIndex="rowIndex" let-column="column">
+                            <wc-grid-editor-command 
+                                [alignMode]="'end'"
+                                [hasConfirmation]="true"
+                                [confirmationTitle]="'Delete ?'"
+                                [rowIndex]="rowIndex" 
+                                [columnIndex]="columnIndex" 
+                                [column]="column" 
+                                [commandIcon]="'assets/img/icons.svg#ico-no'"
+                                [dataItem]="dataItem"
+                                (commandConfirm)="onDeleteOKPressed(dataItem)"  
+                                >
+                            </wc-grid-editor-command>
+                    </ng-template>
+                </kendo-grid-column>
+
+                <div *kendoGridDetailTemplate="let dataItem">
+                    <wa-license-details [licenseItem]="dataItem"></wa-license-details>
+                </div>
+    
+            </kendo-grid>
+
+        </div>
+
+    </div>

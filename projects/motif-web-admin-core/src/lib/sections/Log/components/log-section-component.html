@@ -1,0 +1,83 @@
+<wc-loading-overlay [visible]='loading'></wc-loading-overlay>
+
+<wc-dashboard-header [title]="'Log'"></wc-dashboard-header>
+
+<div class="row spread">
+
+    <div class="flex-toolbar" style="display:flex;align-items: center;">
+        <div>
+            <label>Lines</label>
+            <input type="number" [(ngModel)]="linesCount">
+        </div>
+        <div>
+            <label>ROOT Log Level</label>
+            <kendo-dropdownlist [data]="logLevels" [textField]="'level'" [valueField]="'level'" [(ngModel)]="rootLogLevel"
+                [valuePrimitive]="false"></kendo-dropdownlist>
+        </div>
+    </div>
+
+    <div class="flex-cmd">
+        <kendo-buttongroup look="flat">
+            <button kendoButton [toggleable]="false" (click)="onExportClicked()">
+                <fa-icon [icon]="faExternalLinkSquareAlt"></fa-icon>Export
+            </button>
+        </kendo-buttongroup>
+        <kendo-buttongroup look="flat">
+            <button kendoButton [toggleable]="false" (click)="onDownloadClicked()">
+                <fa-icon [icon]="faDownload"></fa-icon>Download
+            </button>
+        </kendo-buttongroup>
+        <kendo-buttongroup look="flat">
+            <button kendoButton [toggleable]="false" [icon]="'refresh'" (click)="onRefreshClicked()">Refresh</button>
+        </kendo-buttongroup>
+    </div>
+
+</div>
+
+<div class="row fill">
+    <div>
+
+        <!-- Sliding Editor Panel for Export -->
+        <wc-slide-panel #exportSlideDownPanel (close)="onSlidePanelClose()">
+            <div class="wc-slide-down-editor-pane" style="display:flex;">
+                <div>
+                    <label>Data Record Type</label>
+                    <kendo-dropdownlist [data]="dataRecordTypes" [(ngModel)]="dataRecordType" [valuePrimitive]="true"></kendo-dropdownlist>
+                </div>
+                <div>
+                    <kendo-daterange style="display:flex;">
+                        <div>
+                            <label>Start</label>
+                            <kendo-dateinput kendoDateRangeStartInput [(value)]="range.start"></kendo-dateinput>
+                        </div>
+                        <div>
+                            <label>End</label>
+                            <kendo-dateinput kendoDateRangeEndInput [(value)]="range.end"></kendo-dateinput>
+                        </div>
+                        <kendo-daterange-popup (open)="onDateRangePopupOpen()" #dateRangePopup></kendo-daterange-popup>
+                    </kendo-daterange>
+                </div>
+            </div>
+    
+            <div class="cmd" style="align-items: center;padding-top: 11px;">
+                <label style="padding-bottom: 0px;padding-left: 10px;padding-right: 10px;">Do Export?</label>
+                <a (click)="onExportConfirm()">
+                    <svg class="ok" data-id="ok">
+                        <use xlink:href="assets/img/icons.svg#ico-ok"></use>
+                    </svg>
+                </a>
+                <a (click)="onExportCancel()" data-slideup="#user-add">
+                    <svg class="ko" data-id="ko">
+                        <use xlink:href="assets/img/icons.svg#ico-ko"></use>
+                    </svg>
+                </a>
+            </div>
+        </wc-slide-panel>
+
+        <!-- Log Pane -->
+        <label>Log <div class="cmd"><button class="small small-copy-button" data-copy="#output" (click)="onCopyToClipboardClicked()">
+                    <fa-icon [icon]="faPaste" style="font-size: 18px;padding-left: 4px;"></fa-icon>
+                </button></div></label>
+        <textarea class="fill log-pane" spellcheck="false" id="output" #logPane readonly>{{tailLines}}</textarea>
+    </div>
+</div>

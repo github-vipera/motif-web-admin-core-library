@@ -1,0 +1,71 @@
+<p-dialog
+  #newItemDialog
+  [(visible)]="display"
+  [modal]="true"
+  [responsive]="true"
+  [style]="{ width: '450px', minWidth: '400px' }"
+  [minY]="70"
+  [baseZIndex]="10000"
+>
+  <p-header> {{titlePart}} Counter Info   <strong>[{{name?name:''}}]</strong></p-header>
+  
+  <div style="min-width: 350px;display:flex;flex-direction: column;">
+    <kendo-textbox-container
+      floatingLabel="Counter Name"
+      style="width: 100%;"
+    >
+      <input kendoTextBox [(ngModel)]="name" required [attr.disabled]="currentEditType=== EditType.Update ? 'disabled' : null"/>
+    </kendo-textbox-container>
+    <label class="warning-label" *ngIf="nameEditingWarningDisplay"
+      >Invalid name</label
+    >
+
+    <kendo-textbox-container floatingLabel="Description" style="width: 100%;">
+      <input kendoTextBox [(ngModel)]="description" required/>
+    </kendo-textbox-container>
+
+    <label class="switch-control-label"> 
+        Enabled
+    </label>
+    <p-inputSwitch [(ngModel)]="enabled"></p-inputSwitch>
+
+    <kendo-textbox-container floatingLabel="Pattern" style="width: 100%;">
+        <input kendoTextBox [(ngModel)]="pattern" required disabled/>
+      </kendo-textbox-container>
+      <kendo-buttongroup look="flat" class="flex-cmd" style="padding-top: 4px;">
+          <button kendoButton [toggleable]="false" (click)="onPatternSelec()" [attr.disabled]="currentEditType=== EditType.Update ? 'disabled' : null">
+            Select...
+          </button>
+        </kendo-buttongroup>
+    
+      <kendo-textbox-container floatingLabel="Counting Function" style="width: 100%;">
+        <input kendoTextBox [(ngModel)]="fn" required />
+      </kendo-textbox-container>
+
+      <kendo-textbox-container floatingLabel="Counting Function Params" style="width: 100%;">
+          <input kendoTextBox [(ngModel)]="fnParams" required />
+        </kendo-textbox-container>
+  
+    
+
+  </div>
+
+  <p-footer>
+    <kendo-buttongroup look="flat">
+      <button kendoButton [toggleable]="false" (click)="onCancel()">
+        Cancel
+      </button>
+      <button
+        kendoButton
+        [toggleable]="false"
+        [primary]="true"
+        (click)="onConfirm()"
+      >
+        {{confirmButtonTitle}}
+      </button>
+    </kendo-buttongroup>
+  </p-footer>
+</p-dialog>
+
+
+<wc-service-catalog-selector-dialog #entitySelector [dataFilter]="{ 'channel': 'JSON'}" (select)="onEntrySelected($event)"></wc-service-catalog-selector-dialog>

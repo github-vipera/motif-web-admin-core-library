@@ -1,0 +1,136 @@
+
+.channel-label,
+.badge {
+  background-color: #b5b5b5;
+  color: #fff;
+  font-size: 12px;
+  font-size: 0.75rem;
+  line-height: 2;
+  font-weight: bold;
+  padding: 3px 7px;
+  text-align: center;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+
+.channel-label {
+  border-radius: 4px;
+  display: inline;
+}
+
+.badge {
+  border-radius: 10px;
+  display: inline-block;
+  padding: 1px 7px;
+}
+
+.channel-label[href]:hover, .channel-label[href]:focus {
+  color: #fff;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+a.badge:hover, a.badge:focus {
+  color: #fff;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.channel-label a,
+.badge a {
+  color: #fff;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.channel-label:empty,
+.badge:empty {
+  display: none;
+}
+
+.badge-channel-REST {
+    background-color: green;
+    font-size: 0.63rem;
+}
+
+.badge-channel-JSON {
+    background-color: #8484c1;
+    font-size: 0.63rem;
+}
+
+.badge-channel-BROWSER {
+    background-color: rgb(233, 125, 2);
+    font-size: 0.63rem;
+}
+
+.badge-channel-SMS {
+    background-color: #a6a695;
+    font-size: 0.63rem;
+}
+
+.badge-channel-WEBADMIN {
+    background-color: rgb(255, 52, 52);
+    font-size: 0.63rem;
+}
+
+.badge-channel-WEBCONTENT {
+    background-color: rgb(70, 70, 167);
+    font-size: 0.63rem;
+}
+
+.wc-services-grid-column-description {
+    color: #8484c1;
+}
+
+.wc-services-grid-column-name {
+    font-weight: bold;
+}
+
+.wc-services-grid-rowselector {
+    width:100%;
+    height:100%; 
+    display: flex; 
+    align-items: center;
+
+    fa-icon {
+        padding-right: 8px;
+    }
+}
+
+.node-icon-Domain {
+    color: rgb(45, 235, 146);
+}
+
+.node-icon-Application {
+    color: rgb(45, 235, 146);
+}
+
+.node-icon-Service {
+    color: rgb(45, 235, 146);
+}
+
+.service-catalog-row {
+    padding: .6rem !important;
+}
+
+th {
+    padding: .6rem !important;
+    border-bottom: 1px solid #666;
+}
+
+td {
+    padding: .6rem !important;
+    border-bottom: 1px dotted #666;
+}
+
+.ui-state-highlight {
+    background-color: #335e78;
+}
+
+.ui-state-highlight>td {
+    color: white;
+}
+
+.treetable-xss {
+    height: 100%;
+}

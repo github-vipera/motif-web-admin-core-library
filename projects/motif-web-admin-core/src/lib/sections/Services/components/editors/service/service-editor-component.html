@@ -1,0 +1,9 @@
+<div class="inspector">
+
+    <wc-property-editor [model]="propertyModel" (propertyChange)="onPropertyChanged($event)"
+        (miniButtonClick)="onMiniButtonClick($event)"> </wc-property-editor>
+
+    <wa-services-section-message-cateogries-dialog #offlineMessagesDialog (categorySelect)="onCategorySelected($event)"></wa-services-section-message-cateogries-dialog>
+
+</div>
+

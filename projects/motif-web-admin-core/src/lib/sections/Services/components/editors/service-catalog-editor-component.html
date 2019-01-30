@@ -1,0 +1,63 @@
+<div class="wc-service-catalog-editor-main-container">
+    <div class='wc-service-catalog-editor-title wc-truncate-text'>{{title}}</div>
+    <div class='wc-service-catalog-editor-container'>
+
+        <wc-loading-overlay [visible]='isBusy'></wc-loading-overlay>
+
+        <div class='wc-service-catalog-editor-namespace wc-truncate-text'>{{namespace}}</div>
+
+        <div class='wc-service-catalog-editor-commands'>
+            <button kendoButton look="flat" icon="save" class='right-button' (click)="onSaveButtonClick($event)" >Save</button>
+            <button kendoButton look="flat" icon="reload" (click)='onReloadButtonClick($event)' >Reload</button>
+        </div>
+
+        <div class="wc-service-catalog-editor-scrollable-content">
+
+            <wa-services-domain-editor  
+            #domainEditor *ngIf="isDomainEditing()" 
+                [editorContext]="editorContext" 
+                (startLoading)='isBusy=true'
+                (endLoading)='isBusy=false'
+                (endSaving)='onDataSaved($event);isBusy=false;'
+                (startSaving)='isBusy=true'
+                (endSavingWithError)='isBusy=false'
+                ></wa-services-domain-editor>
+
+            <wa-services-application-editor #applicationEditor 
+            *ngIf="isApplicationEditing()"
+            [editorContext]="editorContext" 
+            (startLoading)='isBusy=true'
+            (endLoading)='isBusy=false'
+            (endSaving)='onDataSaved($event);isBusy=false;'
+            (startSaving)='isBusy=true'
+            (endSavingWithError)='isBusy=false'
+        ></wa-services-application-editor>
+            
+            <wa-services-service-editor 
+                #serviceEditor
+                *ngIf="isServiceEditing()" 
+                [editorContext]="editorContext" 
+                (startLoading)='isBusy=true'
+                (endLoading)='isBusy=false'
+                (endSaving)='onDataSaved($event);isBusy=false;'
+                (startSaving)='isBusy=true'
+                (endSavingWithError)='isBusy=false'
+            ></wa-services-service-editor>
+
+            <wa-services-operation-editor 
+            #operationEditor
+            *ngIf="isOperationEditing()" 
+            [editorContext]="editorContext" 
+            (startLoading)='isBusy=true'
+            (endLoading)='isBusy=false'
+            (endSaving)='onDataSaved($event);isBusy=false;'
+            (startSaving)='isBusy=true'
+            (endSavingWithError)='isBusy=false'
+            ></wa-services-operation-editor>
+        </div>
+    
+    </div>
+
+
+</div>
+

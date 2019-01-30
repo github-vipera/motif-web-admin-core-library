@@ -1,0 +1,43 @@
+<!--
+<div class="example-container" cdkDropList>
+        <div class="example-box" cdkDrag>Drag me around</div>
+</div>
+-->
+
+<canvas #canvas class="main-canvas" width="800px" height="800px"></canvas>
+
+<div cdkDropList class="destination-drop-container" (cdkDropListDropped)="drop($event)" #droppedItemsList="cdkDropList">
+
+</div>
+
+
+<!--
+<div style="width:100%;height: 300px;">
+  <table style="width:100%;height: 300px;">
+    <tr>
+      <th>Col1</th>
+      <th>Col2</th>
+    </tr>
+    <tr>
+      <td>Pippo</td>
+      <td>ddddd</td>
+    </tr>
+    <tr>
+      <td>Pluto</td>
+      <td>dfewfr</td>
+    </tr>
+  </table>
+</div>
+-->
+
+<kendo-grid [data]="gridDataLeft" [height]="410" class="left-grid">
+  <kendo-grid-column field="name" title="Name" width="40"> </kendo-grid-column>
+  <kendo-grid-column field="description" title="Description" width="250">
+  </kendo-grid-column>
+  <kendo-grid-column title="Drag" width="250" cdkDropList [cdkDropListConnectedTo]="[droppedItemsList]">
+    <ng-template kendoGridCellTemplate let-dataItem>
+            <div class="example-box" cdkDrag>Drag Me</div>
+    </ng-template>
+  </kendo-grid-column>
+</kendo-grid>
+

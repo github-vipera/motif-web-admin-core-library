@@ -1,0 +1,33 @@
+:host{
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+ }
+
+.log-pane {
+    white-space: pre;
+}
+
+.editor.slidedown > div > label {
+    padding-bottom: 5px;
+}
+
+.editor.slidedown > div > kendo-daterange > div > label {
+    padding-bottom: 5px;
+}
+
+.small-copy-button {
+    height: 2rem;
+    width: 2rem;
+    border-radius: 50px;
+    background: #0f88e8;
+}
+
+.wc-slide-down-editor-pane {
+    label {
+        margin-bottom: 4px;
+    }
+    div {
+        margin-right: 8px;
+    }
+}

@@ -1,0 +1,40 @@
+<div style="display: flex;flex-direction: column;height: 100%;">
+  <span class="wa-offline-messages-pane-title">Messages</span>
+
+  <kendo-grid #grid [data]="data" 
+      style="flex-grow: 2;border:none;padding-top: 4px;" 
+      [selectable]="true"
+      [resizable]="true"
+      (selectionChange)="onSelectionChange($event)"
+      (keydown)="onKeydown(grid, $event)"
+      (cellClose)="cellCloseHandler($event)"
+    >
+    <kendo-grid-column field="locale" title="Locale"
+        [width]="70"
+        [minResizableWidth]="50">
+        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+          <span>{{ dataItem.locale | localeName }}</span>
+        </ng-template>
+        <ng-template kendoGridEditTemplate
+          let-dataItem="dataItem"
+          let-formGroup="formGroup">
+          <kendo-dropdownlist #localesDropDown
+            [data]="locales"
+            [textField]="'name'"
+            [valueField]="'code'"
+            [formControl]="formGroup.get('locale')"
+            [valuePrimitive]="true"
+            >
+          </kendo-dropdownlist>
+      </ng-template>
+
+    </kendo-grid-column>
+    <kendo-grid-column field="message" title="Message"> </kendo-grid-column>
+  </kendo-grid>
+
+  <kendo-buttongroup style="justify-content: flex-end;">
+    <button kendoButton [toggleable]="false" [icon]="'plus'" title="Add Message" (click)="addNewClicked()" [disabled]="!canAdd"></button>
+    <button kendoButton [toggleable]="false" [icon]="'minus'" title="Remove Message" (click)="removeClicked()" [disabled]="!canRemove"></button>
+  </kendo-buttongroup>
+</div>
+

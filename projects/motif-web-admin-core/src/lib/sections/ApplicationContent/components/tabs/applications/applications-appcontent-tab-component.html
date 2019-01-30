@@ -1,0 +1,93 @@
+<wc-loading-overlay [visible]='loading'></wc-loading-overlay>
+<wa-appcontent-applications-new-app-dialog #newAppDialog (confirm)="onMobileApplicationAddConfirm($event)"></wa-appcontent-applications-new-app-dialog>
+
+<div>
+    <wc-confirmation-dialog (cancel)="onConfirmationCancel($event)" (confirm)="onConfirmationOK($event)"></wc-confirmation-dialog>
+
+    <div class="row spread">
+        <div class="flex-toolbar" style="display:flex;align-items: center;">
+            <div style="margin-right:10px;width:60%;max-width: 400px;min-width: 250px;">
+                <label>Domain</label>
+                <wc-domain-selector-combobox #domainSelector (domainSelected)="onDomainSelected($event)"
+                    (selectionCancelled)="onDomainSelected(null)"></wc-domain-selector-combobox>
+            </div>
+
+            <div>
+                <label>&nbsp;</label>
+                <kendo-buttongroup look="flat">
+                    <button kendoButton [toggleable]="false" [icon]="'save'" (click)="onSaveClicked()" [disabled]="!editService.hasChanges()">Save</button>
+                    <button kendoButton [toggleable]="false" [icon]="'track-changes-reject'" (click)="onDiscardClicked()"
+                        [disabled]="!editService.hasChanges()">Discard Changes</button>
+                    <button kendoButton [toggleable]="false" (click)="onMobileAppClicked()" [disabled]="!canAddProperty">
+                        <fa-icon [icon]="faMobileAlt"></fa-icon>Add Mobile Application
+                    </button>
+                </kendo-buttongroup>
+            </div>
+        </div>
+
+
+        <div class="flex-cmd">
+            <kendo-buttongroup look="flat">
+                <button kendoButton [toggleable]="false" [icon]="'refresh'" (click)="onRefreshClicked()" [disabled]="!canRefresh">Refresh</button>
+            </kendo-buttongroup>
+        </div>
+
+    </div>
+
+
+    <div class="row fill">
+        <div>
+            <!-- Grid -->
+
+            <kendo-grid #datagrid [data]="view | async" [columnMenu]="true" [scrollable]="true"
+                (cellClick)="cellClickHandler($event)" (cellClose)="cellCloseHandler($event)" (dataStateChange)="onStateChange($event)"
+                (cellClose)="cellCloseHandler($event)" [resizable]="true" [reorderable]="true">
+                >
+
+
+                <kendo-grid-column field="name" title="Name">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        <label class="k-icon grid-cell-dirty grid-cell-dirty-{{dataItem.dirty}}"></label>
+                        {{dataItem.name}}
+                    </ng-template>
+                </kendo-grid-column>
+
+                <kendo-grid-column field="latestVersion" title="Latest Version" width="160">
+                </kendo-grid-column>
+
+                <kendo-grid-column field="forbiddenVersion" title="Forbidden Version" width="160">
+                </kendo-grid-column>
+
+                <kendo-grid-column field="downloadUrl" title="App Store URL">
+                </kendo-grid-column>
+
+                <kendo-grid-column field="lastAppCheck" title="Last App Check" width="160" format="{0:dd/MM/yyyy HH:mm:ss}">
+                </kendo-grid-column>
+
+                <kendo-grid-column field="created" title="Created" width="160" format="{0:dd/MM/yyyy HH:mm:ss}">
+                </kendo-grid-column>
+
+                <kendo-grid-column title="" width="150" minResizableWidth="140">
+                    <ng-template kendoGridCellTemplate let-dataItem let-columnIndex="columnIndex" let-rowIndex="rowIndex" let-column="column">
+                            <wc-grid-editor-command 
+                                [alignMode]="'end'"
+                                [hasConfirmation]="true"
+                                [confirmationTitle]="'Delete ?'"
+                                [rowIndex]="rowIndex" 
+                                [columnIndex]="columnIndex" 
+                                [column]="column" 
+                                [commandIcon]="'assets/img/icons.svg#ico-no'"
+                                [dataItem]="dataItem"
+                                (commandConfirm)="onDeleteOKPressed(dataItem)"  
+                                >
+                            </wc-grid-editor-command>
+                    </ng-template>
+                </kendo-grid-column>
+
+            </kendo-grid>
+        </div>
+
+    </div>
+
+
+</div>

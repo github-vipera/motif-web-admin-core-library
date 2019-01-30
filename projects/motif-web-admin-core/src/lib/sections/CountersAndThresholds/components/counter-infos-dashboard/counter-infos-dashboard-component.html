@@ -1,0 +1,15 @@
+<div class="row fill">
+
+  <kendo-splitter orientation="vertical" style="border: none;">
+    
+    <kendo-splitter-pane>
+        <wa-counter-infos-pane-component [(ngModel)]="selectedCounterInfo"></wa-counter-infos-pane-component>
+      </kendo-splitter-pane>
+      
+      <kendo-splitter-pane>
+          <wa-thresholds-pane-component [counterInfo]="selectedCounterInfo"></wa-thresholds-pane-component>
+        </kendo-splitter-pane>
+
+    </kendo-splitter>
+
+</div>

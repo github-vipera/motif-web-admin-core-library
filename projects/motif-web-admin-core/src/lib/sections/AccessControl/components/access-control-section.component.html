@@ -1,0 +1,157 @@
+<wc-dashboard-header [title]="'Access Control'"></wc-dashboard-header>
+
+<div class="row spread">
+  <div class="flex-toolbar" style="display:flex;align-items: center;">
+    <div style="margin-right:10px;width:60%;max-width: 400px;min-width: 250px;">
+      <label>Domain</label>
+      <wc-domain-selector-combobox #domainSelector (domainSelected)="onDomainSelected($event)" (selectionCancelled)="onDomainSelected(null)"></wc-domain-selector-combobox>
+    </div>
+  </div>
+  <div class="flex-cmd">
+    <kendo-buttongroup look="flat">
+      <button kendoButton [toggleable]="false" [icon]="'refresh'" (click)="onResetClicked()">
+        Reset
+      </button>
+    </kendo-buttongroup>
+  </div>
+</div>
+
+<div class="row fill" style="height: 800px;">
+  <kendo-splitter orientation="vertical">
+    <kendo-splitter-pane [collapsible]="false" [resizable]="true">
+      <kendo-splitter orientation="horizontal">
+        <kendo-splitter-pane [collapsible]="false">
+          <div class="pane-content">
+            <input type="radio" [checked]="usersTabSelected" name="tabs" id="tab-1-cmd" checked="">
+            <input type="radio" [checked]="adminsTabSelected" name="tabs" id="tab-2-cmd">
+            <input type="radio" [checked]="clientsTabSelected" name="tabs" id="tab-3-cmd">
+
+            <div class="tabs">
+              <label for="tab-1-cmd">
+                <div class="tab-title">Users</div>
+              </label>
+              <label for="tab-2-cmd">
+                <div class="tab-title">Admins</div>
+              </label>
+              <label for="tab-3-cmd">
+                <div class="tab-title">Clients</div>
+              </label>
+            </div>
+
+            <div class="tab" id="tab-1">
+              <wa-users-list [selectedDomain]="selectedDomain" (selectionChange)="onUserSelectionChange($event)"
+                [selection]="userSelection"></wa-users-list>
+            </div>
+
+
+            <div class="tab" id="tab-2">
+              <kendo-grid [data]="adminsData" [kendoGridSelectBy]="'userId'" [selectedKeys]="adminSelection"
+                (selectedKeysChange)="onUserSelectionChange($event)" [selectable]="selectableSettings">
+                <kendo-grid-column field="userId" title="UserID" width="30">
+                </kendo-grid-column>
+                <kendo-grid-column field="created" title="Created" width="40">
+                </kendo-grid-column>
+                <kendo-grid-column field="state" title="State" width="30">
+                </kendo-grid-column>
+                <kendo-grid-column field="email" title="Email" width="30">
+                </kendo-grid-column>
+                <kendo-grid-column field="lastLogin" title="Last Login" width="30">
+                </kendo-grid-column>
+              </kendo-grid>
+            </div>
+
+            <div class="tab" id="tab-3">
+              <kendo-grid [data]="clientsData" [kendoGridSelectBy]="'userId'" [selectedKeys]="clientSelection"
+                (selectedKeysChange)="onUserSelectionChange($event)" [selectable]="selectableSettings">
+                <kendo-grid-column field="userId" title="UserID" width="100">
+                </kendo-grid-column>
+                <kendo-grid-column field="created" title="Created" width="150">
+                </kendo-grid-column>
+                <kendo-grid-column field="state" title="State" width="30">
+                </kendo-grid-column>
+                <kendo-grid-column field="lastLogin" title="Last Login" width="30">
+                </kendo-grid-column>
+              </kendo-grid>
+            </div>
+          </div>
+        </kendo-splitter-pane>
+
+        <kendo-splitter-pane [collapsible]="false" size="30%">
+          <label class="acl-label">GROUPS</label>
+          <div class="pane-content">
+            <kendo-grid [data]="groupsData" [kendoGridSelectBy]="'name'" [selectedKeys]="groupSelection"
+              (selectedKeysChange)="onGroupSelectionChange($event)" [selectable]="selectableSettings">
+              <kendo-grid-column field="name" title="Name" width="100">
+              </kendo-grid-column>
+              <kendo-grid-column field="description" title="Description" width="150">
+              </kendo-grid-column>
+            </kendo-grid>
+          </div>
+        </kendo-splitter-pane>
+      </kendo-splitter>
+    </kendo-splitter-pane>
+
+    <kendo-splitter-pane [collapsible]="false" size="40%">
+      <kendo-splitter>
+        <kendo-splitter-pane [collapsible]="false" size="20%">
+          <label class="acl-label">ROLES</label>
+          <div class="pane-content">
+            <kendo-grid [data]="rolesData" [kendoGridSelectBy]="'name'" [selectedKeys]="roleSelection"
+              (selectedKeysChange)="onRoleSelectionChange($event)" [selectable]="selectableSettings">
+              <kendo-grid-column field="name" title="Name" width="100">
+              </kendo-grid-column>
+              <kendo-grid-column field="description" title="Description" width="150">
+              </kendo-grid-column>
+            </kendo-grid>
+          </div>
+        </kendo-splitter-pane>
+
+        <kendo-splitter-pane [collapsible]="false" size="33%">
+          <label class="acl-label">ACTIONS</label>
+          <div class="pane-content">
+            <kendo-grid [data]="actionsData" 
+              [kendoGridSelectBy]="'name'" 
+              [selectedKeys]="actionSelection"
+              (selectedKeysChange)="onActionSelectionChange($event)" 
+              [selectable]="selectableSettings"
+              [skip]="actionsSkip"
+              [pageSize]="actionsPageSize"
+              [scrollable]="'virtual'"
+              [rowHeight]="35"
+              [height]="450"
+              (pageChange)="actionsPageChange($event)">
+              <kendo-grid-column field="name" title="Name" width="100">
+              </kendo-grid-column>
+              <kendo-grid-column field="description" title="Description" width="100">
+              </kendo-grid-column>
+            </kendo-grid>
+          </div>
+        </kendo-splitter-pane>
+
+        <kendo-splitter-pane [collapsible]="false">
+          <label class="acl-label">PERMISSIONS</label>
+          <div class="pane-content">
+            <kendo-grid [data]="permissionsGridView" 
+              [kendoGridSelectBy]="permissionKey" 
+              [selectedKeys]="permissionSelection"
+              (selectedKeysChange)="onPermissionSelectionChange($event)" 
+              [selectable]="selectableSettings"
+              [skip]="permissionsSkip"
+              [pageSize]="permissionsPageSize"
+              [scrollable]="'virtual'"
+              [rowHeight]="35"
+              [height]="450"
+              (pageChange)="permissionsPageChange($event)">
+              <kendo-grid-column field="component" title="Component" width="100">
+              </kendo-grid-column>
+              <kendo-grid-column field="action" title="Action" width="20">
+              </kendo-grid-column>
+              <kendo-grid-column field="target" title="Target" width="60">
+              </kendo-grid-column>
+            </kendo-grid>
+          </div>
+        </kendo-splitter-pane>
+      </kendo-splitter>
+    </kendo-splitter-pane>
+  </kendo-splitter>
+</div>
