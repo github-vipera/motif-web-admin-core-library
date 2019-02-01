@@ -6,7 +6,7 @@ import * as _ from 'lodash';
 import { faFileImport, faDownload } from '@fortawesome/free-solid-svg-icons';
 import { WCNotificationCenter, NotificationType } from 'web-console-ui-kit';
 import { WCSubscriptionHandler } from '../../../components/Commons/wc-subscription-handler';
-import { WCUploadPanelEvent } from 'src/app/components/UI/wc-upload-panel-component/wc-upload-panel-component';
+import { WCUploadPanelEvent } from '../../../components/UI/wc-upload-panel-component/wc-upload-panel-component';
 
 const LOG_TAG = '[LicenseManagerSection]';
 

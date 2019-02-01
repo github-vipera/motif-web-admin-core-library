@@ -1,7 +1,7 @@
 import { CountersAndThresholdUtils } from '../../../commons/CountersAndThresholdUtils';
 import { Component, OnInit, EventEmitter, Output, ViewChild } from '@angular/core';
 import { NGXLogger } from 'web-console-core';
-import { ServiceCatalogSelectorDialogComponent, SelectionEvent } from 'src/app/components/UI/selectors/service-catalog-selector/service-catalog-selector-dialog';
+import { ServiceCatalogSelectorDialogComponent, SelectionEvent } from '../../../../../components/UI/selectors/service-catalog-selector/service-catalog-selector-dialog';
 
 const LOG_TAG = '[NewCounterInfoDialogComponent]';
 

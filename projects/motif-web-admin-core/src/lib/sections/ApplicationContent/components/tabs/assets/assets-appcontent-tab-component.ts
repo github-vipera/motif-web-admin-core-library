@@ -19,8 +19,7 @@ import { ConfirmationDialogComponent } from '../../../../../components/Confirmat
 import { saveAs } from '@progress/kendo-file-saver';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 import { WCSubscriptionHandler } from '../../../../../components/Commons/wc-subscription-handler';
-import { WCSlidePanelComponent } from 'web-console-ui-kit';
-import { WCUploadPanelEvent } from 'src/app/components/UI/wc-upload-panel-component/wc-upload-panel-component';
+import { WCUploadPanelEvent } from 'projects/motif-web-admin-core/src/lib/components';
 
 
 const LOG_TAG = '[AssetsAppContentSection]';

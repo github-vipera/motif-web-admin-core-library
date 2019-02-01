@@ -3,7 +3,7 @@ import { Component, OnInit, OnDestroy, EventEmitter, Output, Input } from '@angu
 import { NGXLogger} from 'web-console-core';
 import { WCNotificationCenter, NotificationType } from 'web-console-ui-kit';
 import { CountersService, ThresholdInfoEntityList, ThresholdInfoEntity } from '@wa-motif-open-api/counters-thresholds-service';
-import { WCSubscriptionHandler } from 'src/app/components/Commons/wc-subscription-handler';
+import { WCSubscriptionHandler } from '../../../../components/Commons/wc-subscription-handler';
 import { ThresholdsInfosModel } from './data/model'; 
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 

@@ -1,9 +1,9 @@
+import { ConfirmationDialogComponent } from '../../../components/ConfirmationDialog/confirmation-dialog-component';
 import { Component, OnInit, OnDestroy, ViewChild, Input, ElementRef, Renderer } from '@angular/core';
 import { PluginView } from 'web-console-core';
 import { NGXLogger} from 'web-console-core';
 import { SettingsService, ConfigurationsService, SettingUpdate, SettingCreate } from '@wa-motif-open-api/configuration-service';
-import { MotifService, MotifServicesList, ConfigurationRow } from '../data/model';
-import { ConfirmationDialogComponent } from 'src/app/components/ConfirmationDialog/confirmation-dialog-component';
+import { MotifService, ConfigurationRow } from '../data/model';
 import { ComboBoxComponent } from '@progress/kendo-angular-dropdowns';
 import * as FileSaver from 'file-saver';
 import { WCEditService, WCEditServiceConfiguration } from 'web-console-ui-kit';

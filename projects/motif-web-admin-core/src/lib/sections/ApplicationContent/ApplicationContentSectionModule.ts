@@ -1,3 +1,4 @@
+import { CommonSelectorsModule } from './../../components/CommonsSelectorsModule';
 import { NewAppDialogComponent } from './components/tabs/applications/dialog/new-app-dialog';
 import { WCUploadPanelModule } from '../../components/UI/wc-upload-panel-component/WCUploadPanelModule';
 import { NgModule } from '@angular/core';
@@ -15,7 +16,6 @@ import { CommonsUIModule } from '../../components/CommonsUIModule';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TooltipModule } from '@progress/kendo-angular-tooltip';
 import { DroppableModule } from '@ctrl/ngx-droppable';
-import { CommonSelectorsModule } from 'src/app/components/CommonsSelectorsModule';
 import { DialogModule } from 'primeng/dialog';
 
 @NgModule({

@@ -3,7 +3,7 @@ import { Component, OnInit, OnDestroy, EventEmitter, Output, Input } from '@angu
 import { NGXLogger} from 'web-console-core';
 import { WCNotificationCenter, NotificationType } from 'web-console-ui-kit';
 import { CountersService, CounterInfoEntityList, CounterInfoEntity } from '@wa-motif-open-api/counters-thresholds-service';
-import { WCSubscriptionHandler } from 'src/app/components/Commons/wc-subscription-handler';
+import { WCSubscriptionHandler } from '../../../../components/Commons/wc-subscription-handler';
 import { CounterInfosModel } from './data/model';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { SelectableSettings } from '@progress/kendo-angular-grid';

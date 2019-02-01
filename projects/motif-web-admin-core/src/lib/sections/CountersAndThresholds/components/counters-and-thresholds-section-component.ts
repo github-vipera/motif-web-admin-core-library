@@ -3,7 +3,7 @@ import { WCNotificationCenter } from 'web-console-ui-kit';
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { NGXLogger} from 'web-console-core';
 import { PluginView } from 'web-console-core';
-import { ServiceCatalogSelectorDialogComponent, SelectionEvent } from 'src/app/components/UI/selectors/service-catalog-selector/service-catalog-selector-dialog';
+import { ServiceCatalogSelectorDialogComponent, SelectionEvent } from '../../../components/UI/selectors/service-catalog-selector/service-catalog-selector-dialog';
 import { SelectionEvent as CounterInfoSelectionEvent } from './counter-infos/counter-infos-component'
 import { ThresholdEditDialogComponent } from './dialogs/threshold-edit-dialog-component/threshold-edit-dialog-component';
 
