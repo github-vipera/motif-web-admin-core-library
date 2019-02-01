@@ -17,7 +17,6 @@ import { ServiceCatalogEditorChangesEvent, EditingType } from './editors/service
 import { Domain, Application } from '@wa-motif-open-api/platform-service';
 import { Service, ServiceOperation } from '@wa-motif-open-api/catalog-service';
 import { ConfirmationService } from 'primeng/api';
-import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { WCSubscriptionHandler } from '../../../components/Commons/wc-subscription-handler';
 
 const LOG_TAG = '[ServicesSection]';

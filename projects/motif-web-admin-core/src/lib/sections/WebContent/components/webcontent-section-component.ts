@@ -4,12 +4,11 @@ import { PluginView } from 'web-console-core';
 import { NGXLogger} from 'web-console-core';
 import { WCNotificationCenter, NotificationType } from 'web-console-ui-kit';
 import { WebcontentService, BundleStatusList, BundleStatus, ClusterBundleStatus } from '@wa-motif-open-api/web-content-service';
-import { WCSubscriptionHandler } from 'src/app/components/Commons/wc-subscription-handler';
+import { WCSubscriptionHandler } from '../../../components/Commons/wc-subscription-handler';
 import * as _ from 'lodash';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
-import { WCSlidePanelComponent } from 'web-console-ui-kit';
 import { WebContentUpdateDialogComponent } from './dialog/webcontent-update-dialog';
-import { WCUploadPanelEvent } from 'src/app/components/UI/wc-upload-panel-component/wc-upload-panel-component';
+import { WCUploadPanelEvent } from '../../../components/UI/wc-upload-panel-component/wc-upload-panel-component';
 
 const LOG_TAG = '[WebContentSectionComponent]';
 

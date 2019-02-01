@@ -8,7 +8,7 @@ import { NGXLogger} from 'web-console-core';
 import { faFileImport, faDownload, faPlusCircle, faLessThanEqual } from '@fortawesome/free-solid-svg-icons';
 import { SelectionEvent, CounterInfosComponent } from '../../../counter-infos/counter-infos-component'
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { WCSubscriptionHandler } from 'src/app/components/Commons/wc-subscription-handler';
+import { WCSubscriptionHandler } from '../../../../../../components/Commons/wc-subscription-handler';
 
 const LOG_TAG = '[CounterInfosPaneComponent]';
 

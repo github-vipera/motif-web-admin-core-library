@@ -440,7 +440,7 @@ export class AssetsTabComponent implements OnInit, OnDestroy {
         }));
     }
 
-    private doPublishAssetsBundle(dataItem): void {
+    public doPublishAssetsBundle(dataItem): void {
         this.logger.debug(LOG_TAG, 'doPublishAssetsBundle: ', dataItem);
 
         const isPublishing = !dataItem.published;

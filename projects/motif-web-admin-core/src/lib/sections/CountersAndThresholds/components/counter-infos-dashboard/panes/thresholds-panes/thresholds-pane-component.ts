@@ -6,7 +6,7 @@ import { NGXLogger} from 'web-console-core';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { ThresholdsComponent } from '../../../thresholds/thresholds-component';
 import { ThresholdDialogResult, ThresholdEditDialogComponent, EditType as DialogEditType } from '../../../dialogs/threshold-edit-dialog-component/threshold-edit-dialog-component';
-import { WCSubscriptionHandler } from 'src/app/components/Commons/wc-subscription-handler';
+import { WCSubscriptionHandler } from '../../../../../../components/Commons/wc-subscription-handler';
 
 const LOG_TAG = '[ThresholdsPaneComponent]';
 

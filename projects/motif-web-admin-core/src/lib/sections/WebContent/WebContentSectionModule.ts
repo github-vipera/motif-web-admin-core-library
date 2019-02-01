@@ -1,4 +1,4 @@
-import { WCUploadPanelModule } from 'src/app/components/UI/wc-upload-panel-component/WCUploadPanelModule';
+import { WCUploadPanelModule } from '../../components/UI/wc-upload-panel-component/WCUploadPanelModule';
 import { WebContentUpdateDialogComponent } from './components/dialog/webcontent-update-dialog';
 import { CommonSelectorsModule } from './../../components/CommonsSelectorsModule';
 import { NgModule } from '@angular/core';
