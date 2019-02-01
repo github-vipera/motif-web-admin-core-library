@@ -8,10 +8,10 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "copy_assets": "cp -rf ./projects/web-motif-admin-core/src/assets ./dis/web-admin-core/assets/",
-    "buildlib": "ng build --prod web-motif-admin-core",
-    "packlib": "npm pack ./dist/web-motif-admin-core",
-    "distlib": "buildlib;copy_assets;packlib"
+    "copy_assets": "cp -rf ./projects/motif-web-admin-core/src/assets ./dis/motif-web-admin-core/assets/",
+    "buildlib": "ng build --prod motif-web-admin-core",
+    "packlib": "npm pack ./dist/motif-web-admin-core",
+    "distlib": "npm run buildlib;npm run copy_assets;npm run packlib"
   },
   "private": true,
   "dependencies": {
