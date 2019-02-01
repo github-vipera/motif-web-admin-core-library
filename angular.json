@@ -145,6 +145,11 @@
           "options": {
             "tsConfig": "projects/motif-web-admin-core/tsconfig.lib.json",
             "project": "projects/motif-web-admin-core/ng-package.json"
+          },
+          "configurations": {
+            "production" : {
+              "project": "projects/motif-web-admin-core/ng-package.prod.json"
+            }
           }
         },
         "test": {
