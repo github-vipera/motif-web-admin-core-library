@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "copy_assets": "cp -rf ./projects/motif-web-admin-core/src/assets ./dis/motif-web-admin-core/assets/",
+    "copy_assets": "cp -rf ./projects/motif-web-admin-core/src/assets ./dist/motif-web-admin-core/assets/",
     "buildlib": "ng build --prod motif-web-admin-core",
     "packlib": "npm pack ./dist/motif-web-admin-core",
     "distlib": "npm run buildlib;npm run copy_assets;npm run packlib"
