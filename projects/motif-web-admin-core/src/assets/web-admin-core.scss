@@ -387,4 +387,26 @@ body {
  }
  
  
+ .notification {
+   background: $notification_background_color;
+   color: $notification_color;
+   border: 1px solid $notification_border;
+ }
+ 
+ .loading {
+   background:$loading_background_color;
+   color:$loading_color;
+ }
+ 
+ .loading > div {
+   background:$loading_div_background_color;
+ }
+ 
+ .spinner:before {
+   background:$spinner_before_background_color;
+ }
+ 
+ .spinner:after {
+   background:$spinner_after_background_color;
+ }
  
