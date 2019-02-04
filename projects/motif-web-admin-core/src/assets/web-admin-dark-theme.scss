@@ -1,0 +1,150 @@
+$body_background_color:#282D31;
+
+// Main
+$main_background_color:#22272B;
+$main_color: #fff;
+$main_color_darken: #ddd;
+
+// Parts
+$part_background_color: #363F44;
+$part_processing_half_background_color: #474F55;
+
+// Mark
+$mark_background_color:#ff0;
+$mark_color:#000;
+
+// Selection
+$selection_background_color: #999;
+
+// Common Elements
+$label_color: #888;
+$label_background_color: #22272b;
+
+$dashboard_background_color: #353A3E;
+
+$ok_color: #6C4;
+$ok_fill: $ok_color;
+
+$ko_color: #d45;
+$ko_fill: $ko_color;
+
+$warn_color: #fc0;
+$warn_fill: $warn_color;
+
+// Input
+$input_background_color: #353A3E;
+$input_color:$main_color_darken;
+
+$input_checkbox_checked_background_color: #666;
+$input_checkbox_checked_color: $main_color;
+
+$switch_background_color: #d45;
+$switch_before_background_color: $main_color;
+$switch_checked_background_color: #d45;
+
+
+// Tree
+$tree_head_color: $label_color;
+$tree_head_border_color: #666;
+$tree_child_color: #999;
+$tree_child_active_color: $main_color_darken;
+$tree_child_active_background_color: rgba(255,255,255,.1);
+$tree_child_hover_background_color: rgba(255,255,255,.5);
+
+// Button
+$button_background_color: #22272B;
+$button_color: #ddd;
+$button_border_color: #ddd;
+$button_hover_background_color: #44494D;
+$button_hover_color: $main_color;
+$button_active_background_color: #22272B;
+$button_active_color: #44494D;
+$button_primary_background_color: #22272B;
+$button_primary_color: #44494D;
+
+// Login
+$login_logo_background:#1A1D22;
+$login_part_color:#aaa;
+
+// Header
+$header_background_color: $part_background_color;
+$header_description_color: #787f84;
+$header_description_hover_color: #ccc;
+
+// Nav
+$nav_background_color: #2E3337;
+$nav_div_background_color: #363F44;
+$nav_div_color: #ccc;
+$nav_a_color: #999;
+$nav_a_hover_color: #fff;
+$nav_a_hover_background_color: $nav_div_background_color;
+$nav_a_hover_span_background_color: $nav_div_background_color;
+$nav_a_hover_box_shadow_color: rgba(0,0,0,.5);
+$nav_a_a_border_color: #444;
+$nav_a_current_color: #eee;
+$nav_a_current_background_color: #22272B;
+$nav_a_current_hover_background_color: $nav_a_current_background_color;
+
+
+// Tabs
+$tab_label_background_color: #191c1f;
+$tab_selected_label_background_color: #22272B;
+$tab_selected_label_color: #ddd;
+
+// Inspector
+$aside_color: #ddd;
+$aside_border_color: #999;
+$inspector_input_focus_background_color: #484f54;
+$inspector_textarea_focus_background_color: #484f54;
+$inspector_label_disabled_color: #666;
+$inspector_button_disabled_color: #666;
+$inspector_select_disabled_color: #666;
+
+// Section
+$section_background_color: #22272B;
+$section_header_color: #ddd;
+$section_header_p_color: #999;
+
+// Editor
+$editor_color: #aaa;
+$editor_background_color: rgba(255,255,255,.1);
+$editor_border_color: #d45;
+
+
+// Table
+$table_th_border_bottom_color:#aaa;
+$table_th_color:#ddd;
+$table_table_sorter_color:#6c4;
+$table_td_border_bottom_color:#666;
+$table_td_color:#aaa;
+$table_td_hover_background_color:rgba(255,255,255,.07);
+$table_nth_background_color:rgba(255,255,255,.03);
+$table_error_border_color: #d45;
+$table_sorter_childRow_border_color: #555;
+$table_sorter_childRow_color: #ccc;
+
+// Counter
+$counter_value_color: #ddd;
+$counter_key_color: #999;
+
+// List
+$list_border_color: #666;
+$list_key_color: #ddd;
+$list_key_value: #aaa;
+
+
+// Footer
+$footer_background_color: $part_background_color;
+$footer_color: #ccc;
+$footer_switch_background_color: rgba(255,255,255,.1);;
+$footer_switch_before_background_color: rgba(255,255,255,.3);
+$footer_switch_checked_background_color: rgba(0,0,0,.2);
+$footer_switch_checked_before_background_color: #fff;
+$footer_size_background_color: rgba(255,255,255,.1);
+$footer_size_label_background_color: rgba(255,255,255,.4);
+$footer_size_label_hover_background_color: rgba(255,255,255,.8);
+$footer_size_label_checked_background_color: rgba(255,255,255,1);
+$footer_license_color: #787f84;
+$footer_license_hover_color: #ccc;
+
+
