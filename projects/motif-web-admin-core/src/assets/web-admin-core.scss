@@ -1,9 +1,9 @@
 @import "./wc-uikit-kendo.scss";
-@import "./wc-uikit-primeng.scss";
-@import "./wc-uikit-dashboard.scss";
 @import "./wc-uikit-form.scss";
-@import "./wc-uikit-toast.scss";
 @import "./wc-uikit-grid.scss";
+@import "./wc-uikit-toast.scss";
+@import "./wc-uikit-dashboard.scss";
+@import "./wc-uikit-primeng.scss";
 
 body {
    background:$body_background_color;
@@ -503,5 +503,9 @@ section .header.sub-header h1 {
 .badge-disabled {
   background-color: $badge_disabled_background_color;
   color: $badge_disabled_color;
+}
+
+.logo img {
+  content:$logo_small_header;
 }
 
