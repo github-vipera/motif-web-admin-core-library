@@ -1,3 +1,4 @@
+/*
 $body_background_color:#282D31;
 
 // Main
@@ -34,7 +35,6 @@ $warn_fill: $warn_color;
 // Input
 $input_background_color: #353A3E;
 $input_color:$main_color_darken;
-$input_placeholder_color: rgb(147, 147, 147);
 
 $input_checkbox_checked_background_color: #666;
 $input_checkbox_checked_color: $main_color;
@@ -62,9 +62,6 @@ $button_active_background_color: #22272B;
 $button_active_color: #44494D;
 $button_primary_background_color: #22272B;
 $button_primary_color: #44494D;
-$button_disabled_background_color : #525f69;
-$button_disabled_color : #909192;
-
 
 // Login
 $login_logo_background:#1A1D22;
@@ -223,34 +220,10 @@ $inputSwicth_background_color: #7a7b7b;
 $inputSwicth_checked_background_color: #62ce39;
 $inputSwicth_slider_background_color: #ffff;
 
-
-
-// Grid (Kendo UI)
-$grid_cell_checkbox_checked_color: #009900;
-$grid_cell_dirty_color: #ff0000;
-$grid_color:#ddd;
-$grid_background_color:rgba(105, 148, 179, 0.19);
-$grid_border_color: #666;
-$grid_background_color: transparent;
-$grid_content_background_color: transparent;
-$grid_header_background_color: transparent;
-$grid_footer_background_color: transparent;
-$grid_column_resizer_color: transparent;
-$grid_grouping_header_background_color: $grid_header_background_color;
-$grid_grouping_row_background_color: #363535;
-$grid_header_color: #ddd;
-$grid_header_border_color: rgb(223, 223, 223);
-$table_edit_button_background_color: #22272b;
-$pager_wrap_color: #656565;
-$pager_wrap_background_color: #353a3e;
-
-// Toolbar (Kendo UI)
-$toolbar_background_color: transparent;
-
-
-// Splitbar (Kendo UI)
-$splitter_color: #656565;
-$splitter_background_color: rgb(56, 56, 56);
-
-// Notification
-$notification_color: #ffff;
+*/
+/*
+$grid_border_color: black;
+$grid_background_color: red;
+$grid_header_background_color: blue;
+$grid_footer_background_color: green;
+*/

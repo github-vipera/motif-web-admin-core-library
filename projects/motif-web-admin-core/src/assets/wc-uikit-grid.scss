@@ -4,8 +4,8 @@
 }
 
 .grid-cell-checkbox-true:before {
-    content: "\e118"; 
-    color: #009900;
+    content: "\e118";
+    color: $grid_cell_checkbox_checked_color;
 }
 
 .grid-cell-checkbox-true:false {
@@ -13,7 +13,7 @@
 }
 
 .grid-cell-dirty {
-    color: red;
+    color: $grid_cell_dirty_color;
 }
 
 .grid-cell-dirty-true:before {
@@ -34,10 +34,12 @@
 }
 
 .k-grid td.k-state-selected, .k-grid tr.k-state-selected > td {
-    color: white;
-    background-color: rgba(105, 148, 179, 0.19);
+    color: $grid_color;
+    background-color: $grid_background_color;
 }
 
 .k-grid td {
-    border-bottom: 1px dotted #666;
+    border-bottom: 1px dotted $grid_border_color;
+    color: $table_td_color;
 }
+

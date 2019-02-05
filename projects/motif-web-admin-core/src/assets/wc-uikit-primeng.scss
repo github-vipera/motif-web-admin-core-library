@@ -1,158 +1,157 @@
 /**
  * MENU
  */
- .ui-button {
-	border: 0;
-  }
-  
-  .ui-contextmenu {
-	  background-color: $contextMenu_background_color;
-	  font-size: 0.85rem;
-  }
-  
-  
-  .ui-menu-list {
-	  background-color: $contextMenu_background_color;
-  }
-  
-  .ui-menuitem:hover {
-	  background-color: $contextMenu_hover_background_color;
-  }
-  
-  .ui-menuitem-link{
-	  font-family: 'Open Sans',sans-serif;
-	  font-weight: bold;
-	  text-transform: uppercase;
-	  font-weight: normal;
-	  font-size: 11px;
-	  text-decoration: none;
-	  font-weight: 700;
-  }
-  
-  .ui-contextmenu .ui-menuitem-link {
-	padding-top: .45em;
-	  padding-bottom: .45em;
-	  color: $contextMenu_color;
-  }
-  
-  .ui-contextmenu:hover .ui-menuitem-link:hover {
-	padding-top: .45em;
-	  padding-bottom: .45em;
-	  color: #fff;
-  }
-  
-  .ui-menuitem-link.ui-state-disabled {
-	  color: $contextMenu_disabled_color;
-  }
-  
-  .ui-menuitem-link.ui-state-disabled:hover {
-	  color: $contextMenu_disabled_color;
-  }
-  
-  .ui-contextmenu.ui-state-disabled:hover {
-	  color: $contextMenu_disabled_color;
-  }
-  
-  .ui-menuitem-link.ui-state-disabled:hover {
-	  color: $contextMenu_disabled_color;
-  }
-  
-  .ui-submenu-list {
-	  background-color: $contextMenu_background_color;
-  }
-  
-  .ui-menu .ui-menu-separator {
-	  border-top: solid .5px $menu_separator_color;
-  }
-  
-  /**
-   * DIALOGS
-   */
-  .ui-dialog {
-	  background: $dialog_background_color;
-  }
-  
-  .ui-dialog .ui-dialog-titlebar {
-	  background-color: $dialog_header_background_color;
-	  color: $dialog_header_color;
-  }
-  
-  .ui-dropdown-panel .ui-dropdown-list {
-	  background: $dropdown_panel_background_color;
-	  color: $dropdown_panel_color;
-	  font-size: 0.8rem;
-  }
-  
-  .ui-dropdown-item:hover {
-	  background: $dropdown_item_hover_background_color;
-  }
-  
-  .ui-dropdown label.ui-dropdown-label  {
-	  color: $dropdown_item_color;
-  }
-  
-  .ui-treetable {
-	  height: 100%;
-  }
-  
-  .ui-treetable-scrollable-wrapper {
-	  height: 100%;
-  }
-  
-  
-  .ui-treetable-scrollable-view {
-	  height: 100%;
-  }
-  
-  .ui-treetable-scrollable-body {
-	  max-height: none !important;
-	  height: 95% !important;
-  }
-  
-  .wa-ng-combo-box
-  {
-	  height: 30px;
-	  background : $combobox_ng_background_color;
-	  color: $combobox_ng_color;
-	  padding-top: 6px;
-	  padding-left:6px;
-  }
-  
-  .ui-placeholder {
-	  color: $ui_placeholder_color !important;
-  }
-  
-  /* Switch Button */
-  .ui-inputswitch .ui-inputswitch-slider
-  {
-	  background-color: $inputSwicth_background_color;
-  }
-  
-  .ui-inputswitch.ui-inputswitch-checked .ui-inputswitch-slider
-  {
-	  background-color: $inputSwicth_checked_background_color;
-  }
-  
-  .ui-inputswitch-slider:before
-  {
-	  background: $inputSwicth_slider_background_color;
-  }
-  
-  .ui-inputswitch {
-	  width: 2.1em;
-	  height: 1.3em;
-  }
-  
-  .ui-inputswitch-slider:before {
-	  left: 0.2em;
-	  bottom: .2em;
-	  height: 1em;
-	  width: 1em;
-	  transition: .1s;
-  }
-  
-  .ui-inputswitch-checked .ui-inputswitch-slider:before {
-	  -webkit-transform: translateX(0.7em);
-	  transform: translateX(0.7em);
-  }
-  
+.ui-button {
+  border: 0;
+}
+
+.ui-contextmenu {
+	background-color: $contextMenu_background_color;
+	font-size: 0.85rem;
+}
+
+
+.ui-menu-list {
+	background-color: $contextMenu_background_color;
+}
+
+.ui-menuitem:hover {
+	background-color: $contextMenu_hover_background_color;
+}
+
+.ui-menuitem-link{
+	font-family: 'Open Sans',sans-serif;
+	font-weight: bold;
+	text-transform: uppercase;
+    font-weight: normal;
+	font-size: 11px;
+	text-decoration: none;
+	font-weight: 700;
+}
+
+.ui-contextmenu .ui-menuitem-link {
+  padding-top: .45em;
+	padding-bottom: .45em;
+	color: $contextMenu_color;
+}
+
+.ui-contextmenu:hover .ui-menuitem-link:hover {
+  padding-top: .45em;
+	padding-bottom: .45em;
+	color: #fff;
+}
+
+.ui-menuitem-link.ui-state-disabled {
+	color: $contextMenu_disabled_color;
+}
+
+.ui-menuitem-link.ui-state-disabled:hover {
+	color: $contextMenu_disabled_color;
+}
+
+.ui-contextmenu.ui-state-disabled:hover {
+	color: $contextMenu_disabled_color;
+}
+
+.ui-menuitem-link.ui-state-disabled:hover {
+	color: $contextMenu_disabled_color;
+}
+
+.ui-submenu-list {
+	background-color: $contextMenu_background_color;
+}
+
+.ui-menu .ui-menu-separator {
+    border-top: solid .5px $menu_separator_color;
+}
+
+/**
+ * DIALOGS
+ */
+.ui-dialog {
+	background: $dialog_background_color;
+}
+
+.ui-dialog .ui-dialog-titlebar {
+	background-color: $dialog_header_background_color;
+	color: $dialog_header_color;
+}
+
+.ui-dropdown-panel .ui-dropdown-list {
+	background: $dropdown_panel_background_color;
+	color: $dropdown_panel_color;
+	font-size: 0.8rem;
+}
+
+.ui-dropdown-item:hover {
+	background: $dropdown_item_hover_background_color;
+}
+
+.ui-dropdown label.ui-dropdown-label  {
+	color: $dropdown_item_color;
+}
+
+.ui-treetable {
+    height: 100%;
+}
+
+.ui-treetable-scrollable-wrapper {
+    height: 100%;
+}
+
+
+.ui-treetable-scrollable-view {
+    height: 100%;
+}
+
+.ui-treetable-scrollable-body {
+    max-height: none !important;
+    height: 95% !important;
+}
+
+.wa-ng-combo-box
+{
+	height: 30px;
+	background : $combobox_ng_background_color;
+	color: $combobox_ng_color;
+	padding-top: 6px;
+	padding-left:6px;
+}
+
+.ui-placeholder {
+	color: $ui_placeholder_color !important;
+}
+
+/* Switch Button */
+.ui-inputswitch .ui-inputswitch-slider
+{
+	background-color: $inputSwicth_background_color;
+}
+
+.ui-inputswitch.ui-inputswitch-checked .ui-inputswitch-slider
+{
+	background-color: $inputSwicth_checked_background_color;
+}
+
+.ui-inputswitch-slider:before
+{
+	background: $inputSwicth_slider_background_color;
+}
+
+.ui-inputswitch {
+    width: 2.1em;
+    height: 1.3em;
+}
+
+.ui-inputswitch-slider:before {
+    left: 0.2em;
+	bottom: .2em;
+	height: 1em;
+    width: 1em;
+    transition: .1s;
+}
+
+.ui-inputswitch-checked .ui-inputswitch-slider:before {
+    -webkit-transform: translateX(0.7em);
+    transform: translateX(0.7em);
+}
