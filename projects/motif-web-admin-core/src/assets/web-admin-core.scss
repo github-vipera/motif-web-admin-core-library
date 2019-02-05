@@ -1,478 +1,480 @@
+@import "./wc-uikit-primeng.scss";
+
 body {
-	background:$body_background_color;
- }
- 
- .row > div .label {
-	background: $main_background_color;
- }
- 
- button, .btn {
-	background: $main_background_color;
- }
- 
- button:active, .btn:active {
+   background:$body_background_color;
+}
+
+.row > div .label {
    background: $main_background_color;
- }
- 
- .login {
+}
+
+button, .btn {
    background: $main_background_color;
- }
- 
- nav a.current {
-   background: $main_background_color;
- }
- 
- nav a.current:hover span {
-   background: $main_background_color;
- }
- 
- #tab-1-cmd:checked ~ .tabs [for="tab-1-cmd"], #tab-2-cmd:checked ~ .tabs [for="tab-2-cmd"], #tab-3-cmd:checked ~ .tabs [for="tab-3-cmd"] {
-   background: $main_background_color;
- }
- 
- section {
-   background: $main_background_color;
- }
- 
- .loading > div {
-   background: $main_background_color;
- }
- 
- header {
-	background: $header_background_color;
- }
- 
- nav div {
-   background: $part_background_color;
- }
- 
- nav a:hover {
-   background: $part_background_color;
- }
- 
- footer {
-	background:$footer_background_color;
- }
- 
- @keyframes processing {
-   0% {
-	  background:$part_background_color;
-  }
-   50% {
-	  background: $part_processing_half_background_color;
-  }
-   100% {
-	  background:$part_background_color;
-  }
- }
- 
- mark{
-   background-color:$mark_background_color;
-   color:$mark_color;
- }
- 
- ::selection {
-   background-color:$selection_background_color;
- }
- 
- label {
-	color: $label_color;
- }
- 
- input, select, textarea {
-	background: $input_background_color;
-	color:$input_color;
- }
- 
- input[type=checkbox]:checked + label:before {
-	background:$input_checkbox_checked_background_color;
-	color: $input_checkbox_checked_color;
- }
- 
- .switch input[type=checkbox] + label {
-   background:$switch_background_color;
- }
- 
- .switch input[type=checkbox]:checked + label {
-   background:$switch_checked_background_color;
- }
- 
- .switch input[type=checkbox] + label:before {
-   background:$switch_before_background_color;
- }
- 
- .dashboard .row > div {
-   background:$dashboard_background_color;
- }
- 
- .row > div .label {
-   color: $label_color;
-   background:$label_background_color;
- }
- 
- .ok {
-  color:$ok_color !important;
-   fill:$ok_fill;
- }
- 
- .ko {
-  color:$ko_color !important;
-   fill: $ko_fill;
- }
- 
- .warn {
-  color:$warn_color !important;
-   fill:$warn_fill;
- }
- 
- .tree .head {
-   color:$tree_head_color;
- }
- 
- .tree .head, .tree .parent, .tree .child {
-   border-bottom: 1px dotted $tree_head_color;
- }
- 
- .tree .parent, .tree .child {
-   color:$tree_child_color;
- }
- 
- .tree .parent.active, .tree .child.active {
-   color:$tree_child_active_color;
-   background:$tree_child_active_background_color;
- }
- .tree .parent:hover, .tree .child:hover {
-  background:$tree_child_hover_background_color;
- }
- 
- button, .btn {
-   background:$button_background_color;
-   color:$button_color;
-   border:1px solid $button_border_color;
- }
- 
- button:hover, .btn:hover {
-   background:$button_hover_background_color;
-   color:$button_hover_color;
- }
- 
- button:active, .btn:active {
-  background:$button_active_background_color;
-   color:$button_active_color;
- }
- 
- button.primary, .btn.primary {
-  background:$button_primary_background_color;
-   color:$button_primary_color;
- }
- 
- .login {
-   background:$main_background_color;
-   color:$main_color;
- }
- 
- .login .logo {
-  background:$login_logo_background
- }
- 
- .login h1 {
-   color:$main_color_darken;
- }
- 
- .login p {
-  $login_part_color:$login_part_color;
- }
- 
- header {
+}
+
+button:active, .btn:active {
+  background: $main_background_color;
+}
+
+.login {
+  background: $main_background_color;
+}
+
+nav a.current {
+  background: $main_background_color;
+}
+
+nav a.current:hover span {
+  background: $main_background_color;
+}
+
+#tab-1-cmd:checked ~ .tabs [for="tab-1-cmd"], #tab-2-cmd:checked ~ .tabs [for="tab-2-cmd"], #tab-3-cmd:checked ~ .tabs [for="tab-3-cmd"] {
+  background: $main_background_color;
+}
+
+section {
+  background: $main_background_color;
+}
+
+.loading > div {
+  background: $main_background_color;
+}
+
+header {
    background: $header_background_color;
- }
- 
- header .description {
-   color: $header_description_color;
- }
- 
- header .description:hover {
-  color: $header_description_hover_color;
- }
- 
- nav {
-   background:$nav_background_color;
- }
- 
- nav div {
-   background:$nav_div_background_color;
-   color:$nav_div_color;
- }
- 
- nav a {
-	color:$nav_a_color;
- }
- 
- nav a:hover {
-   background: $nav_a_hover_background_color;
-	color:$nav_a_hover_color;
- }
- 
- nav a:hover span {
-	background:$nav_a_hover_span_background_color;
-	box-shadow:0 0 10px $nav_a_hover_box_shadow_color;
- }
- 
- nav a + a {
-   border-top:1px solid $nav_a_a_border_color;
- }
- 
- nav a.current {
-   color:$nav_a_current_color;
-	background:$nav_a_current_background_color;
- }
- 
- nav a.current:hover span {
-   background:$nav_a_current_hover_background_color;
- }
- 
- .tabs label {
-   background: $tab_label_background_color;
- }
- 
- #tab-1-cmd:checked ~ .tabs [for="tab-1-cmd"], #tab-2-cmd:checked ~ .tabs [for="tab-2-cmd"], #tab-3-cmd:checked ~ .tabs [for="tab-3-cmd"] {
-   background:$tab_selected_label_background_color;
-	color:$tab_selected_label_color;
- }
- 
- aside h1 {
-   color:$aside_color;
-   border-bottom:1px solid $aside_border_color;
- }
- 
- .inspector input:focus {
-	background-color: $inspector_input_focus_background_color;
- }
- .inspector textarea:focus {
-	background-color: $inspector_textarea_focus_background_color;
- }
- .inspector > div > div > label[disabled] {
-	color: $inspector_label_disabled_color;
- }
- .inspector > div > button[disabled] {
-	color: $inspector_button_disabled_color;
- }
- .inspector > div > div > select[disabled] {
-	color: $inspector_select_disabled_color;
- }
- 
- section {
-   background:$section_background_color;
- }
- 
- section .header {
-  color:$section_header_color;
- }
- 
- section .header p {
-   color:$section_header_p_color
- }
- 
- .editor {
-   color: $editor_color;
-	background: $editor_background_color;
- }
- 
- .editor input.error, .editor select.error {
-   border-color:$editor_border_color;
- }
- 
- th {
-   border-bottom:2px solid $table_th_border_bottom_color;
-	color:$table_th_color;
- }
- 
- th.tablesorter-headerAsc:not(.nosort):after {
-	color:$table_table_sorter_color;
- }
- 
- th.tablesorter-headerDesc:not(.nosort):after {
-	color:$table_table_sorter_color;
- }
- 
- td {
-   border-bottom:1px solid $table_td_border_bottom_color;
-	color:$table_td_color;
- }
- 
- tr:nth-child(2n+1) td {
-   background:$table_nth_background_color;
- }
- 
- tr:hover td {
-   background:$table_td_hover_background_color;
- }
- 
- table input.error, table select.error {
-   border-color:$table_error_border_color;
- }
- 
- table .tablesorter-childRow td > div + div {
-   border-top:1px solid $table_sorter_childRow_border_color;
- }
- 
- table .tablesorter-childRow div div:first-child {
-	color:$table_sorter_childRow_color;
- }
- 
- .counter .value {
-	color:$counter_value_color;
- }
- 
- .counter .key {
-	color:$counter_key_color;
- }
- 
- .list > div + div {
-   border-top:1px solid $list_border_color;
- }
- 
- .list .key {
-	color:$list_key_color;
- }
- 
- .list .value {
-   color:$list_key_value;
- }
- 
- 
- footer {
+}
+
+nav div {
+  background: $part_background_color;
+}
+
+nav a:hover {
+  background: $part_background_color;
+}
+
+footer {
    background:$footer_background_color;
-   color:$footer_color;
+}
+
+@keyframes processing {
+  0% {
+     background:$part_background_color;
  }
- 
- footer .switch input[type=checkbox]+label {
-   background: $footer_switch_background_color;
+  50% {
+     background: $part_processing_half_background_color;
  }
- 
- footer .switch input[type=checkbox]+label:before {
-   background: $footer_switch_before_background_color;
+  100% {
+     background:$part_background_color;
  }
- 
- footer .switch input[type=checkbox]:checked+label {
-  background:$footer_switch_checked_background_color;
+}
+
+mark{
+  background-color:$mark_background_color;
+  color:$mark_color;
+}
+
+::selection {
+  background-color:$selection_background_color;
+}
+
+label {
+   color: $label_color;
+}
+
+input, select, textarea {
+   background: $input_background_color;
+   color:$input_color;
+}
+
+input[type=checkbox]:checked + label:before {
+   background:$input_checkbox_checked_background_color;
+   color: $input_checkbox_checked_color;
+}
+
+.switch input[type=checkbox] + label {
+  background:$switch_background_color;
+}
+
+.switch input[type=checkbox]:checked + label {
+  background:$switch_checked_background_color;
+}
+
+.switch input[type=checkbox] + label:before {
+  background:$switch_before_background_color;
+}
+
+.dashboard .row > div {
+  background:$dashboard_background_color;
+}
+
+.row > div .label {
+  color: $label_color;
+  background:$label_background_color;
+}
+
+.ok {
+ color:$ok_color !important;
+  fill:$ok_fill;
+}
+
+.ko {
+ color:$ko_color !important;
+  fill: $ko_fill;
+}
+
+.warn {
+ color:$warn_color !important;
+  fill:$warn_fill;
+}
+
+.tree .head {
+  color:$tree_head_color;
+}
+
+.tree .head, .tree .parent, .tree .child {
+  border-bottom: 1px dotted $tree_head_color;
+}
+
+.tree .parent, .tree .child {
+  color:$tree_child_color;
+}
+
+.tree .parent.active, .tree .child.active {
+  color:$tree_child_active_color;
+  background:$tree_child_active_background_color;
+}
+.tree .parent:hover, .tree .child:hover {
+ background:$tree_child_hover_background_color;
+}
+
+button, .btn {
+  background:$button_background_color;
+  color:$button_color;
+  border:1px solid $button_border_color;
+}
+
+button:hover, .btn:hover {
+  background:$button_hover_background_color;
+  color:$button_hover_color;
+}
+
+button:active, .btn:active {
+ background:$button_active_background_color;
+  color:$button_active_color;
+}
+
+button.primary, .btn.primary {
+ background:$button_primary_background_color;
+  color:$button_primary_color;
+}
+
+.login {
+  background:$main_background_color;
+  color:$main_color;
+}
+
+.login .logo {
+ background:$login_logo_background
+}
+
+.login h1 {
+  color:$main_color_darken;
+}
+
+.login p {
+ $login_part_color:$login_part_color;
+}
+
+header {
+  background: $header_background_color;
+}
+
+header .description {
+  color: $header_description_color;
+}
+
+header .description:hover {
+ color: $header_description_hover_color;
+}
+
+nav {
+  background:$nav_background_color;
+}
+
+nav div {
+  background:$nav_div_background_color;
+  color:$nav_div_color;
+}
+
+nav a {
+   color:$nav_a_color;
+}
+
+nav a:hover {
+  background: $nav_a_hover_background_color;
+   color:$nav_a_hover_color;
+}
+
+nav a:hover span {
+   background:$nav_a_hover_span_background_color;
+   box-shadow:0 0 10px $nav_a_hover_box_shadow_color;
+}
+
+nav a + a {
+  border-top:1px solid $nav_a_a_border_color;
+}
+
+nav a.current {
+  color:$nav_a_current_color;
+   background:$nav_a_current_background_color;
+}
+
+nav a.current:hover span {
+  background:$nav_a_current_hover_background_color;
+}
+
+.tabs label {
+  background: $tab_label_background_color;
+}
+
+#tab-1-cmd:checked ~ .tabs [for="tab-1-cmd"], #tab-2-cmd:checked ~ .tabs [for="tab-2-cmd"], #tab-3-cmd:checked ~ .tabs [for="tab-3-cmd"] {
+  background:$tab_selected_label_background_color;
+   color:$tab_selected_label_color;
+}
+
+aside h1 {
+  color:$aside_color;
+  border-bottom:1px solid $aside_border_color;
+}
+
+.inspector input:focus {
+   background-color: $inspector_input_focus_background_color;
+}
+.inspector textarea:focus {
+   background-color: $inspector_textarea_focus_background_color;
+}
+.inspector > div > div > label[disabled] {
+   color: $inspector_label_disabled_color;
+}
+.inspector > div > button[disabled] {
+   color: $inspector_button_disabled_color;
+}
+.inspector > div > div > select[disabled] {
+   color: $inspector_select_disabled_color;
+}
+
+section {
+  background:$section_background_color;
+}
+
+section .header {
+ color:$section_header_color;
+}
+
+section .header p {
+  color:$section_header_p_color
+}
+
+.editor {
+  color: $editor_color;
+   background: $editor_background_color;
+}
+
+.editor input.error, .editor select.error {
+  border-color:$editor_border_color;
+}
+
+th {
+  border-bottom:2px solid $table_th_border_bottom_color;
+   color:$table_th_color;
+}
+
+th.tablesorter-headerAsc:not(.nosort):after {
+   color:$table_table_sorter_color;
+}
+
+th.tablesorter-headerDesc:not(.nosort):after {
+   color:$table_table_sorter_color;
+}
+
+td {
+  border-bottom:1px solid $table_td_border_bottom_color;
+   color:$table_td_color;
+}
+
+tr:nth-child(2n+1) td {
+  background:$table_nth_background_color;
+}
+
+tr:hover td {
+  background:$table_td_hover_background_color;
+}
+
+table input.error, table select.error {
+  border-color:$table_error_border_color;
+}
+
+table .tablesorter-childRow td > div + div {
+  border-top:1px solid $table_sorter_childRow_border_color;
+}
+
+table .tablesorter-childRow div div:first-child {
+   color:$table_sorter_childRow_color;
+}
+
+.counter .value {
+   color:$counter_value_color;
+}
+
+.counter .key {
+   color:$counter_key_color;
+}
+
+.list > div + div {
+  border-top:1px solid $list_border_color;
+}
+
+.list .key {
+   color:$list_key_color;
+}
+
+.list .value {
+  color:$list_key_value;
+}
+
+
+footer {
+  background:$footer_background_color;
+  color:$footer_color;
+}
+
+footer .switch input[type=checkbox]+label {
+  background: $footer_switch_background_color;
+}
+
+footer .switch input[type=checkbox]+label:before {
+  background: $footer_switch_before_background_color;
+}
+
+footer .switch input[type=checkbox]:checked+label {
+ background:$footer_switch_checked_background_color;
+}
+
+footer .switch input[type=checkbox]:checked+label:before {
+ background:$footer_switch_checked_before_background_color;
+}
+
+footer .size {
+  background:$footer_size_background_color;
+}
+
+footer .size label {
+  background:$footer_size_label_background_color;
+}
+
+footer .size :not(:checked) + label:hover {
+  background: $footer_size_label_hover_background_color;
+}
+
+footer .size :checked + label {
+ background:$footer_size_label_checked_background_color;
+}
+
+footer .license {
+  color:$footer_license_color;
+}
+
+footer .license:hover {
+ color:$footer_license_hover_color;
+}
+
+
+.notification {
+  background: $notification_background_color;
+  color: $notification_color;
+  border: 1px solid $notification_border;
+}
+
+.loading {
+  background:$loading_background_color;
+  color:$loading_color;
+}
+
+.loading > div {
+  background:$loading_div_background_color;
+}
+
+.spinner:before {
+  background:$spinner_before_background_color;
+}
+
+.spinner:after {
+  background:$spinner_after_background_color;
+}
+
+@keyframes processing {
+  0% {
+     background:$keyframes_processing_0_background_color;
  }
- 
- footer .switch input[type=checkbox]:checked+label:before {
-  background:$footer_switch_checked_before_background_color;
+  50% {
+     background:$keyframes_processing_50_background_color;
  }
- 
- footer .size {
-   background:$footer_size_background_color;
+  100% {
+     background:$keyframes_processing_100_background_color;
  }
- 
- footer .size label {
-   background:$footer_size_label_background_color;
- }
- 
- footer .size :not(:checked) + label:hover {
-   background: $footer_size_label_hover_background_color;
- }
- 
- footer .size :checked + label {
-  background:$footer_size_label_checked_background_color;
- }
- 
- footer .license {
-   color:$footer_license_color;
- }
- 
- footer .license:hover {
-  color:$footer_license_hover_color;
- }
- 
- 
- .notification {
-   background: $notification_background_color;
-   color: $notification_color;
-   border: 1px solid $notification_border;
- }
- 
- .loading {
-   background:$loading_background_color;
-   color:$loading_color;
- }
- 
- .loading > div {
-   background:$loading_div_background_color;
- }
- 
- .spinner:before {
-   background:$spinner_before_background_color;
- }
- 
- .spinner:after {
-   background:$spinner_after_background_color;
- }
- 
- @keyframes processing {
-   0% {
-	  background:$keyframes_processing_0_background_color;
-  }
-   50% {
-	  background:$keyframes_processing_50_background_color;
-  }
-   100% {
-	  background:$keyframes_processing_100_background_color;
-  }
- }
- 
- .gauge:before {
-   background:$gauge_before_background_color;
- }
- .gauge:after {
-   background:$gauge_after_background_color;
- }
- .percentage .meter {
-  background:$percentage_meter_background_color;
- }
- .percentage-indicator {
-   color:$percentage_indicator_color;
- }
- .meter {
-  background:$meter_background_color;
- }
- 
- .chart figcaption {
-   color:$chart_fig_caption_color;
- }
- 
- gridster-item {
-   background: $gridster_item_background_color !important;
- }
- gridster .gridster-column {
-   border-left: 1px dotted $gridster_column_border_color !important;
-   border-right: 1px dotted $gridster_column_border_color !important;
- }
- gridster .gridster-row {
-   border-top: 1px dotted $gridster_column_border_color !important;
-   border-bottom: 1px dotted $gridster_column_border_color !important;
- }
- 
- section .header.sub-header h1 {
-   color: $section_sub_header_color;
- }
- 
- .warning-label {
-   color: $warning_label_color;
- }
- 
- .property-modified label {
-   color: $property_modified_color;
- }
- 
- .badge-enabled {
-   background-color: $badge_enabled_background_color;
-   color: $badge_enabled_color;
- }
- 
- .badge-disabled {
-   background-color: $badge_disabled_background_color;
-   color: $badge_disabled_color;
- }
- 
+}
+
+.gauge:before {
+  background:$gauge_before_background_color;
+}
+.gauge:after {
+  background:$gauge_after_background_color;
+}
+.percentage .meter {
+ background:$percentage_meter_background_color;
+}
+.percentage-indicator {
+  color:$percentage_indicator_color;
+}
+.meter {
+ background:$meter_background_color;
+}
+
+.chart figcaption {
+  color:$chart_fig_caption_color;
+}
+
+gridster-item {
+  background: $gridster_item_background_color !important;
+}
+gridster .gridster-column {
+  border-left: 1px dotted $gridster_column_border_color !important;
+  border-right: 1px dotted $gridster_column_border_color !important;
+}
+gridster .gridster-row {
+  border-top: 1px dotted $gridster_column_border_color !important;
+  border-bottom: 1px dotted $gridster_column_border_color !important;
+}
+
+section .header.sub-header h1 {
+  color: $section_sub_header_color;
+}
+
+.warning-label {
+  color: $warning_label_color;
+}
+
+.property-modified label {
+  color: $property_modified_color;
+}
+
+.badge-enabled {
+  background-color: $badge_enabled_background_color;
+  color: $badge_enabled_color;
+}
+
+.badge-disabled {
+  background-color: $badge_disabled_background_color;
+  color: $badge_disabled_color;
+}
+

@@ -54,7 +54,7 @@ $tree_child_hover_background_color: rgba(255,255,255,.5);
 // Button
 $button_background_color: #22272B;
 $button_color: #ddd;
-$button_border_color: #ddd;
+$button_border_color: #444;
 $button_hover_background_color: #44494D;
 $button_hover_color: $main_color;
 $button_active_background_color: #22272B;
@@ -187,4 +187,35 @@ $badge_enabled_background_color:green;
 $badge_enabled_color:white;
 $badge_disabled_background_color:gray;
 $badge_disabled_color:#454545;
+
+// Context menu (PrimeNG)
+$contextMenu_background_color: #363F44;
+$contextMenu_hover_background_color: rgb(45, 53, 57);
+$contextMenu_color: #bdbdbd;
+$contextMenu_disabled_color: #666;
+$menu_separator_color: #ffffff73;
+
+// Dialogs (PrimeNG)
+$dialog_background_color: #36424a;
+$dialog_header_background_color: #1b1f21;
+$dialog_header_color: #c1c1c1;
+
+// Dropdowns (PrimeNG)
+$dropdown_panel_background_color:#444c50;
+$dropdown_panel_color:white;
+$dropdown_item_hover_background_color:#3e4448;
+$dropdown_item_color:#ddd;
+
+
+// Combo Box (PrimeNG)
+$combobox_ng_background_color : rgb(83, 84, 84);
+$combobox_ng_color : #ddd;
+
+// UI Placeholder (PrimeNG)
+$ui_placeholder_color: #888888 !important;
+
+// Switch Button (PrimeNG)
+$inputSwicth_background_color: #7a7b7b;
+$inputSwicth_checked_background_color: #62ce39;
+$inputSwicth_slider_background_color: #ffff;
 
