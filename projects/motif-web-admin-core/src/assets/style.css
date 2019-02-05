@@ -27,7 +27,7 @@ body{
   margin:0
 }
 
-app-root article,app-root aside,app-root footer,app-root header,app-root nav,app-root section {
+article,aside,footer, header,nav,section {
   display:block
 }
 
