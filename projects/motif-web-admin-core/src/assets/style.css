@@ -262,7 +262,8 @@
 	 margin-top:.5rem;
 	 margin-right:.5rem;
   }
-  input, select, textarea {
+  
+  app-root input, app-root select, app-root textarea {
 	font-family:'Open Sans';
 	 /*background:#353A3E;
 	 color:#ddd;*/
@@ -274,6 +275,7 @@
 	 width:100%;
 	 flex:1;
   }
+  
   textarea {
 	font-family:monospace;
 	 height:15rem;
@@ -1373,15 +1375,6 @@
 	 animation:zoomin 1s infinite linear;
   }
   
-  
-  
-  
-  /* --->> */
-  
-  
-  
-  
-  
   @keyframes notify {
 	 0% {
 		top:-10rem;
@@ -1414,17 +1407,7 @@
 		opacity:1;
 	}
   }
-  @keyframes processing {
-	 0% {
-		background:#363F44;
-	}
-	 50% {
-		background:#474F55;
-	}
-	 100% {
-		background:#363F44;
-	}
-  }
+  
   @keyframes spin {
 	 0% {
 		transform:rotate(0deg);
@@ -1470,7 +1453,7 @@
   }
   .gauge:before {
 	border-radius:6rem 6rem 0 0;
-	 background:#494f54;
+	 /*background:#494f54;*/
   }
   .gauge:after {
 	position:absolute;
@@ -1478,16 +1461,13 @@
 	 left:3rem;
 	 width:6rem;
 	 height:3rem;
-	 background:#353A3E;
+	 /*background:#353A3E;*/
 	 border-radius:3rem 3rem 0 0;
   }
   .meter {
 	top:100%;
 	 transform-origin:center top;
 	 border-radius:0 0 6rem 6rem;
-  }
-  .percentage .meter {
-	background:#6C4;
   }
   .percentage-container {
 	position:absolute;
@@ -1498,11 +1478,8 @@
   }
   .percentage-indicator {
 	font-weight:700;
-	 color:#aaa;
+	 /*color:#aaa;*/
 	 font-size:1.5rem;
-  }
-  .meter {
-	background:#d45;
   }
   .meter[data-rate="10"] {
 	animation:to10 5s both;
@@ -1568,8 +1545,21 @@
 	 font-family:Montserrat;
 	 text-transform:uppercase;
 	 font-size:.75rem;
-	 color:#aaa;
+	 /*color:#aaa;*/
   }
+  
+  
+  
+  
+  
+  
+  /* --->> */
+  
+  
+  
+  
+  
+  /*
   body.l-theme {
 	background:#fff;
   }
@@ -1766,6 +1756,8 @@
 		background:#ddd;
 	}
   }
+  */
+  
   app-root {
 	 width: 100%;
   }
@@ -1773,22 +1765,26 @@
 	 background: transparent !important;
   }
   gridster-item {
-	 background: #353A3E !important;
+  /*   background: #353A3E !important;*/
   }
   gridster .gridster-column {
+	/*
 	 border-left: 1px dotted rgba(255, 255, 255, 0.19) !important;
 	 border-right: 1px dotted rgba(255, 255, 255, 0.19) !important;
+	 */
   }
   gridster .gridster-row {
-	 border-top: 1px dotted rgba(255, 255, 255, 0.19) !important;
+	/*
+	border-top: 1px dotted rgba(255, 255, 255, 0.19) !important;
 	 border-bottom: 1px dotted rgba(255, 255, 255, 0.19) !important;
+	 */
   }
   .flex-toolbar > div {
 	 padding-right: 12px;
   }
   section .header.sub-header h1 {
 	 font-size: 1rem;
-	 color: gray;
+	 /*color: gray;*/
   }
   .tab-title {
 	 padding-left: 4px;
@@ -1810,11 +1806,11 @@
 	 text-transform: inherit;
 	 font-weight: lighter;
 	 font-family: inherit;
-	 color: #ff4b4b;
+	 /*color: #ff4b4b;*/
 	 padding-top: 4px;
   }
   .property-modified label {
-	 color: red;
+	 /*color: red;*/
   }
   input {
 	 border-radius: 4px;
@@ -1842,11 +1838,15 @@
 	 white-space: nowrap;
   }
   .badge-enabled {
+	/*
 	 background-color: green;
 	 color: white;
+	 */
   }
   .badge-disabled {
+	/*
 	 background-color: gray;
 	 color: #454545;
+	 */
   }
   

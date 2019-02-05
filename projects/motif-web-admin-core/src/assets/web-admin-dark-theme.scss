@@ -149,7 +149,7 @@ $footer_license_hover_color: #ccc;
 
 // Others
 $loading_background_color: rgba(255,255,255,.4);
-$loading_color: $fff;
+$loading_color: #fff;
 $loading_div_background_color: #22272B;
 
 $spinner_before_background_color: rgba(255,255,255,.3);;
@@ -158,4 +158,33 @@ $spinner_after_background_color: rgba(255,255,255,.3);;
 $notification_background_color: #11161A;
 $notification_color: #eee;
 $notification_border: #666;
+
+// Animations
+$keyframes_processing_0_background_color:#363F44;
+$keyframes_processing_50_background_color:#474F55;
+$keyframes_processing_100_background_color:#363F44;
+
+$gauge_before_background_color:#494f54;
+$gauge_after_background_color:#494f54;
+
+$percentage_meter_background_color:#6C4;
+$percentage_indicator_color:#aaa;
+
+$meter_background_color:#d45;
+
+$chart_fig_caption_color: #aaa;
+
+
+// Gridster
+$gridster_item_background_color: #353A3E;
+$gridster_column_border_color: rgba(255, 255, 255, 0.19);
+
+$section_sub_header_color: gray;
+$warning_label_color: #ff4b4b;
+$property_modified_color: red;
+
+$badge_enabled_background_color:green;
+$badge_enabled_color:white;
+$badge_disabled_background_color:gray;
+$badge_disabled_color:#454545;
 

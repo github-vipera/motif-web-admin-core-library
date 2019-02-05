@@ -410,3 +410,69 @@ body {
    background:$spinner_after_background_color;
  }
  
+ @keyframes processing {
+   0% {
+	  background:$keyframes_processing_0_background_color;
+  }
+   50% {
+	  background:$keyframes_processing_50_background_color;
+  }
+   100% {
+	  background:$keyframes_processing_100_background_color;
+  }
+ }
+ 
+ .gauge:before {
+   background:$gauge_before_background_color;
+ }
+ .gauge:after {
+   background:$gauge_after_background_color;
+ }
+ .percentage .meter {
+  background:$percentage_meter_background_color;
+ }
+ .percentage-indicator {
+   color:$percentage_indicator_color;
+ }
+ .meter {
+  background:$meter_background_color;
+ }
+ 
+ .chart figcaption {
+   color:$chart_fig_caption_color;
+ }
+ 
+ gridster-item {
+   background: $gridster_item_background_color !important;
+ }
+ gridster .gridster-column {
+   border-left: 1px dotted $gridster_column_border_color !important;
+   border-right: 1px dotted $gridster_column_border_color !important;
+ }
+ gridster .gridster-row {
+   border-top: 1px dotted $gridster_column_border_color !important;
+   border-bottom: 1px dotted $gridster_column_border_color !important;
+ }
+ 
+ section .header.sub-header h1 {
+   color: $section_sub_header_color;
+ }
+ 
+ .warning-label {
+   color: $warning_label_color;
+ }
+ 
+ .property-modified label {
+   color: $property_modified_color;
+ }
+ 
+ .badge-enabled {
+   background-color: $badge_enabled_background_color;
+   color: $badge_enabled_color;
+ }
+ 
+ .badge-disabled {
+   background-color: $badge_disabled_background_color;
+   color: $badge_disabled_color;
+ }
+ 
