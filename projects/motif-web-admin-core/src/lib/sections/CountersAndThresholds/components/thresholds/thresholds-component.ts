@@ -56,12 +56,12 @@ export class ThresholdsComponent implements OnInit, OnDestroy {
     
     commands: WCGridEditorCommandsConfig = [
         { 
-            commandIcon: 'assets/img/icons.svg#ico-edit',
+            commandIcon: 'wa-ico-edit',
             commandId: EditType.Edit,
             title: 'Edit'
         },
         { 
-            commandIcon: 'assets/img/icons.svg#ico-no',
+            commandIcon: 'wa-ico-no',
             commandId: EditType.Delete,
             title: 'Delete',
             hasConfirmation: true,

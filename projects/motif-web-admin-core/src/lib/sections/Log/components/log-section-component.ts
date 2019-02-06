@@ -23,7 +23,7 @@ const LOG_TAG = '[LogSection]';
     templateUrl: './log-section-component.html'
   })
   @PluginView('Log', {
-    iconName: 'ico-log'
+    iconName: 'wa-ico-log'
 })
 export class LogSectionComponent implements OnInit, OnDestroy {
 

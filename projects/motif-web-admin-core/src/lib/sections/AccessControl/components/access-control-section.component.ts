@@ -25,7 +25,7 @@ const BIT_LOAD_ALL = BIT_LOAD_USERS | BIT_LOAD_GROUPS | BIT_LOAD_ROLES | BIT_LOA
   templateUrl: './access-control-section.component.html'
 })
 @PluginView("AccessControl", {
-  iconName: "ico-users"
+  iconName: "wa-ico-users"
 })
 
 export class AccessControlSectionComponent implements OnInit {

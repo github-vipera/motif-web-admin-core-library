@@ -21,7 +21,7 @@ export class Student {
     templateUrl: './foo-b-section-component.html'
   })
   @PluginView('FooB', {
-    iconName: 'ico-plugins'
+    iconName: 'wa-ico-plugins'
 })
 export class FooBSectionComponent implements OnInit, OnDestroy {
 

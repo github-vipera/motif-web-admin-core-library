@@ -20,7 +20,7 @@ const LOG_TAG = "[OAuth2Section]";
   templateUrl: './oauth2-section.component.html'
 })
 @PluginView("OAuth2", {
-  iconName: "ico-users"
+  iconName: "wa-ico-users"
 })
 export class OAuth2SectionComponent implements OnInit, OnDestroy {
 

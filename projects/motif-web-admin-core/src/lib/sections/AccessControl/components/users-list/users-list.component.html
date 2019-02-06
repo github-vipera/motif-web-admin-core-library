@@ -1,9 +1,7 @@
 <div class="row spread">
     <div class="flex-cmd">
         <a data-slidedown="#user-add" class="btn" (click)="onAddButtonPressed()">
-            <svg data-id="add">
-                <use xlink:href="./assets/img/icons.svg#ico-add"></use>
-            </svg>
+            <i class="button-icon icon wa-ico-add"></i>
             Add User
         </a>
     </div>
@@ -18,22 +16,16 @@
                 <input placeholder="UserIDInt" id="new-user-useridint" [(ngModel)]="newUserModel.userIdInt">
                 <input placeholder="msisdn" id="new-user-msisdn" [(ngModel)]="newUserModel.msisdn">
                 <input placeholder="serial" id="new-user-serial" [(ngModel)]="newUserModel.serial">
-                <!--
-						<input type="password" placeholder="Password" class="error">
-						<input type="password" placeholder="Confirm password" class="error">
-						-->
-                <div class="cmd">
-                    <a>
-                        <svg class="ok" data-id="ok" (click)="onEditorConfirmButtonPressed()">
-                            <use xlink:href="./assets/img/icons.svg#ico-ok"></use>
-                        </svg>
-                    </a>
-                    <a data-slideup="#user-add" (click)="onEditorDismissButtonPressed()">
-                        <svg class="ko" data-id="ko">
-                            <use xlink:href="./assets/img/icons.svg#ico-ko"></use>
-                        </svg>
-                    </a>
-                </div>
+
+                
+       <div class="cmd" style="align-items: center;margin-top:.5rem;">
+            <a (click)="onEditorConfirmButtonPressed()">
+                <i data-id="ok" class="ok icon wa-ico-ok confirmation-icon"></i>
+            </a>
+            <a (click)="onEditorDismissButtonPressed()" data-slideup="#exportSlideDownPanel">
+                <i data-id="ko" class="ko icon wa-ico-ko confirmation-icon"></i>
+            </a>
+        </div>
             </div>
         </wc-slide-panel>
     </div>
@@ -98,7 +90,7 @@
                             [rowIndex]="rowIndex" 
                             [columnIndex]="columnIndex" 
                             [column]="column" 
-                            [commandIcon]="'assets/img/icons.svg#ico-no'"
+                            [commandIcon]="'wa-ico-no'"
                             [dataItem]="dataItem"
                             (commandConfirm)="onDeleteOKPressed(dataItem)"  
                             >

@@ -16,7 +16,7 @@ const LOG_TAG = '[LicenseManagerSection]';
     templateUrl: './license-manager-section-component.html'
   })
   @PluginView('License Manager', {
-    iconName: 'ico-key'
+    iconName: 'wa-ico-key'
 })
 export class LicenseManagerSectionComponent implements OnInit, OnDestroy {
 

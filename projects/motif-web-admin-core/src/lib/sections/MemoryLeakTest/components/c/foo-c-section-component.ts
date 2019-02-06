@@ -15,7 +15,7 @@ const LOG_TAG = '[FooCSection]';
     templateUrl: './foo-c-section-component.html'
   })
   @PluginView('FooC', {
-    iconName: 'ico-plugins'
+    iconName: 'wa-ico-plugins'
 })
 export class FooCSectionComponent implements OnInit, OnDestroy {
 

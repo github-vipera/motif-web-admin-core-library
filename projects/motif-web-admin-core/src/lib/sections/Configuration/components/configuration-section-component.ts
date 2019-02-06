@@ -26,7 +26,7 @@ const LOG_TAG = '[ConfigurationSection]';
     templateUrl: './configuration-section.component.html'
   })
   @PluginView('Configuration', {
-    iconName: 'ico-configuration'
+    iconName: 'wa-ico-configuration'
   })
 export class ConfigurationSectionComponent implements OnInit, OnDestroy {
 

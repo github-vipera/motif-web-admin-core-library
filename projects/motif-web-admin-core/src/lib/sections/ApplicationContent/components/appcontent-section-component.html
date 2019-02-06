@@ -1,24 +1,12 @@
 <wc-dashboard-header [title]="'Application Content'"></wc-dashboard-header>
-			
-<input type="radio" name="tabs" id="tab-1-cmd" checked="">
-<input type="radio" name="tabs" id="tab-2-cmd">
+            
 
-<div class="tabs">
-    <label for="tab-1-cmd">
-        <svg data-id="configuration"><use xlink:href="./assets/img/icons.svg#ico-smartphone"></use></svg> 
-        <div class="tab-title">Applications</div>
-    </label>
-    <label for="tab-2-cmd">
-        <svg data-id="platform"><use xlink:href="./assets/img/icons.svg#ico-html"></use></svg> 
-        <div class="tab-title">Assets</div>
-    </label>
-</div>
-
-<div class="tab" id="tab-1">
-    <wa-appcontent-applications-tab></wa-appcontent-applications-tab>
-</div>
-
-
-<div class="tab" id="tab-2">
-    <wa-assets-appcontent-tab-component></wa-assets-appcontent-tab-component>
-</div>
+<wc-tab-panel style="margin-top:1.5rem;">
+        <wc-tab-item title="Applications" icon="wa-ico-smartphone">
+                <wa-appcontent-applications-tab></wa-appcontent-applications-tab>
+        </wc-tab-item>
+        <wc-tab-item title="Assets" icon="wa-ico-html">
+                <wa-assets-appcontent-tab-component></wa-assets-appcontent-tab-component>
+        </wc-tab-item>
+    
+    </wc-tab-panel>

@@ -1,25 +1,11 @@
 <wc-dashboard-header [title]="'Counters and Thresholds'"></wc-dashboard-header>
 
-<input type="radio" name="tabs" id="tab-1-cmd" checked="">
-<input type="radio" name="tabs" id="tab-2-cmd">
-
-<div class="tabs">
-    <label for="tab-1-cmd">
-        <svg data-id="configuration"><use xlink:href="./assets/img/icons.svg#ico-counter"></use></svg> 
-        <div class="tab-title">Counter Infos</div>
-    </label>
-    <label for="tab-2-cmd">
-        <svg data-id="platform"><use xlink:href="./assets/img/icons.svg#ico-list-progress"></use></svg> 
-        <div class="tab-title">Counters</div>
-    </label>
-</div>
-
-<div class="tab" id="tab-1">
-    <wa-counter-infos-dashboard-component style="height: 100%;display: flex;flex-direction: column;"></wa-counter-infos-dashboard-component>
-</div>
-
-
-<div class="tab" id="tab-2">
-    <wa-counters-list-component></wa-counters-list-component>
-</div>
-
+<wc-tab-panel style="margin-top:1.5rem;">
+        <wc-tab-item title="Counter Infos" icon="wa-ico-counter">
+                <wa-counter-infos-dashboard-component style="height: 100%;display: flex;flex-direction: column;"></wa-counter-infos-dashboard-component>
+        </wc-tab-item>
+        <wc-tab-item title="Counters" icon="wa-ico-list-progress">
+                <wa-counters-list-component></wa-counters-list-component>
+        </wc-tab-item>
+    
+    </wc-tab-panel>

@@ -22,7 +22,7 @@ const LOG_TAG = '[SessionsSection]';
     templateUrl: './sessions-section.component.html'
 })
 @PluginView('Sessions', {
-    iconName: 'ico-sessions'
+    iconName: 'wa-ico-sessions'
 })
 export class SessionsSectionComponent implements OnInit, OnDestroy {
 

@@ -1,29 +1,9 @@
 <wc-dashboard-header [title]="'Utilities'"></wc-dashboard-header>
 
-<input type="radio" name="tabs" id="tab-1-cmd" checked="">
-<!--
-<input type="radio" name="tabs" id="tab-2-cmd">
--->
 
-<div class="tabs">
-    <label for="tab-1-cmd">
-        <svg data-id="otp"><use xlink:href="./assets/img/icons.svg#ico-otp"></use></svg> 
-        <div class="tab-title">OTP</div>
-    </label>
-    <!--
-    <label for="tab-2-cmd">
-        <svg data-id="json"><use xlink:href="./assets/img/icons.svg#ico-json-file"></use></svg> 
-        <div class="tab-title">JSON Test</div>
-    </label>
-    -->
-</div>
-
-<div class="tab" id="tab-1">
-    <wa-utilities-otp-component></wa-utilities-otp-component>
-</div>
-
-<!--
-<div class="tab" id="tab-2">
-    JSON Call Test
-</div>
--->
+<wc-tab-panel style="margin-top:1.5rem;">
+        <wc-tab-item title="OTP" icon="wa-ico-smartphone">
+                <wa-utilities-otp-component></wa-utilities-otp-component>
+        </wc-tab-item>
+    
+    </wc-tab-panel>

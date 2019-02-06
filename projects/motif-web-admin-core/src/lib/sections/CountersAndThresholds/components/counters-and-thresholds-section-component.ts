@@ -15,7 +15,7 @@ const LOG_TAG = '[CountersAndThresholdsSection]';
     templateUrl: './counters-and-thresholds-section-component.html'
 })
 @PluginView('Counters & Thresholds', {
-    iconName: 'ico-thresholds'
+    iconName: 'wa-ico-thresholds'
 })
 export class CountersAndThresholdsSectionComponent implements OnInit {
 

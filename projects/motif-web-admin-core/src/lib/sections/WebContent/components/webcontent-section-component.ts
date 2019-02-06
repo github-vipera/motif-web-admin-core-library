@@ -30,7 +30,7 @@ enum CommandType {
     templateUrl: './webcontent-section-component.html'
   })
   @PluginView('WebContent', {
-    iconName: 'ico-web',
+    iconName: 'wa-ico-web',
   })
 export class WebContentSectionComponent implements OnInit, OnDestroy {
 
@@ -58,17 +58,17 @@ export class WebContentSectionComponent implements OnInit, OnDestroy {
 
     commands: WCGridEditorCommandsConfig = [
         { 
-            commandIcon: 'assets/img/icons.svg#ico-edit',
+            commandIcon: 'wa-ico-edit',
             commandId: CommandType.Edit,
             title: 'Edit'
         },
         { 
-            commandIcon: 'assets/img/icons.svg#ico-download',
+            commandIcon: 'wa-ico-download',
             commandId: CommandType.Download,
             title: 'Download'
         },
         { 
-            commandIcon: 'assets/img/icons.svg#ico-no',
+            commandIcon: 'wa-ico-no',
             commandId: CommandType.Delete,
             title: 'Delete',
             hasConfirmation: true,

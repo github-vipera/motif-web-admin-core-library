@@ -58,20 +58,17 @@
                     </kendo-daterange>
                 </div>
             </div>
-    
-            <div class="cmd" style="align-items: center;padding-top: 11px;">
-                <label style="padding-bottom: 0px;padding-left: 10px;padding-right: 10px;">Do Export?</label>
-                <a (click)="onExportConfirm()">
-                    <svg class="ok" data-id="ok">
-                        <use xlink:href="./assets/img/icons.svg#ico-ok"></use>
-                    </svg>
-                </a>
-                <a (click)="onExportCancel()" data-slideup="#user-add">
-                    <svg class="ko" data-id="ko">
-                        <use xlink:href="./assets/img/icons.svg#ico-ko"></use>
-                    </svg>
-                </a>
-            </div>
+            
+            <div class="cmd" style="align-items: center;margin-top:.5rem;">
+                    <label style="padding-bottom: 0px;padding-left: 10px;padding-right: 10px;">Do Export ?</label>
+                    <a (click)="onExportConfirm()">
+                        <i data-id="ok" class="ok icon wa-ico-ok confirmation-icon"></i>
+                    </a>
+                    <a (click)="onExportCancel()" data-slideup="#exportSlideDownPanel">
+                        <i data-id="ko" class="ko icon wa-ico-ko confirmation-icon"></i>
+                    </a>
+                </div>
+            
         </wc-slide-panel>
 
         <!-- Log Pane -->

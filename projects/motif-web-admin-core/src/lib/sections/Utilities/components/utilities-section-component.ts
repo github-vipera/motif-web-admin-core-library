@@ -10,7 +10,7 @@ const LOG_TAG = '[UtilitiesSection]';
     templateUrl: './utilities-section.component.html'
 })
 @PluginView('Utilities', {
-    iconName: 'ico-toolbox-big'
+    iconName: 'wa-ico-toolbox-big'
 })
 export class UtilitiesSectionComponent implements OnInit {
 
