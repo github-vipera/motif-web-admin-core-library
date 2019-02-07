@@ -1,0 +1,27 @@
+
+// default colors
+theme-defaults {
+  --headerBackground: $header_background_color;
+  --headerColor: $header_description_color;
+  --headerColorHover: $header_description_hover_color;
+}
+
+$variables: (
+  --headerBackground: var(--headerBackground),
+  --headerColor: var(--headerColor),
+  --headerColorHover: var(--headerColorHover)
+);
+
+@import "./functions.scss";
+
+app-root header {
+  background-color: var(--headerBackground);
+}
+
+app-root header .description {
+  color: var(--headerColor);
+}
+
+app-root header .description:hover {
+  color: var(--headerColorHover);
+}
