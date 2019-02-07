@@ -70,7 +70,8 @@
     "web-console-core": "^0.3.0",
     "web-console-login": "^0.1.0",
     "web-console-ui-kit": "^0.4.0",
-    "zone.js": "^0.8.26"
+    "zone.js": "^0.8.26",
+    "dat.gui": "^0.7.5"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.12.1",
