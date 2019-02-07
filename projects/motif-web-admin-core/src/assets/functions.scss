@@ -1,0 +1,4 @@
+// grabs the native css variable from the global sass map
+@function var($variable) {
+  @return map-get($variables, $variable);
+}
