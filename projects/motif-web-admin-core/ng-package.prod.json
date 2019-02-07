@@ -47,7 +47,7 @@
     "angular-gridster2",
     "b64-to-blob",
     "core-js",
-    "dateformat",
+    "moment",
     "file-saver",
     "install",
     "ngx-clipboard",

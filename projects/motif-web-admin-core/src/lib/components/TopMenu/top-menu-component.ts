@@ -2,7 +2,8 @@ import { SessionService } from './../Commons/session-service';
 import { Component, Input, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { AuthService, StatusBarService, NGXLogger } from 'web-console-core';
-import * as moment from 'moment'
+import * as moment_ from 'moment'
+const moment = moment_;
 
 const LOG_TAG = '[TopMenuComponent]';
 

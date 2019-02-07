@@ -183,11 +183,15 @@ template {
 [hidden]{
   display:none
 }
-html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, img, ins, kbd, q, s, samp, small, strike, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+html, app-root body, app-root div, app-root span, app-root applet, app-root object, app-root iframe, app-root h1, app-root h2, app-root h3, app-root h4, app-root h5, app-root h6, app-root p, app-root blockquote, app-root pre, app-root a, app-root abbr, app-root acronym, app-root address, app-root big, app-root cite, app-root code, app-root del, app-root dfn, app-root img, app-root ins, app-root kbd, app-root q, app-root s, app-root samp, app-root small, app-root strike,
+app-root sub, app-root sup, app-root tt, app-root var, app-root b, app-root u, app-root i, app-root center, app-root dl,app-root  dt, app-root dd, app-root ol, app-root ul, app-root li, app-root fieldset,
+app-root form, app-root label, app-root legend, app-root table, app-root caption, app-root tbody, app-root tfoot, app-root thead, app-root tr, app-root th, app-root td,
+app-root article, app-root aside, app-root canvas, app-root details, app-root embed, app-root figure, app-root figcaption, app-root footer, app-root header, app-root hgroup, app-root menu, app-root nav, app-root output, app-root ruby, app-root section, app-root summary, app-root time, app-root mark, app-root audio, app-root video {
   border:0;
    vertical-align:baseline;
 }
-* {
+
+app-root * {
   box-sizing:border-box;
    outline:none;
 }
@@ -265,7 +269,7 @@ label .cmd {
    margin-right:.5rem;
 }
 
-app-root input, select, textarea {
+app-root input, app-root select, app-root textarea {
   font-family:'Open Sans';
    /*background:#353A3E;
    color:#ddd;*/
@@ -278,12 +282,12 @@ app-root input, select, textarea {
    flex:1;
 }
 
-textarea {
+app-root textarea {
   font-family:monospace;
    height:15rem;
    padding:.5rem;
 }
-textarea.pre {
+app-root textarea.pre {
   white-space:nowrap;
 }
 .form-element {
