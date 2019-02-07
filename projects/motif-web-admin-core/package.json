@@ -55,7 +55,7 @@
     "angular-gridster2": "^7.1.0",
     "b64-to-blob": "^1.2.19",
     "core-js": "^2.5.4",
-    "dateformat": "^3.0.3",
+    "moment": "^2.24.0",
     "file-saver": "^2.0.0",
     "install": "^0.12.2",
     "ngx-clipboard": "^11.1.9",
