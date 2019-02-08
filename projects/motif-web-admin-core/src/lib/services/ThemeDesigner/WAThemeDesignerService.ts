@@ -41,9 +41,9 @@ export class WAThemeDesignerService {
             "Section" : "#ffae23"
           },
             header: {
-                "Background": "#ffae23",
-                "Color" : "#ffae23",
-                "ColorHover" : "#ffae23"
+                "Background": this.getColorProperty('--headerBackground'),
+                "Color" : this.getColorProperty('--headerColor'),
+                "ColorHover" : this.getColorProperty('--headerColorHover'),
             },
             Export: () =>{ alert("TODO!!"); console.log("this.obj:",this.obj)}
           };
@@ -89,4 +89,7 @@ export class WAThemeDesignerService {
       }
     }
 
+    private getColorProperty(variableName: string): string {
+      return this.themeWrapper.style.getProperty(variableName);
+    }
 }

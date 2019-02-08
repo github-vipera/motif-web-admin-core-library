@@ -14,6 +14,9 @@ $variables: (
 
 @import "./functions.scss";
 
+
+/** HEADER **/
+
 app-root header {
   background-color: var(--headerBackground);
 }
