@@ -27,7 +27,13 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "node_modules/ngx-toastr/toastr.css",
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/@progress/kendo-theme-default/scss/all.scss",
+              "src/styles.scss",
+              "projects/motif-web-admin-core/src/assets/style.css",
+              "projects/motif-web-admin-core/src/assets/motif_webadmin_iconfont.css"
             ],
             "scripts": []
           },
@@ -61,7 +67,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "motif-web-admin-core-library:build"
+            "browserTarget": "motif-web-admin-core-library:build",
+            "proxyConfig": "./proxy.conf.json"
           },
           "configurations": {
             "production": {
