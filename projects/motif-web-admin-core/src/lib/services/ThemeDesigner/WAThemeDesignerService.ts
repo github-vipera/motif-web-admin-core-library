@@ -7,6 +7,11 @@ import * as dat from 'dat.gui'
 
 const LOG_TAG = '[WAThemeDesignerService]';
 
+interface ColorItemDef {
+  name: string;
+  variableName: string;
+}
+
 @Injectable()
 export class WAThemeDesignerService {
 
@@ -27,38 +32,48 @@ export class WAThemeDesignerService {
         gui.useLocalStorage = true;
 
         this.obj = {
+          main: {
+            "Background": "#ffae23",
+            "Color" : "#ffae23",
+            "Body" : "#ffae23",
+            "Section" : "#ffae23"
+          },
             header: {
                 "Background": "#ffae23",
                 "Color" : "#ffae23",
                 "ColorHover" : "#ffae23"
             },
-            Export: () =>{ alert("ppppp"); console.log("this.obj:",this.obj)}
+            Export: () =>{ alert("TODO!!"); console.log("this.obj:",this.obj)}
           };
 
-          let f1 = gui.addFolder("Header");
-          f1.addColor(this.obj.header, 'Background').onChange((value) => {
-            //console.log("this.themeWrapper:", this.themeWrapper)
-            this.themeWrapper.style.setProperty('--headerBackground', value);
-          });
-          f1.addColor(this.obj.header, 'Color').onChange((value) => {
-            //console.log("this.themeWrapper:", this.themeWrapper)
-            this.themeWrapper.style.setProperty('--headerColor', value);
-          });
-          f1.addColor(this.obj.header, 'ColorHover').onChange((value) => {
-            //console.log("this.themeWrapper:", this.themeWrapper)
-            this.themeWrapper.style.setProperty('--headerColorHover', value);
-          });
+          this.createFolder(gui, 'Main', [
+            { name: 'Background', variableName: '--mainBackgroundColor' },
+            { name: 'Color', variableName: '--mainColor' },
+            { name: 'Body', variableName: '--bodyBackgroundColor' },
+            { name: 'Section', variableName: '--sectionBackgroundColor'}
+          ], this.obj.main);
+
+          this.createFolder(gui, 'Header', [
+            { name: 'Background', variableName: '--headerBackground' },
+            { name: 'Color', variableName: '--headerColor' },
+            { name: 'ColorHover', variableName: '--headerColorHover' }
+          ], this.obj.header);
+
 
           gui.add(this.obj, "Export");
-
 
           this.logger.debug(LOG_TAG, 'show done' );
 
     }
-}
 
-var FizzyText = function() {
-    this.message = 'dat.gui';
-    this.speed = 0.8;
-    this.displayOutline = true;
-};
+    private createFolder(gui:GUI, folderName:string, colors:ColorItemDef[], target: any){
+      let f1 = gui.addFolder(folderName);
+      for (var i=0;i<colors.length;i++){
+        let colorItemDef: ColorItemDef = colors[i];
+        f1.addColor(target, colorItemDef.name).onChange((value) => {
+          this.themeWrapper.style.setProperty(colorItemDef.variableName, value);
+        });
+      }
+    }
+
+}
