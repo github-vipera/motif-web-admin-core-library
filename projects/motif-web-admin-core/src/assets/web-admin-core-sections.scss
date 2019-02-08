@@ -34,3 +34,86 @@
 .small-copy-button {
     background: $small-copy-button_background_color;
 }
+
+/* OAuth2 */
+
+/* Plugins */
+
+/* Sessions */
+
+/* Utilities-OTP */
+
+/* Web Content */
+
+/* Services */
+
+
+.channel-label:empty,
+.badge:empty {
+    color: $service_catalog_badge_channel_color;
+}
+
+.channel-label {
+ color: $service_catalog_badge_channel_color;
+}
+
+.badge-channel-REST {
+    background-color: $service_catalog_badge_channel_rest_background_color;
+    color: $service_catalog_badge_channel_rest_color;
+}
+
+.badge-channel-JSON {
+    background-color: $service_catalog_badge_channel_json_background_color;
+    color: $service_catalog_badge_channel_json_color;
+}
+
+.badge-channel-BROWSER {
+    background-color: $service_catalog_badge_channel_browser_background_color;
+    color: $service_catalog_badge_channel_browser_color;
+}
+
+.badge-channel-SMS {
+    background-color: $service_catalog_badge_channel_sms_background_color;
+    color: $service_catalog_badge_channel_sms_color;
+}
+
+.badge-channel-WEBADMIN {
+    background-color: $service_catalog_badge_channel_webadmin_background_color;
+    color: $service_catalog_badge_channel_webadmin_color;
+}
+
+.badge-channel-WEBCONTENT {
+    background-color: $service_catalog_badge_channel_webcontent_background_color;
+    color: $service_catalog_badge_channel_webcontent_color;
+}
+
+
+wa-service-catalog-selector .node-icon-Domain {
+    color: $service_catalog_icon_color;
+}
+
+wa-service-catalog-selector .node-icon-Application {
+    color: $service_catalog_icon_color;
+}
+
+wa-service-catalog-selector .node-icon-Service {
+    color: $service_catalog_icon_color;
+}
+
+
+wa-service-catalog-selector .ui-state-highlight {
+    background-color: $grid_selected_row; 
+}
+
+wa-service-catalog-selector .ui-state-highlight>td {
+    color: $grid_selected_row_color;
+}
+
+
+wa-service-catalog-selector p-treetable table th {
+    border-bottom: 1px solid $grid_border_color;
+}
+
+wa-service-catalog-selector p-treetable table  td {
+    border-bottom: 1px dotted $grid_border_color;
+}

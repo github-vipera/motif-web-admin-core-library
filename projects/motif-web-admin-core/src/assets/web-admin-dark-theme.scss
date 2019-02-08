@@ -195,7 +195,8 @@ $badge_disabled_background_color:gray;
 $badge_disabled_color:#454545;
 $badge_warning_background_color:rgb(105, 202, 60);
 $badge_warning_color: #fff;
-
+$badge_error_background_color:rgb(255, 38, 38);
+$badge_error_color: #fff;
 
 // Context menu (PrimeNG)
 $contextMenu_background_color: #363F44;
@@ -234,6 +235,7 @@ $inputSwicth_slider_background_color: #ffff;
 $grid_cell_checkbox_checked_color: #009900;
 $grid_cell_dirty_color: #ff0000;
 $grid_selected_row:#585164;
+$grid_selected_row_color:#fff;
 $grid_color:#ddd;
 $grid_background_color:rgba(105, 148, 179, 0.19);
 $grid_border_color: #666;
@@ -269,3 +271,19 @@ $small-copy-button_background_color: #0f88e8;
 
 // Logo
 $logo_small_header:'';
+
+$service_catalog_icon_color: rgb(45, 235, 146);
+$service_catalog_badge_channel_color: #fff;
+
+$service_catalog_badge_channel_rest_background_color: green;
+$service_catalog_badge_channel_rest_color: $service_catalog_badge_channel_color;
+$service_catalog_badge_channel_json_background_color: #8484c1;
+$service_catalog_badge_channel_json_color: $service_catalog_badge_channel_color;
+$service_catalog_badge_channel_browser_background_color: rgb(233, 125, 2);
+$service_catalog_badge_channel_browser_color: $service_catalog_badge_channel_color;
+$service_catalog_badge_channel_sms_background_color: #a6a695;
+$service_catalog_badge_channel_sms_color: $service_catalog_badge_channel_color;
+$service_catalog_badge_channel_webadmin_background_color: rgb(255, 52, 52);
+$service_catalog_badge_channel_webadmin_color: $service_catalog_badge_channel_color;
+$service_catalog_badge_channel_webcontent_background_color: rgb(70, 70, 167);
+$service_catalog_badge_channel_webcontent_color: $service_catalog_badge_channel_color;

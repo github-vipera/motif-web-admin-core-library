@@ -505,6 +505,30 @@ section .header.sub-header h1 {
   color: $badge_disabled_color;
 }
 
+.badge-error {
+  background-color: $badge_error_background_color;
+  color: $badge_error_color;
+}
+
+.badge {
+  border-radius: 4px;
+  display: inline-block;
+  padding: 1px 7px;
+}
+
+.badge-status {
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 0.63rem;
+  line-height: 1.3;
+  font-weight: bold;
+  padding: 3px 7px;
+  text-align: center;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+
+
 .logo img {
   content:$logo_small_header;
 }
