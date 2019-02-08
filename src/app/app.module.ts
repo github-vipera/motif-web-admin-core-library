@@ -11,6 +11,7 @@ import { environment } from '../environments/environment';
 import { WC_API_BASE_PATH, WC_OAUTH_BASE_PATH } from 'web-console-core'
 import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
 import { LayoutModule } from '@progress/kendo-angular-layout';
+import { HotkeyModule, HotkeysService, Hotkey } from 'angular2-hotkeys';
 
 // Motif Web Admin Modules
 import { WebAdminModulesProvider } from 'motif-web-admin-core';
@@ -28,7 +29,7 @@ import { CountersAndThresholdsSectionModule } from 'motif-web-admin-core';
 import { TopMenuComponentModule } from 'motif-web-admin-core';
 import { WebContentSectionModule } from 'motif-web-admin-core';
 import { WAThemeDesignerModule } from 'motif-web-admin-core';
-
+import { WAThemeDesignerService } from 'motif-web-admin-core';
 
 const LoggerModuleConfigured = LoggerModule.forRoot({
   level: (environment.production ? NgxLoggerLevel.OFF : NgxLoggerLevel.DEBUG),
@@ -53,6 +54,9 @@ const appRoutes: Routes = [
       appRoutes,
       { enableTracing: false } // <-- debugging purposes only
     ),
+    HotkeyModule.forRoot({
+      cheatSheetCloseEsc: true
+    }),
     LoggerModuleConfigured,
     WebAdminModulesProvider,
     ToolBarModule,
@@ -87,9 +91,16 @@ const appRoutes: Routes = [
 })
 export class AppModule {
 
-  constructor(private logger: NGXLogger){
+  constructor(private logger: NGXLogger, private hotkeysService: HotkeysService, private themeEditorService: WAThemeDesignerService){
     this.logger.info('AppModule' , 'Starting application');
     this.logger.debug('AppModule' , 'Starting application DEBUG message');
+
+    this.hotkeysService.add(new Hotkey('alt+shift+t', (event: KeyboardEvent): boolean => {
+      this.themeEditorService.show();
+      console.log('Show Theme Editor hotkey pressed');
+      return false; // Prevent bubbling
+    }, undefined, 'Show Theme Editor'));
+  
   }
 
 }

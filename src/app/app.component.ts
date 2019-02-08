@@ -25,7 +25,7 @@ export class AppComponent {
   }
 
   ngAfterContentInit() {
-    this.themeEditorService.show();
+    //this.themeEditorService.show();
   }
 
 }
