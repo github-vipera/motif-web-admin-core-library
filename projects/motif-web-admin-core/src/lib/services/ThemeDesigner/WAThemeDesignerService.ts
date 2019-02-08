@@ -15,7 +15,9 @@ interface ColorItemDef {
 @Injectable()
 export class WAThemeDesignerService {
 
+  private initialized: boolean;
   private themeWrapper: any;
+  private gui:GUI;
 
     constructor(private logger: NGXLogger, @Inject(DOCUMENT) private document: any){
       console.log("@Inject(DOCUMENT) private document ", document);
@@ -27,9 +29,9 @@ export class WAThemeDesignerService {
 
     public show(){
         this.logger.debug(LOG_TAG, 'show called' );
-
-        const gui: GUI = new dat.default.GUI({name: "Theme Designer", width: 400, closed: true, autoPlace: true, hideable:true });
-        gui.useLocalStorage = true;
+      if (!this.initialized) {
+        this.gui = new dat.default.GUI({name: "Theme Designer", width: 400, closed: false, autoPlace: true, hideable:true });
+        this.gui.useLocalStorage = true;
 
         this.obj = {
           main: {
@@ -46,21 +48,32 @@ export class WAThemeDesignerService {
             Export: () =>{ alert("TODO!!"); console.log("this.obj:",this.obj)}
           };
 
-          this.createFolder(gui, 'Main', [
+          this.createFolder(this.gui, 'Main', [
             { name: 'Background', variableName: '--mainBackgroundColor' },
             { name: 'Color', variableName: '--mainColor' },
             { name: 'Body', variableName: '--bodyBackgroundColor' },
             { name: 'Section', variableName: '--sectionBackgroundColor'}
           ], this.obj.main);
 
-          this.createFolder(gui, 'Header', [
+          this.createFolder(this.gui, 'Header', [
             { name: 'Background', variableName: '--headerBackground' },
             { name: 'Color', variableName: '--headerColor' },
             { name: 'ColorHover', variableName: '--headerColorHover' }
           ], this.obj.header);
 
 
-          gui.add(this.obj, "Export");
+          this.gui.add(this.obj, "Export");
+          this.initialized = true;
+
+          this.gui.open();
+      } else {
+        this.logger.debug(LOG_TAG, 'show for ', this.gui);
+        if (this.gui.closed){
+          this.gui.open();
+        } else {
+          this.gui.close();
+        }
+      }
 
           this.logger.debug(LOG_TAG, 'show done' );
 
