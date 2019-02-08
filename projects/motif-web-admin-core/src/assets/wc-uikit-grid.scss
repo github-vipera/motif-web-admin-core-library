@@ -20,26 +20,7 @@
     content: "\e003";
 }
 
-.k-grid tr:not(.k-state-selected):hover {
-    background: none;
-    color: inherit;
-}
-
-.k-grid tr.k-alt:not(.k-state-selected):hover {
-    background: transparent;
-}
-
 .wc-grid-command-column {
     padding: 0px;
-}
-
-.k-grid td.k-state-selected, .k-grid tr.k-state-selected > td {
-    color: $grid_color;
-    background-color: $grid_background_color;
-}
-
-.k-grid td {
-    border-bottom: 1px dotted $grid_border_color;
-    color: $table_td_color;
 }
 

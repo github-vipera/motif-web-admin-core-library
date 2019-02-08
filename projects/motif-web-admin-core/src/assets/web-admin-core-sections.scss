@@ -1,0 +1,36 @@
+
+/// SECTIONS >>>>>>>>=================================
+
+/* Access Control Section */
+.acl-label {
+    color: $label_color;
+} 
+
+.user-status-ACTIVE {
+    background-color: $badge_enabled_background_color;
+    color: $badge_enabled_color;
+}
+
+.user-status-PREACTIVE {
+	background-color: $badge_warning_background_color;
+	color: $badge_warning_color;
+}
+
+/* Application Content */
+
+/* Configuration */
+
+/* Counters & Thresholds */
+
+.wa-licman-details-item.license-key{
+    span {
+        color: $label_warn_color;
+    }
+}
+
+/* License Management */
+
+/* Log Management */
+.small-copy-button {
+    background: $small-copy-button_background_color;
+}

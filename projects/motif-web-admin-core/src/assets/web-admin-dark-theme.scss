@@ -18,7 +18,9 @@ $selection_background_color: #999;
 
 // Common Elements
 $label_color: #888;
-$label_background_color: #22272b;
+$label_background_color: transparent;
+$label_warn_color: #46d046;
+
 
 $dashboard_background_color: #353A3E;
 
@@ -188,9 +190,12 @@ $warning_label_color: #ff4b4b;
 $property_modified_color: red;
 
 $badge_enabled_background_color:green;
-$badge_enabled_color:white;
+$badge_enabled_color:#fff;
 $badge_disabled_background_color:gray;
 $badge_disabled_color:#454545;
+$badge_warning_background_color:rgb(105, 202, 60);
+$badge_warning_color: #fff;
+
 
 // Context menu (PrimeNG)
 $contextMenu_background_color: #363F44;
@@ -228,6 +233,7 @@ $inputSwicth_slider_background_color: #ffff;
 // Grid (Kendo UI)
 $grid_cell_checkbox_checked_color: #009900;
 $grid_cell_dirty_color: #ff0000;
+$grid_selected_row:#585164;
 $grid_color:#ddd;
 $grid_background_color:rgba(105, 148, 179, 0.19);
 $grid_border_color: #666;
@@ -243,6 +249,10 @@ $grid_header_border_color: rgb(223, 223, 223);
 $table_edit_button_background_color: #22272b;
 $pager_wrap_color: #656565;
 $pager_wrap_background_color: #353a3e;
+//->OK
+$grid_tr_hover_background_color: #333c4e;
+$grid_tr_hover_color: $grid_color;
+
 
 // Toolbar (Kendo UI)
 $toolbar_background_color: transparent;
@@ -255,6 +265,7 @@ $splitter_background_color: rgb(56, 56, 56);
 // Notification
 $notification_color: #ffff;
 
+$small-copy-button_background_color: #0f88e8;
 
 // Logo
 $logo_small_header:'';

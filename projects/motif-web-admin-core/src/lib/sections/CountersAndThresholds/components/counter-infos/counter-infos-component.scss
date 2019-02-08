@@ -16,16 +16,6 @@
     white-space: nowrap;
   }
 
-.badge-enabled {
-    background-color: green;
-    color: white;
-}
-
-.badge-disabled {
-    background-color: gray;
-    color: #454545;
-}
-
 .counter-info-row-details {
     padding: 0px;
 }
@@ -36,9 +26,7 @@
         padding: 0px;
         padding-top: 0.1rem;
         padding-bottom: 0.1rem;
-        color: #595959;
         a {
-            color: rgb(83, 150, 83);
             margin-left: 10px;
         }
     }

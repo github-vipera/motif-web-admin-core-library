@@ -10,15 +10,23 @@
   background: $grid_footer_background_color;
 }
 
-.k-grid tr, .k-grid td {
-    background: $grid_background_color;
-}
-
 /*
-.k-grid-header, .k-grid-footer {
-    background: transparent;
+
+.k-grid tr:not(.k-state-selected):hover {
+    background: lighten($grid_selected_row, .4);
+    color: inherit;
 }
 */
+
+.k-grid tbody tr:hover, .k-grid tbody tr.k-state-hover {
+    color: $grid_tr_hover_color;
+    background-color: $grid_tr_hover_background_color;
+}
+
+.k-grid td.k-state-selected, .k-grid tr.k-state-selected > td {
+    color: $grid_color;
+    background-color: darken($grid_tr_hover_background_color, .6);// $grid_background_color;
+}
 
 .k-column-resizer {
     background: $grid_column_resizer_color;
@@ -34,7 +42,7 @@
 
 .k-grid td {
     border-width: 0 0 0 0;
-    border-bottom: 1px solid $grid_border_color;
+    border-bottom: 1px dotted $grid_border_color;
     color: $grid_color;
     vertical-align: top;
 }
