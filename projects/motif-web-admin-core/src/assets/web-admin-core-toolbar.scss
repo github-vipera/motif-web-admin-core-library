@@ -1,0 +1,96 @@
+/** TOOLBAR **/
+
+nav a.current {
+  background: $main_background_color;
+}
+
+nav a.current:hover span {
+  background: $main_background_color;
+}
+
+
+nav div {
+  background: $part_background_color;
+}
+
+/*
+nav a:hover {
+  background: $part_background_color;
+}
+*/
+
+nav {
+  background:$nav_background_color;
+}
+
+nav div {
+  background:$nav_background_color;
+  color:$nav_color;
+}
+
+nav a {
+   color:$nav_color;
+}
+
+nav a:hover {
+  /*background: $nav_hover_background_color;*/
+  color:$nav_hover_color;
+}
+
+nav a:hover span {
+   background: $nav_hover_background_color;
+   color:$nav_hover_color;
+   box-shadow:0 0 10px $nav_a_hover_box_shadow_color;
+}
+
+nav a + a {
+  border-top:1px solid $nav_a_a_border_color;
+}
+
+nav a.current {
+  color:$nav_a_current_color;
+   background:$nav_a_current_background_color;
+}
+
+nav a.current:hover span {
+  background:$nav_hover_background_color;
+}
+
+nav a .main-menu-icon-container {
+  color: $nav_color;
+  /* width: 1.5rem; */
+  /* height: 1.5rem; */
+  /*transition: all .1s;*/
+  //opacity: 1;//.3;
+  position: relative;
+  z-index: 2;
+padding: 0;
+}
+
+nav:hover a .main-menu-icon-container {
+opacity:1;
+}
+
+nav a:hover span {
+  transform:scale(1);
+  display:flex;
+  align-items:center;
+  padding-right:1rem;
+  opacity:1; top:0;
+  bottom:0;
+  box-shadow:0 0 10px rgba(0,0,0,.5); z-index:1;
+}
+
+nav a:hover .main-menu-icon-container  {
+  color: $nav_hover_color;
+}
+
+/*
+nav a:hover { transition:all .1s; }
+*/
+
+.button-icon {
+padding-right: 4px;
+}
+
+/** END TOOLBAR **/

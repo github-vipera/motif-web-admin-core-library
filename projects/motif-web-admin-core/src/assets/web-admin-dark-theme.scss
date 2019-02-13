@@ -2,8 +2,8 @@ $body_background_color:#282D31;
 
 // Main
 $main_background_color:#22272B;
-$main_color: #fff;
-$main_color_darken: #ddd;
+$main_color: #ddd;
+$title1_color: $main_color;
 
 // Parts
 $part_background_color: #363F44;
@@ -35,7 +35,7 @@ $warn_fill: $warn_color;
 
 // Input
 $input_background_color: #353A3E;
-$input_color:$main_color_darken;
+$input_color:$main_color;
 $input_placeholder_color: rgb(147, 147, 147);
 
 $input_checkbox_checked_background_color: #666;
@@ -50,7 +50,7 @@ $switch_checked_background_color: #d45;
 $tree_head_color: $label_color;
 $tree_head_border_color: #666;
 $tree_child_color: #999;
-$tree_child_active_color: $main_color_darken;
+$tree_child_active_color: $main_color;
 $tree_child_active_background_color: rgba(255,255,255,.1);
 $tree_child_hover_background_color: rgba(255,255,255,.5);
 
@@ -77,13 +77,13 @@ $header_background_color: $part_background_color;
 $header_description_color: #787f84;
 $header_description_hover_color: #ccc;
 
-// Nav
+// Toolbar (Nav)
 $nav_background_color: #2E3337;
 $nav_div_background_color: #363F44;
 $nav_div_color: #ccc;
-$nav_a_color: #999;
-$nav_a_hover_color: #fff;
-$nav_a_hover_background_color: $nav_div_background_color;
+$nav_color: #999;
+$nav_hover_color: #fff;
+$nav_hover_background_color: $nav_div_background_color;
 $nav_a_hover_span_background_color: $nav_div_background_color;
 $nav_a_hover_box_shadow_color: rgba(0,0,0,.5);
 $nav_a_a_border_color: #444;
@@ -107,8 +107,7 @@ $inspector_button_disabled_color: #666;
 $inspector_select_disabled_color: #666;
 
 // Section
-$section_background_color: #22272B;
-$section_header_color: #ddd;
+$section_background_color: $main_background_color;
 $section_header_p_color: #999;
 
 // Editor
@@ -237,9 +236,10 @@ $grid_cell_dirty_color: #ff0000;
 $grid_selected_row:#585164;
 $grid_selected_row_color:#fff;
 $grid_color:#ddd;
-$grid_background_color:rgba(105, 148, 179, 0.19);
-$grid_border_color: #666;
+//$grid_background_color:rgba(105, 148, 179, 0.19);
 $grid_background_color: transparent;
+$grid_background_opacity: 0;
+$grid_border_color: #666;
 $grid_content_background_color: transparent;
 $grid_header_background_color: transparent;
 $grid_footer_background_color: transparent;
@@ -254,7 +254,6 @@ $pager_wrap_background_color: #353a3e;
 //->OK
 $grid_tr_hover_background_color: #333c4e;
 $grid_tr_hover_color: $grid_color;
-
 
 // Toolbar (Kendo UI)
 $toolbar_background_color: transparent;

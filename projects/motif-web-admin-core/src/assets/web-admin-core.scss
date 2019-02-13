@@ -25,14 +25,6 @@ button:active, .btn:active {
   background: $main_background_color;
 }
 
-nav a.current {
-  background: $main_background_color;
-}
-
-nav a.current:hover span {
-  background: $main_background_color;
-}
-
 #tab-1-cmd:checked ~ .tabs [for="tab-1-cmd"], #tab-2-cmd:checked ~ .tabs [for="tab-2-cmd"], #tab-3-cmd:checked ~ .tabs [for="tab-3-cmd"] {
   background: $main_background_color;
 }
@@ -47,14 +39,6 @@ section {
 
 header {
    background: $header_background_color;
-}
-
-nav div {
-  background: $part_background_color;
-}
-
-nav a:hover {
-  background: $part_background_color;
 }
 
 footer {
@@ -179,7 +163,7 @@ button.primary, .btn.primary {
 }
 
 .login h1 {
-   color:$main_color_darken;
+   color:$main_color;
 }
 .login p {
    color:$main_color;
@@ -190,7 +174,7 @@ button.primary, .btn.primary {
 }
 
 .login h1 {
-  color:$main_color_darken;
+  color:$main_color;
 }
 
 .login p {
@@ -224,41 +208,6 @@ app-root header .description:hover {
   transform-origin:left;
 }
 
-nav {
-  background:$nav_background_color;
-}
-
-nav div {
-  background:$nav_div_background_color;
-  color:$nav_div_color;
-}
-
-nav a {
-   color:$nav_a_color;
-}
-
-nav a:hover {
-  background: $nav_a_hover_background_color;
-   color:$nav_a_hover_color;
-}
-
-nav a:hover span {
-   background:$nav_a_hover_span_background_color;
-   box-shadow:0 0 10px $nav_a_hover_box_shadow_color;
-}
-
-nav a + a {
-  border-top:1px solid $nav_a_a_border_color;
-}
-
-nav a.current {
-  color:$nav_a_current_color;
-   background:$nav_a_current_background_color;
-}
-
-nav a.current:hover span {
-  background:$nav_a_current_hover_background_color;
-}
 
 .tabs label {
   background: $tab_label_background_color;
@@ -290,12 +239,14 @@ aside h1 {
    color: $inspector_select_disabled_color;
 }
 
+/*
 section {
   background:$section_background_color;
 }
+*/
 
 section .header {
- color:$section_header_color;
+ color:$title1_color;
 }
 
 section .header p {
@@ -415,6 +366,9 @@ footer .license:hover {
  color:$footer_license_hover_color;
 }
 
+wc-status-bar {
+  color: $footer_color !important;
+}
 
 .notification {
   background: $notification_background_color;
@@ -540,33 +494,6 @@ section .header.sub-header h1 {
 	color: #999;
 }
 
-nav a .main-menu-icon-container {
-    fill: currentColor;
-    /* width: 1.5rem; */
-    /* height: 1.5rem; */
-    /*transition: all .1s;*/
-    opacity: .3;
-    position: relative;
-    z-index: 2;
-	padding: 0;
-}
 
-nav:hover a .main-menu-icon-container {
-	opacity:1;
-}
-
-nav a:hover span {
-	transform:scale(1); display:flex; align-items:center; padding-right:1rem; opacity:1; top:0; bottom:0; background:#363F44; box-shadow:0 0 10px rgba(0,0,0,.5); z-index:1;
-}
-
-nav a:hover .main-menu-icon-container  {
-	color: white;
-}
-
-nav { transition:all .1s; }
-
-.button-icon {
-	padding-right: 4px;
-}
-
+@import './web-admin-core-toolbar.scss';
 @import './web-admin-core-sections.scss';

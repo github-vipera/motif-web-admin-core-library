@@ -62,7 +62,6 @@
     "web-console-core",
     "web-console-login",
     "web-console-ui-kit",
-    "zone.js",
-    "dat.gui"
+    "zone.js"
   ]
 }

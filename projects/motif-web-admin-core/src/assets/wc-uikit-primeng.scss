@@ -93,6 +93,23 @@
 
 .ui-treetable {
     height: 100%;
+    background: $grid_background_color;
+}
+
+.ui-treetable .ui-treetable-tbody>tr>td {
+  color: $grid_color;
+}
+
+.ui-treetable .ui-treetable-thead>tr>th {
+  color: $grid_header_color;
+}
+
+.ui-treetable tr:hover {
+  background:$grid_tr_hover_background_color;
+}
+
+.ui-treetable tr:hover td {
+  color: $grid_tr_hover_color;
 }
 
 .ui-treetable-scrollable-wrapper {

@@ -69,7 +69,6 @@
     "angular2-hotkeys": "^2.1.4",
     "b64-to-blob": "^1.2.19",
     "core-js": "^2.5.4",
-    "dat.gui": "^0.7.5",
     "file-saver": "^2.0.0",
     "install": "^0.12.2",
     "moment": "^2.24.0",
