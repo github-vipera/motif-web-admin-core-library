@@ -131,28 +131,6 @@ input[type=checkbox]:checked + label:before {
 .tree .parent:hover, .tree .child:hover {
  background:$tree_child_hover_background_color;
 }
-/*
-button, .btn {
-  background:$button_background_color;
-  color:$button_color;
-  border:1px solid $button_border_color;
-}
-
-button:hover, .btn:hover {
-  background:$button_hover_background_color;
-  color:$button_hover_color;
-}
-
-button:active, .btn:active {
- background:$button_active_background_color;
-  color:$button_active_color;
-}
-
-button.primary, .btn.primary {
- background:$button_primary_background_color;
-  color:$button_primary_color;
-}
-*/
 
 .login {
   background:$main_background_color;
@@ -204,18 +182,6 @@ app-root header .description:hover {
   transform:scale(1.2);
   transform-origin:left;
 }
-
-/*
-.tabs label {
-  background: $tab_background_color;
-  color: $tab_color;
-}
-
-#tab-1-cmd:checked ~ .tabs [for="tab-1-cmd"], #tab-2-cmd:checked ~ .tabs [for="tab-2-cmd"], #tab-3-cmd:checked ~ .tabs [for="tab-3-cmd"] {
-  background: $tab_selected_background_color;
-  color: $tab_selected_color;
-}
-*/
 
 aside h1 {
   color:$aside_color;
@@ -496,5 +462,6 @@ section .header.sub-header h1 {
 @import './web-admin-core-toolbar.scss';
 @import './web-admin-core-tabs.scss';
 @import './web-admin-core-buttons.scss';
+@import './web-admin-core-combobox.scss';
 @import './web-admin-core-sections.scss';
 
