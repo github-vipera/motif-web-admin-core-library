@@ -55,9 +55,11 @@ app-root {
         color: $combobox_background_color;
         background: $combobox_color;
     }
+  }
 
-
-  
+  .k-combobox .k-select {
+    background: $combobox_button_background_color;
+    color:$combobox_button_color;
   }
 
 }
