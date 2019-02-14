@@ -20,7 +20,7 @@ export const WC_USERS_SELECTOR_CONTROL_VALUE_ACCESSOR: any = {
     styles: [
     ],
     template: `
-    <kendo-combobox #combo style="width:100%;" [data]="data" [filterable]="true" (filterChange)="handleFilter($event)" [popupSettings]="{ 'popupClass' : 'wa-kui-combobox-popup' }"
+    <kendo-combobox #combo style="width:100%;" [data]="data" [filterable]="true" (filterChange)="handleFilter($event)" [popupSettings]="{ 'popupClass' : 'wa-kui-combobox-popup', 'animate' : false  }"
     [allowCustom]="false" [valueField]="'userId'" [textField]="'userId'"
     [(ngModel)]="selectedUser"></kendo-combobox>
     `,
