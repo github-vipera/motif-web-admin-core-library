@@ -21,7 +21,7 @@ export const WC_SERVICES_SELECTOR_CONTROL_VALUE_ACCESSOR: any = {
     styles: [
     ],
     template: `
-    <kendo-combobox #combo style="width:100%;" [data]="data"   [filterable]="true" (filterChange)="handleFilter($event)"
+    <kendo-combobox #combo style="width:100%;" [data]="data"   [filterable]="true" (filterChange)="handleFilter($event)" [popupSettings]="{ 'popupClass' : 'wa-kui-combobox-popup' }"
     [allowCustom]="false" [valueField]="'name'" 
     [textField]="'name'" [(ngModel)]="selectedService"></kendo-combobox>
     `,

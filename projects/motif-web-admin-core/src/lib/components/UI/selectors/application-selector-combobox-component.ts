@@ -21,7 +21,7 @@ export const WC_APPLICATION_SELECTOR_CONTROL_VALUE_ACCESSOR: any = {
     ],
     template: `
     <kendo-combobox #combo style="width:100%;" [data]="data"   [filterable]="true" (filterChange)="handleFilter($event)"
-    [allowCustom]="false" [valueField]="'name'" [textField]="'name'"
+    [allowCustom]="false" [valueField]="'name'" [textField]="'name'" [popupSettings]="{ 'popupClass' : 'wa-combobox-popup' }"
     [(ngModel)]="selectedApplication"></kendo-combobox>
     `,
     providers: [WC_APPLICATION_SELECTOR_CONTROL_VALUE_ACCESSOR]
