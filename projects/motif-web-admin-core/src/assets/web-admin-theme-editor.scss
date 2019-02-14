@@ -45,6 +45,12 @@ body {
     @include define-custom-property('nav-hover-color', $nav_hover_color);
 
 
+    // Tabs
+    @include define-custom-property('tab-selected-background-color', $tab_selected_background_color);
+    @include define-custom-property('tab-selected-color', $tab_selected_color);
+    @include define-custom-property('tab-background-color', $tab_background_color);
+    @include define-custom-property('tab-color', $tab_color);
+
 }
 
 $main_background_color: var(--main-background-color);
@@ -77,3 +83,10 @@ $nav_a_a_border_color: var(--nav-border-color);
 $nav_color: var(--nav-color);
 $nav_hover_background_color: var(--nav-hover-background-color);
 $nav_hover_color: var(--nav-hover-color);
+
+
+// Tabs
+$tab_selected_background_color : var(--tab-selected-background-color);
+$tab_selected_color : var(--tab-selected-color);
+$tab_color : var(--tab-color);
+$tab_background_color : var(--tab-background-color);

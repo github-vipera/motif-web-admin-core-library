@@ -93,9 +93,13 @@ $nav_a_current_hover_background_color: $nav_a_current_background_color;
 
 
 // Tabs
-$tab_label_background_color: #191c1f;
+/*$tab_label_background_color: #191c1f;
 $tab_selected_label_background_color: #22272B;
-$tab_selected_label_color: #ddd;
+*/
+$tab_selected_color: #ddd;
+$tab_selected_background_color: $main_background_color;
+$tab_color: #ddd;
+$tab_background_color: $part_background_color;
 
 // Inspector
 $aside_color: #ddd;
@@ -286,3 +290,5 @@ $service_catalog_badge_channel_webadmin_background_color: rgb(255, 52, 52);
 $service_catalog_badge_channel_webadmin_color: $service_catalog_badge_channel_color;
 $service_catalog_badge_channel_webcontent_background_color: rgb(70, 70, 167);
 $service_catalog_badge_channel_webcontent_color: $service_catalog_badge_channel_color;
+
+//

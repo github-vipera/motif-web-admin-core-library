@@ -25,10 +25,6 @@ button:active, .btn:active {
   background: $main_background_color;
 }
 
-#tab-1-cmd:checked ~ .tabs [for="tab-1-cmd"], #tab-2-cmd:checked ~ .tabs [for="tab-2-cmd"], #tab-3-cmd:checked ~ .tabs [for="tab-3-cmd"] {
-  background: $main_background_color;
-}
-
 section {
   background: $main_background_color;
 }
@@ -210,13 +206,22 @@ app-root header .description:hover {
 
 
 .tabs label {
-  background: $tab_label_background_color;
+  background: $tab_background_color;
+  color: $tab_color;
 }
 
+/*
 #tab-1-cmd:checked ~ .tabs [for="tab-1-cmd"], #tab-2-cmd:checked ~ .tabs [for="tab-2-cmd"], #tab-3-cmd:checked ~ .tabs [for="tab-3-cmd"] {
   background:$tab_selected_label_background_color;
    color:$tab_selected_label_color;
 }
+*/
+
+#tab-1-cmd:checked ~ .tabs [for="tab-1-cmd"], #tab-2-cmd:checked ~ .tabs [for="tab-2-cmd"], #tab-3-cmd:checked ~ .tabs [for="tab-3-cmd"] {
+  background: $tab_selected_background_color;
+  color: $tab_selected_color;
+}
+
 
 aside h1 {
   color:$aside_color;
