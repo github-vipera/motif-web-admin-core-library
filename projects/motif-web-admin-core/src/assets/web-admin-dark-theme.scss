@@ -54,19 +54,6 @@ $tree_child_active_color: $main_color;
 $tree_child_active_background_color: rgba(255,255,255,.1);
 $tree_child_hover_background_color: rgba(255,255,255,.5);
 
-// Button
-$button_background_color: #22272B;
-$button_color: #ddd;
-$button_border_color: #444;
-$button_hover_background_color: #44494D;
-$button_hover_color: $main_color;
-$button_active_background_color: #22272B;
-$button_active_color: #44494D;
-$button_primary_background_color: #22272B;
-$button_primary_color: #44494D;
-$button_disabled_background_color : #525f69;
-$button_disabled_color : #909192;
-
 
 // Login
 $login_logo_background:#1A1D22;
@@ -93,9 +80,6 @@ $nav_a_current_hover_background_color: $nav_a_current_background_color;
 
 
 // Tabs
-/*$tab_label_background_color: #191c1f;
-$tab_selected_label_background_color: #22272B;
-*/
 $tab_selected_color: #ddd;
 $tab_selected_background_color: $main_background_color;
 $tab_color: #ddd;
@@ -291,4 +275,25 @@ $service_catalog_badge_channel_webadmin_color: $service_catalog_badge_channel_co
 $service_catalog_badge_channel_webcontent_background_color: rgb(70, 70, 167);
 $service_catalog_badge_channel_webcontent_color: $service_catalog_badge_channel_color;
 
-//
+// Buttons
+$button_background_color:rgba(0,0,0, 0);
+$button_color:#DDDDDD;
+$button_border_color:rgba(0,0,0, 0);
+
+$button_hover_background_color:rgba(0,0,0, 0);
+$button_hover_color:#FFFFFF;
+$button_hover_border_color:rgba(0,0,0, 0);
+
+$button_disabled_background_color:rgba(82,95,105, 0);
+$button_disabled_color:#909192;
+$button_disabled_border_color:rgba(0,0,0, 0);
+
+//$button_background_color: #22272B;
+//$button_color: #ddd;
+//$button_border_color: #444;
+//$button_hover_background_color: #44494D;
+//$button_hover_color: $main_color;
+$button_active_background_color: #22272B;
+$button_active_color: #44494D;
+$button_primary_background_color: #22272B;
+$button_primary_color: #44494D;

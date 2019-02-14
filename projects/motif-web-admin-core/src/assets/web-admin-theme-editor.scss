@@ -51,6 +51,17 @@ body {
     @include define-custom-property('tab-background-color', $tab_background_color);
     @include define-custom-property('tab-color', $tab_color);
 
+    // Buttons
+    @include define-custom-property('button-background-color', $button_background_color);
+    @include define-custom-property('button-color', $button_color);
+    @include define-custom-property('button-border-color', $button_border_color);
+    @include define-custom-property('button-hover-background-color', $button_hover_background_color);
+    @include define-custom-property('button-hover-color', $button_hover_color);
+    @include define-custom-property('button-hover-border-color', $button_hover_border_color);
+    @include define-custom-property('button-disabled-background-color', $button_disabled_background_color);
+    @include define-custom-property('button-disabled-color', $button_disabled_color);
+    @include define-custom-property('button-disabled-border-color', $button_disabled_border_color);
+
 }
 
 $main_background_color: var(--main-background-color);
@@ -90,3 +101,16 @@ $tab_selected_background_color : var(--tab-selected-background-color);
 $tab_selected_color : var(--tab-selected-color);
 $tab_color : var(--tab-color);
 $tab_background_color : var(--tab-background-color);
+
+// Buttons
+$button_background_color: var(--button-background-color);
+$button_color: var(--button-color);
+$button_border_color: var(--button-border-color);
+
+$button_hover_background_color: var(--button-hover-background-color);
+$button_hover_color: var(--button-hover-color);
+$button_hover_border_color: var(--button-hover-border-color);
+
+$button_disabled_background_color: var(--button-disabled-background-color);
+$button_disabled_color: var(--button-disabled-color);
+$button_disabled_border_color: var(--button-disabled-border-color);

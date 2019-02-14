@@ -131,7 +131,7 @@ input[type=checkbox]:checked + label:before {
 .tree .parent:hover, .tree .child:hover {
  background:$tree_child_hover_background_color;
 }
-
+/*
 button, .btn {
   background:$button_background_color;
   color:$button_color;
@@ -152,6 +152,7 @@ button.primary, .btn.primary {
  background:$button_primary_background_color;
   color:$button_primary_color;
 }
+*/
 
 .login {
   background:$main_background_color;
@@ -492,7 +493,8 @@ section .header.sub-header h1 {
 	color: #999;
 }
 
-
 @import './web-admin-core-toolbar.scss';
 @import './web-admin-core-tabs.scss';
+@import './web-admin-core-buttons.scss';
 @import './web-admin-core-sections.scss';
+
