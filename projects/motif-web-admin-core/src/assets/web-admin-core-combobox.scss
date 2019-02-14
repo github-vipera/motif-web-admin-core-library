@@ -40,6 +40,11 @@ app-root {
     li {
         color: transparent;
     }
+
+    .k-item[aria-selected="true"] {
+      background: $combobox_selected_item_background_color;
+      color: $combobox_selected_item_color;      
+    }
   
     .k-item  {
         color: $combobox_color;
@@ -50,6 +55,8 @@ app-root {
         color: $combobox_background_color;
         background: $combobox_color;
     }
+
+
   
   }
 
