@@ -1,0 +1,57 @@
+[name="tabs"] {
+  display:none;
+}
+
+.tabs {
+  margin-top:-1rem;
+   margin-left:-1rem;
+   margin-right:-1rem;
+   display:flex;
+   align-items:center;
+   justify-content:center;
+}
+
+.tabs label {
+   flex:1;
+   display:flex;
+   justify-content:center;
+   align-items:center;
+   padding:.5rem;
+   cursor:pointer;
+}
+.tabs label span {
+  font-size:0;
+}
+.tabs label:hover {
+}
+.tabs label:hover span {
+  font-size:.9rem;
+}
+.tabs label svg {
+  fill:currentColor;
+   width:1.5rem;
+   height:1.5rem;
+   margin-right:.5rem;
+}
+#tab-1-cmd:checked ~ .tabs [for="tab-1-cmd"], #tab-2-cmd:checked ~ .tabs [for="tab-2-cmd"], #tab-3-cmd:checked ~ .tabs [for="tab-3-cmd"] {
+   opacity:1;
+}
+.tab {
+  display:none;
+}
+#tab-1-cmd:checked ~ #tab-1, #tab-2-cmd:checked ~ #tab-2, #tab-3-cmd:checked ~ #tab-3 {
+  display:flex;
+   flex-direction:column;
+   flex:1;
+}
+
+.tabs label {
+  background: $tab_background_color;
+  color: $tab_color;
+}
+
+#tab-1-cmd:checked ~ .tabs [for="tab-1-cmd"], #tab-2-cmd:checked ~ .tabs [for="tab-2-cmd"], #tab-3-cmd:checked ~ .tabs [for="tab-3-cmd"] {
+  background: $tab_selected_background_color;
+  color: $tab_selected_color;
+}
+

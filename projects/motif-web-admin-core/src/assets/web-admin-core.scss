@@ -204,24 +204,17 @@ app-root header .description:hover {
   transform-origin:left;
 }
 
-
+/*
 .tabs label {
   background: $tab_background_color;
   color: $tab_color;
 }
 
-/*
-#tab-1-cmd:checked ~ .tabs [for="tab-1-cmd"], #tab-2-cmd:checked ~ .tabs [for="tab-2-cmd"], #tab-3-cmd:checked ~ .tabs [for="tab-3-cmd"] {
-  background:$tab_selected_label_background_color;
-   color:$tab_selected_label_color;
-}
-*/
-
 #tab-1-cmd:checked ~ .tabs [for="tab-1-cmd"], #tab-2-cmd:checked ~ .tabs [for="tab-2-cmd"], #tab-3-cmd:checked ~ .tabs [for="tab-3-cmd"] {
   background: $tab_selected_background_color;
   color: $tab_selected_color;
 }
-
+*/
 
 aside h1 {
   color:$aside_color;
@@ -501,4 +494,5 @@ section .header.sub-header h1 {
 
 
 @import './web-admin-core-toolbar.scss';
+@import './web-admin-core-tabs.scss';
 @import './web-admin-core-sections.scss';
