@@ -10,5 +10,24 @@ $logo_small_header:url('src/assets/logo.svg');
 @import 'projects/motif-web-admin-core/src/assets/web-admin-core.scss';
 
 // add support for theme editor
-@import 'projects/motif-web-admin-core/src/assets/web-admin-theme-editor.scss';
+//@import 'projects/motif-web-admin-core/src/assets/web-admin-theme-editor.scss';
 
+.wa-kui-combobox-popup {
+    background: transparent;
+    border: none;
+
+    li {
+        color: red;
+    }
+
+    .k-item  {
+        color: green;
+        background: black;
+    }
+
+    .k-item:hover  {
+        color: black;
+        background: green;
+    }
+
+}
