@@ -68,8 +68,8 @@ app-root {
   }
 
   .k-combobox .k-select:hover {
-    background: blue;
-    color:red;
+    background: $combobox_button_background_color;
+    color:$combobox_button_color;
   }
 
   .k-dropdown .k-dropdown-wrap {

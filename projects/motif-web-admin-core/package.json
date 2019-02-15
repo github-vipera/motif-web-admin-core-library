@@ -1,6 +1,6 @@
 {
   "name": "motif-web-admin-core",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "peerDependencies": {
     "@angular/animations": "^7.2.1",
     "@angular/cdk": "^7.2.1",
