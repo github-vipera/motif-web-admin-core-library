@@ -44,6 +44,7 @@ app-root {
 
   .k-textbox-container > .k-textbox {
     border-radius: 4px;
+    border: solid 1px $input_border_color;
   }
 
   input, select, textarea {
@@ -82,10 +83,3 @@ app-root {
   }
 
 }
-
-
-/*
-$input_background_color : var(--input-background-color);
-$input_color : var(--input-color);
-$input_placeholder_color: var(--input-placeholder-color);
-*/
