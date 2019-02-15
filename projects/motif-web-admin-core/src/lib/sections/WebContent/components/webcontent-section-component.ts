@@ -3,7 +3,7 @@ import { Component, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/co
 import { PluginView } from 'web-console-core';
 import { NGXLogger} from 'web-console-core';
 import { WCNotificationCenter, NotificationType } from 'web-console-ui-kit';
-import { WebcontentService, BundleStatusList, BundleStatus, ClusterBundleStatus } from '@wa-motif-open-api/web-content-service';
+import { BundlesService, BundleStatus, ClusterBundleStatus } from '@wa-motif-open-api/web-content-service';
 import { WCSubscriptionHandler } from '../../../components/Commons/wc-subscription-handler';
 import * as _ from 'lodash';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
@@ -80,7 +80,7 @@ export class WebContentSectionComponent implements OnInit, OnDestroy {
     constructor(private logger: NGXLogger,
         private notificationCenter: WCNotificationCenter,
         private elem: ElementRef,
-        private webContentService: WebcontentService) {
+        private webContentService: BundlesService) {
             this.logger.debug(LOG_TAG , 'Opening...');
     }
 
@@ -107,8 +107,9 @@ export class WebContentSectionComponent implements OnInit, OnDestroy {
     }
 
     refreshData(){
+        
         this.loading = true;
-        this._subHandler.add(this.webContentService.getBundlesStatusList().subscribe( (data: BundleStatusList) => {
+        this._subHandler.add(this.webContentService.getBundlesStatusList().subscribe( (data: Array<BundleStatus>) => {
             this.logger.debug(LOG_TAG, 'Get bundle statuses results:', data);
 
             this.gridData = _.forEach(data, (element: BundleStatus) => {
@@ -131,6 +132,7 @@ export class WebContentSectionComponent implements OnInit, OnDestroy {
                 closable: true
             });
         }));
+        
     }
 
     

@@ -256,8 +256,8 @@ export class LogSectionComponent implements OnInit, OnDestroy {
             type: NotificationType.Info,
             closable: false
         });
-        const startDate = this.convertDate(this.range.start);
-        const endDate = this.convertDate(this.range.end);
+        const startDate = this.range.start;
+        const endDate = this.range.end;
         this.logger.debug(LOG_TAG , 'exportDataRecords: ', this.dataRecordType, startDate, endDate);
         this._subHandler.add(this.datarecordsService.exportDatarecords(this.dataRecordType, null, null, null, 
             startDate, endDate ).subscribe( (data) => {
