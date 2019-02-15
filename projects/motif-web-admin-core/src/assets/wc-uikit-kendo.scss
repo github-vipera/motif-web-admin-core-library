@@ -157,31 +157,6 @@ kendo-popup {
     background: $toolbar_background_color;
 }
 
-.k-input {
-    color: $input_color;
-}
-
- .k-textbox, .k-textbox, .k-textarea, .k-textarea, .k-input.k-textbox, .k-input.k-textbox {
-    /*background-color: #535454;*/
-    background-color: #353a3e;
-    color: $input_color;
-}
-
- .k-textbox:focus, .k-textbox.k-state-focus, .k-textarea:focus, .k-textarea.k-state-focus, .k-input.k-textbox:focus, .k-input.k-textbox.k-state-focus {
-    color: $input_color;
-    background-color: #67696b;
-    border-color: rgba(0, 0, 0, 0.15);
-}
-
-.k-textbox-container > .k-label {
-    top: 50%;
-}
-
-.k-textbox-container > .k-label, .k-textbox-container.k-state-focused > .k-label {
-    -webkit-transform: translate(-8px, -6px) translate(-1px, -1.07142857em) translate(-12.5%, -9.375%) scale(0.75);
-    transform: translate(-8px, -6px) translate(-1px, -1.07142857em) translate(-12.5%, -9.375%) scale(0.75);
-}
-
 
 .k-splitbar {
     color: $splitter_color;
@@ -206,16 +181,6 @@ kendo-popup {
     color: $input_color;
 }
 
-.k-textbox::placeholder, .k-input::placeholder, .k-input.k-textbox::placeholder, .k-textarea::placeholder {
-    color: $input_placeholder_color;
-    font-size: 11px;
-    font-family: montserrat;
-    text-transform: uppercase;
-}
-
-.k-textbox-container > .k-textbox {
-    border-radius: 4px;
-}
 
 .k-grid-content {
     overflow-y: auto;
