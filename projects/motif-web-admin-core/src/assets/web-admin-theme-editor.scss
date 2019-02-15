@@ -70,6 +70,10 @@ body {
     @include define-custom-property('combobox-button-background-color', $combobox_button_background_color);
     @include define-custom-property('combobox-button-color', $combobox_button_color);
 
+    // Input
+    @include define-custom-property('input-background-color', $input_background_color);
+    @include define-custom-property('input-color', $input_color);
+
 }
 
 $main_background_color: var(--main-background-color);
@@ -131,3 +135,7 @@ $combobox_selected_item_background_color: var(--combobox-selected-item-backgroun
 $combobox_selected_item_color: var(--combobox-selected-item-color);
 $combobox_button_background_color: var(--combobox-button-background-color);
 $combobox_button_color: var(--combobox-button-color);
+
+// Input
+$input_background_color : var(--input-background-color);
+$input_color : var(--input-color);

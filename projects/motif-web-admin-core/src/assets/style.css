@@ -282,7 +282,7 @@ app-root input, app-root select, app-root textarea {
    padding:0 .5rem;
    height:2rem;
    display:block;
-   width:100%;
+   /*width:100%;*/
    flex:1;
 }
 
