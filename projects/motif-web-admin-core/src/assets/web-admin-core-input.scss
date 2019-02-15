@@ -21,8 +21,8 @@ app-root {
   }
 
   .k-textbox:focus, .k-textbox.k-state-focus, .k-textarea:focus, .k-textarea.k-state-focus, .k-input.k-textbox:focus, .k-input.k-textbox.k-state-focus {
-    color: $input_color;
-    background-color: $input_background_color;
+    color: $input_focus_color;
+    background-color: $input_focus_background_color;
     border-color: $input_border_color;
   }
 
@@ -51,6 +51,11 @@ app-root {
     background: $input_background_color;
     color:$input_color;
     border: solid 1px $input_border_color;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    background: $input_focus_background_color;
+    color:$input_focus_color;
   }
 
   .form-element {

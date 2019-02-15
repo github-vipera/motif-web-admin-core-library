@@ -75,6 +75,8 @@ body {
     @include define-custom-property('input-color', $input_color);
     @include define-custom-property('input-placeholder-color', $input_placeholder_color);
     @include define-custom-property('input-border-color', $input_border_color);
+    @include define-custom-property('input-focus-background-color', $input_focus_background_color);
+    @include define-custom-property('input-focus-color', $input_focus_color);
 
 }
 
@@ -143,3 +145,5 @@ $input_background_color : var(--input-background-color);
 $input_color : var(--input-color);
 $input_placeholder_color: var(--input-placeholder-color);
 $input_border_color: var(--input-border-color);
+$input_focus_background_color: var(--input-focus-background-color);
+$input_focus_color: var(--input-focus-color);
