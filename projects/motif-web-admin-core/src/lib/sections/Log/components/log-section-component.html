@@ -11,7 +11,7 @@
         </div>
         <div>
             <label>ROOT Log Level</label>
-            <kendo-dropdownlist [data]="logLevels" [textField]="'level'" [valueField]="'level'" [(ngModel)]="rootLogLevel"
+            <kendo-dropdownlist [data]="logLevels" [textField]="'level'" [valueField]="'level'" [(ngModel)]="rootLogLevel" [popupSettings]="{ 'popupClass' : 'wa-kui-combobox-popup', 'animate' : false }"
                 [valuePrimitive]="false"></kendo-dropdownlist>
         </div>
     </div>
@@ -42,7 +42,7 @@
             <div class="wc-slide-down-editor-pane" style="display:flex;">
                 <div>
                     <label>Data Record Type</label>
-                    <kendo-dropdownlist [data]="dataRecordTypes" [(ngModel)]="dataRecordType" [valuePrimitive]="true"></kendo-dropdownlist>
+                    <kendo-dropdownlist [data]="dataRecordTypes" [(ngModel)]="dataRecordType" [valuePrimitive]="true"  [popupSettings]="{ 'popupClass' : 'wa-kui-combobox-popup', 'animate' : false }"></kendo-dropdownlist>
                 </div>
                 <div>
                     <kendo-daterange style="display:flex;">

@@ -27,7 +27,8 @@
       [(ngModel)]="type" 
       [defaultItem]="defaultDataType"
       (valueChange)="onTypeValueChange($event)"
-      [valuePrimitive]="false">
+      [valuePrimitive]="false"
+      [popupSettings]="{ 'popupClass' : 'wa-kui-combobox-popup', 'animate' : false }">
     </kendo-dropdownlist>
     <label class="warning-label" *ngIf="typeEditingWarningDisplay">Invalid data type</label>
 
