@@ -23,7 +23,7 @@ app-root {
   .k-textbox:focus, .k-textbox.k-state-focus, .k-textarea:focus, .k-textarea.k-state-focus, .k-input.k-textbox:focus, .k-input.k-textbox.k-state-focus {
     color: $input_color;
     background-color: $input_background_color;
-    border-color: rgba(0, 0, 0, 0.15);
+    border-color: $input_border_color;
   }
 
   .k-textbox-container > .k-label {
@@ -77,6 +77,9 @@ app-root {
      padding:.5rem;
   }
 
+  .k-textbox-container.k-state-empty > .k-label  {
+    color: $input_placeholder_color;
+  }
 
 }
 
