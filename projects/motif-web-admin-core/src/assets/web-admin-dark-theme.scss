@@ -210,6 +210,8 @@ $combobox_selected_item_background_color: #3f596d;
 $combobox_selected_item_color: #ddd;
 $combobox_button_background_color: #aaa;
 $combobox_button_color: #404040;
+$combobox_button_hover_background_color: $combobox_button_background_color;
+$combobox_button_hover_color: $combobox_button_color;
 
 // UI Placeholder (PrimeNG)
 $ui_placeholder_color: #888888 !important;
