@@ -3,6 +3,10 @@
 
 app-root {
 
+  button {
+    outline: none;
+  }
+
   button.k-button.k-flat {
     background-color: $button_background_color !important;
     color: $button_color !important;
@@ -43,18 +47,3 @@ app-root {
   }
 
 }
-
-/*
-$button_background_color
-$button_color
-$button_border_color
-
-$button_hover_background_color
-$button_hover_color
-$button_hover_border_color
-
-$button_disabled_background_color
-$button_disabled_color
-$button_disabled_border_color;
-
-*/
