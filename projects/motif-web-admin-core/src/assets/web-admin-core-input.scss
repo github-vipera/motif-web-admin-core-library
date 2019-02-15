@@ -1,36 +1,88 @@
+app-root {
 
-.k-input {
-  color: $input_color;
+  input, select,  textarea {
+    font-family:'Open Sans';
+     font-size:.8rem;
+     padding:0 .5rem;
+     height:2rem;
+     display:block;
+     flex:1;
+  }
+
+
+  .k-input {
+    color: $input_color;
+  }
+
+  .k-textbox, .k-textbox, .k-textarea, .k-textarea, .k-input.k-textbox, .k-input.k-textbox {
+    /*background-color: #535454;*/
+    background-color: $input_background_color;
+    color: $input_color;
+  }
+
+  .k-textbox:focus, .k-textbox.k-state-focus, .k-textarea:focus, .k-textarea.k-state-focus, .k-input.k-textbox:focus, .k-input.k-textbox.k-state-focus {
+    color: $input_color;
+    background-color: $input_background_color;
+    border-color: rgba(0, 0, 0, 0.15);
+  }
+
+  .k-textbox-container > .k-label {
+    top: 50%;
+  }
+
+  .k-textbox-container > .k-label, .k-textbox-container.k-state-focused > .k-label {
+    -webkit-transform: translate(-8px, -6px) translate(-1px, -1.07142857em) translate(-12.5%, -9.375%) scale(0.75);
+    transform: translate(-8px, -6px) translate(-1px, -1.07142857em) translate(-12.5%, -9.375%) scale(0.75);
+  }
+
+  .k-textbox::placeholder, .k-input::placeholder, .k-input.k-textbox::placeholder, .k-textarea::placeholder {
+    color: $input_placeholder_color;
+    font-size: 11px;
+    font-family: montserrat;
+    text-transform: uppercase;
+  }
+
+  .k-textbox-container > .k-textbox {
+    border-radius: 4px;
+  }
+
+  input, select, textarea {
+    background: $input_background_color;
+    color:$input_color;
+    border: solid 1px $input_border_color;
+  }
+
+  .form-element {
+    display:inline-flex;
+     height:2rem;
+  }
+
+  input[type=file] {
+    all:initial;
+     width:0.1px;
+     height:0.1px;
+     opacity:0;
+     overflow:hidden;
+     position:absolute;
+     z-index:-1;
+  }
+
+  textarea.pre {
+    white-space:nowrap;
+  }
+
+  textarea {
+    font-family:monospace;
+     height:15rem;
+     padding:.5rem;
+  }
+
+
 }
 
-.k-textbox, .k-textbox, .k-textarea, .k-textarea, .k-input.k-textbox, .k-input.k-textbox {
-  /*background-color: #535454;*/
-  background-color: #353a3e;
-  color: $input_color;
-}
 
-.k-textbox:focus, .k-textbox.k-state-focus, .k-textarea:focus, .k-textarea.k-state-focus, .k-input.k-textbox:focus, .k-input.k-textbox.k-state-focus {
-  color: $input_color;
-  background-color: #67696b;
-  border-color: rgba(0, 0, 0, 0.15);
-}
-
-.k-textbox-container > .k-label {
-  top: 50%;
-}
-
-.k-textbox-container > .k-label, .k-textbox-container.k-state-focused > .k-label {
-  -webkit-transform: translate(-8px, -6px) translate(-1px, -1.07142857em) translate(-12.5%, -9.375%) scale(0.75);
-  transform: translate(-8px, -6px) translate(-1px, -1.07142857em) translate(-12.5%, -9.375%) scale(0.75);
-}
-
-.k-textbox::placeholder, .k-input::placeholder, .k-input.k-textbox::placeholder, .k-textarea::placeholder {
-  color: $input_placeholder_color;
-  font-size: 11px;
-  font-family: montserrat;
-  text-transform: uppercase;
-}
-
-.k-textbox-container > .k-textbox {
-  border-radius: 4px;
-}
+/*
+$input_background_color : var(--input-background-color);
+$input_color : var(--input-color);
+$input_placeholder_color: var(--input-placeholder-color);
+*/

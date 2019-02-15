@@ -73,6 +73,8 @@ body {
     // Input
     @include define-custom-property('input-background-color', $input_background_color);
     @include define-custom-property('input-color', $input_color);
+    @include define-custom-property('input-placeholder-color', $input_placeholder_color);
+    @include define-custom-property('input-border-color', $input_border_color);
 
 }
 
@@ -139,3 +141,5 @@ $combobox_button_color: var(--combobox-button-color);
 // Input
 $input_background_color : var(--input-background-color);
 $input_color : var(--input-color);
+$input_placeholder_color: var(--input-placeholder-color);
+$input_border_color: var(--input-border-color);
