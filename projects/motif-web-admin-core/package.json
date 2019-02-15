@@ -70,7 +70,9 @@
     "web-console-core": "^0.3.0",
     "web-console-login": "^0.1.0",
     "web-console-ui-kit": "^0.4.0",
-    "zone.js": "^0.8.26"
+    "zone.js": "^0.8.26",
+    "color-parse": "^1.3.7",
+    "color-string": "^1.5.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.12.1",

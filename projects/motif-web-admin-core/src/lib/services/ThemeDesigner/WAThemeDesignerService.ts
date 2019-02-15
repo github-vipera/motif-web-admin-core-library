@@ -1,6 +1,7 @@
-import { Injectable, Inject } from '@angular/core';
+import { WAThemeDesignerToolbox } from './toolbox/wa-theme-designer-toolbox';
+import { ThemeModelBuilder, ThemeModel, ThemeItem, ThemeGroup, ThemeColorItem } from './ThemeModel';
+import { Injectable, Inject, Injector, ApplicationRef, ComponentFactoryResolver } from '@angular/core';
 import { NGXLogger } from 'web-console-core';
-import { GUI } from "dat-gui";
 import { DOCUMENT } from '@angular/common';
 
 
@@ -14,34 +15,30 @@ interface ColorItemDef {
 @Injectable()
 export class WAThemeDesignerService {
 
-  private initialized: boolean;
   private themeWrapper: any;
-  private gui:GUI;
+  private themeModel: ThemeModel;
 
-    constructor(private logger: NGXLogger, @Inject(DOCUMENT) private document: any){
-      console.log("@Inject(DOCUMENT) private document ", document);
+    constructor(private logger: NGXLogger, @Inject(DOCUMENT) private document: any,
+      private resolver: ComponentFactoryResolver,
+      private injector: Injector,
+      private app: ApplicationRef
+    ){
+      this.logger.debug("@Inject(DOCUMENT) private document ", document);
       this.themeWrapper = this.document.querySelector('app-root');
-      console.log("this.themeWrapper:", this.themeWrapper);
+      this.logger.debug("this.themeWrapper:", this.themeWrapper);
     }
 
     private obj:any;
 
+
     public show(){
-
-
+      let factory = this.resolver.resolveComponentFactory(WAThemeDesignerToolbox);
+      let newNode = document.createElement('div');
+      newNode.id = 'wa-theme-editor-container';
+      this.document.body.appendChild(newNode);
+      const ref = factory.create(this.injector, [], newNode);
+      this.app.attachView(ref.hostView);
     }
 
-    private createFolder(gui:GUI, folderName:string, colors:ColorItemDef[], target: any){
-      let f1 = gui.addFolder(folderName);
-      for (var i=0;i<colors.length;i++){
-        let colorItemDef: ColorItemDef = colors[i];
-        f1.addColor(target, colorItemDef.name).onChange((value) => {
-          this.themeWrapper.style.setProperty(colorItemDef.variableName, value);
-        });
-      }
-    }
-
-    private getColorProperty(variableName: string): string {
-      return this.themeWrapper.style.getProperty(variableName);
-    }
 }
+

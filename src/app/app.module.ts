@@ -78,7 +78,6 @@ const appRoutes: Routes = [
     TopMenuComponentModule,
     WebContentSectionModule,
     WAThemeDesignerModule
-    /*,MemoryLeakSectionModule*/
   ],
   providers: [
     { provide: WC_API_BASE_PATH, useValue: environment.API_BASE_PATH },
@@ -91,12 +90,12 @@ const appRoutes: Routes = [
 })
 export class AppModule {
 
-  constructor(private logger: NGXLogger, private hotkeysService: HotkeysService, private themeEditorService: WAThemeDesignerService){
+  constructor(private logger: NGXLogger, private hotkeysService: HotkeysService, private themeDesignerService: WAThemeDesignerService){
     this.logger.info('AppModule' , 'Starting application');
     this.logger.debug('AppModule' , 'Starting application DEBUG message');
 
     this.hotkeysService.add(new Hotkey('alt+shift+t', (event: KeyboardEvent): boolean => {
-      this.themeEditorService.show();
+      this.themeDesignerService.show();
       console.log('Show Theme Editor hotkey pressed');
       return false; // Prevent bubbling
     }, undefined, 'Show Theme Editor'));

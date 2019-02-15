@@ -13,7 +13,7 @@ export class AppComponent {
 
   constructor(private topBarService: WCTopBarService,
               private authService: AuthService,
-              private themeEditorService: WAThemeDesignerService){
+              private themeDesignerService: WAThemeDesignerService){
   }
 
   ngOnInit() {
@@ -25,7 +25,6 @@ export class AppComponent {
   }
 
   ngAfterContentInit() {
-    //this.themeEditorService.show();
   }
 
 }

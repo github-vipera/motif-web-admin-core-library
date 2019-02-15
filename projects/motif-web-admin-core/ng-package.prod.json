@@ -62,6 +62,8 @@
     "web-console-core",
     "web-console-login",
     "web-console-ui-kit",
-    "zone.js"
+    "zone.js",
+    "color-parse",
+    "color-string"
   ]
 }
