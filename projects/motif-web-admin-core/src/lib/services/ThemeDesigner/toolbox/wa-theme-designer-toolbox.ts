@@ -72,6 +72,14 @@ export class WAThemeDesignerToolbox {
 
   onHiddenInputBlur(event){
     this.overlayPanel.hide();
+  } 
+
+  public show(){
+    this.display = true;
+  }
+
+  public hide(){
+    this.display = false;
   }
 
 }

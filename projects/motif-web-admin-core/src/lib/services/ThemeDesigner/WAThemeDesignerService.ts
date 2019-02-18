@@ -17,6 +17,7 @@ export class WAThemeDesignerService {
 
   private themeWrapper: any;
   private themeModel: ThemeModel;
+  private themeEditor: WAThemeDesignerToolbox;
 
     constructor(private logger: NGXLogger, @Inject(DOCUMENT) private document: any,
       private resolver: ComponentFactoryResolver,
@@ -32,12 +33,18 @@ export class WAThemeDesignerService {
 
 
     public show(){
-      let factory = this.resolver.resolveComponentFactory(WAThemeDesignerToolbox);
-      let newNode = document.createElement('div');
-      newNode.id = 'wa-theme-editor-container';
-      this.document.body.appendChild(newNode);
-      const ref = factory.create(this.injector, [], newNode);
-      this.app.attachView(ref.hostView);
+      if (this.themeEditor){
+        this.themeEditor.show();
+      } else {
+        let factory = this.resolver.resolveComponentFactory(WAThemeDesignerToolbox);
+        let newNode = document.createElement('div');
+        newNode.id = 'wa-theme-editor-container';
+        this.document.body.appendChild(newNode);
+        const ref = factory.create(this.injector, [], newNode);
+        this.app.attachView(ref.hostView);
+        this.themeEditor = ref.instance;
+        console.log(">>>>>> this.themeEditor:", this.themeEditor);
+        }
     }
 
 }
