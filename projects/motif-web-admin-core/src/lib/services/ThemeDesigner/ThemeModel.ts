@@ -129,11 +129,15 @@ export class DefaultThemeModel implements ThemeModel {
       this.createColorItem('grid', 'Grid Hover Backgorund', '--grid-row-hover-background-color', '$grid_tr_hover_background_color'),
       this.createColorItem('grid', 'Grid Hover Color', '--grid-row-hover-color', '$grid_tr_hover_color'),
       this.createColorItem('grid', 'Grid Selected Background Color', '--grid-row-selected-background-color', '$grid_selected_row_color'),
-      this.createColorItem('grid', 'Grid Selected Color', '--grid-row-selected-color', '$grid_selected_row')
+      this.createColorItem('grid', 'Grid Selected Color', '--grid-row-selected-color', '$grid_selected_row'),
+      this.createColorItem('grid', 'Grid Command Color', '--grid-command-color', '$grid_command_color'),
+      this.createColorItem('grid', 'Grid Selected Row Command Color', '--grid-selected-row-command-color', '$grid_selected_row_command_color')
     ];
     return ret;
   }
-
+  
+  
+  
 
   private createToolbarGroup(): ThemeGroup {
     let ret = new ThemeGroup();

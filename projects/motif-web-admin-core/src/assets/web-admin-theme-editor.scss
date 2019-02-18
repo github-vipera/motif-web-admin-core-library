@@ -38,6 +38,8 @@ body {
     @include define-custom-property('grid-row-hover-background-color', $grid_tr_hover_background_color);
     @include define-custom-property('grid-row-selected-background-color', $grid_selected_row_color);
     @include define-custom-property('grid-row-selected-color', $grid_selected_row);
+    @include define-custom-property('grid-command-color', $grid_command_color);
+    @include define-custom-property('grid-selected-row-command-color', $grid_selected_row_command_color);
 
     //Toolbar
     @include define-custom-property('nav-background-color', $nav_background_color);
@@ -106,6 +108,9 @@ $grid_tr_hover_background_color: var(--grid-row-hover-background-color);
 $grid_tr_hover_color: var(--grid-row-hover-color);
 $grid_selected_row_color: var(--grid-row-selected-background-color);
 $grid_selected_row: var(--grid-row-selected-color);
+$grid_command_color: var(--grid-command-color);
+$grid_selected_row_command_color: var(--grid-selected-row-command-color);
+
 
 // Toolbar
 $nav_background_color: var(--nav-background-color);
