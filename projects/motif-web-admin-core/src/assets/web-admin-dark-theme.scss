@@ -194,7 +194,7 @@ $contextMenu_background_color: #363F44;
 $contextMenu_hover_background_color: rgb(45, 53, 57);
 $contextMenu_color: #bdbdbd;
 $contextMenu_disabled_color: #666;
-$menu_separator_color: #ffffff73;
+$menu_separator_color: rgba(255, 255, 255, 0.73);
 
 // Dialogs (PrimeNG)
 $dialog_background_color: #36424a;
@@ -261,7 +261,7 @@ $splitter_color: #656565;
 $splitter_background_color: rgb(56, 56, 56);
 
 // Notification
-$notification_color: #ffff;
+$notification_color: #ffffff;
 
 // Logo
 $logo_small_header:'';

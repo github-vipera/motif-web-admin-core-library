@@ -4,7 +4,7 @@
 /* Access Control Section */
 .acl-label {
     color: $label_color;
-} 
+}
 
 .user-status-ACTIVE {
     background-color: $badge_enabled_background_color;
@@ -104,13 +104,17 @@ wa-service-catalog-selector .node-icon-Service {
 
 
 wa-service-catalog-selector .ui-state-highlight {
-    background-color: $grid_selected_row; 
+    background-color: $grid_selected_row_color;
+    color: $grid_selected_row;
 }
 
 wa-service-catalog-selector .ui-state-highlight>td {
-    color: $grid_selected_row_color;
+    color: $grid_selected_row;
 }
 
+wa-service-catalog-selector .ui-state-highlight>tr {
+  color: $grid_selected_row;
+}
 
 wa-service-catalog-selector p-treetable table th {
     border-bottom: 1px solid $grid_border_color;
@@ -118,4 +122,12 @@ wa-service-catalog-selector p-treetable table th {
 
 wa-service-catalog-selector p-treetable table  td {
     border-bottom: 1px dotted $grid_border_color;
+}
+
+wa-service-catalog-selector p-treetable table  td:focus {
+  outline: none;
+}
+
+wa-service-catalog-selector p-treetable table  tr:focus {
+  outline: none;
 }
