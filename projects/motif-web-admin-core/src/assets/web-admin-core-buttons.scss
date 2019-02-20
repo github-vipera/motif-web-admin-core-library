@@ -26,7 +26,7 @@ app-root {
   button.k-button.k-flat:hover {
     background-color: $button_hover_background_color !important;
     color: $button_hover_color !important;
-    border: solid 1px  $button_hover_border_color !important;
+    /*border: solid 1px  $button_hover_border_color !important;*/
   }
 
   button:active, .btn:active {
