@@ -709,12 +709,14 @@ aside .cmd {
 
 section {
   flex:1;
-   /*background:#22272B;*/
    padding:1rem;
-   height:100%;
+   height: -webkit-calc(100% - 2.1rem);
+   height:    -moz-calc(100% - 2.1rem);
+   height:         calc(100% - 2.1rem);
    overflow:auto;
    display:flex;
    flex-direction:column;
+   overflow: hidden;
 }
 section .header {
   /*color:#ddd;*/
