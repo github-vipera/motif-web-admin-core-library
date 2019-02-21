@@ -1,11 +1,11 @@
 import { CountersAndThresholdUtils } from './../../../commons/CountersAndThresholdUtils';
-import { ThresholdInfoEntityList, ThresholdInfoEntity } from '@wa-motif-open-api/counters-thresholds-service';
+import { ThresholdInfoEntity } from '@wa-motif-open-api/counters-thresholds-service';
 import * as _ from 'lodash';
 
 export class ThresholdsInfosModel {
 
 
-    private _data: ThresholdInfoEntityList;
+    private _data: Array<ThresholdInfoEntity>;
 
     constructor(){
     }   
@@ -14,7 +14,7 @@ export class ThresholdsInfosModel {
         this._data = null;
     }
 
-    public loadData(data: ThresholdInfoEntityList) {
+    public loadData(data: Array<ThresholdInfoEntity>) {
         this._data = _.forEach(data, (element: ThresholdInfoEntity) => {
             if (element.created) {
                 element.created = new Date(element.created);
@@ -23,7 +23,7 @@ export class ThresholdsInfosModel {
 
     }
 
-    public get data(): ThresholdInfoEntityList {
+    public get data(): Array<ThresholdInfoEntity> {
         return this._data;
     }
 

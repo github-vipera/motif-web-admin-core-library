@@ -1,10 +1,10 @@
 import { CountersAndThresholdUtils } from './../../../commons/CountersAndThresholdUtils';
-import { CounterInfoEntityList, CounterInfoEntity } from '@wa-motif-open-api/counters-thresholds-service';
+import { CounterInfoEntity } from '@wa-motif-open-api/counters-thresholds-service';
 import * as _ from 'lodash';
 
 export class CounterInfosModel {
 
-    private _data: CounterInfoEntityList;
+    private _data: Array<CounterInfoEntity>;
 
     constructor(){
 
@@ -14,7 +14,7 @@ export class CounterInfosModel {
         this._data = null;
     }
 
-    public loadData(data: CounterInfoEntityList) {
+    public loadData(data: Array<CounterInfoEntity>) {
         this._data = _.forEach(data, (element: CounterInfoEntity) => {
             if (element.created) {
                 element.created = new Date(element.created);
@@ -32,7 +32,7 @@ export class CounterInfosModel {
             item.operation);
     }
 
-    public get data(): CounterInfoEntityList {
+    public get data(): Array<CounterInfoEntity> {
         return this._data;
     }
 

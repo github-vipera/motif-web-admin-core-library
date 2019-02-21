@@ -12,8 +12,7 @@ import {
   SystemService,
   SystemCategory,
   SystemMessage,
-  SystemMessageCreate,
-  SystemMessagesList
+  SystemMessageCreate
 } from '@wa-motif-open-api/platform-service';
 import { ConfirmationService } from 'primeng/api';
 import {
@@ -49,7 +48,7 @@ export class MessagesPaneComponent implements OnInit, OnDestroy {
     SystemMessage
   >();
 
-  data: SystemMessagesList = [];
+  data: Array<SystemMessage> = [];
 
   locales: string[];
   availableLocales: string[];
@@ -109,7 +108,7 @@ export class MessagesPaneComponent implements OnInit, OnDestroy {
       this._subHandler.add(this.systemService
         .getSystemMessages(this._domain, this._category.name)
         .subscribe(
-          (data: SystemMessagesList) => {
+          (data: Array<SystemMessage>) => {
             this.data = data;
             this.editService.read(this.data, this.editServiceConfiguration);
             this.logger.debug(LOG_TAG, 'reloadMessages: ', data);

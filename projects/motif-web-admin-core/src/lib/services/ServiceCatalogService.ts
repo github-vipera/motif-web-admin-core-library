@@ -1,15 +1,12 @@
 import { Injectable } from '@angular/core';
 import { DomainsService,
-         DomainsList,
          Domain, DomainCreate,
          ApplicationsService,
-         ApplicationsList,
          Application,
          ApplicationCreate,
           } from '@wa-motif-open-api/platform-service';
 import { ServicesService,
     Service,
-    ServiceList,
     ServiceCreate,
     OperationsService,
     ServiceOperation } from '@wa-motif-open-api/catalog-service';
@@ -23,7 +20,7 @@ const LOG_TAG = '[ServiceCatalogService]';
 @Injectable()
 export class ServiceCatalogService {
 
-    private domainsList: DomainsList;
+    private domainsList: Array<Domain>;
 
     constructor(private domainService: DomainsService,
         private applicationService: ApplicationsService,
@@ -43,7 +40,7 @@ export class ServiceCatalogService {
 
             const serviceCatalog = [];
 
-            this.domainService.getDomains().subscribe(( domains: DomainsList ) => {
+            this.domainService.getDomains().subscribe(( domains: Array<Domain> ) => {
                 const domainsCount = domains.length;
                 let processedDomains = 0;
 
@@ -53,7 +50,7 @@ export class ServiceCatalogService {
                     domainInfo.applications = [];
                     serviceCatalog.push(domainInfo);
 
-                    this.applicationService.getApplications(domain.name).subscribe(( applications: ApplicationsList ) => {
+                    this.applicationService.getApplications(domain.name).subscribe(( applications: Array<Application> ) => {
 
                         const appCount = applications.length;
                         let processedApps = 0;
@@ -64,7 +61,7 @@ export class ServiceCatalogService {
 
                         for (const application of applications ) {
                             const applicationInfo: any = application;
-                            this.appService.getServiceList(domain.name, application.name).subscribe( ( services: ServiceList ) => {
+                            this.appService.getServiceList(domain.name, application.name).subscribe( ( services: Array<Service> ) => {
                                 applicationInfo.services = services;
                                 // tslint:disable-next-line:max-line-length
                                 this.logger.debug(LOG_TAG, 'getServiceCatalog services[' + application.name + '@' + domain.name + ']:', services );

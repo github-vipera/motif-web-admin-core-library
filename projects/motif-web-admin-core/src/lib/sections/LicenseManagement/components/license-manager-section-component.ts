@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, Renderer, ElementRef, OnDestroy } from '@angular/core';
 import { PluginView } from 'web-console-core';
 import { NGXLogger} from 'web-console-core';
-import { LicenseService, LicenseList, License } from '@wa-motif-open-api/license-management-service';
+import { LicenseService, License } from '@wa-motif-open-api/license-management-service';
 import * as _ from 'lodash';
 import { faFileImport, faDownload } from '@fortawesome/free-solid-svg-icons';
 import { WCNotificationCenter, NotificationType } from 'web-console-ui-kit';
@@ -23,7 +23,7 @@ export class LicenseManagerSectionComponent implements OnInit, OnDestroy {
     faFileImport = faFileImport;
     faDownload = faDownload;
 
-    public _licenses: LicenseList = [];
+    public _licenses: Array<License> = [];
     public loading: boolean;
 
     private _subHandler: WCSubscriptionHandler = new WCSubscriptionHandler();

@@ -8,7 +8,7 @@ import {
   OnDestroy
 } from '@angular/core';
 import { NGXLogger } from 'web-console-core';
-import { SystemService, SystemCategoryCreate, SystemCategoriesList, SystemCategory } from '@wa-motif-open-api/platform-service';
+import { SystemService, SystemCategoryCreate, SystemCategory } from '@wa-motif-open-api/platform-service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import {
   WCEditService,
@@ -30,7 +30,7 @@ const LOG_TAG = '[CategoryPaneComponent]';
   templateUrl: './category-pane-component.html'
 })
 export class CategoryPaneComponent implements OnInit, OnDestroy {
-  data: SystemCategoriesList = [];
+  data: Array<SystemCategory> = [];
 
   @Output() selectionChange: EventEmitter<SystemCategory> = new EventEmitter<SystemCategory>();
   private _domain: string = null;
@@ -80,7 +80,7 @@ export class CategoryPaneComponent implements OnInit, OnDestroy {
   private reloadCategories(): void {
     if (this._domain) {
       this._subHandler.add(this.systemService.getSystemCategories(this._domain).subscribe(
-        (data: SystemCategoriesList)  => {
+        (data: Array<SystemCategory>)  => {
           this.logger.debug(LOG_TAG, 'reloadCategories: ', data);
           this.data = data;
           this.editService.read(this.data, this.editServiceConfiguration);

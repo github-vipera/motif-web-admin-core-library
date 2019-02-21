@@ -6,7 +6,7 @@ import { SessionRow } from '../data/model'
 import { GridComponent, PageChangeEvent } from '@progress/kendo-angular-grid';
 import { SortDescriptor, GroupDescriptor, DataResult } from '@progress/kendo-data-query';
 import { MotifQuerySort, MotifQueryResults } from 'web-console-core';
-import { Domain, ApplicationsService, ApplicationsList, Application } from '@wa-motif-open-api/platform-service'
+import { Domain, ApplicationsService, Application } from '@wa-motif-open-api/platform-service'
 import { ComboBoxComponent } from '@progress/kendo-angular-dropdowns';
 import * as _ from 'lodash';
 import { DomainSelectorComboBoxComponent } from '../../../components/UI/selectors/domain-selector-combobox-component'
@@ -42,7 +42,7 @@ export class SessionsSectionComponent implements OnInit, OnDestroy {
     public totalRecords = 0;
     public isFieldSortable = false;
 
-    public applicationsList: ApplicationsList = [];
+    public applicationsList: Array<Application> = [];
     public _selectedApplication: Application; // combo box selection
     @Input() public selectedDomain: Domain;
     private _subHandler: WCSubscriptionHandler = new WCSubscriptionHandler();

@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PluginView } from 'web-console-core';
 import { NGXLogger} from 'web-console-core';
-import { RegistryService, PluginList, Plugin } from '@wa-motif-open-api/plugin-registry-service';
+import { RegistryService, Plugin } from '@wa-motif-open-api/plugin-registry-service';
 import { SafeStyle } from '@angular/platform-browser';
 import { process, State } from '@progress/kendo-data-query';
 import { WCSubscriptionHandler } from '../../../components/Commons/wc-subscription-handler';
@@ -27,7 +27,7 @@ const LOG_TAG = '[PluginsSection]';
 })
 export class PluginsSectionComponent implements OnInit, OnDestroy {
 
-    public data: PluginList;
+    public data: Array<Plugin>;
     public gridData: GridDataResult; // = process(sampleProducts, this.state);
     public loading: boolean;
     private filterValue: string;
@@ -69,7 +69,7 @@ export class PluginsSectionComponent implements OnInit, OnDestroy {
 
     public refreshData() {
         this.loading = true;
-        this._subHandler.add(this.registryService.getPlugins(true, 'REGISTERED').subscribe((data: PluginList) => {
+        this._subHandler.add(this.registryService.getPlugins(true, 'REGISTERED').subscribe((data: Array<Plugin>) => {
             this.data = data;
             this.displayData();
             this.loading = false;

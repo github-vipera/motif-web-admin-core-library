@@ -1,5 +1,5 @@
 import { Component, ContentChild, EventEmitter, Input, Output, OnDestroy, Renderer2, TemplateRef } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { GridComponent } from '@progress/kendo-angular-grid';
 
 @Component({

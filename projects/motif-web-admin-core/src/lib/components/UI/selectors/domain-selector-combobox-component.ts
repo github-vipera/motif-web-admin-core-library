@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, forwardRef, ViewChild } from '@angular/core';
-import { DomainsService, DomainsList, Domain } from '@wa-motif-open-api/platform-service';
+import { DomainsService, Domain } from '@wa-motif-open-api/platform-service';
 import { NGXLogger} from 'web-console-core';
 import { WCNotificationCenter, NotificationType } from 'web-console-ui-kit';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -28,8 +28,8 @@ export const WC_DOMAIN_SELECTOR_CONTROL_VALUE_ACCESSOR: any = {
 })
 export class DomainSelectorComboBoxComponent implements OnInit, OnDestroy {
 
-    public data: DomainsList = [];
-    public domainList: DomainsList = [];
+    public data: Array<Domain> = [];
+    public domainList: Array<Domain> = [];
     public _selectedDomain: Domain; // combo box selection
     @Output() domainSelected: EventEmitter<Domain> = new EventEmitter();
     @Output() selectionCancelled: EventEmitter<any> = new EventEmitter();

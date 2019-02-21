@@ -5,10 +5,10 @@ import { EditorPropertyChangeEvent } from '../commons/editors-events';
 import { BaseEditorComponent } from '../base-editor-component';
 import { Observable } from 'rxjs';
 import { WCNotificationCenter, NotificationType } from 'web-console-ui-kit';
-import { ApplicationsService, Application, ApplicationUpdate, Property } from '@wa-motif-open-api/platform-service';
+import { ApplicationsService, Application, ApplicationUpdate, Property, SystemCategory } from '@wa-motif-open-api/platform-service';
 import { EditorContext } from '../service-catalog-editor-context';
 import { MessageCategoriesDialogComponent } from '../../dialogs/message-categories/message-categories-dialog'
-import { SystemService, SystemCategoriesList } from '@wa-motif-open-api/platform-service';
+import { SystemService } from '@wa-motif-open-api/platform-service';
 import { WCSubscriptionHandler } from '../../../../../components/Commons/wc-subscription-handler';
 
 const LOG_TAG = '[ServicesSectionApplicationEditor]';
@@ -406,7 +406,7 @@ export class ApplicationEditorComponent  extends BaseEditorComponent implements 
   }
 
   reloadCategories() {
-    this._subHandler.add(this.systemService.getSystemCategories(this.editorContext.domainName).subscribe( (data: SystemCategoriesList) => {
+    this._subHandler.add(this.systemService.getSystemCategories(this.editorContext.domainName).subscribe( (data: Array<SystemCategory>) => {
       const categories = [];
       for (let i = 0; i < data.length; i++){
         categories.push(data[i].name);

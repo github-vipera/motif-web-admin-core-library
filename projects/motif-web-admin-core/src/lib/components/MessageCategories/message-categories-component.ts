@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { NGXLogger} from 'web-console-core';
 import { SystemCategory, SystemMessage } from '@wa-motif-open-api/platform-service';
-import { CategoryPaneComponent } from './panes/cateogry-pane/category-pane-component';
+import { CategoryPaneComponent } from './panes/category-pane/category-pane-component';
 import { MessagesPaneComponent } from './panes/messages-pane/messages-pane-component';
 
 const LOG_TAG = '[MessageCategoriesComponent]';

@@ -2,7 +2,7 @@ import { WCGridEditorCommandsConfig, WCGridEditorCommandComponentEvent, WCConfir
 import { Component, OnInit, OnDestroy, EventEmitter, Output, Input } from '@angular/core';
 import { NGXLogger} from 'web-console-core';
 import { WCNotificationCenter, NotificationType } from 'web-console-ui-kit';
-import { CountersService, ThresholdInfoEntityList, ThresholdInfoEntity } from '@wa-motif-open-api/counters-thresholds-service';
+import { CountersService, ThresholdInfoEntity } from '@wa-motif-open-api/counters-thresholds-service';
 import { WCSubscriptionHandler } from '../../../../components/Commons/wc-subscription-handler';
 import { ThresholdsInfosModel } from './data/model'; 
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
@@ -94,7 +94,7 @@ export class ThresholdsComponent implements OnInit, OnDestroy {
         this.logger.debug(LOG_TAG, 'reloadData called');
         this.loading = true;
         if (this._counterInfo){
-            this._subHandler.add(this.countersService.getThresholdInfoList(this._counterInfo).subscribe( (data: ThresholdInfoEntityList) => {
+            this._subHandler.add(this.countersService.getThresholdInfoList(this._counterInfo).subscribe( (data: Array<ThresholdInfoEntity>) => {
                 this.logger.debug(LOG_TAG, 'getThresholdInfoList done: ', data);
                 this.tableModel.loadData(data);
                 this.loading = false;

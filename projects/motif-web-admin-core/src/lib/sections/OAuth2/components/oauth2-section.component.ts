@@ -4,7 +4,7 @@ import { NGXLogger } from 'web-console-core';
 import { SortDescriptor, GroupDescriptor, DataResult } from '@progress/kendo-data-query';
 import { PageChangeEvent, GridComponent } from '@progress/kendo-angular-grid';
 import { MotifQuerySort, MotifQueryResults } from 'web-console-core';
-import { Oauth2Service, OAuthRequest, RefreshTokenList, AccessTokenList } from '@wa-motif-open-api/oauth2-service';
+import { Oauth2Service, OAuthRequest, RefreshToken, AccessToken } from '@wa-motif-open-api/oauth2-service';
 import { HttpParams } from '@angular/common/http';
 import * as _ from 'lodash';
 import { DomainSelectorComboBoxComponent } from '../../../components/UI/selectors/domain-selector-combobox-component';
@@ -28,8 +28,8 @@ export class OAuth2SectionComponent implements OnInit, OnDestroy {
   @ViewChild('domainSelector') domainSelector: DomainSelectorComboBoxComponent;
 
   //Data
-  public refreshTokenList: RefreshTokenList = [];
-  public accessTokenList: AccessTokenList = [];
+  public refreshTokenList: Array<RefreshToken> = [];
+  public accessTokenList: Array<AccessToken> = [];
 
   //Grid Options
   public sort: SortDescriptor[] = [];

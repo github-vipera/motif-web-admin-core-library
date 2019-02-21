@@ -2,7 +2,7 @@ import { NGXLogger} from 'web-console-core'
 import { Component, OnInit, Input } from '@angular/core';
 import { WCToasterService } from 'web-console-ui-kit'
 import { DataResult } from '@progress/kendo-data-query';
-import { Oauth2Service, AccessTokenList, RefreshToken } from '@wa-motif-open-api/oauth2-service'
+import { Oauth2Service, RefreshToken, AccessToken } from '@wa-motif-open-api/oauth2-service'
 
 const LOG_TAG = "[OAuth2Section] [RefreshTokenDetailsComponent]";
 const REFRESH_TOKENS_LIST_ENDPOINT = "/oauth2/refreshTokens/{0}/accessTokens"
@@ -17,7 +17,7 @@ export class RefreshTokenDetailsComponent implements OnInit {
   @Input() public refreshToken: RefreshToken;
 
   //Data
-  public accessTokenList: AccessTokenList = [];
+  public accessTokenList: Array<AccessToken> = [];
 
   //Grid Options
   public gridView: DataResult;

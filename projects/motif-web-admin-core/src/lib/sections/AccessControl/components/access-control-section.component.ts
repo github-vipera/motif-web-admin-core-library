@@ -5,7 +5,7 @@ import { SelectableSettings, SelectionEvent, RowArgs, PageChangeEvent, GridDataR
 import { UsersService, GroupsService, RolesService, ActionsService, PermissionsService, Group, Permission, Action, Role } from '@wa-motif-open-api/auth-access-control-service'
 import {
   UsersService as PlatformUsersService, ClientsService as PlatformClientsService, AdminsService as PlatformAdminsService,
-  User, AdminUser, ClientUser, Domain, ClientsService, UsersList
+  User, AdminUser, ClientUser, Domain, ClientsService
 } from '@wa-motif-open-api/platform-service'
 import * as _ from 'lodash';
 import { WCNotificationCenter, NotificationType } from 'web-console-ui-kit'

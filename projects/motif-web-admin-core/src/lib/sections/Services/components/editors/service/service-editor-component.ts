@@ -8,7 +8,7 @@ import { WCNotificationCenter, NotificationType } from 'web-console-ui-kit';
 import { EditorContext } from '../service-catalog-editor-context';
 import { ServicesService, Service, ServiceUpdate } from '@wa-motif-open-api/catalog-service';
 import { MessageCategoriesDialogComponent } from '../../dialogs/message-categories/message-categories-dialog'
-import { SystemService, SystemCategoriesList } from '@wa-motif-open-api/platform-service';
+import { SystemService, SystemCategory } from '@wa-motif-open-api/platform-service';
 import { WCSubscriptionHandler } from '../../../../../components/Commons/wc-subscription-handler';
 
 const LOG_TAG = '[ServicesSectionServiceEditor]';
@@ -109,7 +109,7 @@ export class ServiceEditorComponent extends BaseEditorComponent implements OnIni
 
     reloadCategories() {
       this._subHandler.add(this.systemService.getSystemCategories(
-        this.editorContext.domainName).subscribe( (data: SystemCategoriesList) => {
+        this.editorContext.domainName).subscribe( (data: Array<SystemCategory>) => {
         const categories = [];
         for (let i = 0; i < data.length; i++){
           categories.push(data[i].name);

@@ -5,7 +5,7 @@ import { WCNotificationCenter, NotificationType } from 'web-console-ui-kit';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { WCSubscriptionHandler } from '../../Commons/wc-subscription-handler';
 import { ComboBoxComponent } from '@progress/kendo-angular-dropdowns';
-import { SettingsService, ServiceList, Service } from '@wa-motif-open-api/configuration-service';
+import { SettingsService, Service } from '@wa-motif-open-api/configuration-service';
 
 const LOG_TAG = '[ServicesSelectorComboBoxComponent]';
 
@@ -29,8 +29,8 @@ export const WC_SERVICES_SELECTOR_CONTROL_VALUE_ACCESSOR: any = {
 })
 export class ServicesSelectorComboBoxComponent implements OnInit, OnDestroy {
 
-    public data: ServiceList = [];
-    public servicesList: ServiceList = [];
+    public data: Array<Service> = [];
+    public servicesList: Array<Service> = [];
     public _selectedService: Service; // combo box selection
     @Output() serviceSelected: EventEmitter<Service> = new EventEmitter();
     @Output() selectionCancelled: EventEmitter<any> = new EventEmitter();
@@ -70,7 +70,7 @@ export class ServicesSelectorComboBoxComponent implements OnInit, OnDestroy {
      * Get the list of the available Domains
      */
     public refreshServiceList(): void {
-        this._subHandler.add(this.settingsService.getServices().subscribe( (data: ServiceList) => {
+        this._subHandler.add(this.settingsService.getServices().subscribe( (data: Array<Service>) => {
            this.servicesList = data;
            this.data = this.servicesList;
         }, error => {

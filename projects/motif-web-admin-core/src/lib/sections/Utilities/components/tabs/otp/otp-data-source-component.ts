@@ -1,6 +1,6 @@
 import { OnInit, Input, EventEmitter } from '@angular/core';
 import { NGXLogger} from 'web-console-core';
-import { OtpService, OtpList, OtpEntity } from '@wa-motif-open-api/otp-service';
+import { OtpService, OtpEntity } from '@wa-motif-open-api/otp-service';
 import { Domain, User } from '@wa-motif-open-api/platform-service';
 import * as _ from 'lodash';
 import { WCSubscriptionHandler } from '../../../../../components/Commons/wc-subscription-handler';
@@ -11,7 +11,7 @@ export class OTPDataSourceComponent implements OnInit {
 
     private _domain: Domain;
     private _user: User;
-    private _data: OtpList;
+    private _data: Array<OtpEntity>;
 
     public dataChanged: EventEmitter<OTPDataSourceComponent> =  new EventEmitter<OTPDataSourceComponent>();
     public error: EventEmitter<any> =  new EventEmitter();
@@ -61,7 +61,7 @@ export class OTPDataSourceComponent implements OnInit {
     public reload(): void {
         this.logger.debug(LOG_TAG, 'refreshData called...');
         if (this._domain && this.user) {
-            this._subHandler.add(this.otpService.getOtpList(this._domain.name, this._user.userId).subscribe( (list: OtpList) => {
+            this._subHandler.add(this.otpService.getOtpList(this._domain.name, this._user.userId).subscribe( (list: Array<OtpEntity>) => {
                 this.logger.debug(LOG_TAG, 'refreshData done: ', list);
 
                 this._data = _.forEach(list, function (element: OtpEntity) {
@@ -79,7 +79,7 @@ export class OTPDataSourceComponent implements OnInit {
         }
     }
 
-    public get data(): OtpList {
+    public get data(): Array<OtpEntity> {
         return this._data;
     }
 

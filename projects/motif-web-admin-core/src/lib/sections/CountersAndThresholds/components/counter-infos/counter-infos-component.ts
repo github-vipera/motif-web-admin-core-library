@@ -2,7 +2,7 @@ import { WCGridEditorCommandsConfig, WCGridEditorCommandComponentEvent, WCConfir
 import { Component, OnInit, OnDestroy, EventEmitter, Output, Input } from '@angular/core';
 import { NGXLogger} from 'web-console-core';
 import { WCNotificationCenter, NotificationType } from 'web-console-ui-kit';
-import { CountersService, CounterInfoEntityList, CounterInfoEntity } from '@wa-motif-open-api/counters-thresholds-service';
+import { CountersService, CounterInfoEntity } from '@wa-motif-open-api/counters-thresholds-service';
 import { WCSubscriptionHandler } from '../../../../components/Commons/wc-subscription-handler';
 import { CounterInfosModel } from './data/model';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
@@ -99,7 +99,7 @@ export class CounterInfosComponent implements OnInit, OnDestroy {
     reloadData() {
         this.logger.debug(LOG_TAG, 'reloadData called');
         this.loading = true;
-        this._subHandler.add(this.countersService.getCounterInfoList().subscribe( (data: CounterInfoEntityList) => {
+        this._subHandler.add(this.countersService.getCounterInfoList().subscribe( (data: Array<CounterInfoEntity>) => {
             this.logger.debug(LOG_TAG, 'getCounterInfoList done: ', data);
             this.tableModel.loadData(data);
             this.clearSelection();

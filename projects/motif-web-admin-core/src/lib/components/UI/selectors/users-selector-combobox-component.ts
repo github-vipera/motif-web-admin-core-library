@@ -3,7 +3,7 @@ import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, forwardRef, 
 import { NGXLogger} from 'web-console-core'
 import { WCNotificationCenter, NotificationType } from 'web-console-ui-kit'
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { UsersService, User, UsersList } from '@wa-motif-open-api/platform-service';
+import { UsersService, User } from '@wa-motif-open-api/platform-service';
 import { WCSubscriptionHandler } from '../../Commons/wc-subscription-handler';
 
 const LOG_TAG = '[UsersSelectorComboBoxComponent]';
@@ -28,8 +28,8 @@ export const WC_USERS_SELECTOR_CONTROL_VALUE_ACCESSOR: any = {
 })
 export class UsersSelectorComboBoxComponent implements OnInit, OnDestroy {
 
-    public data: UsersList = [];
-    public usersList: UsersList = [];
+    public data: Array<User> = [];
+    public usersList: Array<User> = [];
     public _selectedUser: User;
     private _domain: string = null;
     @Output() userSelected: EventEmitter<User> = new EventEmitter();
@@ -73,7 +73,7 @@ export class UsersSelectorComboBoxComponent implements OnInit, OnDestroy {
     public refreshUsersList(): void {
         this.logger.debug(LOG_TAG, 'refreshUsersList domain=', this._domain);
         if (this._domain) {
-            this._subHandler.add(this.usersService.getUsersList(this._domain).subscribe( (data: UsersList) => {
+            this._subHandler.add(this.usersService.getUsersList(this._domain).subscribe( (data: Array<User>) => {
                 this.usersList = data;
                 this.data = this.usersList;
                 }, error => {

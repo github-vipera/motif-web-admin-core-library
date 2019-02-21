@@ -2,7 +2,7 @@ import { ComboBoxComponent } from '@progress/kendo-angular-dropdowns';
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, forwardRef, ViewChild } from '@angular/core';
 import { NGXLogger} from 'web-console-core';
 import { WCNotificationCenter, NotificationType } from 'web-console-ui-kit';
-import { ApplicationsService, ApplicationsList, Application } from '@wa-motif-open-api/platform-service';
+import { ApplicationsService, Application } from '@wa-motif-open-api/platform-service';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { WCSubscriptionHandler } from '../../Commons/wc-subscription-handler';
 
@@ -28,8 +28,8 @@ export const WC_APPLICATION_SELECTOR_CONTROL_VALUE_ACCESSOR: any = {
 })
 export class ApplicationSelectorComboBoxComponent implements OnInit, OnDestroy {
 
-    public data: ApplicationsList = [];
-    public applicationsList: ApplicationsList = [];
+    public data: Array<Application> = [];
+    public applicationsList: Array<Application> = [];
     public _selectedApplication: Application;
     private _domain: string = null;
     @Output() applicationSelected: EventEmitter<Application> = new EventEmitter();

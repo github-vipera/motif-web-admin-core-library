@@ -1,14 +1,12 @@
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { PluginView } from 'web-console-core'
-//import { UsersService, User } from '../../services/Platform/UsersService';
-//import { DomainsService, Domain } from '../../services/Platform/DomainsService';
 import { WCToasterService, WCConfirmationTitleProvider } from 'web-console-ui-kit'
 import { SortDescriptor, orderBy, GroupDescriptor, process, DataResult } from '@progress/kendo-data-query';
 import { PageChangeEvent, GridComponent } from '@progress/kendo-angular-grid';
 import { MotifQueryFilter, MotifQuerySort, MotifQueryResults, MotifQueryService, MotifPagedQuery } from 'web-console-core';
 import { WCSlidePanelComponent } from 'web-console-ui-kit'
 import { SelectableSettings, SelectionEvent, RowArgs } from '@progress/kendo-angular-grid';
-import { DomainsService, DomainsList, Domain, UsersService, UsersList } from '@wa-motif-open-api/platform-service'
+import { DomainsService, Domain, UsersService, User } from '@wa-motif-open-api/platform-service'
 import { String, StringBuilder } from 'typescript-string-operations'
 import * as _ from 'lodash';
 import { HttpParams } from '@angular/common/http';
@@ -35,8 +33,8 @@ export class UsersListComponent implements OnInit {
   @ViewChild('slideDownEditor') _slideDownEditor : WCSlidePanelComponent;
 
   //Data
-  public usersList: UsersList = [];
-  public domainList: DomainsList = [];
+  public usersList: Array<User> = [];
+  public domainList: Array<Domain> = [];
 
   public _selectedDomain:string; //combo box selection
   @Input("selection")
