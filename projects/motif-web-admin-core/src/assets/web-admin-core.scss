@@ -456,6 +456,16 @@ section .header.sub-header h1 {
 	color: #999;
 }
 
+
+.grid-edit-command-button {
+  color: $grid_command_color !important;
+}
+
+.k-grid tr.k-state-selected .grid-edit-command-button {
+  color: $grid_selected_row_command_color !important;
+}
+
+
 @import './web-admin-core-toolbar.scss';
 @import './web-admin-core-tabs.scss';
 @import './web-admin-core-buttons.scss';

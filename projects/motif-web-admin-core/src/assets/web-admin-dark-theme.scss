@@ -45,9 +45,9 @@ $input_focus_color:$main_color;
 $input_checkbox_checked_background_color: #666;
 $input_checkbox_checked_color: $main_color;
 
-$switch_background_color: #d45;
+$switch_background_color: rgb(218, 30, 52);
 $switch_before_background_color: $main_color;
-$switch_checked_background_color: #d45;
+$switch_checked_background_color: rgb(134, 179, 29);
 
 
 // Tree
@@ -194,7 +194,7 @@ $contextMenu_background_color: #363F44;
 $contextMenu_hover_background_color: rgb(45, 53, 57);
 $contextMenu_color: #bdbdbd;
 $contextMenu_disabled_color: #666;
-$menu_separator_color: #ffffff73;
+$menu_separator_color: rgba(255, 255, 255, 0.73);
 
 // Dialogs (PrimeNG)
 $dialog_background_color: #36424a;
@@ -228,10 +228,11 @@ $inputSwicth_slider_background_color: #ffffff;
 
 
 // Grid (Kendo UI)
+/*
 $grid_cell_checkbox_checked_color: #009900;
 $grid_cell_dirty_color: #ff0000;
-$grid_selected_row:#585164;
-$grid_selected_row_color:#fff;
+$grid_selected_row_color:#505050;
+$grid_selected_row:#FFFFFF;
 $grid_color:#ddd;
 //$grid_background_color:rgba(105, 148, 179, 0.19);
 $grid_background_color: transparent;
@@ -251,6 +252,33 @@ $pager_wrap_background_color: #353a3e;
 //->OK
 $grid_tr_hover_background_color: #333c4e;
 $grid_tr_hover_color: $grid_color;
+$grid_command_color: #ddd;
+$grid_selected_row_command_color: #ddd;
+*/
+$grid_column_resizer_color: transparent;
+$grid_footer_background_color: transparent;
+$grid_header_background_color: transparent;
+$grid_grouping_header_background_color: $grid_header_background_color;
+$grid_grouping_row_background_color: #363535;
+$grid_content_background_color: transparent;
+$table_edit_button_background_color: #22272b;
+$pager_wrap_color: #656565;
+$pager_wrap_background_color: #353a3e;
+$grid_cell_checkbox_checked_color: #009900;
+$grid_cell_dirty_color: #ff0000;
+//--
+$grid_background_color:rgba(0,0,0, 0);
+$grid_color:#DDDDDD;
+$grid_border_color:#666666;
+$grid_header_color:#DDDDDD;
+$grid_header_border_color:#DFDFDF;
+$grid_tr_hover_background_color:#545C73;
+$grid_tr_hover_color:#DDDDDD;
+$grid_selected_row_color:#505050;
+$grid_selected_row:#FFFFFF;
+$grid_command_color:#DDDDDD;
+$grid_selected_row_command_color:#DDDDDD;
+
 
 // Toolbar (Kendo UI)
 $toolbar_background_color: transparent;
@@ -261,7 +289,7 @@ $splitter_color: #656565;
 $splitter_background_color: rgb(56, 56, 56);
 
 // Notification
-$notification_color: #ffff;
+$notification_color: #ffffff;
 
 // Logo
 $logo_small_header:'';

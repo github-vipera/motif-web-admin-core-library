@@ -2,7 +2,7 @@
  * MENU
  */
 
-.ui-contextmenu {
+ .ui-contextmenu {
 	background-color: $contextMenu_background_color;
 	font-size: 0.85rem;
 }
@@ -96,6 +96,12 @@
 .ui-treetable .ui-treetable-tbody>tr>td {
   color: $grid_color;
 }
+
+.ui-treetable .ui-treetable-tbody>tr.ui-state-highlight>td {
+	color: $grid_selected_row;
+	background: $grid_selected_row_color;
+}
+
 
 .ui-treetable .ui-treetable-thead>tr>th {
   color: $grid_header_color;
