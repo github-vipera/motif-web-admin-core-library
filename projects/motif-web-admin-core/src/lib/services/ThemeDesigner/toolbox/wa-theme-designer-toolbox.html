@@ -1,0 +1,60 @@
+
+  <p-dialog #dialog header="Title" [(visible)]="display" id="wa-theme-editor-toolbox-element" [styleClass]="'wa-theme-editor-toolbox'" [contentStyle]="{ 'display': 'flex', 'flex-direction': 'column' }" [style]="{width: '450px' }">
+
+      <div style="overflow: hidden;">
+
+      <p-accordion class="wa-theme-editor-toolbox-accordion" [multiple]="true">
+
+          <p-accordionTab *ngFor="let item of themeModel.items"  header="{{item.description}}">
+
+              <div *ngFor="let colorItem of item.items"  class="wa-theme-designer-toolbox-item" >
+                  <wa-theme-designer-color-picker [colorItem]="colorItem" [label]="colorItem.description" [color]="colorItem.value" style="width:150px;" (pickerButtonClick)="onPickerButtonClick($event)"></wa-theme-designer-color-picker>
+              </div>
+
+          </p-accordionTab>
+
+      </p-accordion>
+
+    </div>
+
+      <div class="wa-theme-designer-toolbox-bottom-toolbar">
+        <button class="wa-theme-designer-toolbox-bottom-toolbar-button" (click)="onDownloadClick($event)">Download</button>
+      </div>
+
+  </p-dialog>
+
+<p-overlayPanel appendTo="body" #op
+                  [style]="{padding:'0px'}"
+                  [dismissable]="false"
+                  [showCloseIcon]="true"
+                  [styleClass]="'wa-theme-editor-color-picker-overlay'"
+                  >
+    <color-chrome #colorPanel [color]="currentEditingColor" (onChange)="handlePickerColorChange($event)"></color-chrome>
+</p-overlayPanel>
+
+<input readonly type="text" #hiddenInput (blur)="onHiddenInputBlur($event)" class="wa-theme-editor-color-picker-control-hidden-input">
+
+       <!--
+          <p-accordionTab header="Header 1">
+          </p-accordionTab>
+
+          <p-accordionTab header="Header 2">
+
+            <div class="wa-theme-designer-toolbox-item">
+                <wa-theme-designer-color-picker [label]="'Background Color'" [color]="'rgba(80,80,156, 0.4)'" style="width:150px;"></wa-theme-designer-color-picker>
+            </div>
+            <div class="wa-theme-designer-toolbox-item">
+                <wa-theme-designer-color-picker [label]="'Text Color'" [color]="'white'" style="width:150px;"></wa-theme-designer-color-picker>
+            </div>
+
+            </p-accordionTab>
+
+          <p-accordionTab header="Header 3">
+              <div class="wa-theme-designer-toolbox-item">
+                  <wa-theme-designer-color-picker [label]="'Background Color'" [color]="'rgba(20,20,156, 0.4)'" style="width:150px;"></wa-theme-designer-color-picker>
+              </div>
+              <div class="wa-theme-designer-toolbox-item">
+                  <wa-theme-designer-color-picker [label]="'Text Color'" [color]="'blue'" style="width:150px;"></wa-theme-designer-color-picker>
+              </div>
+            </p-accordionTab>
+          -->

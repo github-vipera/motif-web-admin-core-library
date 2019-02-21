@@ -1,0 +1,79 @@
+<p-dialog
+  #newItemDialog
+  [(visible)]="display"
+  [modal]="true"
+  [responsive]="true"
+  [style]="{ width: '450px', minWidth: '400px' }"
+  [minY]="70"
+  [baseZIndex]="10000"
+>
+  <p-header> {{titlePart}} Threshold </p-header>
+  
+  <div style="min-width: 350px;display:flex;flex-direction: column;">
+    <kendo-textbox-container
+      floatingLabel="Threshold Name"
+      style="width: 100%;"
+    >
+      <input kendoTextBox [(ngModel)]="name" required [attr.disabled]="currentEditType=== EditType.Update ? 'disabled' : null"/>
+    </kendo-textbox-container>
+    <label class="warning-label" *ngIf="nameEditingWarningDisplay"
+      >Invalid name</label
+    >
+
+    <kendo-textbox-container floatingLabel="Description" style="width: 100%;">
+      <input kendoTextBox [(ngModel)]="description" required/>
+    </kendo-textbox-container>
+
+    <label class="switch-control-label"> 
+        Enabled
+    </label>
+    <p-inputSwitch [(ngModel)]="enabled"></p-inputSwitch>
+
+    <label class="switch-control-label"> 
+        Deny
+    </label>
+    <p-inputSwitch [(ngModel)]="deny"></p-inputSwitch>
+
+    <label class="switch-control-label"> 
+      Type
+    </label>
+    <kendo-dropdownlist [data]="types" [(ngModel)]="type" [valuePrimitive]="true" [attr.disabled]="currentEditType=== EditType.Update ? 'disabled' : null" [popupSettings]="{ 'popupClass' : 'wa-kui-combobox-popup', 'animate' : false }"></kendo-dropdownlist>
+
+    <kendo-textbox-container floatingLabel="Check Function" style="width: 100%;">
+      <input kendoTextBox [(ngModel)]="fn" required />
+    </kendo-textbox-container>
+
+    <kendo-textbox-container floatingLabel="Check Function Params" style="width: 100%;">
+        <input kendoTextBox [(ngModel)]="fnParams" required />
+      </kendo-textbox-container>
+  
+      <kendo-textbox-container floatingLabel="Action Function" style="width: 100%;">
+          <input kendoTextBox [(ngModel)]="action" required />
+        </kendo-textbox-container>
+    
+        <kendo-textbox-container floatingLabel="Action Function Params" style="width: 100%;">
+            <input kendoTextBox [(ngModel)]="actionParams" required />
+          </kendo-textbox-container>
+        
+
+  </div>
+
+  <p-footer>
+    <kendo-buttongroup look="flat">
+      <button kendoButton [toggleable]="false" (click)="onCancel()">
+        Cancel
+      </button>
+      <button
+        kendoButton
+        [toggleable]="false"
+        [primary]="true"
+        (click)="onConfirm()"
+      >
+        {{confirmButtonTitle}}
+      </button>
+    </kendo-buttongroup>
+  </p-footer>
+</p-dialog>
+
+
+<wc-service-catalog-selector-dialog #entitySelector [dataFilter]="{ 'channel': 'JSON'}" (select)="onEntrySelected($event)"></wc-service-catalog-selector-dialog>

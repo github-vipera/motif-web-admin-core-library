@@ -1,0 +1,25 @@
+<p-dialog
+  #newItemDialog
+  focusOnShow="true"
+  [(visible)]="display"
+  [modal]="true"
+  [responsive]="true"
+  [contentStyle]="{'height':'78%'}"
+  [style]="{ width: '750px', maxWidth: '750px',  height: '6800px', minHeight: '680px'}"
+  [baseZIndex]="10000"
+  [resizable]="false"
+>
+  <p-header> Offline Messages </p-header>
+
+  <div style="height: 300px;">
+    <wa-message-categories-component #messageCategories [domain]="domain" (selectionChange)="onSelectionChange($event)"></wa-message-categories-component>
+  </div>
+
+  <p-footer>
+    <kendo-buttongroup look="flat">
+      <button kendoButton [toggleable]="false" (click)="onCancel();">Cancel</button>
+      <button kendoButton [toggleable]="false" [primary]="true" (click)="onConfirm();" [disabled]="!canSelect">Select</button>
+    </kendo-buttongroup>
+  </p-footer>
+
+</p-dialog>

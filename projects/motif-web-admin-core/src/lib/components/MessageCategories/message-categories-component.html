@@ -1,0 +1,9 @@
+<kendo-splitter orientation="horizontal" style="width: 100%; height:100%;">
+  <kendo-splitter-pane min="20%" size="30%" style="padding: 2px;overflow: hidden;">
+    <wa-message-categories-category-pane #categoriesPane [domain]="domain" (selectionChange)="onCategorySelection($event)"></wa-message-categories-category-pane>
+  </kendo-splitter-pane>
+
+  <kendo-splitter-pane min="30%" style="padding: 2px;overflow: hidden;">
+    <wa-message-categories-messages-pane #messagesPane [domain]="domain" [category]="selectedCategory" (selectionChange)="onMessageSelectionChange($event)"></wa-message-categories-messages-pane>
+  </kendo-splitter-pane>
+</kendo-splitter>

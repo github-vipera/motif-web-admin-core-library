@@ -1,0 +1,54 @@
+
+
+
+app-root {
+
+  button {
+    outline: none;
+  }
+
+  button.k-button.k-flat {
+    background-color: $button_background_color !important;
+    color: $button_color !important;
+    /*
+    border: solid 1px $button_border_color !important;
+    */
+  }
+
+  button.k-button.k-state-disabled {
+    background-color: $button_disabled_background_color !important;
+    color: $button_disabled_color !important;
+    /*
+    border: solid 1px  $button_disabled_border_color !important;
+    */
+  }
+
+  button.k-button.k-flat:hover {
+    background-color: $button_hover_background_color !important;
+    color: $button_hover_color !important;
+    /*border: solid 1px  $button_hover_border_color !important;*/
+  }
+
+  button:active, .btn:active {
+    background:$button_active_background_color;
+     color:$button_active_color;
+   }
+
+   button.primary, .btn.primary {
+    background:$button_primary_background_color;
+     color:$button_primary_color;
+   }
+
+
+   .k-button {
+    font-size: 11px;
+    color: combobox_ng_color;
+  }
+
+  .ui-button {
+    border: 0;
+    color: $button_color !important;
+  }
+
+}
+

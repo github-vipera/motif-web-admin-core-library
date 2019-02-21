@@ -1,0 +1,133 @@
+
+/// SECTIONS >>>>>>>>=================================
+
+/* Access Control Section */
+.acl-label {
+    color: $label_color;
+}
+
+.user-status-ACTIVE {
+    background-color: $badge_enabled_background_color;
+    color: $badge_enabled_color;
+}
+
+.user-status-PREACTIVE {
+	background-color: $badge_warning_background_color;
+	color: $badge_warning_color;
+}
+
+/* Application Content */
+
+/* Configuration */
+
+/* Counters & Thresholds */
+
+.wa-licman-details-item.license-key{
+    span {
+        color: $label_warn_color;
+    }
+}
+
+/* License Management */
+
+/* Log Management */
+.small-copy-button {
+    background: #262c31;
+    color: white;
+    border: solid 2px #ffffff70;
+}
+
+/* OAuth2 */
+
+/* Plugins */
+
+/* Sessions */
+
+/* Utilities-OTP */
+
+/* Web Content */
+
+/* Services */
+
+
+.channel-label:empty,
+.badge:empty {
+    color: $service_catalog_badge_channel_color;
+}
+
+.channel-label {
+ color: $service_catalog_badge_channel_color;
+}
+
+.badge-channel-REST {
+    background-color: $service_catalog_badge_channel_rest_background_color;
+    color: $service_catalog_badge_channel_rest_color;
+}
+
+.badge-channel-JSON {
+    background-color: $service_catalog_badge_channel_json_background_color;
+    color: $service_catalog_badge_channel_json_color;
+}
+
+.badge-channel-BROWSER {
+    background-color: $service_catalog_badge_channel_browser_background_color;
+    color: $service_catalog_badge_channel_browser_color;
+}
+
+.badge-channel-SMS {
+    background-color: $service_catalog_badge_channel_sms_background_color;
+    color: $service_catalog_badge_channel_sms_color;
+}
+
+.badge-channel-WEBADMIN {
+    background-color: $service_catalog_badge_channel_webadmin_background_color;
+    color: $service_catalog_badge_channel_webadmin_color;
+}
+
+.badge-channel-WEBCONTENT {
+    background-color: $service_catalog_badge_channel_webcontent_background_color;
+    color: $service_catalog_badge_channel_webcontent_color;
+}
+
+
+wa-service-catalog-selector .node-icon-Domain {
+    color: $service_catalog_icon_color;
+}
+
+wa-service-catalog-selector .node-icon-Application {
+    color: $service_catalog_icon_color;
+}
+
+wa-service-catalog-selector .node-icon-Service {
+    color: $service_catalog_icon_color;
+}
+
+
+wa-service-catalog-selector .ui-state-highlight {
+    background-color: $grid_selected_row_color;
+    color: $grid_selected_row;
+}
+
+wa-service-catalog-selector .ui-state-highlight>td {
+    color: $grid_selected_row;
+}
+
+wa-service-catalog-selector .ui-state-highlight>tr {
+  color: $grid_selected_row;
+}
+
+wa-service-catalog-selector p-treetable table th {
+    border-bottom: 1px solid $grid_border_color;
+}
+
+wa-service-catalog-selector p-treetable table  td {
+    border-bottom: 1px dotted $grid_border_color;
+}
+
+wa-service-catalog-selector p-treetable table  td:focus {
+  outline: none;
+}
+
+wa-service-catalog-selector p-treetable table  tr:focus {
+  outline: none;
+}

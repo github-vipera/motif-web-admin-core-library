@@ -1,0 +1,157 @@
+$prefix: "--"; //Prefix string for custom CSS properties
+
+//Merges a variable name with $prefix
+@function custom-property-name($name) {
+    @return $prefix + $name;
+}
+
+// Defines a custom property
+@mixin define-custom-property($name, $value) {
+    #{custom-property-name($name)}: $value;
+}
+
+body {
+
+    // Append SASS variables which are desired to be accesible:
+    @include define-custom-property('main-background-color', $main_background_color);
+    //@include define-custom-property('main-color', $main_color);
+
+    //Lables and Titles
+    @include define-custom-property('title-1-color', $title1_color);
+
+    //Header
+    @include define-custom-property('header-background-color', $header_background_color);
+    @include define-custom-property('header-color', $header_description_color);
+    @include define-custom-property('header-color-hover', $header_description_hover_color);
+
+    //Footer
+    @include define-custom-property('footer-background-color', $footer_background_color);
+    @include define-custom-property('footer-color', $footer_color);
+
+    //Grid
+    @include define-custom-property('grid-color', $grid_color);
+    @include define-custom-property('grid-background-color', $grid_background_color);
+    @include define-custom-property('grid-border-color', $grid_border_color);
+    @include define-custom-property('grid-header-color', $grid_header_color);
+    @include define-custom-property('grid-header-border-color', $grid_header_border_color);
+    @include define-custom-property('grid-row-hover-color', $grid_tr_hover_color);
+    @include define-custom-property('grid-row-hover-background-color', $grid_tr_hover_background_color);
+    @include define-custom-property('grid-row-selected-background-color', $grid_selected_row_color);
+    @include define-custom-property('grid-row-selected-color', $grid_selected_row);
+    @include define-custom-property('grid-command-color', $grid_command_color);
+    @include define-custom-property('grid-selected-row-command-color', $grid_selected_row_command_color);
+
+    //Toolbar
+    @include define-custom-property('nav-background-color', $nav_background_color);
+    @include define-custom-property('nav-border-color', $nav_a_a_border_color);
+    @include define-custom-property('nav-color', $nav_color);
+    @include define-custom-property('nav-hover-background-color', $nav_hover_background_color);
+    @include define-custom-property('nav-hover-color', $nav_hover_color);
+
+
+    // Tabs
+    @include define-custom-property('tab-selected-background-color', $tab_selected_background_color);
+    @include define-custom-property('tab-selected-color', $tab_selected_color);
+    @include define-custom-property('tab-background-color', $tab_background_color);
+    @include define-custom-property('tab-color', $tab_color);
+
+    // Buttons
+    @include define-custom-property('button-background-color', $button_background_color);
+    @include define-custom-property('button-color', $button_color);
+    @include define-custom-property('button-border-color', $button_border_color);
+    @include define-custom-property('button-hover-background-color', $button_hover_background_color);
+    @include define-custom-property('button-hover-color', $button_hover_color);
+    @include define-custom-property('button-hover-border-color', $button_hover_border_color);
+    @include define-custom-property('button-disabled-background-color', $button_disabled_background_color);
+    @include define-custom-property('button-disabled-color', $button_disabled_color);
+    @include define-custom-property('button-disabled-border-color', $button_disabled_border_color);
+
+    // Comboboxes
+    @include define-custom-property('combobox-background-color', $combobox_background_color);
+    @include define-custom-property('combobox-color', $combobox_color);
+    @include define-custom-property('combobox-selected-item-background-color', $combobox_selected_item_background_color);
+    @include define-custom-property('combobox-selected-item-color', $combobox_selected_item_color);
+    @include define-custom-property('combobox-button-background-color', $combobox_button_background_color);
+    @include define-custom-property('combobox-button-color', $combobox_button_color);
+
+    // Input
+    @include define-custom-property('input-background-color', $input_background_color);
+    @include define-custom-property('input-color', $input_color);
+    @include define-custom-property('input-placeholder-color', $input_placeholder_color);
+    @include define-custom-property('input-border-color', $input_border_color);
+    @include define-custom-property('input-focus-background-color', $input_focus_background_color);
+    @include define-custom-property('input-focus-color', $input_focus_color);
+
+}
+
+$main_background_color: var(--main-background-color);
+//$main_color: var(--main-color);
+
+$title1_color: var(--title-1-color);
+
+// Header
+$header_background_color: var(--header-background-color);
+$header_description_color: var(--header-color);
+$header_description_hover_color: var(--header-color-hover);
+
+// Footer
+$footer_background_color: var(--footer-background-color);
+$footer_color: var(--footer-color);
+
+// Grid
+$grid_color : var(--grid-color);
+$grid_border_color: var(--grid-border-color);
+$grid_header_color : var(--grid-header-color);
+$grid_header_border_color: var(--grid-header-border-color);
+$grid_background_color: var(--grid-background-color);
+$grid_tr_hover_background_color: var(--grid-row-hover-background-color);
+$grid_tr_hover_color: var(--grid-row-hover-color);
+$grid_selected_row_color: var(--grid-row-selected-background-color);
+$grid_selected_row: var(--grid-row-selected-color);
+$grid_command_color: var(--grid-command-color);
+$grid_selected_row_command_color: var(--grid-selected-row-command-color);
+
+
+// Toolbar
+$nav_background_color: var(--nav-background-color);
+$nav_a_a_border_color: var(--nav-border-color);
+$nav_color: var(--nav-color);
+$nav_hover_background_color: var(--nav-hover-background-color);
+$nav_hover_color: var(--nav-hover-color);
+
+
+// Tabs
+$tab_selected_background_color : var(--tab-selected-background-color);
+$tab_selected_color : var(--tab-selected-color);
+$tab_color : var(--tab-color);
+$tab_background_color : var(--tab-background-color);
+
+// Buttons
+$button_background_color: var(--button-background-color);
+$button_color: var(--button-color);
+$button_border_color: var(--button-border-color);
+
+$button_hover_background_color: var(--button-hover-background-color);
+$button_hover_color: var(--button-hover-color);
+$button_hover_border_color: var(--button-hover-border-color);
+
+$button_disabled_background_color: var(--button-disabled-background-color);
+$button_disabled_color: var(--button-disabled-color);
+$button_disabled_border_color: var(--button-disabled-border-color);
+
+
+// Combo Boxes
+$combobox_background_color: var(--combobox-background-color);
+$combobox_color: var(--combobox-color);
+$combobox_selected_item_background_color: var(--combobox-selected-item-background-color);
+$combobox_selected_item_color: var(--combobox-selected-item-color);
+$combobox_button_background_color: var(--combobox-button-background-color);
+$combobox_button_color: var(--combobox-button-color);
+
+// Input
+$input_background_color : var(--input-background-color);
+$input_color : var(--input-color);
+$input_placeholder_color: var(--input-placeholder-color);
+$input_border_color: var(--input-border-color);
+$input_focus_background_color: var(--input-focus-background-color);
+$input_focus_color: var(--input-focus-color);

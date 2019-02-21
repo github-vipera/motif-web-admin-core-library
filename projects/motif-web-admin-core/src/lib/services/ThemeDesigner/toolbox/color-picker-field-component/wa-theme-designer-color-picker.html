@@ -1,0 +1,35 @@
+
+<div class="wa-theme-editor-color-picker-control">
+
+  <a class="wa-theme-editor-color-picker-control-label">{{label}}</a>
+
+  <wa-theme-designer-color-picker-input-field style="width: 100%;" [color]="colorRaw" [text]="color" (dblclick)="onInputDblClick($event)">
+  </wa-theme-designer-color-picker-input-field>
+
+  <button #pickerButton (click)="onPickerButtonClick($event)" class="wa-theme-editor-color-picker-button">
+      <img class="wa-theme-editor-color-picker-button-icon" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMzNweCIgaGVpZ2h0PSIzM3B4IiB2aWV3Qm94PSIwIDAgMzMgMzMiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8IS0tIEdlbmVyYXRvcjogU2tldGNoIDQ0LjEgKDQxNDU1KSAtIGh0dHA6Ly93d3cuYm9oZW1pYW5jb2RpbmcuY29tL3NrZXRjaCAtLT4KICAgIDx0aXRsZT5VbnRpdGxlZDwvdGl0bGU+CiAgICA8ZGVzYz5DcmVhdGVkIHdpdGggU2tldGNoLjwvZGVzYz4KICAgIDxkZWZzPjwvZGVmcz4KICAgIDxnIGlkPSJQYWdlLTEiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIiBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPgogICAgICAgIDxnIGlkPSJtYWdpYy13YW5kIiBmaWxsLXJ1bGU9Im5vbnplcm8iIGZpbGw9IiNGRkZGRkYiPgogICAgICAgICAgICA8cGF0aCBkPSJNOCw2IEw0LDIgTDIsMiBMMiw0IEw2LDggTDgsNiBaIE0xMCwwIEwxMiwwIEwxMiw0IEwxMCw0IEwxMCwwIFogTTE4LDEwIEwyMiwxMCBMMjIsMTIgTDE4LDEyIEwxOCwxMCBaIE0yMCw0IEwyMCwyIEwxOCwyIEwxNCw2IEwxNiw4IEwyMCw0IFogTTAsMTAgTDQsMTAgTDQsMTIgTDAsMTIgTDAsMTAgWiBNMTAsMTggTDEyLDE4IEwxMiwyMiBMMTAsMjIgTDEwLDE4IFogTTIsMTggTDIsMjAgTDQsMjAgTDgsMTYgTDYsMTQgTDIsMTggWiBNMzEuNTYzLDI3LjU2MyBMMTEuNjg0LDcuNjg0IEMxMS4xMDEsNy4xMDEgMTAuMTQ2LDcuMTAxIDkuNTYzLDcuNjg0IEw3LjY4NCw5LjU2MyBDNy4xMDEsMTAuMTQ2IDcuMTAxLDExLjEwMSA3LjY4NCwxMS42ODQgTDI3LjU2MywzMS41NjMgQzI4LjE0NiwzMi4xNDYgMjkuMTAxLDMyLjE0NiAyOS42ODQsMzEuNTYzIEwzMS41NjMsMjkuNjg0IEMzMi4xNDYsMjkuMTAxIDMyLjE0NiwyOC4xNDYgMzEuNTYzLDI3LjU2MyBaIE0xNSwxNyBMOSwxMSBMMTEsOSBMMTcsMTUgTDE1LDE3IFoiIGlkPSJTaGFwZSI+PC9wYXRoPgogICAgICAgIDwvZz4KICAgIDwvZz4KPC9zdmc+" alt="Red dot" />
+  </button>
+  <button  (click)="onPickerCopyButtonClick($event)" class="wa-theme-editor-color-picker-button">
+    <img class="wa-theme-editor-color-picker-button-icon" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMzJweCIgaGVpZ2h0PSIzMnB4IiB2aWV3Qm94PSIwIDAgMzIgMzIiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8IS0tIEdlbmVyYXRvcjogU2tldGNoIDQ0LjEgKDQxNDU1KSAtIGh0dHA6Ly93d3cuYm9oZW1pYW5jb2RpbmcuY29tL3NrZXRjaCAtLT4KICAgIDx0aXRsZT5VbnRpdGxlZDwvdGl0bGU+CiAgICA8ZGVzYz5DcmVhdGVkIHdpdGggU2tldGNoLjwvZGVzYz4KICAgIDxkZWZzPjwvZGVmcz4KICAgIDxnIGlkPSJQYWdlLTEiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIiBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPgogICAgICAgIDxnIGlkPSJjb3B5IiBmaWxsLXJ1bGU9Im5vbnplcm8iIGZpbGw9IiNGRkZGRkYiPgogICAgICAgICAgICA8cGF0aCBkPSJNMjAsOCBMMjAsMCBMNiwwIEwwLDYgTDAsMjQgTDEyLDI0IEwxMiwzMiBMMzIsMzIgTDMyLDggTDIwLDggWiBNNiwyLjgyOCBMNiw2IEwyLjgyOCw2IEw2LDIuODI4IFogTTIsMjIgTDIsOCBMOCw4IEw4LDIgTDE4LDIgTDE4LDggTDEyLDE0IEwxMiwyMiBMMiwyMiBaIE0xOCwxMC44MjggTDE4LDE0IEwxNC44MjgsMTQgTDE4LDEwLjgyOCBaIE0zMCwzMCBMMTQsMzAgTDE0LDE2IEwyMCwxNiBMMjAsMTAgTDMwLDEwIEwzMCwzMCBaIiBpZD0iU2hhcGUiPjwvcGF0aD4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPg==" alt="Red dot" />
+  </button>
+  <button  (click)="onPickerPasteButtonClick($event)" class="wa-theme-editor-color-picker-button">
+    <img class="wa-theme-editor-color-picker-button-icon" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMzBweCIgaGVpZ2h0PSIzMnB4IiB2aWV3Qm94PSIwIDAgMzAgMzIiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8IS0tIEdlbmVyYXRvcjogU2tldGNoIDQ0LjEgKDQxNDU1KSAtIGh0dHA6Ly93d3cuYm9oZW1pYW5jb2RpbmcuY29tL3NrZXRjaCAtLT4KICAgIDx0aXRsZT5VbnRpdGxlZCAyPC90aXRsZT4KICAgIDxkZXNjPkNyZWF0ZWQgd2l0aCBTa2V0Y2guPC9kZXNjPgogICAgPGRlZnM+PC9kZWZzPgogICAgPGcgaWQ9IlBhZ2UtMSIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPGcgaWQ9InBhc3RlIiBmaWxsLXJ1bGU9Im5vbnplcm8iIGZpbGw9IiNGRkZGRkYiPgogICAgICAgICAgICA8cGF0aCBkPSJNMjAsNCBMMTYsNCBMMTYsMiBDMTYsMC45IDE1LjEsMCAxNCwwIEwxMCwwIEM4LjksMCA4LDAuOSA4LDIgTDgsNCBMNCw0IEw0LDggTDIwLDggTDIwLDQgWiBNMTQsNCBMMTAsNCBMMTAsMi4wMDQgQzEwLjAwMSwyLjAwMyAxMC4wMDIsMi4wMDIgMTAuMDA0LDIgTDEzLjk5NywyIEMxMy45OTgsMi4wMDEgMTQsMi4wMDIgMTQuMDAxLDIuMDA0IEwxNC4wMDEsNCBMMTQsNCBaIE0yNCwxMCBMMjQsNSBDMjQsNC40NSAyMy41NSw0IDIzLDQgTDIxLDQgTDIxLDYgTDIyLDYgTDIyLDEwIEwxNiwxMCBMMTAsMTYgTDEwLDI0IEwyLDI0IEwyLDYgTDMsNiBMMyw0IEwxLDQgQzAuNDUsNCAwLDQuNDUgMCw1IEwwLDI1IEMwLDI1LjU1IDAuNDUsMjYgMSwyNiBMMTAsMjYgTDEwLDMyIEwzMCwzMiBMMzAsMTAgTDI0LDEwIFogTTE2LDEyLjgyOCBMMTYsMTYgTDEyLjgyOCwxNiBMMTYsMTIuODI4IFogTTI4LDMwIEwxMiwzMCBMMTIsMTggTDE4LDE4IEwxOCwxMiBMMjgsMTIgTDI4LDMwIFoiIGlkPSJTaGFwZSI+PC9wYXRoPgogICAgICAgIDwvZz4KICAgIDwvZz4KPC9zdmc+" alt="Red dot" />
+  </button>
+  <!--
+  <input readonly type="text" #hiddenInput (blur)="onHiddenInputBlur($event)" class="wa-theme-editor-color-picker-control-hidden-input">
+  -->
+
+</div>
+
+<!--
+<p-overlayPanel appendTo="body" #op
+                  [style]="{padding:'0px'}"
+                  [dismissable]="false"
+                  [showCloseIcon]="true"
+                  [styleClass]="'wa-theme-editor-color-picker-overlay'"
+
+                  >
+    <color-chrome #colorPanel [color]="color" (onChange)="handleChange($event)"></color-chrome>
+
+</p-overlayPanel>
+-->

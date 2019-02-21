@@ -1,0 +1,334 @@
+$body_background_color:#282D31;
+
+// Main
+$main_background_color:#22272B;
+$main_color: #ddd;
+$title1_color: $main_color;
+
+// Parts
+$part_background_color: #363F44;
+$part_processing_half_background_color: #474F55;
+
+// Mark
+$mark_background_color:#ff0;
+$mark_color:#000;
+
+// Selection
+$selection_background_color: #999;
+
+// Common Elements
+$label_color: #888;
+$label_background_color: transparent;
+$label_warn_color: #46d046;
+
+
+$dashboard_background_color: #353A3E;
+
+$ok_color: #6C4;
+$ok_fill: $ok_color;
+
+$ko_color: #d45;
+$ko_fill: $ko_color;
+
+$warn_color: #fc0;
+$warn_fill: $warn_color;
+
+// Input
+$input_background_color: #353A3E;
+$input_color:$main_color;
+$input_placeholder_color: rgb(147, 147, 147);
+$input_border_color: transparent;
+$input_focus_background_color: #353A3E;
+$input_focus_color:$main_color;
+
+
+$input_checkbox_checked_background_color: #666;
+$input_checkbox_checked_color: $main_color;
+
+$switch_background_color: rgb(218, 30, 52);
+$switch_before_background_color: $main_color;
+$switch_checked_background_color: rgb(134, 179, 29);
+
+
+// Tree
+$tree_head_color: $label_color;
+$tree_head_border_color: #666;
+$tree_child_color: #999;
+$tree_child_active_color: $main_color;
+$tree_child_active_background_color: rgba(255,255,255,.1);
+$tree_child_hover_background_color: rgba(255,255,255,.5);
+
+
+// Login
+$login_logo_background:#1A1D22;
+$login_part_color:#aaa;
+
+// Header
+$header_background_color: $part_background_color;
+$header_description_color: #787f84;
+$header_description_hover_color: #ccc;
+
+// Toolbar (Nav)
+$nav_background_color: #2E3337;
+$nav_div_background_color: #363F44;
+$nav_div_color: #ccc;
+$nav_color: #999;
+$nav_hover_color: #fff;
+$nav_hover_background_color: $nav_div_background_color;
+$nav_a_hover_span_background_color: $nav_div_background_color;
+$nav_a_hover_box_shadow_color: rgba(0,0,0,.5);
+$nav_a_a_border_color: #444;
+$nav_a_current_color: #eee;
+$nav_a_current_background_color: #22272B;
+$nav_a_current_hover_background_color: $nav_a_current_background_color;
+
+
+// Tabs
+$tab_selected_color: #ddd;
+$tab_selected_background_color: $main_background_color;
+$tab_color: #ddd;
+$tab_background_color: $part_background_color;
+
+// Inspector
+$aside_color: #ddd;
+$aside_border_color: #999;
+$inspector_input_focus_background_color: #484f54;
+$inspector_textarea_focus_background_color: #484f54;
+$inspector_label_disabled_color: #666;
+$inspector_button_disabled_color: #666;
+$inspector_select_disabled_color: #666;
+
+// Section
+$section_background_color: $main_background_color;
+$section_header_p_color: #999;
+
+// Editor
+$editor_color: #aaa;
+$editor_background_color: rgba(255,255,255,.1);
+$editor_border_color: #d45;
+
+
+// Table
+$table_th_border_bottom_color:#aaa;
+$table_th_color:#ddd;
+$table_table_sorter_color:#6c4;
+$table_td_border_bottom_color:#666;
+$table_td_color:#aaa;
+$table_td_hover_background_color:rgba(255,255,255,.07);
+$table_nth_background_color:rgba(255,255,255,.03);
+$table_error_border_color: #d45;
+$table_sorter_childRow_border_color: #555;
+$table_sorter_childRow_color: #ccc;
+
+// Counter
+$counter_value_color: #ddd;
+$counter_key_color: #999;
+
+// List
+$list_border_color: #666;
+$list_key_color: #ddd;
+$list_key_value: #aaa;
+
+
+// Footer
+$footer_background_color: $part_background_color;
+$footer_color: #ccc;
+$footer_switch_background_color: rgba(255,255,255,.1);;
+$footer_switch_before_background_color: rgba(255,255,255,.3);
+$footer_switch_checked_background_color: rgba(0,0,0,.2);
+$footer_switch_checked_before_background_color: #fff;
+$footer_size_background_color: rgba(255,255,255,.1);
+$footer_size_label_background_color: rgba(255,255,255,.4);
+$footer_size_label_hover_background_color: rgba(255,255,255,.8);
+$footer_size_label_checked_background_color: rgba(255,255,255,1);
+$footer_license_color: #787f84;
+$footer_license_hover_color: #ccc;
+
+// Others
+$loading_background_color: rgba(255,255,255,.4);
+$loading_color: #fff;
+$loading_div_background_color: #22272B;
+
+$spinner_before_background_color: rgba(255,255,255,.3);;
+$spinner_after_background_color: rgba(255,255,255,.3);;
+
+$notification_background_color: #11161A;
+$notification_color: #eee;
+$notification_border: #666;
+
+// Animations
+$keyframes_processing_0_background_color:#363F44;
+$keyframes_processing_50_background_color:#474F55;
+$keyframes_processing_100_background_color:#363F44;
+
+$gauge_before_background_color:#494f54;
+$gauge_after_background_color:#494f54;
+
+$percentage_meter_background_color:#6C4;
+$percentage_indicator_color:#aaa;
+
+$meter_background_color:#d45;
+
+$chart_fig_caption_color: #aaa;
+
+
+// Gridster
+$gridster_item_background_color: #353A3E;
+$gridster_column_border_color: rgba(255, 255, 255, 0.19);
+
+$section_sub_header_color: gray;
+$warning_label_color: #ff4b4b;
+$property_modified_color: red;
+
+$badge_enabled_background_color:green;
+$badge_enabled_color:#fff;
+$badge_disabled_background_color:gray;
+$badge_disabled_color:#454545;
+$badge_warning_background_color:rgb(105, 202, 60);
+$badge_warning_color: #fff;
+$badge_error_background_color:rgb(255, 38, 38);
+$badge_error_color: #fff;
+
+// Context menu (PrimeNG)
+$contextMenu_background_color: #363F44;
+$contextMenu_hover_background_color: rgb(45, 53, 57);
+$contextMenu_color: #bdbdbd;
+$contextMenu_disabled_color: #666;
+$menu_separator_color: rgba(255, 255, 255, 0.73);
+
+// Dialogs (PrimeNG)
+$dialog_background_color: #36424a;
+$dialog_header_background_color: #1b1f21;
+$dialog_header_color: #c1c1c1;
+
+// Dropdowns (PrimeNG)
+$dropdown_panel_background_color:#444c50;
+$dropdown_panel_color:white;
+$dropdown_item_hover_background_color:#3e4448;
+$dropdown_item_color:#ddd;
+
+// Combo Box (PrimeNG)
+$combobox_background_color: #30383e;
+$combobox_color: #ddd;
+$combobox_selected_item_background_color: #3f596d;
+$combobox_selected_item_color: #ddd;
+$combobox_button_background_color: #aaa;
+$combobox_button_color: #404040;
+$combobox_button_hover_background_color: $combobox_button_background_color;
+$combobox_button_hover_color: $combobox_button_color;
+
+// UI Placeholder (PrimeNG)
+$ui_placeholder_color: #888888 !important;
+
+// Switch Button (PrimeNG)
+$inputSwicth_background_color: #7a7b7b;
+$inputSwicth_checked_background_color: #62ce39;
+$inputSwicth_slider_background_color: #ffffff;
+
+
+
+// Grid (Kendo UI)
+/*
+$grid_cell_checkbox_checked_color: #009900;
+$grid_cell_dirty_color: #ff0000;
+$grid_selected_row_color:#505050;
+$grid_selected_row:#FFFFFF;
+$grid_color:#ddd;
+//$grid_background_color:rgba(105, 148, 179, 0.19);
+$grid_background_color: transparent;
+$grid_background_opacity: 0;
+$grid_border_color: #666;
+$grid_content_background_color: transparent;
+$grid_header_background_color: transparent;
+$grid_footer_background_color: transparent;
+$grid_column_resizer_color: transparent;
+$grid_grouping_header_background_color: $grid_header_background_color;
+$grid_grouping_row_background_color: #363535;
+$grid_header_color: #ddd;
+$grid_header_border_color: rgb(223, 223, 223);
+$table_edit_button_background_color: #22272b;
+$pager_wrap_color: #656565;
+$pager_wrap_background_color: #353a3e;
+//->OK
+$grid_tr_hover_background_color: #333c4e;
+$grid_tr_hover_color: $grid_color;
+$grid_command_color: #ddd;
+$grid_selected_row_command_color: #ddd;
+*/
+$grid_column_resizer_color: transparent;
+$grid_footer_background_color: transparent;
+$grid_header_background_color: transparent;
+$grid_grouping_header_background_color: $grid_header_background_color;
+$grid_grouping_row_background_color: #363535;
+$grid_content_background_color: transparent;
+$table_edit_button_background_color: #22272b;
+$pager_wrap_color: #656565;
+$pager_wrap_background_color: #353a3e;
+$grid_cell_checkbox_checked_color: #009900;
+$grid_cell_dirty_color: #ff0000;
+//--
+$grid_background_color:rgba(0,0,0, 0);
+$grid_color:#DDDDDD;
+$grid_border_color:#666666;
+$grid_header_color:#DDDDDD;
+$grid_header_border_color:#DFDFDF;
+$grid_tr_hover_background_color:#545C73;
+$grid_tr_hover_color:#DDDDDD;
+$grid_selected_row_color:#505050;
+$grid_selected_row:#FFFFFF;
+$grid_command_color:#DDDDDD;
+$grid_selected_row_command_color:#DDDDDD;
+
+
+// Toolbar (Kendo UI)
+$toolbar_background_color: transparent;
+
+
+// Splitbar (Kendo UI)
+$splitter_color: #656565;
+$splitter_background_color: rgb(56, 56, 56);
+
+// Notification
+$notification_color: #ffffff;
+
+// Logo
+$logo_small_header:'';
+
+$service_catalog_icon_color: rgb(45, 235, 146);
+$service_catalog_badge_channel_color: #fff;
+
+$service_catalog_badge_channel_rest_background_color: green;
+$service_catalog_badge_channel_rest_color: $service_catalog_badge_channel_color;
+$service_catalog_badge_channel_json_background_color: #8484c1;
+$service_catalog_badge_channel_json_color: $service_catalog_badge_channel_color;
+$service_catalog_badge_channel_browser_background_color: rgb(233, 125, 2);
+$service_catalog_badge_channel_browser_color: $service_catalog_badge_channel_color;
+$service_catalog_badge_channel_sms_background_color: #a6a695;
+$service_catalog_badge_channel_sms_color: $service_catalog_badge_channel_color;
+$service_catalog_badge_channel_webadmin_background_color: rgb(255, 52, 52);
+$service_catalog_badge_channel_webadmin_color: $service_catalog_badge_channel_color;
+$service_catalog_badge_channel_webcontent_background_color: rgb(70, 70, 167);
+$service_catalog_badge_channel_webcontent_color: $service_catalog_badge_channel_color;
+
+// Buttons
+$button_background_color:rgba(0,0,0, 0);
+$button_color:#DDDDDD;
+$button_border_color:rgba(0,0,0, 0);
+
+$button_hover_background_color:rgba(0,0,0, 0);
+$button_hover_color:#FFFFFF;
+$button_hover_border_color:rgba(0,0,0, 0);
+
+$button_disabled_background_color:rgba(82,95,105, 0);
+$button_disabled_color:#909192;
+$button_disabled_border_color:rgba(0,0,0, 0);
+
+//$button_background_color: #22272B;
+//$button_color: #ddd;
+//$button_border_color: #444;
+//$button_hover_background_color: #44494D;
+//$button_hover_color: $main_color;
+$button_active_background_color: #22272B;
+$button_active_color: #44494D;
+$button_primary_background_color: #22272B;
+$button_primary_color: #44494D;

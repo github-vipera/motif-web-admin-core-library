@@ -1,0 +1,42 @@
+<p-contextMenu #tableContextMenu [target]="servicetableContainer" [model]="menuItems" [styleClass]="'wc-context-menu'"></p-contextMenu>
+
+<wa-services-section-newitem-dialog #newItemDialog (confirm)='onNewItemConfirm($event)'></wa-services-section-newitem-dialog>
+<wa-services-section-new-operation-dialog #newOperationDialog (confirm)='onNewServiceOperationConfirm($event)'></wa-services-section-new-operation-dialog>
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle" baseZIndex="999999999"></p-confirmDialog>
+
+<wc-dashboard-header [title]="'Services'"></wc-dashboard-header>
+
+<div class="row spread" #target>
+  <div class="flex-toolbar" style="display:flex;align-items: center;">
+      <p-menubar [model]="menuItems"  [autoDisplay]="false"></p-menubar>
+  </div>
+
+  <div class="flex-cmd">
+      <kendo-buttongroup look="flat">
+          <button
+        kendoButton
+        [toggleable]="false"
+        [icon]="'refresh'"
+        (click)="onRefreshClicked()"
+      >
+        Refresh
+      </button>
+    </kendo-buttongroup>
+  </div>
+</div>
+
+<div class="row fill">
+  <kendo-splitter>
+    <kendo-splitter-pane style="overflow: hidden;">
+      <div #servicetableContainer style="height: 100%;">
+          <wa-service-catalog-selector (nodeSelection)="nodeSelect($event)" #serviceCatalog></wa-service-catalog-selector>
+      </div>
+    </kendo-splitter-pane>
+
+    <kendo-splitter-pane [collapsible]="true" size="30%">
+        <wa-services-editor #servicesEditor (changesSaved)="onChangesSaved($event)"></wa-services-editor>
+    </kendo-splitter-pane>
+
+  </kendo-splitter>
+
+</div>

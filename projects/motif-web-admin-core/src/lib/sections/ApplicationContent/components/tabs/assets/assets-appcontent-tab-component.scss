@@ -1,0 +1,17 @@
+.badge {
+    border-radius: 4px;
+    display: inline-block;
+    padding: 1px 7px;
+}
+
+.badge-status {
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 0.63rem;
+    line-height: 1.3;
+    font-weight: bold;
+    padding: 3px 7px;
+    text-align: center;
+    vertical-align: baseline;
+    white-space: nowrap;
+  }

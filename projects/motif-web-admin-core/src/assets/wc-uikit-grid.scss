@@ -1,0 +1,26 @@
+.grid-cell-checkbox {
+    left: 50%;
+    transform: translate(-50%, 0px);
+}
+
+.grid-cell-checkbox-true:before {
+    content: "\e118";
+    color: $grid_cell_checkbox_checked_color;
+}
+
+.grid-cell-checkbox-true:false {
+    content: "\e121";
+}
+
+.grid-cell-dirty {
+    color: $grid_cell_dirty_color;
+}
+
+.grid-cell-dirty-true:before {
+    content: "\e003";
+}
+
+.wc-grid-command-column {
+    padding: 0px;
+}
+

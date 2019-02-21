@@ -1,0 +1,97 @@
+<wc-loading-overlay [visible]='loading'></wc-loading-overlay>
+
+<wc-dashboard-header [title]="'Configuration'"></wc-dashboard-header>
+
+<wc-confirmation-dialog (cancel)="onConfirmationCancel($event)" (confirm)="onConfirmationOK($event)"></wc-confirmation-dialog>
+
+<input type="file" id="xmlFileImport" name="xmlFileImport"  accept="application/xml" (input)="onUploadFileSelected($event)" #xmlFileImport>
+
+<div class="row spread">
+
+    <div class="flex-toolbar" style="display:flex;align-items: center;">
+       <div style="margin-right:10px;width:60%;max-width: 400px;min-width: 250px;">
+            <label>Service</label>
+            <wc-services-selector-combobox [(ngModel)]="selectedService"></wc-services-selector-combobox>
+        </div>
+        
+        <div>
+            <label>&nbsp;</label>
+            <kendo-buttongroup look="flat">
+                <button kendoButton [toggleable]="false" [icon]="'save'" (click)="onSaveClicked()" [disabled]="!editService.hasChanges()">Save</button>
+                <button kendoButton [toggleable]="false" [icon]="'track-changes-reject'" (click)="onDiscardClicked()" [disabled]="!editService.hasChanges()">Discard Changes</button>
+                <button kendoButton [toggleable]="false" [icon]="'filter-add-expression'" (click)="onAddPropertyClicked()" [disabled]="!canAddProperty">Add Property</button>
+            </kendo-buttongroup>
+        </div>
+    </div>
+
+    <div class="flex-cmd">
+        <kendo-buttongroup look="flat">
+            <button kendoButton [toggleable]="false" (click)="onExportClicked()" [disabled]="!canExport"><fa-icon [icon]="faDownload"></fa-icon>Export</button>
+            <button kendoButton kendofileselect tyle="file" [toggleable]="false" (click)="onImportClicked()"><fa-icon [icon]="faFileImport"></fa-icon>Import</button>
+            <button kendoButton [toggleable]="false" [icon]="'refresh'" (click)="onRefreshClicked()" [disabled]="!canRefresh">Refresh</button>
+        </kendo-buttongroup>
+    </div>
+
+</div>
+
+<div class="row fill">
+
+        <kendo-grid #datagrid [data]="view | async" 
+                (cellClick)="cellClickHandler($event)"
+                (cellClose)="cellCloseHandler($event)"
+                (dataStateChange)="onStateChange($event)"
+                (cellClose)="cellCloseHandler($event)"
+                [navigable]="true"> 
+
+                <kendo-grid-column
+                    field="name" title="Name" width="360">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <label class="k-icon grid-cell-dirty grid-cell-dirty-{{dataItem.dirty}}"></label>
+                            {{dataItem.name}}
+                        </ng-template>
+                </kendo-grid-column>
+
+                <kendo-grid-column field="value" title="Value" >
+                </kendo-grid-column>
+                <kendo-grid-column field="type" title="Type" width="150">
+                </kendo-grid-column>
+
+                <kendo-grid-column
+                    media="(min-width: 80px)"
+                    title="Dynamic" width="80">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        <label class="k-icon grid-cell-checkbox grid-cell-checkbox-{{dataItem.dynamic}}"></label>
+                    </ng-template>
+               </kendo-grid-column>
+
+               <kendo-grid-column
+                    media="(min-width: 80px)"
+                    title="Crypted" width="80">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        <label class="k-icon grid-cell-checkbox grid-cell-checkbox-{{dataItem.crypted}}"></label>
+                    </ng-template>
+                </kendo-grid-column>
+
+                <kendo-grid-column title="" width="150" minResizableWidth="140">
+                    <ng-template kendoGridCellTemplate let-dataItem let-columnIndex="columnIndex" let-rowIndex="rowIndex" let-column="column">
+                            <wc-grid-editor-command 
+                                [alignMode]="'end'"
+                                [hasConfirmation]="true"
+                                [confirmationTitle]="'Delete ?'"
+                                [rowIndex]="rowIndex" 
+                                [columnIndex]="columnIndex" 
+                                [column]="column" 
+                                [commandIcon]="'wa-ico-no'"
+                                [dataItem]="dataItem"
+                                (commandConfirm)="onDeleteOKPressed(dataItem)"  
+                                >
+                            </wc-grid-editor-command>
+                    </ng-template>
+                </kendo-grid-column>
+
+            </kendo-grid>
+
+            <wa-configuration-section-new-config-param-dialog #newPropertyDialog (confirm)="onAddNewPropertyConfirmed($event)"></wa-configuration-section-new-config-param-dialog>
+
+
+</div>

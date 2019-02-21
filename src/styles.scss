@@ -1,0 +1,14 @@
+
+/* You can add global styles to this file, and also import other style files */
+
+@import "../projects/motif-web-admin-core/src/assets/web-admin-dark-theme.scss";
+@import "../projects/motif-web-admin-core/src/assets/web-admin-light-theme.scss";
+
+$logo_small_header:url('src/assets/logo.svg');
+
+// add support for theme editor
+@import '../projects/motif-web-admin-core/src/assets/web-admin-theme-editor.scss';
+
+
+@import '../projects/motif-web-admin-core/src/assets/web-admin-core.scss';
+

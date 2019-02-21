@@ -1,0 +1,90 @@
+<wa-utilities-otp-component-new-otp-dialog  #newOtpDialog (confirm)="onNewOtpConfirm($event)" [domain]="(dataSource.domain ? dataSource.domain.name : null)"></wa-utilities-otp-component-new-otp-dialog>
+
+<div>
+
+    <div class="row spread">
+        <div class="flex-toolbar" style="display:flex;align-items: center;">
+            
+            <div style="margin-right:10px;width:60%;max-width: 400px;min-width: 250px;">
+                <label>Domain</label>
+                <wc-domain-selector-combobox #domainSelector [(ngModel)]="dataSource.domain"></wc-domain-selector-combobox>
+            </div>
+                        
+            <div style="margin-left: 40px;margin-right:10px;width:60%;max-width: 400px;min-width: 250px;">
+                <label>User</label>
+                <wc-user-selector-combobox #userSelector [domain]="(dataSource.domain ? dataSource.domain.name : null)"
+                [(ngModel)]="dataSource.user"
+                ></wc-user-selector-combobox>
+            </div>
+
+            <kendo-buttongroup look="flat">
+                <button kendoButton [toggleable]="false" (click)="onCreateClicked()" style="margin-top: 10%;">
+                        <fa-icon [icon]="faPlusCircle" class="left-icon-button"></fa-icon>Create New OTP
+                </button>
+            </kendo-buttongroup>
+        </div>
+
+        <div class="flex-cmd">
+            <kendo-buttongroup look="flat">
+                <button kendoButton [toggleable]="false" [icon]="'refresh'" (click)="onRefreshClicked()">Refresh</button>
+            </kendo-buttongroup>
+        </div>
+
+    </div>
+
+    <div class="row fill">
+        
+        <div>
+            
+            <kendo-grid [data]="dataSource.data" [scrollable]="true" [resizable]="true"
+                [reorderable]="true" 
+            >
+
+                <kendo-grid-column field="id" title="ID" width="30">
+                </kendo-grid-column>
+
+                <kendo-grid-column field="created" title="Created" width="100" format="{0:dd/MM/yyyy HH:mm:ss}">
+                </kendo-grid-column>
+        
+                <kendo-grid-column field="consumed" title="Consumed" width="45">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        <label class="k-icon grid-cell-checkbox grid-cell-checkbox-{{dataItem.consumed}}"></label>
+                    </ng-template>
+                </kendo-grid-column>
+        
+                <kendo-grid-column field="key" title="Key (HASHED)" width="260">
+                </kendo-grid-column>
+                
+                <kendo-grid-column field="maxFail" title="Max Fail" width="40">
+                </kendo-grid-column>
+        
+                <kendo-grid-column field="scope" title="Scope" width="200">
+                </kendo-grid-column>
+
+                <kendo-grid-column field="expiry" title="Expiry" width="40">
+                </kendo-grid-column>
+
+                <kendo-grid-column title="" width="150" minResizableWidth="140">
+                    <ng-template kendoGridCellTemplate let-dataItem let-columnIndex="columnIndex" let-rowIndex="rowIndex" let-column="column">
+                            <wc-grid-editor-command 
+                                [alignMode]="'end'"
+                                [hasConfirmation]="true"
+                                [confirmationTitle]="'Delete ?'"
+                                [rowIndex]="rowIndex" 
+                                [columnIndex]="columnIndex" 
+                                [column]="column" 
+                                [commandIcon]="'wa-ico-no'"
+                                [dataItem]="dataItem"
+                                (commandConfirm)="onDeleteOKPressed(dataItem)"  
+                                >
+                            </wc-grid-editor-command>
+                    </ng-template>
+                </kendo-grid-column>
+
+            </kendo-grid>            
+
+        </div>
+    </div>
+
+
+</div>

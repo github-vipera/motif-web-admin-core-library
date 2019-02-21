@@ -1,0 +1,51 @@
+<wc-loading-overlay [visible]="loading"></wc-loading-overlay>
+
+
+<p-treeTable #serviceTable
+    [value]="tableModel.model"
+    selectionMode="single"
+    [(selection)]="selectedNode"
+    dataKey="id"
+    class="treetable-xss"
+    [style]="{ 'height': '100%' }"
+    [scrollable]="true" 
+    scrollHeight="100%" 
+    (onNodeUnselect)="nodeUnselect($event)"
+    [(contextMenuSelection)]="selectedNode"
+    [contextMenu]="contextMenu"
+    >
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Type</th>
+        <th>Channel</th>
+      </tr>
+    </ng-template>
+    <ng-template
+      pTemplate="body"
+      let-rowNode
+      let-rowData="rowData"
+      let-columns="columns"
+    >
+      <tr [ttRow]="rowNode" [ttContextMenuRow]="rowNode" [ttSelectableRow]="rowNode" style="height:30px">
+        <td class="service-catalog-row">
+          <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+          <i
+            class="pi pi-fw {{rowData.nodeIcon}} node-icon-{{rowData.nodeType}}"
+          ></i>
+          <span
+            ><strong>{{ rowData.name }}</strong></span
+          >
+        </td>
+        <td class="service-catalog-row">{{ rowData.description }}</td>
+        <td class="service-catalog-row">{{ rowData.nodeType }}</td>
+        <td class="service-catalog-row">
+          <span class="channel-label badge-channel-{{rowData.channel}}">{{
+            rowData.channel
+          }}</span>
+        </td>
+      </tr>
+    </ng-template>
+    </p-treeTable>
+

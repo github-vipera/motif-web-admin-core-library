@@ -1,0 +1,65 @@
+
+.channel-label,
+.badge {
+  font-size: 12px;
+  font-size: 0.75rem;
+  line-height: 2;
+  font-weight: bold;
+  padding: 3px 7px;
+  text-align: center;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+
+.channel-label {
+  border-radius: 4px;
+  display: inline;
+}
+
+.badge {
+  border-radius: 10px;
+  display: inline-block;
+  padding: 1px 7px;
+}
+
+.channel-label[href]:hover, .channel-label[href]:focus {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+a.badge:hover, a.badge:focus {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.channel-label a,
+.badge a {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.channel-label:empty,
+.badge:empty {
+  display: none;
+}
+
+.channel-label {
+    font-size: 0.63rem;
+}
+
+.service-catalog-row {
+    padding: .6rem !important;
+}
+
+.treetable-xss {
+    height: 100%;
+}
+
+wa-service-catalog-selector p-treetable table th {
+    padding: .6rem !important;
+}
+
+wa-service-catalog-selector p-treetable table  td {
+    padding: .6rem !important;
+}
+

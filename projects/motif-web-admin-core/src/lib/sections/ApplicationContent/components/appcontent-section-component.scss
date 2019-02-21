@@ -1,0 +1,22 @@
+:host{
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+ }
+
+.log-pane {
+    white-space: pre;
+}
+
+.editor.slidedown > div > label {
+    padding-bottom: 5px;
+}
+
+.editor.slidedown > div > kendo-daterange > div > label {
+    padding-bottom: 5px;
+}
+
+.tabs {
+    margin-top: 0;
+}
+

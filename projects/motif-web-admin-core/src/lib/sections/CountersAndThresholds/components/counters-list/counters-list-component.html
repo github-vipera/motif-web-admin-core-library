@@ -1,0 +1,65 @@
+<wc-loading-overlay [visible]='loading'></wc-loading-overlay>
+
+<div class="row spread">
+    <div class="flex-toolbar" style="display:flex;align-items: center;">
+        <div style="margin-right:10px;width:60%;max-width: 400px;min-width: 250px;">
+            <label>Domain</label>
+            <wc-domain-selector-combobox #domainSelector [(ngModel)]="selectedDomain"></wc-domain-selector-combobox>
+        </div>
+
+        <div style="margin-left: 40px;margin-right:10px;width:60%;max-width: 400px;min-width: 250px;">
+            <label>User</label>
+            <wc-user-selector-combobox #userSelector [domain]="(selectedDomain ? selectedDomain.name : null)" [(ngModel)]="selectedUser"></wc-user-selector-combobox>
+        </div>
+
+
+    </div>
+
+    <div class="flex-cmd">
+        <kendo-buttongroup look="flat">
+            <button kendoButton [toggleable]="false" [icon]="'refresh'" (click)="onRefreshClicked()"  [disabled]="!canRefresh">Refresh</button>
+        </kendo-buttongroup>
+    </div>
+
+</div>
+
+<div class="row fill">
+
+    <kendo-grid [data]="gridView" [columnMenu]="true" [scrollable]="true" [resizable]="true"
+        [reorderable]="true" [pageSize]="pageSize" [skip]="skip" [pageable]="{
+        buttonCount: 5,
+        info: true,
+        type: type,
+        pageSizes: true,
+        previousNext: true
+        }"
+        [scrollable]="'none'" (pageChange)="pageChange($event)">
+        >
+        
+        <kendo-grid-column field="counter" title="Counter">
+          </kendo-grid-column>
+ 
+        <kendo-grid-column field="created" title="Created"  format="{0:dd/MM/yyyy HH:mm:ss}">
+          </kendo-grid-column>
+
+        <kendo-grid-column field="lastCountDate" title="Last Count Date"  format="{0:dd/MM/yyyy HH:mm:ss}">
+          </kendo-grid-column>
+  
+        <kendo-grid-column field="lastIncrement" title="Last Increment">
+        </kendo-grid-column>
+
+        <kendo-grid-column field="previousCounter" title="Previous Counter">
+          </kendo-grid-column>
+
+        <kendo-grid-column field="name" title="Counter Info Name">
+        </kendo-grid-column>
+
+        <kendo-grid-column field="counterInfoPattern" title="Counter Info Pattern">
+        </kendo-grid-column>
+    
+  
+    </kendo-grid>
+
+
+
+</div>

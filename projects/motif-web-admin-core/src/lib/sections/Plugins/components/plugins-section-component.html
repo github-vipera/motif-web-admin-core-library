@@ -1,0 +1,41 @@
+<wc-dashboard-header [title]="'Plugins'"></wc-dashboard-header>
+<wc-loading-overlay [visible]='loading'></wc-loading-overlay>
+
+<div class="row spread">
+
+    <div class="flex-toolbar" style="display:flex;align-items: center;">
+        <kendo-textbox-container floatingLabel="Filter">
+            <input #filterInput kendoTextBox  (afterValueChanged)="onFilterChange($event)" />
+        </kendo-textbox-container>
+    </div>
+
+    <div class="flex-cmd">
+        <kendo-buttongroup look="flat">
+            <button kendoButton [toggleable]="false" [icon]="'refresh'" (click)="onRefreshClicked()">Refresh</button>
+        </kendo-buttongroup>
+    </div>
+
+</div>
+
+<div class="row fill">
+
+
+        <kendo-grid #datagrid [data]="gridData"> 
+
+                <kendo-grid-column
+                    field="name" title="Name" >
+                </kendo-grid-column>
+
+                <kendo-grid-column field="version" title="Version" width="150">
+                    </kendo-grid-column>
+
+                <kendo-grid-column field="status" title="Status" width="150">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                                <span class="whole-cell" [style.color]="statusColorCode(dataItem)">
+                                  {{ dataItem.status }}
+                                </span>
+                              </ng-template>
+                </kendo-grid-column>
+
+            </kendo-grid>
+</div>
