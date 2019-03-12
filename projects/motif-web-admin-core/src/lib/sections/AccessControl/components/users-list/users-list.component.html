@@ -1,105 +1,63 @@
-<div class="row spread">
-    <div class="flex-cmd">
-        <a data-slidedown="#user-add" class="btn" (click)="onAddButtonPressed()">
-            <i class="button-icon icon wa-ico-add"></i>
-            Add User
-        </a>
-    </div>
-
-</div>
-
-<div class="row">
-    <div>
-        <wc-slide-panel #slideDownEditor>
-            <div id="user-add" class="editor slidedown">
-                <input placeholder="UserID" id="new-user-userid" [(ngModel)]="newUserModel.userId">
-                <input placeholder="UserIDInt" id="new-user-useridint" [(ngModel)]="newUserModel.userIdInt">
-                <input placeholder="msisdn" id="new-user-msisdn" [(ngModel)]="newUserModel.msisdn">
-                <input placeholder="serial" id="new-user-serial" [(ngModel)]="newUserModel.serial">
-
-                
-       <div class="cmd" style="align-items: center;margin-top:.5rem;">
-            <a (click)="onEditorConfirmButtonPressed()">
-                <i data-id="ok" class="ok icon wa-ico-ok confirmation-icon"></i>
-            </a>
-            <a (click)="onEditorDismissButtonPressed()" data-slideup="#exportSlideDownPanel">
-                <i data-id="ko" class="ko icon wa-ico-ko confirmation-icon"></i>
-            </a>
-        </div>
-            </div>
-        </wc-slide-panel>
-    </div>
-</div>
-
-<div class="row">
-    <div>
-        <kendo-grid [data]="gridView" [columnMenu]="true" [resizable]="true" [reorderable]="true" [groupable]="false"
-            [group]="groups" (groupChange)="groupChange($event)" [sort]="sort" (sortChange)="sortChange($event)"
-            [sortable]="{ allowUnsort: true, mode: 'multiple' }" [pageSize]="pageSize" [skip]="skip"
-            [pageable]="{
+<div class="row fill">
+    <kendo-grid [data]="gridView" [columnMenu]="true" [resizable]="true" [reorderable]="true" [sort]="sort"
+        (sortChange)="sortChange($event)" (filterChange)="filterChange($event)" [sortable]="{ allowUnsort: true, mode: 'multiple' }" 
+        [pageSize]="pageSize" [skip]="skip" [filterable]="true" [filter]="filter" [pageable]="{
                 buttonCount: 5,
                 info: true,
                 type: type,
                 pageSizes: true,
                 previousNext: true
-                }"
-            [scrollable]="'none'" (pageChange)="pageChange($event)" [kendoGridSelectBy]="'userId'" [selectedKeys]="selectedKeys"
-            (selectedKeysChange)="onSelectionChange($event)" [selectable]="selectableSettings">
-            <kendo-grid-column field="created" title="Created" sortable="isFieldSortable" format="{0:dd/MM/yyyy HH:mm:ss}">
-            </kendo-grid-column>
-            <kendo-grid-column field="userId" title="User ID">
-            </kendo-grid-column>
-            <kendo-grid-column field="userIdInt" title="User ID Int.">
-            </kendo-grid-column>
-            <kendo-grid-column field="email" title="Email">
-            </kendo-grid-column>
-            <kendo-grid-column field="lastLogin" title="Last Login" format="{0:dd/MM/yyyy HH:mm:ss}">
-            </kendo-grid-column>
-            <kendo-grid-column field="locale" title="Locale">
-            </kendo-grid-column>
-            <kendo-grid-column field="msisdn" title="MSISDN">
-            </kendo-grid-column>
-            <kendo-grid-column field="serial" title="Serial">
-            </kendo-grid-column>
-
-            <kendo-grid-column field="state" title="State">
-                <ng-template kendoGridCellTemplate let-dataItem let-columnIndex="columnIndex" let-rowIndex="rowIndex" let-column="column">
-                        <wc-grid-editor-command
-                        [rowIndex]="rowIndex" 
-                        [hasConfirmation]="true"
-                        [confirmationTitleProvider]="statusConfirmationTitleProvider"
-                        [columnIndex]="columnIndex" 
-                        [column]="column" 
-                        [value]="dataItem[column.field]" 
-                        [dataItem]="dataItem"
-                        (commandConfirm)="onStatusChangeOKPressed(dataItem)"  
-                        >
-                            <span class="badge badge-status user-status-{{dataItem[column.field]}}">
-                                {{dataItem[column.field]}}
-                            </span>
-                        </wc-grid-editor-command>
-                </ng-template>
+                }" (pageChange)="pageChange($event)" [kendoGridSelectBy]="'userId'" [selectedKeys]="selectedKeys"
+        (selectedKeysChange)="onSelectionChange($event)" [selectable]="selectableSettings">
+        <kendo-grid-column field="created" title="Created" sortable="isFieldSortable" format="{0:dd/MM/yyyy HH:mm:ss}" [filterable]="false">
+        </kendo-grid-column>
+        <kendo-grid-column field="userId" title="User ID">
+            <ng-template kendoGridFilterCellTemplate let-filter let-column="column">
+                <kendo-grid-string-filter-cell [showOperators]="false" [column]="column" [filter]="filter"
+                    [operator]="eq">
+                </kendo-grid-string-filter-cell>
+            </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column field="userIdInt" title="User ID Int.">
+            <ng-template kendoGridFilterCellTemplate let-filter let-column="column">
+                <kendo-grid-string-filter-cell [showOperators]="false" [column]="column" [filter]="filter"
+                    [operator]="eq">
+                </kendo-grid-string-filter-cell>
+            </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column field="email" title="Email" [filterable]="false">
+        </kendo-grid-column>
+        <kendo-grid-column field="lastLogin" title="Last Login" format="{0:dd/MM/yyyy HH:mm:ss}" [filterable]="false">
+        </kendo-grid-column>
+        <kendo-grid-column field="locale" title="Locale" [filterable]="false">
         </kendo-grid-column>
 
-            <kendo-grid-column title="" width="150" minResizableWidth="140">
-                <ng-template kendoGridCellTemplate let-dataItem let-columnIndex="columnIndex" let-rowIndex="rowIndex" let-column="column">
-                        <wc-grid-editor-command 
-                            [alignMode]="'end'"
-                            [hasConfirmation]="true"
-                            [confirmationTitle]="'Delete ?'"
-                            [rowIndex]="rowIndex" 
-                            [columnIndex]="columnIndex" 
-                            [column]="column" 
-                            [commandIcon]="'wa-ico-no'"
-                            [dataItem]="dataItem"
-                            (commandConfirm)="onDeleteOKPressed(dataItem)"  
-                            >
-                        </wc-grid-editor-command>
-                </ng-template>
-            </kendo-grid-column>
+        <kendo-grid-column field="state" title="State">
+            <ng-template kendoGridFilterCellTemplate let-filter let-column="column">
+                <kendo-grid-string-filter-cell [showOperators]="false" [column]="column" [filter]="filter"
+                    [operator]="eq">
+                </kendo-grid-string-filter-cell>
+            </ng-template>
+            <ng-template kendoGridCellTemplate let-dataItem let-columnIndex="columnIndex" let-rowIndex="rowIndex"
+                let-column="column">
+                <wc-grid-editor-command [rowIndex]="rowIndex" [hasConfirmation]="true"
+                    [confirmationTitleProvider]="statusConfirmationTitleProvider" [columnIndex]="columnIndex" [column]="column"
+                    [value]="dataItem[column.field]" [dataItem]="dataItem" (commandConfirm)="onStatusChangeOKPressed(dataItem)">
+                    <span class="badge badge-status user-status-{{dataItem[column.field]}}">
+                        {{dataItem[column.field]}}
+                    </span>
+                </wc-grid-editor-command>
+            </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column title="" width="150" minResizableWidth="140">
+            <ng-template kendoGridCellTemplate let-dataItem let-columnIndex="columnIndex" let-rowIndex="rowIndex"
+                let-column="column">
+                <wc-grid-editor-commands-group [commands]="commands" [alignMode]="'end'" [rowIndex]="rowIndex"
+                    [columnIndex]="columnIndex" [column]="column" [value]="dataItem[column.field]" [dataItem]="dataItem"
+                    (commandConfirm)="onCommandConfirm($event)" (commandClick)="onCommandClick($event)">
+                </wc-grid-editor-commands-group>
+            </ng-template>
+        </kendo-grid-column>
 
-        </kendo-grid>
-
-    </div>
-
+    </kendo-grid>
 </div>

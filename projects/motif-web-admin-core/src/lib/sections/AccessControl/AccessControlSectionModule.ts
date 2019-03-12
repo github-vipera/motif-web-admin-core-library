@@ -9,6 +9,9 @@ import { PlatformServiceModule } from '@wa-motif-open-api/platform-service'
 import { CommonsUIModule } from '../../components/CommonsUIModule'
 import { GridContextMenuComponent } from './components/grid-context-menu.component';
 import { UsersListComponent } from './components/users-list/users-list.component';
+import { NewUserDialogComponent } from './components/dialogs/user/new-user-dialog';
+import { NewAclEntityDialogComponent } from './components/dialogs/acl/new-acl-entity-dialog';
+import { DialogModule } from 'primeng/dialog';
 
 @NgModule({
     imports: [
@@ -22,13 +25,18 @@ import { UsersListComponent } from './components/users-list/users-list.component
         CommonsUIModule,
         CommonSelectorsModule,
         WCUIKitGridModule,
-        WCNotificationCenterModule
+        WCNotificationCenterModule,
+        DialogModule
     ],
     entryComponents:[
         AccessControlSectionComponent
     ],
     declarations: [
-        AccessControlSectionComponent, GridContextMenuComponent, UsersListComponent
+        AccessControlSectionComponent, 
+        GridContextMenuComponent, 
+        UsersListComponent,
+        NewUserDialogComponent,
+        NewAclEntityDialogComponent
     ],
     exports: [ AccessControlSectionComponent ],
     providers: [ 
