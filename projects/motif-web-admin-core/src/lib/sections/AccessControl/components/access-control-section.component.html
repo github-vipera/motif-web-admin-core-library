@@ -2,6 +2,7 @@
 
 <wa-platform-section-new-acl-entity-dialog #newAclEntityDialog (confirm)='onNewAclEntityConfirm($event)'></wa-platform-section-new-acl-entity-dialog>
 <wa-platform-section-new-user-dialog #newUserDialog (confirm)='onNewUserConfirm($event)'></wa-platform-section-new-user-dialog>
+<wa-platform-section-acl-relations-dialog #aclRelationsDialog></wa-platform-section-acl-relations-dialog>
 
 <div class="row spread">
   <div class="flex-toolbar" style="display:flex;flex-direction: row;align-items: flex-start;">
@@ -175,7 +176,7 @@
         <kendo-splitter-pane [collapsible]="false" size="31%" [scrollable]="false">
           <label class="acl-label">ACTIONS</label>
           <div class="pane-content">
-            <kendo-grid [data]="actionsGridView" [kendoGridSelectBy]="'name'" [selectedKeys]="actionSelection"
+            <kendo-grid id="actionsGrid" [data]="actionsGridView" [kendoGridSelectBy]="'name'" [selectedKeys]="actionSelection"
               (selectedKeysChange)="onActionSelectionChange($event)" [selectable]="selectableSettings"
               [skip]="actionsDataState.skip" [pageSize]="actionsDataState.take" [scrollable]="'virtual'" [rowHeight]="35"
               [height]="height" (pageChange)="actionsPageChange($event)"
@@ -205,7 +206,7 @@
         <kendo-splitter-pane [collapsible]="false" [scrollable]="false">
           <label class="acl-label">PERMISSIONS</label>
           <div class="pane-content">
-            <kendo-grid [data]="permissionsGridView" [kendoGridSelectBy]="permissionKey"
+            <kendo-grid id="permissionsGrid" [data]="permissionsGridView" [kendoGridSelectBy]="permissionKey"
               [selectedKeys]="permissionSelection" (selectedKeysChange)="onPermissionSelectionChange($event)"
               [selectable]="selectableSettings" [skip]="permissionsDataState.skip" [pageSize]="permissionsDataState.take"
               [scrollable]="'virtual'" [rowHeight]="35" [height]="height" (pageChange)="permissionsPageChange($event)"

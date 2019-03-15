@@ -17,6 +17,7 @@ const LOG_TAG = "[AccessControlSection/UsersList]";
 const USERS_LIST_ENDPOINT = "/platform/domains/{0}/users"
 
 export enum RowCommandType {
+  Relations = 'Relations',
   Edit = 'Edit',
   Delete = 'Delete'
 }

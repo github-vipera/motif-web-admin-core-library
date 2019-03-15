@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild, ElementRef, Renderer2, EventEmitter, Output } from '@angular/core';
 import { NGXLogger } from 'web-console-core';
-import { DialogType, EntityType } from '../../editors/acl-editor-context';
+import { DialogType, EntityType } from '../../../editors/acl-editor-context';
 
 const LOG_TAG = '[NewAclEntityDialogComponent]';
 

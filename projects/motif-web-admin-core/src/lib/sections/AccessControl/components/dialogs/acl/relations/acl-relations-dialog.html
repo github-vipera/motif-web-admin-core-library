@@ -1,0 +1,57 @@
+<p-dialog #aclRelationsDialog [(visible)]="display" [modal]="true" [responsive]="true"
+  [style]="{ width: '900px', minWidth: '850px', height: '800px', minWidth: '800px'}" [minY]="70" [baseZIndex]="10000">
+  <p-header> {{ dialogTitle }} <strong>[{{ entityName }}]</strong></p-header>
+
+  <div class="row fill ui-dialog-content ui-widget-content" style="height: 100%;">
+    <kendo-splitter>
+      <kendo-splitter-pane orientation="horizontal" [collapsible]="false" size="50%" [scrollable]="false">
+        <label class="acl-label">CURRENT</label>
+        <div class="pane-content">
+          <kendo-grid id="currentGrid" [data]="currentGridView" [kendoGridSelectBy]="'name'" [selectedKeys]="currentSelection"
+            (selectedKeysChange)="onCurrentSelectionChange($event)" [selectable]="selectableSettings"
+            [skip]="currentDataState.skip" [pageSize]="currentDataState.take" [scrollable]="'virtual'" [rowHeight]="35"
+            [height]="height" (pageChange)="currentPageChange($event)"
+            [filterable]="true" [filter]="currentDataState.filter" (dataStateChange)="onCurrentDataStateChange($event)"
+            [sortable]="{
+              allowUnsort: false,
+              mode: 'single'
+              }"
+            [sort]="currentDataState.sort">
+            <kendo-grid-column field="name" title="Name" width="65">
+            </kendo-grid-column>
+            <kendo-grid-column field="description" title="Description" width="25">
+            </kendo-grid-column>
+          </kendo-grid>
+        </div>
+      </kendo-splitter-pane>
+
+      <kendo-splitter-pane [collapsible]="false" [scrollable]="false">
+        <label class="acl-label">AVAILABLE</label>
+        <div class="pane-content">
+          <kendo-grid id="availableGrid" [data]="availableGridView" [kendoGridSelectBy]="'name'"
+            [selectedKeys]="availableSelection" (selectedKeysChange)="onAvailableSelectionChange($event)"
+            [selectable]="selectableSettings" [skip]="availableDataState.skip" [pageSize]="availableDataState.take"
+            [scrollable]="'virtual'" [rowHeight]="35" [height]="height" (pageChange)="availablePageChange($event)"
+            [filterable]="true" [filter]="availableDataState.filter" (dataStateChange)="onAvailableDataStateChange($event)"
+            [sortable]="{
+              allowUnsort: false,
+              mode: 'single'
+              }"
+            [sort]="availableDataState.sort">
+            <kendo-grid-column field="name" title="Name" width="65">
+            </kendo-grid-column>
+            <kendo-grid-column field="description" title="Description" width="25">
+            </kendo-grid-column>
+          </kendo-grid>
+        </div>
+      </kendo-splitter-pane>
+    </kendo-splitter>
+</div>
+
+  <p-footer>
+    <kendo-buttongroup look="flat">
+      <button kendoButton [toggleable]="false" [primary]="true" (click)="onConfirm();">Ok</button>
+    </kendo-buttongroup>
+  </p-footer>
+
+</p-dialog>
