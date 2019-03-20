@@ -28,7 +28,7 @@
       <kendo-splitter-pane [collapsible]="false" [scrollable]="false">
         <label class="acl-label">AVAILABLE</label>
         <div ng-switch on="availableGridType">
-          <div ng-switch-when="default" class="pane-content">
+          <div ng-switch-when="sdf" class="pane-content">
             <kendo-grid id="availableGrid" [data]="availableGridView" [kendoGridSelectBy]="availableKey"
               [selectedKeys]="availableSelection" (selectedKeysChange)="onAvailableSelectionChange($event)"
               [selectable]="selectableSettings" [skip]="availableDataState.skip" [pageSize]="availableDataState.take"

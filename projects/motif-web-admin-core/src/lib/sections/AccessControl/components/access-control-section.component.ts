@@ -590,6 +590,10 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
     this.loadPermissions();
   }
 
+  onStatusChangeOKPressed(event): void {
+    // TODO: Implement
+  }
+
   onEditAdminOKPressed(event): void {
     if (event.id === RowCommandType.Edit) {
       this._newUserDialog.show(DialogType.Edit, EntityType.Admin, event.rowData.dataItem);
