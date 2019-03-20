@@ -26,7 +26,10 @@ export class AclRelationsDialogComponent implements OnInit {
     dialogTitle = '';
     display: boolean;
     entityName = '';
+    availableGridType = 'permissions';
 
+    public currentData: any[] = [];
+    public availableData: any[] = [];
     public currentSelection: string[] = [];
     public availableSelection: string[] = [];
     public currentGridView: GridDataResult;
@@ -79,6 +82,18 @@ export class AclRelationsDialogComponent implements OnInit {
     public get currentEntityType(): EntityType {
         return this._currentEntityType;
     }
+
+    public get isCurrentEntityAction(): boolean {
+        return this._currentEntityType === EntityType.Action;
+    }
+
+    public availableKey(context: RowArgs): string {
+        if (this.isCurrentEntityAction) {
+            return context.dataItem.component + ':' + context.dataItem.action + ':' + context.dataItem.target;
+        } else {
+            return context.dataItem.name;
+        }
+      }
 
     private prepare(entityType: EntityType, dataItem: any) {
         this.logger.debug(LOG_TAG, 'prepare for:', entityType);
@@ -134,14 +149,48 @@ export class AclRelationsDialogComponent implements OnInit {
         }
 
         forkJoin(getCurrent, getAvailable).subscribe(response => {
-            this.currentGridView = process(response[0], this.currentDataState);
-            this.availableGridView = process(response[1], this.availableDataState);
+            this.currentData = response[0];
+            this.availableData = response[1];
+            this.refreshCurrent();
+            this.refreshAvailable();
         }, error => {
             this.logger.warn(LOG_TAG, 'Error loading data: ', error);
         });
     }
 
+    private refreshCurrent(): void {
+        this.currentGridView = process(this.currentData, this.currentDataState);
+    }
+
+    private refreshAvailable(): void {
+        this.availableGridView = process(this.availableData, this.availableDataState);
+    }
+
     onConfirm(): void {
         this.display = false;
+    }
+
+    public onCurrentSelectionChange(e: SelectionEvent) {
+    }
+
+    public onAvailableSelectionChange(e: SelectionEvent) {
+    }
+
+    public onCurrentDataStateChange(state: DataStateChangeEvent): void {
+        this.currentDataState = state;
+    }
+
+    public onAvailableDataStateChange(state: DataStateChangeEvent): void {
+        this.availableDataState = state;
+    }
+
+    public onCurrentPageChange(event: PageChangeEvent): void {
+        this.currentDataState.skip = event.skip;
+        this.refreshCurrent();
+    }
+
+    public onAvailablePageChange(event: PageChangeEvent): void {
+        this.availableDataState.skip = event.skip;
+        this.refreshAvailable();
     }
 }

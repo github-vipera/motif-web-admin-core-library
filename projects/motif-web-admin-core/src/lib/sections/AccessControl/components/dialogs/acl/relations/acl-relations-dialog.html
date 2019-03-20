@@ -1,5 +1,5 @@
 <p-dialog #aclRelationsDialog [(visible)]="display" [modal]="true" [responsive]="true"
-  [style]="{ width: '900px', minWidth: '850px', height: '800px', minWidth: '800px'}" [minY]="70" [baseZIndex]="10000">
+  [style]="{ width: '900px', minWidth: '850px', height: '800px'}" [minY]="70" [baseZIndex]="10000">
   <p-header> {{ dialogTitle }} <strong>[{{ entityName }}]</strong></p-header>
 
   <div class="row fill ui-dialog-content ui-widget-content" style="height: 100%;">
@@ -10,7 +10,7 @@
           <kendo-grid id="currentGrid" [data]="currentGridView" [kendoGridSelectBy]="'name'" [selectedKeys]="currentSelection"
             (selectedKeysChange)="onCurrentSelectionChange($event)" [selectable]="selectableSettings"
             [skip]="currentDataState.skip" [pageSize]="currentDataState.take" [scrollable]="'virtual'" [rowHeight]="35"
-            [height]="height" (pageChange)="currentPageChange($event)"
+            (pageChange)="onCurrentPageChange($event)"
             [filterable]="true" [filter]="currentDataState.filter" (dataStateChange)="onCurrentDataStateChange($event)"
             [sortable]="{
               allowUnsort: false,
@@ -27,24 +27,41 @@
 
       <kendo-splitter-pane [collapsible]="false" [scrollable]="false">
         <label class="acl-label">AVAILABLE</label>
-        <div class="pane-content">
-          <kendo-grid id="availableGrid" [data]="availableGridView" [kendoGridSelectBy]="'name'"
-            [selectedKeys]="availableSelection" (selectedKeysChange)="onAvailableSelectionChange($event)"
-            [selectable]="selectableSettings" [skip]="availableDataState.skip" [pageSize]="availableDataState.take"
-            [scrollable]="'virtual'" [rowHeight]="35" [height]="height" (pageChange)="availablePageChange($event)"
-            [filterable]="true" [filter]="availableDataState.filter" (dataStateChange)="onAvailableDataStateChange($event)"
-            [sortable]="{
-              allowUnsort: false,
-              mode: 'single'
-              }"
-            [sort]="availableDataState.sort">
-            <kendo-grid-column field="name" title="Name" width="65">
-            </kendo-grid-column>
-            <kendo-grid-column field="description" title="Description" width="25">
-            </kendo-grid-column>
-          </kendo-grid>
+        <div ng-switch on="availableGridType">
+          <div ng-switch-when="default" class="pane-content">
+            <kendo-grid id="availableGrid" [data]="availableGridView" [kendoGridSelectBy]="availableKey"
+              [selectedKeys]="availableSelection" (selectedKeysChange)="onAvailableSelectionChange($event)"
+              [selectable]="selectableSettings" [skip]="availableDataState.skip" [pageSize]="availableDataState.take"
+              [scrollable]="'virtual'" [rowHeight]="35" (pageChange)="onAvailablePageChange($event)" [filterable]="true"
+              [filter]="availableDataState.filter" (dataStateChange)="onAvailableDataStateChange($event)" [sortable]="{
+                      allowUnsort: false,
+                      mode: 'single'
+                      }" [sort]="availableDataState.sort">
+              <kendo-grid-column field="name" title="Name" width="65">
+              </kendo-grid-column>
+              <kendo-grid-column field="description" title="Description" width="25">
+              </kendo-grid-column>
+            </kendo-grid>
+          </div>
+          <div ng-switch-when="permissions" class="pane-content">
+            <kendo-grid id="availablePermissionsGrid" [data]="availableGridView" [kendoGridSelectBy]="availableKey"
+              [selectedKeys]="availableSelection" (selectedKeysChange)="onAvailableSelectionChange($event)"
+              [selectable]="selectableSettings" [skip]="availableDataState.skip" [pageSize]="availableDataState.take"
+              [scrollable]="'virtual'" [rowHeight]="35" (pageChange)="onAvailablePageChange($event)" [filterable]="true"
+              [filter]="availableDataState.filter" (dataStateChange)="onAvailableDataStateChange($event)" [sortable]="{
+                      allowUnsort: false,
+                      mode: 'single'
+                      }" [sort]="availableDataState.sort">
+              <kendo-grid-column field="component" title="Component" width="100">
+              </kendo-grid-column>
+              <kendo-grid-column field="action" title="Action" width="45" [sortable]="false">
+              </kendo-grid-column>
+              <kendo-grid-column field="target" title="Target" width="60">
+              </kendo-grid-column>
+            </kendo-grid>
+          </div>
         </div>
-      </kendo-splitter-pane>
+    </kendo-splitter-pane>
     </kendo-splitter>
 </div>
 
