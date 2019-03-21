@@ -167,9 +167,11 @@ export class WebContentSectionComponent implements OnInit, OnDestroy {
 
     doTogglePublishBundle(item: BundleStatus):void {
         this.logger.debug(LOG_TAG, 'doTogglePublishBundle: ', item);
-        if (item.info["syntheticStatus"] === "UNPUBLISHED"){
+        if (item.info["syntheticStatus"] === PublishingStatus.Unpublished){
             this.doPublishBundle(item);
-        } else if (item.info["syntheticStatus"] === "PUBLISHED"){
+        } else if (item.info["syntheticStatus"] === PublishingStatus.Published){
+            this.doUnpublishBundle(item);
+        } else if (item.info["syntheticStatus"] === PublishingStatus.Error){
             this.doUnpublishBundle(item);
         }
     }
