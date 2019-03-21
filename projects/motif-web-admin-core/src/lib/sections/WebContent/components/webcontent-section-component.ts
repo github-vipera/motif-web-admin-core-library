@@ -389,6 +389,7 @@ export class WebContentSectionComponent implements OnInit, OnDestroy {
             context: event.context,
             domain: event.domain
         };
+        this.logger.debug(LOG_TAG, 'onUpdateConfirm: ', bundleName, bundleVersion, bundleUpdate);
         this._subHandler.add(this.webContentService.updateBundle(bundleName, bundleVersion, bundleUpdate).subscribe( (data) => {
 
             this.refreshData();

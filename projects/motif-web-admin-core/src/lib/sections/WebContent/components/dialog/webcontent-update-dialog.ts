@@ -68,10 +68,10 @@ export class WebContentUpdateDialogComponent implements OnInit {
     onConfirm(): void {
         this.display = false;
         this.confirm.emit({
-            application : this.application,
+            application : this.selectedApplication.name,
             bundleName: this.bundleName,
             bundleVersion : this.bundleVersion,
-            domain : this.domain,
+            domain : this.selectedDomain.name,
             context : this.context
         });
     }
