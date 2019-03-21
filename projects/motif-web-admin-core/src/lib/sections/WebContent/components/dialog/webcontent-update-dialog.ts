@@ -8,6 +8,8 @@ export interface UpdateDialogResult {
     domain: string;
     application: string;
     context: string;
+    bundleVersion: string;
+    bundleName: string;
 }
 
 @Component({
@@ -17,6 +19,8 @@ export interface UpdateDialogResult {
 })
 export class WebContentUpdateDialogComponent implements OnInit {
 
+    bundleName: string;
+    bundleVersion: string;
     display: boolean;
     domain: string;
     application: string;
@@ -36,9 +40,9 @@ export class WebContentUpdateDialogComponent implements OnInit {
         this.logger.debug(LOG_TAG, 'Initializing...');
     }
 
-    public show(domain: string, application: string, context: string): void {
+    public show(bundleName: string, bundleVersion: string, domain: string, application: string, context: string): void {
         this.logger.debug(LOG_TAG, 'show called for: ', domain, application, context);
-        this.prepare(domain, application, context);
+        this.prepare(bundleName, bundleVersion, domain, application, context);
         this.display = true;
     }
 
@@ -46,12 +50,14 @@ export class WebContentUpdateDialogComponent implements OnInit {
         this.display = false;
     }
 
-    private prepare(domain: string, application: string, context: string): void {
+    private prepare(bundleName: string, bundleVersion: string, domain: string, application: string, context: string): void {
         this.logger.debug(LOG_TAG, 'show called for: ', domain, application, context);
         // fill the fields
         this.domain = domain;
         this.application = application;
         this.context = context;
+        this.bundleName = bundleName;
+        this.bundleVersion = bundleVersion;
     }
 
     onCancel(): void {
@@ -60,7 +66,14 @@ export class WebContentUpdateDialogComponent implements OnInit {
     }
 
     onConfirm(): void {
-        //TODO !!       
+        this.display = false;
+        this.confirm.emit({
+            application : this.application,
+            bundleName: this.bundleName,
+            bundleVersion : this.bundleVersion,
+            domain : this.domain,
+            context : this.context
+        });
     }
 
 }

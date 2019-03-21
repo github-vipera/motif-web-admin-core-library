@@ -1,5 +1,5 @@
 <wc-loading-overlay [visible]="loading"></wc-loading-overlay>
-<wa-webcontent-update-dialog #updateDialog></wa-webcontent-update-dialog>
+<wa-webcontent-update-dialog #updateDialog (confirm)="onUpdateConfirm($event)"></wa-webcontent-update-dialog>
 
 <wc-dashboard-header [title]="'Web Content'"></wc-dashboard-header>
 
