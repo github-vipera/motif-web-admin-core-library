@@ -116,7 +116,6 @@ export class WebContentSectionComponent implements OnInit, OnDestroy {
                 element.info["syntheticStatus"] = this.buildSyntheticStatus(element);
             });
 
-
             this.gridData = data;
             this.loading = false;
         }, (error) => {
@@ -139,13 +138,15 @@ export class WebContentSectionComponent implements OnInit, OnDestroy {
     private buildSyntheticStatus(statusInfo: BundleStatus): string {
         let published: number = 0;  
         let unpusblished: number = 0;  
-        for (let i=0;i<statusInfo.status.length;i++){
-            const clusterStatus:ClusterBundleStatus = statusInfo.status[i];
-            if (clusterStatus.status === PublishingStatus.Unpublished) {
-                unpusblished++;
-            }
-            if (clusterStatus.status === PublishingStatus.Published) {
-                published++;
+        if (statusInfo.status){
+            for (let i=0;i<statusInfo.status.length;i++){
+                const clusterStatus:ClusterBundleStatus = statusInfo.status[i];
+                if (clusterStatus.status === PublishingStatus.Unpublished) {
+                    unpusblished++;
+                }
+                if (clusterStatus.status === PublishingStatus.Published) {
+                    published++;
+                }
             }
         }
         this.logger.debug(LOG_TAG, 'buildSyntheticStatus (published count vs unpublished count): ', published, unpusblished);
