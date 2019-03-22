@@ -1,69 +1,91 @@
 <p-dialog #aclRelationsDialog [(visible)]="display" [modal]="true" [responsive]="true"
-  [style]="{ width: '900px', minWidth: '850px', height: '800px'}" [minY]="70" [baseZIndex]="10000">
+  [style]="{ width: '1280px', minWidth: '1024px', height: '800px'}" [minY]="70" [baseZIndex]="10000">
   <p-header> {{ dialogTitle }} <strong>[{{ entityName }}]</strong></p-header>
 
-  <div class="row fill ui-dialog-content ui-widget-content" style="height: 100%;">
+  <div class="row fill" style="height: 100%;">
     <kendo-splitter>
-      <kendo-splitter-pane orientation="horizontal" [collapsible]="false" size="50%" [scrollable]="false">
+      <kendo-splitter-pane orientation="horizontal" [collapsible]="false" size="45%" [scrollable]="false">
         <label class="acl-label">CURRENT</label>
-        <div class="pane-content">
-          <kendo-grid id="currentGrid" [data]="currentGridView" [kendoGridSelectBy]="'name'" [selectedKeys]="currentSelection"
-            (selectedKeysChange)="onCurrentSelectionChange($event)" [selectable]="selectableSettings"
-            [skip]="currentDataState.skip" [pageSize]="currentDataState.take" [scrollable]="'virtual'" [rowHeight]="35"
-            (pageChange)="onCurrentPageChange($event)"
+        <div *ngIf="!isCurrentEntityAction" class="pane-content" style="height: 100%;">
+          <kendo-grid id="currentGrid" [data]="currentGridView" [kendoGridSelectBy]="'name'"
+            [selectedKeys]="currentSelection" (selectedKeysChange)="onCurrentSelectionChange($event)"
+            [selectable]="selectableSettings" [skip]="currentDataState.skip" [pageSize]="currentDataState.take"
+            [scrollable]="'virtual'" [rowHeight]="35" (pageChange)="onCurrentPageChange($event)" [resizable]="true"
             [filterable]="true" [filter]="currentDataState.filter" (dataStateChange)="onCurrentDataStateChange($event)"
-            [sortable]="{
+            [height]="height" style="height: 100%;" [sortable]="{
               allowUnsort: false,
               mode: 'single'
-              }"
-            [sort]="currentDataState.sort">
+              }" [sort]="currentDataState.sort">
             <kendo-grid-column field="name" title="Name" width="65">
             </kendo-grid-column>
             <kendo-grid-column field="description" title="Description" width="25">
             </kendo-grid-column>
           </kendo-grid>
         </div>
+        <div *ngIf="isCurrentEntityAction" class="pane-content" style="height: 100%;">
+          <kendo-grid id="currentGrid" [data]="currentGridView" [kendoGridSelectBy]="permissionKey"
+            [selectedKeys]="currentSelection" (selectedKeysChange)="onCurrentSelectionChange($event)"
+            [selectable]="selectableSettings" [skip]="currentDataState.skip" [pageSize]="currentDataState.take"
+            [scrollable]="'virtual'" [rowHeight]="35" (pageChange)="onCurrentPageChange($event)" [resizable]="true"
+            [filterable]="true" [height]="height" [filter]="currentDataState.filter"
+            (dataStateChange)="onCurrentDataStateChange($event)" [sortable]="{
+                              allowUnsort: false,
+                              mode: 'single'
+                              }" style="height: 100%;" [sort]="currentDataState.sort">
+            <kendo-grid-column field="component" title="Component" width="100">
+            </kendo-grid-column>
+            <kendo-grid-column field="action" title="Action" width="45" [sortable]="false">
+            </kendo-grid-column>
+            <kendo-grid-column field="target" title="Target" width="60">
+            </kendo-grid-column>
+          </kendo-grid>
+        </div>
       </kendo-splitter-pane>
-
+      <kendo-splitter-pane [collapsible]="false" size="10%">
+        <button kendoButton look="flat" [toggleable]="false" [disabled]="isAddSelectedDisabled" (click)="onAddSelected();">Add Selected</button>
+        <button kendoButton look="flat" [toggleable]="false" [disabled]="isAddAllDisabled" (click)="onAddAll();">Add All</button>
+        <button kendoButton look="flat" [toggleable]="false" [disabled]="isRemoveSelectedDisabled" (click)="onRemoveSelected();">Remove Selected</button>
+        <button kendoButton look="flat" [toggleable]="false" [disabled]="isRemoveAllDisabled" (click)="onRemoveAll();">Remove All</button>
+      </kendo-splitter-pane>
       <kendo-splitter-pane [collapsible]="false" [scrollable]="false">
         <label class="acl-label">AVAILABLE</label>
-        <div ng-switch on="availableGridType">
-          <div ng-switch-when="sdf" class="pane-content">
-            <kendo-grid id="availableGrid" [data]="availableGridView" [kendoGridSelectBy]="availableKey"
-              [selectedKeys]="availableSelection" (selectedKeysChange)="onAvailableSelectionChange($event)"
-              [selectable]="selectableSettings" [skip]="availableDataState.skip" [pageSize]="availableDataState.take"
-              [scrollable]="'virtual'" [rowHeight]="35" (pageChange)="onAvailablePageChange($event)" [filterable]="true"
-              [filter]="availableDataState.filter" (dataStateChange)="onAvailableDataStateChange($event)" [sortable]="{
-                      allowUnsort: false,
-                      mode: 'single'
-                      }" [sort]="availableDataState.sort">
-              <kendo-grid-column field="name" title="Name" width="65">
-              </kendo-grid-column>
-              <kendo-grid-column field="description" title="Description" width="25">
-              </kendo-grid-column>
-            </kendo-grid>
-          </div>
-          <div ng-switch-when="permissions" class="pane-content">
-            <kendo-grid id="availablePermissionsGrid" [data]="availableGridView" [kendoGridSelectBy]="availableKey"
-              [selectedKeys]="availableSelection" (selectedKeysChange)="onAvailableSelectionChange($event)"
-              [selectable]="selectableSettings" [skip]="availableDataState.skip" [pageSize]="availableDataState.take"
-              [scrollable]="'virtual'" [rowHeight]="35" (pageChange)="onAvailablePageChange($event)" [filterable]="true"
-              [filter]="availableDataState.filter" (dataStateChange)="onAvailableDataStateChange($event)" [sortable]="{
-                      allowUnsort: false,
-                      mode: 'single'
-                      }" [sort]="availableDataState.sort">
-              <kendo-grid-column field="component" title="Component" width="100">
-              </kendo-grid-column>
-              <kendo-grid-column field="action" title="Action" width="45" [sortable]="false">
-              </kendo-grid-column>
-              <kendo-grid-column field="target" title="Target" width="60">
-              </kendo-grid-column>
-            </kendo-grid>
-          </div>
+        <div *ngIf="!isCurrentEntityAction" class="pane-content" style="height: 100%;">
+          <kendo-grid id="availableGrid" [data]="availableGridView" [kendoGridSelectBy]="'name'"
+            [selectedKeys]="availableSelection" (selectedKeysChange)="onAvailableSelectionChange($event)"
+            [selectable]="selectableSettings" [skip]="availableDataState.skip" [pageSize]="availableDataState.take"
+            [scrollable]="'virtual'" [rowHeight]="35" [resizable]="true" [height]="height"
+            (pageChange)="onAvailablePageChange($event)" [filterable]="true" style="height: 100%;"
+            [filter]="availableDataState.filter" (dataStateChange)="onAvailableDataStateChange($event)" [sortable]="{
+                            allowUnsort: false,
+                            mode: 'single'
+                            }" [sort]="availableDataState.sort">
+            <kendo-grid-column field="name" title="Name" width="65">
+            </kendo-grid-column>
+            <kendo-grid-column field="description" title="Description" width="25">
+            </kendo-grid-column>
+          </kendo-grid>
         </div>
-    </kendo-splitter-pane>
+        <div *ngIf="isCurrentEntityAction" class="pane-content" style="height: 100%;">
+          <kendo-grid id="availableGrid" [data]="availableGridView" [kendoGridSelectBy]="permissionKey"
+            [selectedKeys]="availableSelection" (selectedKeysChange)="onAvailableSelectionChange($event)"
+            [selectable]="selectableSettings" [skip]="availableDataState.skip" [pageSize]="availableDataState.take"
+            [scrollable]="'virtual'" [rowHeight]="35" [resizable]="true" [height]="height"
+            (pageChange)="onAvailablePageChange($event)" [filterable]="true" style="height: 100%;"
+            [filter]="availableDataState.filter" (dataStateChange)="onAvailableDataStateChange($event)" [sortable]="{
+                            allowUnsort: false,
+                            mode: 'single'
+                            }" [sort]="availableDataState.sort">
+            <kendo-grid-column field="component" title="Component" width="100">
+            </kendo-grid-column>
+            <kendo-grid-column field="action" title="Action" width="45" [sortable]="false">
+            </kendo-grid-column>
+            <kendo-grid-column field="target" title="Target" width="60">
+            </kendo-grid-column>
+          </kendo-grid>
+        </div>
+      </kendo-splitter-pane>
     </kendo-splitter>
-</div>
+  </div>
 
   <p-footer>
     <kendo-buttongroup look="flat">
