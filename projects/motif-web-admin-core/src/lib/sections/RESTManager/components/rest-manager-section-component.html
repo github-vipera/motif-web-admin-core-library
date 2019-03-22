@@ -1,0 +1,36 @@
+<wc-dashboard-header [title]="'REST Manager'"></wc-dashboard-header>
+
+
+<div class="row spread" #target>
+    <div class="flex-toolbar" style="display:flex;align-items: center;">
+    </div>
+  
+    <div class="flex-cmd">
+        <kendo-buttongroup look="flat">
+            <button
+          kendoButton
+          [toggleable]="false"
+          [icon]="'refresh'"
+          (click)="onRefreshClicked()"
+        >
+          Refresh
+        </button>
+      </kendo-buttongroup>
+    </div>
+  </div>
+  
+  <div class="row fill">
+    <kendo-splitter>
+      <kendo-splitter-pane style="overflow: hidden;">
+        <div #servicetableContainer style="height: 100%;">
+            <wa-rest-tree-selector-component (nodeSelection)="nodeSelect($event)" #serviceCatalog></wa-rest-tree-selector-component>
+        </div>
+      </kendo-splitter-pane>
+  
+      <kendo-splitter-pane [collapsible]="true" size="30%">
+          <wa-rest-tree-editor-component #servicesEditor (changesSaved)="onChangesSaved($event)"></wa-rest-tree-editor-component>
+      </kendo-splitter-pane>
+  
+    </kendo-splitter>
+  
+  </div>

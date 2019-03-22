@@ -1,0 +1,33 @@
+<wc-loading-overlay [visible]="loading"></wc-loading-overlay>
+
+<p-treeTable #restCatalogTable     
+[value]="tableModel.model"
+selectionMode="single">
+
+<ng-template pTemplate="header" let-columns>
+    <tr>
+      <th>Path</th>
+      <th>Name</th>
+    </tr>
+  </ng-template>
+  <ng-template
+    pTemplate="body"
+    let-rowNode
+    let-rowData="rowData"
+    let-columns="columns"
+  >
+    <tr [ttRow]="rowNode" [ttContextMenuRow]="rowNode" [ttSelectableRow]="rowNode" style="height:30px">
+      <td class="service-catalog-row">
+        <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+        <i
+          class="pi pi-fw {{rowData.nodeIcon}} node-icon-{{rowData.nodeType}}"
+        ></i>
+        <span
+          ><strong>{{ rowData.path }}</strong></span
+        >
+      </td>
+      <td class="service-catalog-row">{{ rowData.name }}</td>
+    </tr>
+  </ng-template>
+</p-treeTable>
+
