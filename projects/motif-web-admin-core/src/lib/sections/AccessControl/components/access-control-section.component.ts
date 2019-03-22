@@ -20,10 +20,6 @@ import { DialogType, EntityType } from './editors/acl-editor-context';
 import { WCSubscriptionHandler } from '../../../components/Commons/wc-subscription-handler';
 import { Observable } from 'rxjs';
 import { RowCommandType, UsersListComponent } from './users-list/users-list.component';
-import { fromEvent } from 'rxjs/observable/fromEvent';
-import { Subscription } from 'rxjs/Subscription';
-import { take } from 'rxjs/operators/take';
-import { tap } from 'rxjs/operators/tap';
 import { AclRelationsDialogComponent } from './dialogs/acl/relations/acl-relations-dialog';
 
 const LOG_TAG = '[AccessControlSection]';
@@ -34,37 +30,6 @@ const BIT_LOAD_ACTIONS = 32;
 const BIT_LOAD_PERMISSIONS = 64;
 const BIT_LOAD_ALL = BIT_LOAD_USERS | BIT_LOAD_GROUPS | BIT_LOAD_ROLES | BIT_LOAD_ACTIONS | BIT_LOAD_PERMISSIONS;
 
-const tableRow = node => node.tagName.toLowerCase() === 'tr';
-const closest = (node, predicate) => {
-  while (node && !predicate(node)) {
-      node = node.parentNode;
-  }
-
-  return node;
-};
-
-export enum GridType {
-  USERS,
-  ADMINS,
-  CLIENTS,
-  GROUPS,
-  ROLES,
-  ACTIONS,
-  PERMISSIONS
-}
-
-export interface DragDropGridConfig {
-  selector: string;
-  grid: any;
-  provides: string;
-  accepts: Array<string>;
-}
-
-export interface DragData {
-  source: string;
-  data: any;
-}
-
 @Component({
   selector: 'wa-access-control-section',
   styleUrls: ['./access-control-section.component.scss'],
@@ -73,57 +38,10 @@ export interface DragData {
 @PluginView('AccessControl', {
   iconName: 'wa-ico-users'
 })
-export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnDestroy  {
+export class AccessControlSectionComponent implements OnInit, AfterViewInit  {
 
   public size = '450px';
   public height = '330';
-
-  private dragDropConfigs: Array<DragDropGridConfig> = [
-    {
-      selector: '',
-      grid: '',
-      provides: '',
-      accepts: []
-    },
-    {
-      selector: '',
-      grid: '',
-      provides: '',
-      accepts: []
-    },
-    {
-      selector: '',
-      grid: '',
-      provides: '',
-      accepts: []
-    },
-    {
-      selector: '',
-      grid: '',
-      provides: '',
-      accepts: []
-    },
-    {
-      selector: '',
-      grid: '',
-      provides: '',
-      accepts: []
-    },
-    {
-      selector: '#actionsGrid',
-      grid: 'actionsGridView',
-      provides: 'actions',
-      accepts: ['permissions']
-    },
-    {
-      selector: '#permissionsGrid',
-      grid: 'permissionsGridView',
-      provides: 'permissions',
-      accepts: []
-    }
-  ];
-  private dragDropSubscriptions: Array<Subscription> = new Array(7);
-  private currentDragData: DragData;
 
   statusConfirmationTitleProvider: WCConfirmationTitleProvider = {
     getTitle(rowData): string {
@@ -267,97 +185,10 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
   public ngAfterViewInit(): void {
   }
 
-  public ngOnDestroy(): void {
-    for (let idx = 0; idx < this.dragDropSubscriptions.length; idx++) {
-      this.unsubscribeDragDrop(idx);
-    }
-  }
-
   public rowCallback(context: RowClassArgs) {
     return {
       dragging: context.dataItem.dragging
     };
-  }
-
-  private subscribeDragDrop(gridType: GridType): void {
-    this.zone.onStable.pipe(take(1)).subscribe(() =>
-      this.dragDropSubscriptions[gridType] = this.handleDragAndDrop(this.dragDropConfigs[gridType]));
-  }
-
-  private unsubscribeDragDrop(gridType: GridType): void {
-    this.dragDropSubscriptions[gridType].unsubscribe();
-  }
-
-  private handleDragAndDrop(dragDropConfig: DragDropGridConfig): Subscription {
-    const sub = new Subscription(() => { });
-
-    const container: Element = document.querySelector(dragDropConfig.selector);
-    const tableRows = Array.from(container.querySelectorAll('.k-grid tr'));
-    tableRows.forEach(item => {
-      this.renderer.setAttribute(item, 'draggable', 'true');
-      const dragStart = fromEvent<DragEvent>(item, 'dragstart');
-      const dragOver = fromEvent(item, 'dragover');
-      const drop = fromEvent(item, 'drop');
-      const dragEnd = fromEvent(item, 'dragend');
-
-      sub.add(dragStart.pipe(
-        tap(({ dataTransfer }) => {
-          try {
-            const dragImgEl = document.createElement('span');
-            dragImgEl.setAttribute('style', 'position: absolute; display: block; top: 0; left: 0; width: 0; height: 0;');
-            document.body.appendChild(dragImgEl);
-            dataTransfer.setDragImage(dragImgEl, 0, 0);
-          } catch (err) {
-            // IE doesn't support setDragImage
-          }
-          try {
-            // Firefox won't drag without setting data
-            dataTransfer.setData('application/json', '');
-          } catch (err) {
-            // IE doesn't support MIME types in setData
-          }
-        })
-      ).subscribe(({ target }) => {
-        const row: HTMLTableRowElement = <HTMLTableRowElement>target;
-        const dataItem = this[dragDropConfig.grid].data[row.rowIndex];
-        dataItem.dragging = true;
-        this.currentDragData = {
-          source: dragDropConfig.provides,
-          data: dataItem
-        };
-        console.log('drag started for ' + this.currentDragData.source);
-      }));
-
-      sub.add(dragOver.subscribe((e: any) => {
-        if (dragDropConfig.accepts.includes(this.currentDragData.source)) {
-          e.preventDefault();
-          //        const dataItem = gridData.data.splice(draggedItemIndex, 1)[0];
-          const dropIndex = closest(e.target, tableRow).rowIndex;
-          const dropItem = this[dragDropConfig.grid].data[dropIndex];
-
-          console.log(this.currentDragData.source + ' to ' + dragDropConfig.provides + ' is valid');
-        } else {
-          console.log(this.currentDragData.source + ' to ' + dragDropConfig.provides + ' is NOT valid');
-        }
-      }));
-
-      sub.add(drop.subscribe((e: any) => {
-        if (dragDropConfig.accepts.includes(this.currentDragData.source)) {
-          e.preventDefault();
-          console.log('dropped item from ' + this.currentDragData.source + ' to ' + dragDropConfig.provides);
-        } else {
-          console.log('cannot drop item from ' + this.currentDragData.source + ' to ' + dragDropConfig.provides);
-        }
-      }));
-
-      sub.add(dragEnd.subscribe((e: any) => {
-        e.preventDefault();
-        this.currentDragData.data.dragging = false;
-        console.log('drag ended for ' + this.currentDragData.source);
-      }));
-    });
-
-    return sub;
   }
 
   public actionsPageChange(event: PageChangeEvent): void {
@@ -372,8 +203,6 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
 
   private loadActions(): void {
     this.actionsGridView = process(this.actionsData, this.actionsDataState);
-
-    this.subscribeDragDrop(GridType.ACTIONS);
   }
 
   public permissionsPageChange(event: PageChangeEvent): void {
@@ -388,8 +217,6 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
 
   private loadPermissions(): void {
     this.permissionsGridView = process(this.permissionsData, this.permissionsDataState);
-
-    this.subscribeDragDrop(GridType.PERMISSIONS);
   }
 
   public onUserSelectionChange(e: SelectionEvent) {

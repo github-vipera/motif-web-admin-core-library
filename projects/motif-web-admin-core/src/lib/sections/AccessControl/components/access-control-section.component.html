@@ -176,7 +176,7 @@
         <kendo-splitter-pane [collapsible]="false" size="31%" [scrollable]="false">
           <label class="acl-label">ACTIONS</label>
           <div class="pane-content">
-            <kendo-grid id="actionsGrid" [data]="actionsGridView" [kendoGridSelectBy]="'name'" [selectedKeys]="actionSelection"
+            <kendo-grid [data]="actionsGridView" [kendoGridSelectBy]="'name'" [selectedKeys]="actionSelection"
               (selectedKeysChange)="onActionSelectionChange($event)" [selectable]="selectableSettings"
               [skip]="actionsDataState.skip" [pageSize]="actionsDataState.take" [scrollable]="'virtual'" [rowHeight]="35"
               [height]="height" (pageChange)="actionsPageChange($event)"
