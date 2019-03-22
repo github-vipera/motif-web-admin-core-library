@@ -28,6 +28,9 @@ export interface RESTEntry {
 export class RESTTreeTableModel {
   private _model: TreeNode[] = [];
   private _rootNode: TreeNode;
+  
+  private _filter: string;
+  private _filterRegExp: RegExp;
 
   constructor() {}
 
@@ -45,6 +48,9 @@ export class RESTTreeTableModel {
       data: {
         name: restEntry.name,
         url: restEntry.URL,
+        domain: restEntry.domain,
+        application: restEntry.application,
+        filtered: this.isEntryFiltered(restEntry),
         leaf: leaf,
         icon: "pi-bell",
         selectable: true,
@@ -135,13 +141,48 @@ export class RESTTreeTableModel {
 
   public loadData(restTree: any) {
     this.rebuildModel(restTree);
-    console.log(">>>>>>> loadData called for ", restTree);
-    console.log(">>>>>>> loadData done.Model is ", this._model);
   }
 
   public get model(): TreeNode[] {
     return this._model;
   }
+
+  public setFilter(filter:string){
+    if (!filter || filter.length==0 || filter===this._filter){
+      this._filter = null;
+    } else {
+      this._filter = filter;
+      this._filterRegExp = new RegExp("^" + filter.split("*").join(".*") + "$");
+    }
+    this.applyFilter(this._model);
+  }
+
+  public get isFiltered(): boolean {
+    return (this._filter!=null);
+  }
+
+  private applyFilter(model:TreeNode[]){
+    if (!this._filter || !this._model){
+      return;
+    }
+    //Scan recursive
+    for (let i=0;i<model.length;i++){
+      let node:TreeNode = model[i];
+      node.data.filtered = this.isNodeFiltered(node);
+      if (node.children && node.children.length > 0) {
+        this.applyFilter(node.children);
+      }
+    }
+  }
+
+  private isEntryFiltered(entry:RESTEntryWrapper):boolean{
+    return (this._filterRegExp && this._filterRegExp.test(entry.URL));
+  }
+
+  private isNodeFiltered(node:TreeNode):boolean{
+    return (this._filterRegExp && this._filterRegExp.test(node.data.url));
+  }
+
 }
 
 class RESTEntryWrapper {
