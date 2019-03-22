@@ -150,7 +150,7 @@ export class ServiceCatalogSelectorComponent implements OnInit, OnDestroy {
         this.loading = true;
         this._subHandler.add(this.serviceCatalogService.getServiceCatalog().subscribe(data => {
             this.logger.debug(LOG_TAG, 'getServiceCatalog done.');
-            this.logger.trace(LOG_TAG, 'getServiceCatalog services: ', data);
+            this.logger.debug(LOG_TAG, 'getServiceCatalog services: ', data);
             this.tableModel.loadData(data, this._dataFilter);
             this.loading = false;
         }, (error) => {
