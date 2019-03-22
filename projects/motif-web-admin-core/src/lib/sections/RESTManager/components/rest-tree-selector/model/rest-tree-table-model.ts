@@ -162,10 +162,12 @@ export class RESTTreeTableModel {
   }
 
   private applyFilter(model:TreeNode[]){
+    console.log(">>>>>>>>> applyFilter called ", this._filter);
     if (!this._filter || !this._model){
       return;
     }
     //Scan recursive
+    console.log(">>>>>>>>> applyFilter scan start ");
     for (let i=0;i<model.length;i++){
       let node:TreeNode = model[i];
       node.data.filtered = this.isNodeFiltered(node);
@@ -176,7 +178,7 @@ export class RESTTreeTableModel {
   }
 
   private isEntryFiltered(entry:RESTEntryWrapper):boolean{
-    return (this._filterRegExp && this._filterRegExp.test(entry.URL));
+    return(this._filterRegExp!=null && this._filterRegExp.test(entry.URL));
   }
 
   private isNodeFiltered(node:TreeNode):boolean{

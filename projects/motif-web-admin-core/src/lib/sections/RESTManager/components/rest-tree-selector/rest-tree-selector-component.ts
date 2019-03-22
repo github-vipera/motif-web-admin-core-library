@@ -62,4 +62,10 @@ export class RESTTreeSelectorComponent implements OnInit, OnDestroy {
     public get tableModel(): RESTTreeTableModel {
         return this._tableModel;
     }
+
+    public onFilterChange(event: Event) {
+        this.logger.debug(LOG_TAG, 'onFilterChange called');
+        this._tableModel.setFilter(event.srcElement['value']);
+    }
+
 }

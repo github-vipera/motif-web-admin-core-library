@@ -1,5 +1,7 @@
 <wc-loading-overlay [visible]="loading"></wc-loading-overlay>
 
+<input #filterInput kendoTextBox  (afterValueChanged)="onFilterChange($event)" />
+
 <p-treeTable 
 #restCatalogTable     
 [value]="tableModel.model"
@@ -17,6 +19,7 @@ scrollHeight="100%"
       <th>Name</th>
       <th>Domain</th>
       <th>Application</th>
+      <th>Filtered</th>
     </tr>
   </ng-template>
   <ng-template
@@ -38,6 +41,7 @@ scrollHeight="100%"
       <td class="service-catalog-row">{{ rowData.name }}</td>
       <td class="service-catalog-row">{{ rowData.domain }}</td>
       <td class="service-catalog-row">{{ rowData.application }}</td>
+      <td class="service-catalog-row">{{ rowData.filtered }}</td>
     </tr>
   </ng-template>
 </p-treeTable>
