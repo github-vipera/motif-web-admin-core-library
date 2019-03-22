@@ -7,15 +7,11 @@
 
     <div class="cmd" style="align-items: center;">
         <label style="padding-bottom: 0px;padding-left: 10px;padding-right: 10px;">Do Upload?</label>
-        <a (click)="onBundleUploadConfirm()">
-            <svg class="ok" data-id="ok">
-                <use xlink:href="./assets/img/icons.svg#ico-ok"></use>
-            </svg>
+        <a (click)="onBundleUploadConfirm()" style="margin-right: 3px;">
+            <i class="ok icon wa-ico-ok confirmation-icon" data-id="ok"></i>
         </a>
         <a (click)="onBundleUploadCancel()" data-slideup="#user-add">
-            <svg class="ko" data-id="ko">
-                <use xlink:href="./assets/img/icons.svg#ico-ko"></use>
-            </svg>
+            <i class="ko icon wa-ico-ko confirmation-icon" data-id="ko"></i>
         </a>
     </div>
 </wc-slide-panel>

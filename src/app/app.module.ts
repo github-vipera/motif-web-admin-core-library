@@ -62,7 +62,10 @@ const appRoutes: Routes = [
     ToolBarModule,
     BrowserAnimationsModule,
     WebConsoleCoreModule,
+    LayoutModule,
     DateInputsModule,
+    TopMenuComponentModule,
+    WAThemeDesignerModule,
     ConfigurationSectionModule,
     OAuth2SectionModule,
     SessionsSectionModule,
@@ -72,12 +75,9 @@ const appRoutes: Routes = [
     PluginsSectionModule,
     ServicesSectionModule,
     AccessControlSectionModule,
-    LayoutModule,
     UtilitiesSectionModule,
     CountersAndThresholdsSectionModule,
-    TopMenuComponentModule,
-    WebContentSectionModule,
-    WAThemeDesignerModule
+    WebContentSectionModule
   ],
   providers: [
     { provide: WC_API_BASE_PATH, useValue: environment.API_BASE_PATH },
