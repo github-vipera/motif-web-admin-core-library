@@ -6,7 +6,7 @@ import { WCUIKitCoreModule, WCUIKitDataModule, WCUIKitKendoProviderModule, WCUIK
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { CommonsUIModule } from '../../components/CommonsUIModule';
 import { RESTManagerSectionComponent } from './components/rest-manager-section-component';
-import { RESTCatalogComponent } from './components/rest-tree-selector/rest-catalog-component';
+import { RESTCatalogComponent } from './components/rest-catalog-component/rest-catalog-component';
 import { RESTTreeEditorComponent } from './components/rest-tree-editor/rest-tree-editor-component';
 import { TreeTableModule } from 'primeng/treetable';
 

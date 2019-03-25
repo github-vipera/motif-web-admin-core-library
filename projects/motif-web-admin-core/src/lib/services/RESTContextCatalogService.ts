@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { DomainsService,
-         Domain, DomainCreate,
+         Domain,
          ApplicationsService,
          Application,
-         ApplicationCreate,
           } from '@wa-motif-open-api/platform-service';
 import { ServicesService,
     Service,
@@ -11,6 +10,7 @@ import { ServicesService,
     OperationsService,
     ServiceOperation } from '@wa-motif-open-api/catalog-service';
 import { ApplicationsService as AppService } from '@wa-motif-open-api/catalog-service';
+import { ContextsService, ServiceContext } from '@wa-motif-open-api/rest-context-service';
 
 import { Observable } from 'rxjs';
 import { NGXLogger } from 'web-console-core';
@@ -25,9 +25,7 @@ export class RESTContextCatalogService {
 
     constructor(private domainService: DomainsService,
         private applicationService: ApplicationsService,
-        private appService: AppService,
-        private servicesService: ServicesService,
-        private operationsService: OperationsService,
+        private contextService: ContextsService,
         private logger: NGXLogger) {
     }
 
@@ -39,7 +37,7 @@ export class RESTContextCatalogService {
 
             this.logger.debug(LOG_TAG, 'getRESTContextCatalog called' );
 
-            const restContextCatalog = [];
+            var restContextCatalog = [];
             
             // Get all domains
             this.domainService.getDomains().subscribe(( domains: Array<Domain> ) => {
@@ -54,32 +52,53 @@ export class RESTContextCatalogService {
 
                         if (appCount === 0) {
                             processedDomains++;
+                            if ( processedDomains === domainsCount) {
+                                observer.next( restContextCatalog );
+                                observer.complete();
+                                this.logger.debug(LOG_TAG, 'getRESTContextCatalog completed' );
+                            }
                         }
 
                         for (const application of applications ) {
                             const applicationInfo: any = application;
 
-                            /*
-                            this.appService.getServiceList(domain.name, application.name).subscribe( ( services: Array<Service> ) => {
-                                applicationInfo.services = services;
-                                // tslint:disable-next-line:max-line-length
-                                this.logger.debug(LOG_TAG, 'getServiceCatalog services[' + application.name + '@' + domain.name + ']:', services );
-                            }, ( error ) => {
-                                this.logger.error(LOG_TAG, 'getServiceCatalog error:' , error);
-                                observer.error(error);
-                            }, () => {
+                            this.contextService.getContexts(domain.name, application.name).subscribe((contexts:Array<ServiceContext>)=>{
+
+                                this.logger.debug(LOG_TAG, 'getRESTContextCatalog contexts[' + application.name + '@' + domain.name + ']:', contexts );
+                                restContextCatalog = restContextCatalog.concat(contexts);
+                                
                                 processedApps++;
                                 if (processedApps === appCount) {
                                     processedDomains++;
+                                    if ( processedDomains === domainsCount) {
+                                        observer.next( restContextCatalog );
+                                        observer.complete();
+                                        this.logger.debug(LOG_TAG, 'getRESTContextCatalog completed' );
+                                    }
                                 }
+
+                            }, (error)=>{
+
+                                processedApps++;
+                                if (processedApps === appCount) {
+                                    processedDomains++;
+                                    if ( processedDomains === domainsCount) {
+                                        observer.next( restContextCatalog );
+                                        observer.complete();
+                                        this.logger.debug(LOG_TAG, 'getRESTContextCatalog completed' );
+                                    }
+                                }
+                                this.logger.error(LOG_TAG, 'getRESTContextCatalog error:' , error);
+                                observer.error(error);
+
+                            },() => {
+
                                 if ( processedDomains === domainsCount) {
-                                    observer.next( serviceCatalog );
+                                    observer.next( restContextCatalog );
                                     observer.complete();
-                                    this.logger.debug(LOG_TAG, 'getServiceCatalog completed' );
+                                    this.logger.debug(LOG_TAG, 'getRESTContextCatalog completed' );
                                 }
                             });
-                            domainInfo.applications.push(applicationInfo);
-                            */
                         }
 
 

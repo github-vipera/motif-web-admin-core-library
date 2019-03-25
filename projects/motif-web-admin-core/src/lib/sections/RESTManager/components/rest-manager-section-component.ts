@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef, Renderer2, OnDestroy } from '@angular/core';
 import { PluginView } from 'web-console-core';
 import { NGXLogger } from 'web-console-core';
-import { RESTCatalogComponent } from './rest-tree-selector/rest-catalog-component';
+import { RESTCatalogComponent } from './rest-catalog-component/rest-catalog-component';
 
 const LOG_TAG = '[RESTManagerSectionComponent]';
 

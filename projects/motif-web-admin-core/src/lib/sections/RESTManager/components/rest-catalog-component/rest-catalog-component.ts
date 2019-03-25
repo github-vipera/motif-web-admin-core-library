@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef, Renderer2, OnDestroy } from '@angular/core';
 import { NGXLogger } from 'web-console-core';
 import { RESTTreeTableModel } from './model/rest-tree-table-model';
-import { RESTTreeDataProviderMock } from './rest-tree-data-provider-mock';
-
+//import { RESTTreeDataProviderMock } from './rest-tree-data-provider-mock';
+import { RESTContextCatalogService } from '../../../../services/RESTContextCatalogService';
 
 const LOG_TAG = '[RESTCatalogComponent]';
 
@@ -18,7 +18,8 @@ export class RESTCatalogComponent implements OnInit, OnDestroy {
 
     constructor(private logger: NGXLogger,
         private renderer2: Renderer2,
-        private changeDetector: ChangeDetectorRef
+        private changeDetector: ChangeDetectorRef,
+        private restCatalogService: RESTContextCatalogService
         ) {
         this.logger.debug(LOG_TAG, 'Opening...');
 
@@ -45,9 +46,18 @@ export class RESTCatalogComponent implements OnInit, OnDestroy {
     public reloadData() {
         this.logger.debug(LOG_TAG, 'reloadData called');
         this._loading = true;
+        this.restCatalogService.getRESTContextCatalog().subscribe((catalog) => {
+            this._tableModel.loadData(catalog);
+            this._loading = false;
+            this.logger.debug(LOG_TAG, 'reloadData results:', catalog);
+        }, (error) => {
+            this._loading = false;
+            
+        });
+        /*
         let modDataProvider = new RESTTreeDataProviderMock();
         this._tableModel.loadData(modDataProvider.getData());
-        this._loading = false;
+        */
     }
 
     public clear() {
