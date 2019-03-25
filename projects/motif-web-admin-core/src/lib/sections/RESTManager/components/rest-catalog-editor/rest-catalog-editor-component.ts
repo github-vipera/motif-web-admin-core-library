@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef, Renderer2, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef, Renderer2, OnDestroy, Input } from '@angular/core';
 import { NGXLogger } from 'web-console-core';
 import { ContextsService, ServiceContext } from '@wa-motif-open-api/rest-context-service';
 import { RESTCatalogNode } from '../rest-catalog-commons'
@@ -13,6 +13,8 @@ const LOG_TAG = '[RESTTreeEditorComponent]';
 export class RESTCatalogEditorComponent implements OnInit, OnDestroy {
 
     private _currentNode : RESTCatalogNode;
+    private _title = 'No selection.';
+    isBusy: boolean;
 
     constructor(private logger: NGXLogger,
         private renderer2: Renderer2,
@@ -37,10 +39,22 @@ export class RESTCatalogEditorComponent implements OnInit, OnDestroy {
 
     freeMem() {
     }
+
+    @Input() get title(): string {
+        return this._title;
+    }
+
+    private setTitle(title: string): void {
+        this._title = title;
+    }
+
     
     public startEdit(node: RESTCatalogNode){
         this._currentNode = node;
-        this.reloadData();
+        if (node){
+            this.setTitle('Context ' + node.name);
+            this.reloadData();
+        }
     }
 
     public get currentEditingNode():RESTCatalogNode {
@@ -58,6 +72,48 @@ export class RESTCatalogEditorComponent implements OnInit, OnDestroy {
     
             });
         }
+    }
+
+    @Input() get namespace(): string {
+        if (this._currentNode){
+            return this._currentNode.url;
+        } else {
+            return "";
+        }
+    }
+
+    onSaveButtonClick(event) {
+        /*        
+        if (this.editorContext.editingType === EditingType.Domain) {
+            this._domainEditor.saveChanges();
+        } else if (this.editorContext.editingType === EditingType.Application) {
+            this._applicationEditor.saveChanges();
+        } else if (this.editorContext.editingType === EditingType.Service) {
+            this._serviceEditor.saveChanges();
+        } else if (this.editorContext.editingType === EditingType.Operation) {
+            this._operationEditor.saveChanges();
+           }*/
+    }
+
+    onReloadButtonClick(event) {
+        /*
+        if (this.editorContext.editingType === EditingType.Domain) {
+            this._domainEditor.discardChanges();
+        } else if (this.editorContext.editingType === EditingType.Application) {
+            this._applicationEditor.discardChanges();
+        } else if (this.editorContext.editingType === EditingType.Service) {
+            this._serviceEditor.discardChanges();
+        } else if (this.editorContext.editingType === EditingType.Operation) {
+            this._operationEditor.discardChanges();
+        }
+        */
+    }
+
+    onDataSaved(changes: any) {
+        /*
+        this.logger.debug(LOG_TAG, 'onDataSaved: ', changes);
+        this.changesSaved.emit(changes);
+        */
     }
     
 }
