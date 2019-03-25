@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef, Renderer2, OnDestroy, Input } from '@angular/core';
 import { NGXLogger } from 'web-console-core';
-import { ContextsService, ServiceContext } from '@wa-motif-open-api/rest-context-service';
+import { ContextsService, ServiceContext, ServiceContextValue } from '@wa-motif-open-api/rest-context-service';
 import { RESTCatalogNode } from '../rest-catalog-commons'
+import { WCPropertyEditorModel, WCPropertyEditorItemType, WCPropertyEditorItem } from 'web-console-ui-kit';
 
 const LOG_TAG = '[RESTTreeEditorComponent]';
 
@@ -13,8 +14,15 @@ const LOG_TAG = '[RESTTreeEditorComponent]';
 export class RESTCatalogEditorComponent implements OnInit, OnDestroy {
 
     private _currentNode : RESTCatalogNode;
+    private _currentServiceContext: ServiceContext;
     private _title = 'No selection.';
     isBusy: boolean;
+
+    public propertyModel: WCPropertyEditorModel = {
+        items: [
+        ]
+    };
+
 
     constructor(private logger: NGXLogger,
         private renderer2: Renderer2,
@@ -64,15 +72,46 @@ export class RESTCatalogEditorComponent implements OnInit, OnDestroy {
     
     public reloadData():void {
         if (this._currentNode){
-            this.restContextService.getContext(this._currentNode.domain, this._currentNode.application, this._currentNode.name).subscribe( (data) => {
+            this.restContextService.getContext(this._currentNode.domain, this._currentNode.application, this._currentNode.name).subscribe( (data:ServiceContext) => {
                 this.logger.debug(LOG_TAG, 'reloadData results: ', data);
-
+                this._currentServiceContext = data;
+                this.rebuildPropertyModel();
             }, (error) => {
                 this.logger.error(LOG_TAG, 'reloadData error: ', error);
     
             });
         }
     }
+
+    private rebuildPropertyModel(): void {
+        let items = [];
+        let values:Array<ServiceContextValue> = this._currentServiceContext.valuesList;
+        for (let i=0;i<values.length;i++){
+            let valueItem : ServiceContextValue = values[i];
+            let propertyItem = this.buildPropertyItemForValueItem(valueItem);
+            items.push(propertyItem);
+        }
+        this.propertyModel = {
+            items : items
+        }
+    }
+
+    private buildPropertyItemForValueItem(valueItem: ServiceContextValue): WCPropertyEditorItem {
+        let valueType = WCPropertyEditorItemType.String;
+        let value:any = valueItem.value;
+        if (valueItem.attribute.type.toLowerCase()==="boolean"){
+            valueType = WCPropertyEditorItemType.Boolean;
+            value = (valueItem.value === "true" ? true : false );
+        }
+        return {
+            name : valueItem.attribute.name,
+            field: valueItem.attribute.name,
+            description: valueItem.attribute.name,
+            type: valueType,
+            value: value
+        }
+    }
+
 
     @Input() get namespace(): string {
         if (this._currentNode){
