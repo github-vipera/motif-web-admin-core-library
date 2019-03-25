@@ -44,6 +44,7 @@
     "@wa-motif-open-api/plugin-registry-service",
     "@wa-motif-open-api/security-service",
     "@wa-motif-open-api/web-content-service",
+    "@wa-motif-open-api/rest-context-service",
     "angular-gridster2",
     "b64-to-blob",
     "core-js",
