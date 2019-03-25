@@ -3,16 +3,10 @@ import { NGXLogger } from 'web-console-core';
 import { RESTTreeTableModel } from './model/rest-tree-table-model';
 import { RESTContextCatalogService } from '../../../../services/RESTContextCatalogService';
 import { TreeNode } from 'primeng/api';
+import { RESTCatalogNode } from '../rest-catalog-commons'
 
 const LOG_TAG = '[RESTCatalogComponent]';
 
-export interface RESTCatalogNode {
-    url: string;
-    name: string;
-    domain: string;
-    application?: string;
-    data?: any;
-}
 
 export interface RESTCatalogNodeSelectionEvent {
     node: RESTCatalogNode

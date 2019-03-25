@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild, ChangeDetectorRef, Renderer2, OnDestroy }
 import { PluginView } from 'web-console-core';
 import { NGXLogger } from 'web-console-core';
 import { RESTCatalogComponent, RESTCatalogNodeSelectionEvent } from './rest-catalog-component/rest-catalog-component';
+import { RESTCatalogNode } from './rest-catalog-commons'
+import { RESTCatalogEditorComponent } from './rest-catalog-editor/rest-catalog-editor-component';
 
 const LOG_TAG = '[RESTManagerSectionComponent]';
 
@@ -16,6 +18,7 @@ const LOG_TAG = '[RESTManagerSectionComponent]';
 export class RESTManagerSectionComponent implements OnInit, OnDestroy {
 
     @ViewChild('restCatalogSelector') restCatalogSelector: RESTCatalogComponent;
+    @ViewChild('restCatalogEditor') restCatalogEditor: RESTCatalogEditorComponent;
 
     constructor(private logger: NGXLogger,
         private renderer2: Renderer2,
@@ -57,29 +60,8 @@ export class RESTManagerSectionComponent implements OnInit, OnDestroy {
 
     nodeSelect(nodeEvent: RESTCatalogNodeSelectionEvent) {
         this.logger.debug(LOG_TAG, 'nodeSelect ', nodeEvent);
-        
+        this.restCatalogEditor.startEdit(nodeEvent.node);
         /*
-        this.logger.debug(LOG_TAG, 'Node selected: ', nodeEvent);
-
-        const catalogEntry = nodeEvent.node.data;
-        const nodeType = nodeEvent.node.nodeType;
-
-        if (nodeType === 'Domain') {
-            this._servicesEditor.startEditDomain(catalogEntry.domain);
-        } else if (nodeType === 'Application') {
-            this._servicesEditor.startEditApplication(catalogEntry.domain, catalogEntry.application);
-        } else if (nodeType === 'Service') {
-            this._servicesEditor.startEditService(catalogEntry.domain,
-                catalogEntry.application,
-                catalogEntry.service,
-                catalogEntry.channel);
-        } else if (nodeType === 'Operation') {
-            this._servicesEditor.startEditOperation(catalogEntry.domain,
-                catalogEntry.application,
-                catalogEntry.service,
-                catalogEntry.channel,
-                catalogEntry.operation);
-        }
         this.updateCommands(nodeType);
         */
     }

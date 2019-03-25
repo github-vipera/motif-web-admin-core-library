@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef, Renderer2, OnDestroy } from '@angular/core';
 import { NGXLogger } from 'web-console-core';
 import { ContextsService, ServiceContext } from '@wa-motif-open-api/rest-context-service';
+import { RESTCatalogNode } from '../rest-catalog-commons'
 
 const LOG_TAG = '[RESTTreeEditorComponent]';
 
@@ -10,6 +11,8 @@ const LOG_TAG = '[RESTTreeEditorComponent]';
     templateUrl: './rest-catalog-editor-component.html'
 })
 export class RESTCatalogEditorComponent implements OnInit, OnDestroy {
+
+    private _currentNode : RESTCatalogNode;
 
     constructor(private logger: NGXLogger,
         private renderer2: Renderer2,
@@ -35,13 +38,26 @@ export class RESTCatalogEditorComponent implements OnInit, OnDestroy {
     freeMem() {
     }
     
-    /*
-    public void loadData():void {
-        this.restContextService.getContext(domain, application, contextName).subscribe( (data) => {
-
-        }, (error) => {
-
-        });
+    public startEdit(node: RESTCatalogNode){
+        this._currentNode = node;
+        this.reloadData();
     }
-    */
+
+    public get currentEditingNode():RESTCatalogNode {
+        return this._currentNode;
+    }
+
+    
+    public reloadData():void {
+        if (this._currentNode){
+            this.restContextService.getContext(this._currentNode.domain, this._currentNode.application, this._currentNode.name).subscribe( (data) => {
+                this.logger.debug(LOG_TAG, 'reloadData results: ', data);
+
+            }, (error) => {
+                this.logger.error(LOG_TAG, 'reloadData error: ', error);
+    
+            });
+        }
+    }
+    
 }
