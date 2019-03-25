@@ -27,6 +27,7 @@ class="rest-tree-filtered"
       <th>Name</th>
       <th>Domain</th>
       <th>Application</th>
+      <th>Status</th>
     </tr>
   </ng-template>
   <ng-template
@@ -48,6 +49,17 @@ class="rest-tree-filtered"
       <td class="service-catalog-row" [ngClass]="{ treeFiltered : tableModel.isFiltered, rowFiltered : rowData.filtered  }">{{ rowData.name }}</td>
       <td class="service-catalog-row" [ngClass]="{ treeFiltered : tableModel.isFiltered, rowFiltered : rowData.filtered  }">{{ rowData.domain }}</td>
       <td class="service-catalog-row" [ngClass]="{ treeFiltered : tableModel.isFiltered, rowFiltered : rowData.filtered  }">{{ rowData.application }}</td>
+      <td class="service-catalog-row" [ngClass]="{ treeFiltered : tableModel.isFiltered, rowFiltered : rowData.filtered  }">
+
+        <span *ngIf="rowData.enabled" class="badge badge-status badge-enabled">
+          ENABLED
+      </span>
+      <span *ngIf="!rowData.enabled" class="badge badge-status  badge-disabled">
+              DISABLED
+      </span>
+
+
+      </td>
     </tr>
   </ng-template>
 </p-treeTable>

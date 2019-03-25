@@ -15,6 +15,11 @@ export interface RESTEntryAttributeValue {
   attribute: RESTEntryAttribute
 }
 
+export interface URLInfo {
+  url: string;
+  parentURL: string;
+  depth: number;
+}
 
 export interface RESTEntry {
   name: string;
@@ -50,6 +55,7 @@ export class RESTTreeTableModel {
         url: restEntry.URL,
         domain: restEntry.domain,
         application: restEntry.application,
+        enabled: restEntry.enabled,
         filtered: this.isEntryFiltered(restEntry),
         leaf: leaf,
         icon: "pi-bell",
@@ -65,14 +71,14 @@ export class RESTTreeTableModel {
   }
 
   private buildRootEntry(): RESTEntry {
-    return { name: "root", 
+    return { name: "", 
       channel: "REST", 
       enabled: true, 
-      domain: "Default", 
-      application: "vipera" , 
+      domain: "", 
+      application: "" , 
       valuesList: [
         { 
-            value: "/rest",
+            value: "/",
             attribute : {
                 name: "URL",
                 type: "String"
@@ -116,12 +122,27 @@ export class RESTTreeTableModel {
 
   buildNodeForEntry(entry: RESTEntryWrapper, model: TreeNode[]): TreeNode {
     let newNode = this.buildNode(entry, false);
-    let parentNode = this.getNodeByURL(entry.parentURL, model);
+    let parentNode = this.getParentNodeByURL(entry.parentURL, model);
     if (parentNode){
       parentNode.children.push(newNode);
     }
     return newNode;
   }
+
+  getParentNodeByURL(url:string, model: TreeNode[]): TreeNode {
+    let ret:TreeNode = null;
+    if (url.length==0){
+      return null;
+    }
+    let urlInfo = RESTTreeTableModel.urlInfo(url);
+    let parentNode = this.getNodeByURL(urlInfo.parentURL, model);
+    if (parentNode){
+      return parentNode;
+    } else {
+      return this.getParentNodeByURL(urlInfo.parentURL, model);
+    }
+  }
+
 
   getNodeByURL(url:string, model: TreeNode[]): TreeNode {
     let ret:TreeNode = null;
@@ -185,6 +206,21 @@ export class RESTTreeTableModel {
     return (this._filterRegExp && this._filterRegExp.test(node.data.url));
   }
 
+  public static urlInfo(url:string): URLInfo {
+    let urlParts = url.split("/");
+    let parentURL = urlParts.slice(0,urlParts.length-1).join("/");
+    if (parentURL.length==0){
+      parentURL = "/";
+    }
+    return {
+      url : url,
+      parentURL : parentURL,
+      depth: urlParts.length
+    }
+  }
+
+
+
 }
 
 class RESTEntryWrapper {
@@ -205,9 +241,9 @@ class RESTEntryWrapper {
     if (urlAttr){
       this._URL = urlAttr.value;
       if (this._URL){
-        let urlParts = this._URL.split("/");
-        this._parentURL = urlParts.slice(0,urlParts.length-1).join("/");
-        this._depth = urlParts.length;
+        let urlInfo = RESTTreeTableModel.urlInfo(this._URL);
+        this._parentURL = urlInfo.parentURL
+        this._depth = urlInfo.depth;
       }
     }
   }
