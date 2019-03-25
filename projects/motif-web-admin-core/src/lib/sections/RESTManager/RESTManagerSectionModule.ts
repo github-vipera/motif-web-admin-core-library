@@ -7,7 +7,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { CommonsUIModule } from '../../components/CommonsUIModule';
 import { RESTManagerSectionComponent } from './components/rest-manager-section-component';
 import { RESTCatalogComponent } from './components/rest-catalog-component/rest-catalog-component';
-import { RESTTreeEditorComponent } from './components/rest-tree-editor/rest-tree-editor-component';
+import { RESTCatalogEditorComponent } from './components/rest-catalog-editor/rest-catalog-editor-component';
+
 import { TreeTableModule } from 'primeng/treetable';
 
 
@@ -30,7 +31,7 @@ import { TreeTableModule } from 'primeng/treetable';
         RESTManagerSectionComponent
     ],
     declarations: [
-        RESTManagerSectionComponent, RESTCatalogComponent, RESTTreeEditorComponent 
+        RESTManagerSectionComponent, RESTCatalogComponent, RESTCatalogEditorComponent 
     ],
     exports: [ RESTManagerSectionComponent ],
     providers: [  ]

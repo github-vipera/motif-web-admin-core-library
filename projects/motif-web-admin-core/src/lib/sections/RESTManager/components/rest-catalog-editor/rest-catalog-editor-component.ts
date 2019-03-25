@@ -4,11 +4,11 @@ import { NGXLogger } from 'web-console-core';
 const LOG_TAG = '[RESTTreeEditorComponent]';
 
 @Component({
-    selector: 'wa-rest-tree-editor-component',
-    styleUrls: ['./rest-tree-editor-component.scss'],
-    templateUrl: './rest-tree-editor-component.html'
+    selector: 'wa-rest-catalog-editor-component',
+    styleUrls: ['./rest-catalog-editor-component.scss'],
+    templateUrl: './rest-catalog-editor-component.html'
 })
-export class RESTTreeEditorComponent implements OnInit, OnDestroy {
+export class RESTCatalogEditorComponent implements OnInit, OnDestroy {
 
     constructor(private logger: NGXLogger,
         private renderer2: Renderer2,
