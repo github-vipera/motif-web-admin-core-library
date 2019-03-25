@@ -1,9 +1,10 @@
 <wc-loading-overlay [visible]="loading"></wc-loading-overlay>
 
+<!--
 <kendo-textbox-container floatingLabel="Filter">
   <input #filterInput kendoTextBox (afterValueChanged)="onFilterChange($event)" />
 </kendo-textbox-container>
-
+-->
 
 <p-treeTable 
 #restCatalogTable     
@@ -46,7 +47,6 @@ class="rest-tree-filtered"
       <td class="service-catalog-row" [ngClass]="{ treeFiltered : tableModel.isFiltered, rowFiltered : rowData.filtered  }">{{ rowData.name }}</td>
       <td class="service-catalog-row" [ngClass]="{ treeFiltered : tableModel.isFiltered, rowFiltered : rowData.filtered  }">{{ rowData.domain }}</td>
       <td class="service-catalog-row" [ngClass]="{ treeFiltered : tableModel.isFiltered, rowFiltered : rowData.filtered  }">{{ rowData.application }}</td>
-      <td class="service-catalog-row" [ngClass]="{ treeFiltered : tableModel.isFiltered, rowFiltered : rowData.filtered  }">{{ rowData.filtered }}</td>
     </tr>
   </ng-template>
 </p-treeTable>

@@ -3,6 +3,9 @@
 
 <div class="row spread" #target>
     <div class="flex-toolbar" style="display:flex;align-items: center;">
+      <kendo-textbox-container floatingLabel="Filter">
+        <input #filterInput kendoTextBox (afterValueChanged)="onFilterChange($event)" />
+      </kendo-textbox-container>
     </div>
   
     <div class="flex-cmd">
@@ -22,8 +25,8 @@
   <div class="row fill">
     <kendo-splitter>
       <kendo-splitter-pane style="overflow: hidden;">
-        <div #servicetableContainer style="height: 100%;">
-            <wa-rest-tree-selector-component (nodeSelection)="nodeSelect($event)" #serviceCatalog></wa-rest-tree-selector-component>
+        <div style="height: 100%;">
+            <wa-rest-catalog-component (nodeSelection)="nodeSelect($event)" #restCatalogSelector></wa-rest-catalog-component>
         </div>
       </kendo-splitter-pane>
   

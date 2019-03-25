@@ -4,14 +4,14 @@ import { RESTTreeTableModel } from './model/rest-tree-table-model';
 import { RESTTreeDataProviderMock } from './rest-tree-data-provider-mock';
 
 
-const LOG_TAG = '[RESTTreeSelectorComponent]';
+const LOG_TAG = '[RESTCatalogComponent]';
 
 @Component({
-    selector: 'wa-rest-tree-selector-component',
-    styleUrls: ['./rest-tree-selector-component.scss'],
-    templateUrl: './rest-tree-selector-component.html'
+    selector: 'wa-rest-catalog-component',
+    styleUrls: ['./rest-catalog-component.scss'],
+    templateUrl: './rest-catalog-component.html'
 })
-export class RESTTreeSelectorComponent implements OnInit, OnDestroy {
+export class RESTCatalogComponent implements OnInit, OnDestroy {
 
     private _loading:boolean = false;
     private _tableModel: RESTTreeTableModel;
@@ -63,9 +63,10 @@ export class RESTTreeSelectorComponent implements OnInit, OnDestroy {
         return this._tableModel;
     }
 
-    public onFilterChange(event: Event) {
-        this.logger.debug(LOG_TAG, 'onFilterChange called');
-        this._tableModel.setFilter(event.srcElement['value']);
+    public setFilter(value:string){
+        this.logger.debug(LOG_TAG, 'onFilterChange called for ',value);
+        this._tableModel.setFilter(value);
     }
+
 
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef, Renderer2, OnDestroy } from '@angular/core';
 import { PluginView } from 'web-console-core';
 import { NGXLogger } from 'web-console-core';
+import { RESTCatalogComponent } from './rest-tree-selector/rest-catalog-component';
 
 const LOG_TAG = '[RESTManagerSectionComponent]';
 
@@ -13,6 +14,8 @@ const LOG_TAG = '[RESTManagerSectionComponent]';
     iconName: 'wa-ico-services'
 })
 export class RESTManagerSectionComponent implements OnInit, OnDestroy {
+
+    @ViewChild('restCatalogSelector') restCatalogSelector: RESTCatalogComponent;
 
     constructor(private logger: NGXLogger,
         private renderer2: Renderer2,
@@ -48,6 +51,11 @@ export class RESTManagerSectionComponent implements OnInit, OnDestroy {
     public onChangesSaved(event: any) {
         this.logger.debug(LOG_TAG, 'onChangesSaved: ', event);
         //TODO!!
+    }
+
+    public onFilterChange(event: Event) {
+        this.logger.debug(LOG_TAG, 'onFilterChange called');
+        this.restCatalogSelector.setFilter(event.srcElement['value']);
     }
 
 

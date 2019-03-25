@@ -53,20 +53,27 @@ a.badge:hover, a.badge:focus {
 
 .treetable-xss {
     height: 100%;
-}
+    transition: color 0.3s ease;
+  }
 
-wa-service-catalog-selector p-treetable table th {
+wa-rest-catalog-component p-treetable table th {
     padding: .6rem !important;
 }
 
-wa-service-catalog-selector p-treetable table  td {
+wa-rest-catalog-component p-treetable table  td {
     padding: .6rem !important;
+}
+
+.service-catalog-row {
+  transition: color 0.2s ease;
 }
 
 .treeFiltered {
   color: #686868 !important;
+  transition: color 0.2s ease;
 }
 
 .treeFiltered.rowFiltered {
   color: #dfdfdf !important;
+  transition: color 0.2s ease;
 }
