@@ -9,7 +9,6 @@ import { ServicesService,
     ServiceCreate,
     OperationsService,
     ServiceOperation } from '@wa-motif-open-api/catalog-service';
-import { ApplicationsService as AppService } from '@wa-motif-open-api/catalog-service';
 import { ContextsService, ServiceContext } from '@wa-motif-open-api/rest-context-service';
 
 import { Observable } from 'rxjs';

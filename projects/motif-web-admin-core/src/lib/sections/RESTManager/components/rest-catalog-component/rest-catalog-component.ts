@@ -1,10 +1,22 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef, Renderer2, OnDestroy } from '@angular/core';
+import { Component, OnInit, Output, ChangeDetectorRef, Renderer2, OnDestroy, EventEmitter } from '@angular/core';
 import { NGXLogger } from 'web-console-core';
 import { RESTTreeTableModel } from './model/rest-tree-table-model';
-//import { RESTTreeDataProviderMock } from './rest-tree-data-provider-mock';
 import { RESTContextCatalogService } from '../../../../services/RESTContextCatalogService';
+import { TreeNode } from 'primeng/api';
 
 const LOG_TAG = '[RESTCatalogComponent]';
+
+export interface RESTCatalogNode {
+    url: string;
+    name: string;
+    domain: string;
+    application?: string;
+    data?: any;
+}
+
+export interface RESTCatalogNodeSelectionEvent {
+    node: RESTCatalogNode
+}
 
 @Component({
     selector: 'wa-rest-catalog-component',
@@ -15,6 +27,9 @@ export class RESTCatalogComponent implements OnInit, OnDestroy {
 
     private _loading:boolean = false;
     private _tableModel: RESTTreeTableModel;
+
+    @Output() nodeSelection: EventEmitter<RESTCatalogNodeSelectionEvent> = new EventEmitter();
+    _selectedNode: TreeNode;
 
     constructor(private logger: NGXLogger,
         private renderer2: Renderer2,
@@ -78,5 +93,31 @@ export class RESTCatalogComponent implements OnInit, OnDestroy {
         this._tableModel.setFilter(value);
     }
 
+    set selectedNode(node: TreeNode) {
+        this._selectedNode = node;
+        this.nodeSelect(node);
+    }
+
+    nodeUnselect(event: any) {
+        this.logger.debug(LOG_TAG, 'Node unselected: ', event.node.data);
+        this._selectedNode = null;
+    }
+
+    nodeSelect(node: TreeNode) {
+        this.logger.debug(LOG_TAG, 'Node selected: ', node);
+
+        let selectionEvent:RESTCatalogNodeSelectionEvent = null;
+        selectionEvent =  { node: {
+            url: node.data.url,
+            name: node.data.name,
+            domain: node.data.domain,
+            application: node.data.application,
+            data: node.data
+        } };
+        
+
+        this.nodeSelection.emit(selectionEvent);
+    }
+    
 
 }

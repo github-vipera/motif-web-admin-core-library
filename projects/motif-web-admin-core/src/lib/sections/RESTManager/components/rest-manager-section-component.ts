@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef, Renderer2, OnDestroy } from '@angular/core';
 import { PluginView } from 'web-console-core';
 import { NGXLogger } from 'web-console-core';
-import { RESTCatalogComponent } from './rest-catalog-component/rest-catalog-component';
+import { RESTCatalogComponent, RESTCatalogNodeSelectionEvent } from './rest-catalog-component/rest-catalog-component';
 
 const LOG_TAG = '[RESTManagerSectionComponent]';
 
@@ -44,10 +44,6 @@ export class RESTManagerSectionComponent implements OnInit, OnDestroy {
         alert("onRefreshClicked TODO!!");
     }
 
-    nodeSelect(nodeEvent: any) {
-        console.log("Node selected");
-    }
-
     public onChangesSaved(event: any) {
         this.logger.debug(LOG_TAG, 'onChangesSaved: ', event);
         //TODO!!
@@ -56,6 +52,36 @@ export class RESTManagerSectionComponent implements OnInit, OnDestroy {
     public onFilterChange(event: Event) {
         this.logger.debug(LOG_TAG, 'onFilterChange called');
         this.restCatalogSelector.setFilter(event.srcElement['value']);
+    }
+
+
+    nodeSelect(nodeEvent: RESTCatalogNodeSelectionEvent) {
+        this.logger.debug(LOG_TAG, 'nodeSelect ', nodeEvent);
+        
+        /*
+        this.logger.debug(LOG_TAG, 'Node selected: ', nodeEvent);
+
+        const catalogEntry = nodeEvent.node.data;
+        const nodeType = nodeEvent.node.nodeType;
+
+        if (nodeType === 'Domain') {
+            this._servicesEditor.startEditDomain(catalogEntry.domain);
+        } else if (nodeType === 'Application') {
+            this._servicesEditor.startEditApplication(catalogEntry.domain, catalogEntry.application);
+        } else if (nodeType === 'Service') {
+            this._servicesEditor.startEditService(catalogEntry.domain,
+                catalogEntry.application,
+                catalogEntry.service,
+                catalogEntry.channel);
+        } else if (nodeType === 'Operation') {
+            this._servicesEditor.startEditOperation(catalogEntry.domain,
+                catalogEntry.application,
+                catalogEntry.service,
+                catalogEntry.channel,
+                catalogEntry.operation);
+        }
+        this.updateCommands(nodeType);
+        */
     }
 
 

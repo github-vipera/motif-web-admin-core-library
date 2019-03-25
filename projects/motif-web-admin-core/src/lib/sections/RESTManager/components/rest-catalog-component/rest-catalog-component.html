@@ -10,6 +10,8 @@
 #restCatalogTable     
 [value]="tableModel.model"
 selectionMode="single"
+[(selection)]="selectedNode"
+(onNodeUnselect)="nodeUnselect($event)"
 dataKey="url"
 class="treetable-xss"
 [style]="{ 'height': '100%' }"
