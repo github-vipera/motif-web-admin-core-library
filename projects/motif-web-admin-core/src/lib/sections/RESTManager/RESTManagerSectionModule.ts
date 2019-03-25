@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { GridModule } from '@progress/kendo-angular-grid';
 import { LogServiceModule } from '@wa-motif-open-api/log-service'
 import { LoggerModule } from 'ngx-logger'
-import { WCUIKitCoreModule, WCUIKitDataModule, WCUIKitKendoProviderModule, WCUIKitGridModule, WCNotificationCenterModule } from 'web-console-ui-kit'
+import { WCUIKitCoreModule, WCUIKitDataModule, WCUIKitKendoProviderModule, WCUIKitGridModule, WCNotificationCenterModule, WCUIKitDirectivesModule } from 'web-console-ui-kit'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { CommonsUIModule } from '../../components/CommonsUIModule';
 import { RESTManagerSectionComponent } from './components/rest-manager-section-component';
@@ -23,7 +23,8 @@ import { TreeTableModule } from 'primeng/treetable';
         CommonsUIModule,
         WCUIKitGridModule,
         WCNotificationCenterModule,
-        TreeTableModule
+        TreeTableModule,
+        WCUIKitDirectivesModule
     ],
     entryComponents: [
         RESTManagerSectionComponent

@@ -63,3 +63,10 @@ wa-service-catalog-selector p-treetable table  td {
     padding: .6rem !important;
 }
 
+.treeFiltered {
+  color: #686868 !important;
+}
+
+.treeFiltered.rowFiltered {
+  color: #dfdfdf !important;
+}
