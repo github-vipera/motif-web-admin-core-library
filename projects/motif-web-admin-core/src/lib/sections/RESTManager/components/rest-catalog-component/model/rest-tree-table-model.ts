@@ -21,10 +21,18 @@ export interface URLInfo {
   depth: number;
 }
 
+export enum RESTEntryStatus {
+  Enabled = 'Enabled',
+  Disabled  = 'Disabled',
+  NotApplicable = 'NotApplicable',
+  Unknown = 'Unknown'
+}
+
 export interface RESTEntry {
   name: string;
   channel: string;
   enabled: boolean;
+  status: RESTEntryStatus;
   domain: string;
   application: string;
   valuesList: RESTEntryAttributeValue[]
@@ -56,6 +64,7 @@ export class RESTTreeTableModel {
         domain: restEntry.domain,
         application: restEntry.application,
         enabled: restEntry.enabled,
+        status: restEntry.status,
         filtered: this.isEntryFiltered(restEntry),
         leaf: leaf,
         icon: "pi-bell",
@@ -76,6 +85,7 @@ export class RESTTreeTableModel {
       enabled: true, 
       domain: "", 
       application: "" , 
+      status: RESTEntryStatus.NotApplicable,
       valuesList: [
         { 
             value: "/",
@@ -230,6 +240,7 @@ class RESTEntryWrapper {
   _parentURL : string;
   _depth : number;
 
+
   constructor(entry:RESTEntry){
     this._wrapped = entry;
     this.buildURLInfo();
@@ -282,6 +293,14 @@ class RESTEntryWrapper {
 
   public get depth(): number {
     return this._depth;
+  }
+
+  public get status():RESTEntryStatus {
+    if (this._wrapped.status){
+      return this._wrapped.status;
+    } else {
+      return (this.enabled ? RESTEntryStatus.Enabled : RESTEntryStatus.Disabled);
+    }
   }
 
   public getAttribute(attributeName: string): RESTEntryAttributeValue {

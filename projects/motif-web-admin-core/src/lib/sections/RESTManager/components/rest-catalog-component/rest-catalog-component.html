@@ -50,15 +50,12 @@ class="rest-tree-filtered"
       <td class="service-catalog-row" [ngClass]="{ treeFiltered : tableModel.isFiltered, rowFiltered : rowData.filtered  }">{{ rowData.domain }}</td>
       <td class="service-catalog-row" [ngClass]="{ treeFiltered : tableModel.isFiltered, rowFiltered : rowData.filtered  }">{{ rowData.application }}</td>
       <td class="service-catalog-row" [ngClass]="{ treeFiltered : tableModel.isFiltered, rowFiltered : rowData.filtered  }">
-
-        <span *ngIf="rowData.enabled" class="badge badge-status badge-enabled">
-          ENABLED
-      </span>
-      <span *ngIf="!rowData.enabled" class="badge badge-status  badge-disabled">
+        <span *ngIf="rowData.status==='Enabled'" class="badge badge-status badge-enabled">
+            ENABLED
+        </span>
+        <span *ngIf="rowData.status==='Disabled'" class="badge badge-status  badge-disabled">
               DISABLED
-      </span>
-
-
+        </span>
       </td>
     </tr>
   </ng-template>

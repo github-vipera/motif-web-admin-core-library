@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, ChangeDetectorRef, Renderer2, OnDestroy, EventEmitter } from '@angular/core';
 import { NGXLogger } from 'web-console-core';
-import { RESTTreeTableModel } from './model/rest-tree-table-model';
+import { RESTTreeTableModel , RESTEntryStatus } from './model/rest-tree-table-model';
 import { RESTContextCatalogService } from '../../../../services/RESTContextCatalogService';
 import { TreeNode } from 'primeng/api';
 import { RESTCatalogNode } from '../rest-catalog-commons'
