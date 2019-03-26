@@ -41,7 +41,7 @@ export interface RESTEntry {
 
 export class RESTTreeTableModel {
   private _model: TreeNode[] = [];
-  private _rootNode: TreeNode;
+  //private _rootNode: TreeNode;
   
   private _filter: string;
   private _filterRegExp: RegExp;
@@ -117,9 +117,9 @@ export class RESTTreeTableModel {
     let tempModel = [];
 
     //Create the root node
-    this._rootNode = this.buildNode(new RESTEntryWrapper(this.buildRootEntry()), false);
+    //this._rootNode = this.buildNode(new RESTEntryWrapper(this.buildRootEntry()), false);
     // add the root node
-    tempModel.push(this._rootNode);
+    //tempModel.push(this._rootNode);
 
     // now build the nodes
     entries.forEach(entry => {
@@ -139,13 +139,15 @@ export class RESTTreeTableModel {
     let parentNode = this.getParentNodeByURL(entry.parentURL, model);
     if (parentNode){
       parentNode.children.push(newNode);
+    } else {
+      model.push(newNode);
     }
     return newNode;
   }
 
   getParentNodeByURL(url:string, model: TreeNode[]): TreeNode {
     let ret:TreeNode = null;
-    if (url.length==0){
+    if (!url || url.length==0){
       return null;
     }
     let urlInfo = RESTTreeTableModel.urlInfo(url);
@@ -221,6 +223,13 @@ export class RESTTreeTableModel {
   }
 
   public static urlInfo(url:string): URLInfo {
+    if (url==="/"){
+      return {
+        url : url,
+        parentURL : null,
+        depth: 0
+      }
+    }
     let urlParts = url.split("/");
     let parentURL = urlParts.slice(0,urlParts.length-1).join("/");
     if (parentURL.length==0){
