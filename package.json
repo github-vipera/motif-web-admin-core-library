@@ -89,7 +89,7 @@
     "uuid": "^3.3.2",
     "web-console-core": "^0.3.1",
     "web-console-login": "^0.1.1",
-    "web-console-ui-kit": "^0.4.0",
+    "web-console-ui-kit": "^0.5.0",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {
