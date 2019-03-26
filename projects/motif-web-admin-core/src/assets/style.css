@@ -1688,3 +1688,9 @@ input {
    color: #454545;
    */
 }
+
+.property-modified label {
+  color: #ff4b4b;
+  text-decoration: underline;
+  transition: all .3s ease;
+}

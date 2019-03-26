@@ -4,6 +4,7 @@ import { RESTTreeTableModel , RESTEntryStatus } from './model/rest-tree-table-mo
 import { RESTContextCatalogService } from '../../../../services/RESTContextCatalogService';
 import { TreeNode } from 'primeng/api';
 import { RESTCatalogNode } from '../rest-catalog-commons'
+import { WCGridEditorCommandsConfig, WCConfirmationTitleProvider, WCGridEditorCommandComponentEvent } from 'web-console-ui-kit';
 
 const LOG_TAG = '[RESTCatalogComponent]';
 
@@ -24,6 +25,18 @@ export class RESTCatalogComponent implements OnInit, OnDestroy {
 
     @Output() nodeSelection: EventEmitter<RESTCatalogNodeSelectionEvent> = new EventEmitter();
     _selectedNode: TreeNode;
+
+    commands: WCGridEditorCommandsConfig = [
+        { 
+            commandIcon: 'wa-ico-no',
+            commandId: "CommandType.Delete",
+            title: 'Delete',
+            hasConfirmation: true,
+            confirmationTitle: 'Delete ?' 
+        }
+    ];
+
+
 
     constructor(private logger: NGXLogger,
         private renderer2: Renderer2,

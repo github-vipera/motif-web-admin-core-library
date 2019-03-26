@@ -23,7 +23,6 @@ export class RESTCatalogEditorComponent implements OnInit, OnDestroy {
         ]
     };
 
-
     constructor(private logger: NGXLogger,
         private renderer2: Renderer2,
         private changeDetector: ChangeDetectorRef,

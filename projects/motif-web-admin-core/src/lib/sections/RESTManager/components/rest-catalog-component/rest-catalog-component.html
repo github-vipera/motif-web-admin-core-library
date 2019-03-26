@@ -28,6 +28,7 @@ class="rest-tree-filtered"
       <th>Domain</th>
       <th>Application</th>
       <th>Status</th>
+      <th></th>
     </tr>
   </ng-template>
   <ng-template
@@ -35,6 +36,7 @@ class="rest-tree-filtered"
     let-rowNode
     let-rowData="rowData"
     let-columns="columns"
+    let-rowIndex="rowIndex"
   >
     <tr [ttRow]="rowNode" [ttContextMenuRow]="rowNode" [ttSelectableRow]="rowNode" style="height:30px" class="rest-tree-row-filtered">
       <td class="service-catalog-row" [ngClass]="{ treeFiltered : tableModel.isFiltered, rowFiltered : rowData.filtered  }">
@@ -56,6 +58,17 @@ class="rest-tree-filtered"
         <span *ngIf="rowData.status==='Disabled'" class="badge badge-status  badge-disabled">
               DISABLED
         </span>
+      </td>
+      <td class="service-catalog-row" [ngClass]="{ treeFiltered : tableModel.isFiltered, rowFiltered : rowData.filtered  }">
+        <wc-grid-editor-commands-group *ngIf="rowData.canDelete"
+          [commands]="commands"
+          [alignMode]="'end'"
+          [rowIndex]="rowIndex"
+          [columnIndex]="5"
+          [column]="{}"
+          [value]="rowData"
+          [dataItem]="rowData"
+        ></wc-grid-editor-commands-group>        
       </td>
     </tr>
   </ng-template>

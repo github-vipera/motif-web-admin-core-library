@@ -35,6 +35,7 @@ export interface RESTEntry {
   status: RESTEntryStatus;
   domain: string;
   application: string;
+  canDelete: boolean;
   valuesList: RESTEntryAttributeValue[]
 }
 
@@ -65,6 +66,7 @@ export class RESTTreeTableModel {
         application: restEntry.application,
         enabled: restEntry.enabled,
         status: restEntry.status,
+        canDelete: restEntry.canDelete,
         filtered: this.isEntryFiltered(restEntry),
         leaf: leaf,
         icon: "pi-bell",
@@ -86,6 +88,7 @@ export class RESTTreeTableModel {
       domain: "", 
       application: "" , 
       status: RESTEntryStatus.NotApplicable,
+      canDelete: false,
       valuesList: [
         { 
             value: "/",
@@ -103,6 +106,7 @@ export class RESTTreeTableModel {
     // Create the Rest Entry List
     let entries:RESTEntryWrapper[] = [];
     restCatalog.forEach(item => {
+      item.canDelete = true;
       entries.push(new RESTEntryWrapper(item));
     });
     // Sort entries by depth
@@ -301,6 +305,10 @@ class RESTEntryWrapper {
     } else {
       return (this.enabled ? RESTEntryStatus.Enabled : RESTEntryStatus.Disabled);
     }
+  }
+
+  public get canDelete(): boolean {
+    return this._wrapped.canDelete;
   }
 
   public getAttribute(attributeName: string): RESTEntryAttributeValue {
