@@ -108,10 +108,20 @@ export class RESTCatalogEditorComponent implements OnInit, OnDestroy {
             field: valueItem.attribute.name,
             description: valueItem.attribute.name,
             type: valueType,
-            value: value
+            value: value,
+            badge: "I"
         }
+        //(valueItem.attribute["inherited"] ? 'I' : null)
     }
 
+    onPropertyValueChanged(event:any){
+        console.log(">>>>>  onPropertyValueChanged:", event);
+        if (event.item.valueChanged){
+            event.item.badge = null;
+        } else {
+            event.item.badge = "I";
+        }
+    }
 
     @Input() get namespace(): string {
         if (this._currentNode){
