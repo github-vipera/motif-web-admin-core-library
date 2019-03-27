@@ -5,7 +5,7 @@ import { RESTCatalogComponent, RESTCatalogNodeSelectionEvent } from './rest-cata
 import { RESTCatalogEditorComponent } from './rest-catalog-editor/rest-catalog-editor-component';
 import { RESTContextDialogComponent, RESTContextDialogResult, DialogMode } from './dialogs/new-context-dialog/rest-context-dialog-component';
 import { RESTContextCatalogService } from '../../../services';
-import { WCSubscriptionHandler } from 'dist/motif-web-admin-core/lib';
+import { WCSubscriptionHandler } from '../../../components/Commons/wc-subscription-handler';
 import { WCNotificationCenter, NotificationType } from 'web-console-ui-kit';
 
 const LOG_TAG = '[RESTManagerSectionComponent]';
