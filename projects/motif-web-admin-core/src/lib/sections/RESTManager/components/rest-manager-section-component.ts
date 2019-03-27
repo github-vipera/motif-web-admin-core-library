@@ -2,9 +2,11 @@ import { Component, OnInit, ViewChild, ChangeDetectorRef, Renderer2, OnDestroy }
 import { PluginView } from 'web-console-core';
 import { NGXLogger } from 'web-console-core';
 import { RESTCatalogComponent, RESTCatalogNodeSelectionEvent } from './rest-catalog-component/rest-catalog-component';
-import { RESTCatalogNode } from './rest-catalog-commons'
 import { RESTCatalogEditorComponent } from './rest-catalog-editor/rest-catalog-editor-component';
-import { RESTContextDialogComponent } from './dialogs/new-context-dialog/rest-context-dialog-component';
+import { RESTContextDialogComponent, RESTContextDialogResult } from './dialogs/new-context-dialog/rest-context-dialog-component';
+import { RESTContextCatalogService } from '../../../services';
+import { WCSubscriptionHandler } from 'dist/motif-web-admin-core/lib';
+import { WCNotificationCenter, NotificationType } from 'web-console-ui-kit';
 
 const LOG_TAG = '[RESTManagerSectionComponent]';
 
@@ -22,9 +24,13 @@ export class RESTManagerSectionComponent implements OnInit, OnDestroy {
     @ViewChild('restCatalogEditor') restCatalogEditor: RESTCatalogEditorComponent;
     @ViewChild('contextEditDialog') contextEditDialog: RESTContextDialogComponent;
 
+    private _subHandler: WCSubscriptionHandler= new WCSubscriptionHandler();
+
     constructor(private logger: NGXLogger,
         private renderer2: Renderer2,
-        private changeDetector: ChangeDetectorRef
+        private changeDetector: ChangeDetectorRef,
+        private restCatalogService: RESTContextCatalogService,
+        private notificationCenter: WCNotificationCenter
         ) {
         this.logger.debug(LOG_TAG, 'Opening...');
 
@@ -70,6 +76,37 @@ export class RESTManagerSectionComponent implements OnInit, OnDestroy {
 
     onAddRESTContextPressed(){
         this.contextEditDialog.showForNew();
+    }
+
+    onDialogConfirmation(event:RESTContextDialogResult){
+        this._subHandler.add(
+            this.restCatalogService.createRESTContext(event.domain, event.application, event.name, event.url).subscribe( (results)=> {
+
+                this.logger.info(LOG_TAG , 'REST context created:', results);
+                this.notificationCenter.post({
+                    name: 'CreateRESTContext',
+                    title: 'REST Context Create',
+                    message: 'REST Context created successfully.',
+                    type: NotificationType.Success
+                });
+                this.restCatalogSelector.reloadData();
+
+                
+            }, (error) => {
+
+                this.logger.error(LOG_TAG, 'Creating REST Context error:', error);
+                this.notificationCenter.post({
+                    name: 'CreateRESTContextError',
+                    title: 'REST Context Create',
+                    message: 'Error creating REST context:',
+                    type: NotificationType.Error,
+                    error: error,
+                    closable: true
+                });
+
+                
+            })
+        );
     }
 
 }   

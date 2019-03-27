@@ -97,8 +97,8 @@ export class RESTContextDialogComponent implements OnInit {
             dialogMode: this.dialogMode,
             name: this.name,
             url: this.url,
-            application: this.application,
-            domain: this.domain
+            application: this.selectedApplication.name,
+            domain: this.selectedDomain.name
         };
         this.confirm.emit(event);
     }
@@ -150,7 +150,7 @@ export class RESTContextDialogComponent implements OnInit {
             this._applicationEditingWarningDisplay = false;
         }
         return validate;
-        
+
     }
 
     onTypeValueChange(event) {

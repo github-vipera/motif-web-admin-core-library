@@ -1,6 +1,6 @@
 <wc-dashboard-header [title]="'REST Manager'"></wc-dashboard-header>
 
-<wa-rest-context-dialog #contextEditDialog></wa-rest-context-dialog>
+<wa-rest-context-dialog #contextEditDialog (confirm)="onDialogConfirmation($event)"></wa-rest-context-dialog>
 
 
 <div class="row spread" #target>
