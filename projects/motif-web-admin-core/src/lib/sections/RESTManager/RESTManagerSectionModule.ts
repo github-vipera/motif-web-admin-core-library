@@ -1,3 +1,4 @@
+import { CommonSelectorsModule } from './../../components/CommonsSelectorsModule';
 import { NgModule } from '@angular/core';
 import { GridModule } from '@progress/kendo-angular-grid';
 import { LogServiceModule } from '@wa-motif-open-api/log-service'
@@ -8,8 +9,9 @@ import { CommonsUIModule } from '../../components/CommonsUIModule';
 import { RESTManagerSectionComponent } from './components/rest-manager-section-component';
 import { RESTCatalogComponent } from './components/rest-catalog-component/rest-catalog-component';
 import { RESTCatalogEditorComponent } from './components/rest-catalog-editor/rest-catalog-editor-component';
-
+import { RESTContextDialogComponent } from './components/dialogs/new-context-dialog/rest-context-dialog-component';
 import { TreeTableModule } from 'primeng/treetable';
+import { DialogModule } from 'primeng/dialog';
 
 
 @NgModule({
@@ -25,13 +27,15 @@ import { TreeTableModule } from 'primeng/treetable';
         WCUIKitGridModule,
         WCNotificationCenterModule,
         TreeTableModule,
-        WCUIKitDirectivesModule
+        WCUIKitDirectivesModule,
+        DialogModule,
+        CommonSelectorsModule
     ],
     entryComponents: [
         RESTManagerSectionComponent
     ],
     declarations: [
-        RESTManagerSectionComponent, RESTCatalogComponent, RESTCatalogEditorComponent 
+        RESTManagerSectionComponent, RESTCatalogComponent, RESTCatalogEditorComponent , RESTContextDialogComponent
     ],
     exports: [ RESTManagerSectionComponent ],
     providers: [  ]

@@ -4,6 +4,7 @@ import { NGXLogger } from 'web-console-core';
 import { RESTCatalogComponent, RESTCatalogNodeSelectionEvent } from './rest-catalog-component/rest-catalog-component';
 import { RESTCatalogNode } from './rest-catalog-commons'
 import { RESTCatalogEditorComponent } from './rest-catalog-editor/rest-catalog-editor-component';
+import { RESTContextDialogComponent } from './dialogs/new-context-dialog/rest-context-dialog-component';
 
 const LOG_TAG = '[RESTManagerSectionComponent]';
 
@@ -19,6 +20,7 @@ export class RESTManagerSectionComponent implements OnInit, OnDestroy {
 
     @ViewChild('restCatalogSelector') restCatalogSelector: RESTCatalogComponent;
     @ViewChild('restCatalogEditor') restCatalogEditor: RESTCatalogEditorComponent;
+    @ViewChild('contextEditDialog') contextEditDialog: RESTContextDialogComponent;
 
     constructor(private logger: NGXLogger,
         private renderer2: Renderer2,
@@ -28,7 +30,7 @@ export class RESTManagerSectionComponent implements OnInit, OnDestroy {
 
     }
 
-        /**
+    /**
      * Angular ngOnInit
      */
     ngOnInit() {
@@ -67,7 +69,7 @@ export class RESTManagerSectionComponent implements OnInit, OnDestroy {
     }
 
     onAddRESTContextPressed(){
-        alert("TODO!!")
+        this.contextEditDialog.showForNew();
     }
 
 }   
