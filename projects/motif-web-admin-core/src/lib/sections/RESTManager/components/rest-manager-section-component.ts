@@ -44,7 +44,7 @@ export class RESTManagerSectionComponent implements OnInit, OnDestroy {
     }
 
     onRefreshClicked(){
-        alert("onRefreshClicked TODO!!");
+        this.restCatalogSelector.reloadData();
     }
 
     public onChangesSaved(event: any) {
@@ -66,5 +66,8 @@ export class RESTManagerSectionComponent implements OnInit, OnDestroy {
         */
     }
 
+    onAddRESTContextPressed(){
+        alert("TODO!!")
+    }
 
 }   

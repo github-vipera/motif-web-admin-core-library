@@ -5,9 +5,14 @@ import { RESTContextCatalogService } from '../../../../services/RESTContextCatal
 import { TreeNode } from 'primeng/api';
 import { RESTCatalogNode } from '../rest-catalog-commons'
 import { WCGridEditorCommandsConfig, WCConfirmationTitleProvider, WCGridEditorCommandComponentEvent } from 'web-console-ui-kit';
+import { WCNotificationCenter, NotificationType } from 'web-console-ui-kit';
+import { WCSubscriptionHandler } from '../../../../components/Commons/wc-subscription-handler';
 
-const LOG_TAG = '[RESTCatalogComponent]';
+const LOG_TAG = '[RESTCatalogComponent]'; 
 
+enum GridCommandType {
+    Delete = "Delete"
+} 
 
 export interface RESTCatalogNodeSelectionEvent {
     node: RESTCatalogNode
@@ -22,6 +27,7 @@ export class RESTCatalogComponent implements OnInit, OnDestroy {
 
     private _loading:boolean = false;
     private _tableModel: RESTTreeTableModel;
+    private _subHandler: WCSubscriptionHandler= new WCSubscriptionHandler();
 
     @Output() nodeSelection: EventEmitter<RESTCatalogNodeSelectionEvent> = new EventEmitter();
     _selectedNode: TreeNode;
@@ -29,7 +35,7 @@ export class RESTCatalogComponent implements OnInit, OnDestroy {
     commands: WCGridEditorCommandsConfig = [
         { 
             commandIcon: 'wa-ico-no',
-            commandId: "CommandType.Delete",
+            commandId: GridCommandType.Delete,
             title: 'Delete',
             hasConfirmation: true,
             confirmationTitle: 'Delete ?' 
@@ -40,6 +46,7 @@ export class RESTCatalogComponent implements OnInit, OnDestroy {
 
     constructor(private logger: NGXLogger,
         private renderer2: Renderer2,
+        private notificationCenter: WCNotificationCenter,
         private changeDetector: ChangeDetectorRef,
         private restCatalogService: RESTContextCatalogService
         ) {
@@ -63,7 +70,9 @@ export class RESTCatalogComponent implements OnInit, OnDestroy {
 
     freeMem() {
         this._tableModel.close();
-    }
+        this._subHandler.unsubscribe();
+        this._subHandler = null;
+   }
 
     public reloadData() {
         this.logger.debug(LOG_TAG, 'reloadData called');
@@ -126,5 +135,38 @@ export class RESTCatalogComponent implements OnInit, OnDestroy {
         this.nodeSelection.emit(selectionEvent);
     }
     
+    onGridCommandConfirm(event:any){
+        this.logger.debug(LOG_TAG, 'onGridCommandConfirm : ', event);
+        if (event.id===GridCommandType.Delete){
+            this.deleteContext(event.rowData.dataItem.domain, event.rowData.dataItem.application, event.rowData.dataItem.name);
+        }
+    }
+
+    deleteContext(domain:string, application: string, contextName:string){
+        this.logger.debug(LOG_TAG, 'deleteContext : ', domain, application, contextName);
+        this._subHandler.add(this.restCatalogService.deleteRESTContext(domain, application, name).subscribe((result)=>{
+
+            this.logger.info(LOG_TAG , 'REST context deleted:', result);
+            this.notificationCenter.post({
+                name: 'DeleteRESTContext',
+                title: 'Delete REST Context',
+                message: 'REST Context deleted successfully.',
+                type: NotificationType.Success
+            });
+            this.reloadData();
+
+
+        }, (error)=>{
+            this.logger.error(LOG_TAG, 'Deleting REST Context error:', error);
+            this.notificationCenter.post({
+                name: 'DeleteRESTContextError',
+                title: 'Delete REST Context',
+                message: 'Error deleting REST context:',
+                type: NotificationType.Error,
+                error: error,
+                closable: true
+            });
+        }));
+    }
 
 }

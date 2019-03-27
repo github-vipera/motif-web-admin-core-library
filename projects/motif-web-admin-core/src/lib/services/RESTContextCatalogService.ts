@@ -9,7 +9,7 @@ import { ServicesService,
     ServiceCreate,
     OperationsService,
     ServiceOperation } from '@wa-motif-open-api/catalog-service';
-import { ContextsService, ServiceContext } from '@wa-motif-open-api/rest-context-service';
+import { ContextsService, ServiceContext, RestContextCreate } from '@wa-motif-open-api/rest-context-service';
 
 import { Observable } from 'rxjs';
 import { NGXLogger } from 'web-console-core';
@@ -28,7 +28,20 @@ export class RESTContextCatalogService {
         private logger: NGXLogger) {
     }
 
-        /**
+    public deleteRESTContext(domain:string, application:string, contextName:string) : Observable<any> {
+        return this.contextService.deleteContext(domain, application, contextName);
+    }
+
+    public createRESTContext(domain:string, application:string, contextName:string, url:string) : Observable<ServiceContext> {
+        this.logger.debug(LOG_TAG, 'createRESTContext called for ', domain, application, contextName, url );
+        let createObj: RestContextCreate = {
+            context: contextName,
+            url: url
+        };
+        return this.contextService.createContext(domain, application, createObj);
+    }
+
+    /**
      * Returns a JSON with the Service Catalog Structure
      */
     public getRESTContextCatalog(): Observable<any> {

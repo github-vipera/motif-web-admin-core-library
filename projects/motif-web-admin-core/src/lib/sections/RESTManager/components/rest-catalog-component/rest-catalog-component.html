@@ -68,6 +68,7 @@ class="rest-tree-filtered"
           [column]="{}"
           [value]="rowData"
           [dataItem]="rowData"
+          (commandConfirm)="onGridCommandConfirm($event)"
         ></wc-grid-editor-commands-group>        
       </td>
     </tr>
