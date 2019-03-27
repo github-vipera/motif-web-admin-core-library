@@ -1,5 +1,7 @@
+import { ApplicationSelectorComboBoxComponent } from './../../../../../components/UI/selectors/application-selector-combobox-component';
 import { Component, OnInit, Input, ViewChild, ElementRef, Renderer2, EventEmitter, Output } from '@angular/core';
 import { NGXLogger } from 'web-console-core';
+import { DomainSelectorComboBoxComponent } from 'projects/motif-web-admin-core/src/lib/components';
 
 const LOG_TAG = '[NewRESTContextDialogComponent]';
 
@@ -43,6 +45,9 @@ export class RESTContextDialogComponent implements OnInit {
     @Output() confirm: EventEmitter<RESTContextDialogResult> = new EventEmitter();
     @Output() cancel: EventEmitter<void> = new EventEmitter();
 
+    @ViewChild('domainSelector') domainSelector: DomainSelectorComboBoxComponent;
+    @ViewChild('applicationSelector') applicationSelector: ApplicationSelectorComboBoxComponent;
+
     constructor(private logger: NGXLogger) {}
 
     ngOnInit() {
@@ -69,8 +74,9 @@ export class RESTContextDialogComponent implements OnInit {
         this.dialogTitle = "Edit REST Context";
         this.name = contextName;
         this.url = url;
-        this.selectedDomain = domain;
-        this.selectedApplication = application;
+        this.domainSelector.selectedDomainName = domain;
+        this.applicationSelector.domain = domain;
+        this.applicationSelector.selectedApplicationName = application;
     }
 
     private prepareForNew(): void {
@@ -79,8 +85,10 @@ export class RESTContextDialogComponent implements OnInit {
         this.dialogTitle = "Create New REST Context";
         this.name = '';
         this.url = null;
-        this.domain = '';
-        this.application = '';
+        this.selectedApplication = null;
+        this.selectedDomain = null;
+        this.domainSelector.selectedDomain = null;
+        this.applicationSelector.selectedApplication = null;
     }
 
     onCancel(): void {
