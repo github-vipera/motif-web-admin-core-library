@@ -49,7 +49,7 @@
   <kendo-splitter>
     <kendo-splitter-pane style="overflow: hidden;">
       <div style="height: 100%;">
-        <wa-rest-catalog-component
+        <wa-rest-catalog-component (nodeCommand)="onNodeCommand($event)"
           (nodeSelection)="nodeSelect($event)"
           #restCatalogSelector
         ></wa-rest-catalog-component>

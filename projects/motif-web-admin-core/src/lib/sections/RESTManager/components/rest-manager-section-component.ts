@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef, Renderer2, OnDestroy } from '@angular/core';
 import { PluginView } from 'web-console-core';
 import { NGXLogger } from 'web-console-core';
-import { RESTCatalogComponent, RESTCatalogNodeSelectionEvent } from './rest-catalog-component/rest-catalog-component';
+import { RESTCatalogComponent, RESTCatalogNodeSelectionEvent, GridCommandType, RESTCatalogNodeCommandEvent } from './rest-catalog-component/rest-catalog-component';
 import { RESTCatalogEditorComponent } from './rest-catalog-editor/rest-catalog-editor-component';
 import { RESTContextDialogComponent, RESTContextDialogResult, DialogMode } from './dialogs/new-context-dialog/rest-context-dialog-component';
 import { RESTContextCatalogService } from '../../../services';
@@ -140,11 +140,51 @@ export class RESTManagerSectionComponent implements OnInit, OnDestroy {
         );
     }
 
+    doDeleteContext(domain:string, application: string, contextName:string){
+        this.logger.debug(LOG_TAG, 'deleteContext : ', domain, application, contextName);
+        this._subHandler.add(
+            this.restCatalogService.deleteRESTContext(domain, application, name).subscribe((result)=>{
+
+                this.logger.info(LOG_TAG , 'REST context deleted:', result);
+                this.notificationCenter.post({
+                    name: 'DeleteRESTContext',
+                    title: 'Delete REST Context',
+                    message: 'REST Context deleted successfully.',
+                    type: NotificationType.Success
+                });
+                this.reloadData();
+
+
+            }, (error)=>{
+                this.logger.error(LOG_TAG, 'Deleting REST Context error:', error);
+                this.notificationCenter.post({
+                    name: 'DeleteRESTContextError',
+                    title: 'Delete REST Context',
+                    message: 'Error deleting REST context:',
+                    type: NotificationType.Error,
+                    error: error,
+                    closable: true
+                });
+            })
+        );
+    }
+
     onDialogConfirmation(event:RESTContextDialogResult){
         if (event.dialogMode===DialogMode.New){
             this.doCreateRESTContext(event);
         } else if (event.dialogMode===DialogMode.Edit) {
             this.doUpdateRESTContext(event);
+        }
+    }
+
+    onNodeCommand(command:RESTCatalogNodeCommandEvent){
+        this.logger.error(LOG_TAG, 'onNodeCommand:', command);
+        if (command.command===GridCommandType.Delete){
+            this.doDeleteContext(command.node.domain, command.node.application, command.node.name);
+        } else if (command.command===GridCommandType.Edit){
+            this.contextEditDialog.showForEdit(command.node.domain, 
+                command.node.application, 
+                command.node.name, command.node.url);
         }
     }
 

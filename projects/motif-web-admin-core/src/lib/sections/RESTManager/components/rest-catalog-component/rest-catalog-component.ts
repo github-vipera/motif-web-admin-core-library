@@ -10,12 +10,18 @@ import { WCSubscriptionHandler } from '../../../../components/Commons/wc-subscri
 
 const LOG_TAG = '[RESTCatalogComponent]'; 
 
-enum GridCommandType {
-    Delete = "Delete"
+export enum GridCommandType {
+    Delete = "Delete",
+    Edit = "Edit"
 } 
 
 export interface RESTCatalogNodeSelectionEvent {
     node: RESTCatalogNode
+}
+
+export interface RESTCatalogNodeCommandEvent {
+    node: RESTCatalogNode,
+    command: GridCommandType
 }
 
 @Component({
@@ -30,6 +36,8 @@ export class RESTCatalogComponent implements OnInit, OnDestroy {
     private _subHandler: WCSubscriptionHandler= new WCSubscriptionHandler();
 
     @Output() nodeSelection: EventEmitter<RESTCatalogNodeSelectionEvent> = new EventEmitter();
+    @Output() nodeCommand: EventEmitter<RESTCatalogNodeCommandEvent> = new EventEmitter();
+
     _selectedNode: TreeNode;
 
     commands: WCGridEditorCommandsConfig = [
@@ -39,7 +47,12 @@ export class RESTCatalogComponent implements OnInit, OnDestroy {
             title: 'Delete',
             hasConfirmation: true,
             confirmationTitle: 'Delete ?' 
-        }
+        },
+        { 
+            commandIcon: 'wa-ico-edit',
+            commandId: GridCommandType.Edit,
+            title: 'Edit'
+        },
     ];
 
 
@@ -137,36 +150,19 @@ export class RESTCatalogComponent implements OnInit, OnDestroy {
     
     onGridCommandConfirm(event:any){
         this.logger.debug(LOG_TAG, 'onGridCommandConfirm : ', event);
-        if (event.id===GridCommandType.Delete){
-            this.deleteContext(event.rowData.dataItem.domain, event.rowData.dataItem.application, event.rowData.dataItem.name);
-        }
+        this.nodeCommand.emit({
+            node: event.rowData.dataItem,
+            command: event.id
+        })
     }
 
-    deleteContext(domain:string, application: string, contextName:string){
-        this.logger.debug(LOG_TAG, 'deleteContext : ', domain, application, contextName);
-        this._subHandler.add(this.restCatalogService.deleteRESTContext(domain, application, name).subscribe((result)=>{
-
-            this.logger.info(LOG_TAG , 'REST context deleted:', result);
-            this.notificationCenter.post({
-                name: 'DeleteRESTContext',
-                title: 'Delete REST Context',
-                message: 'REST Context deleted successfully.',
-                type: NotificationType.Success
-            });
-            this.reloadData();
-
-
-        }, (error)=>{
-            this.logger.error(LOG_TAG, 'Deleting REST Context error:', error);
-            this.notificationCenter.post({
-                name: 'DeleteRESTContextError',
-                title: 'Delete REST Context',
-                message: 'Error deleting REST context:',
-                type: NotificationType.Error,
-                error: error,
-                closable: true
-            });
-        }));
+    onGridCommandClick(event:any){
+        this.logger.debug(LOG_TAG, 'onGridCommandClick : ', event);
+        this.nodeCommand.emit({
+            node: event.rowData.dataItem,
+            command: event.id
+        })
     }
+
 
 }
