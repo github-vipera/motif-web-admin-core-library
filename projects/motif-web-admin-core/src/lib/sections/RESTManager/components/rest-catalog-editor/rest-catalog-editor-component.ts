@@ -108,7 +108,8 @@ export class RESTCatalogEditorComponent implements OnInit, OnDestroy {
             description: valueItem.attribute.name,
             type: valueType,
             value: value,
-            badge: "I"
+            badge: "I",
+            allowRemove: true
         }
         //(valueItem.attribute["inherited"] ? 'I' : null)
     }
