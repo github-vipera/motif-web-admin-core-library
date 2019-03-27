@@ -67,10 +67,10 @@ export class RESTContextDialogComponent implements OnInit {
         this.logger.debug(LOG_TAG, 'prepare called');
         // set the fields
         this.dialogTitle = "Edit REST Context";
-        this.name = name;
+        this.name = contextName;
         this.url = url;
-        this.domain = domain;
-        this.application = application;
+        this.selectedDomain = domain;
+        this.selectedApplication = application;
     }
 
     private prepareForNew(): void {
