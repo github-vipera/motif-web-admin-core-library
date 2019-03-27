@@ -25,18 +25,21 @@
     >
     <input kendoTextBox [(ngModel)]="url" required />
     </kendo-textbox-container>
-    <label class="warning-label" *ngIf="urlEditingWarningDisplay">Invalid name</label>
+    <label class="warning-label" *ngIf="urlEditingWarningDisplay">Invalid URL</label>
 
     <label class="switch-control-label"> 
       Domain
     </label>
     <wc-domain-selector-combobox [(ngModel)]="selectedDomain"></wc-domain-selector-combobox>
+    <label class="warning-label" *ngIf="domainEditingWarningDisplay">Invalid Domain</label>
   
     <label class="switch-control-label"> 
       Application
     </label>
     <wc-application-selector-combobox [domain]="(selectedDomain ? selectedDomain.name : null)" [(ngModel)]="selectedApplication"></wc-application-selector-combobox>
-  
+    <label class="warning-label" *ngIf="applicationEditingWarningDisplay">Invalid Application</label>
+
+    
   </div>
 
   <p-footer>

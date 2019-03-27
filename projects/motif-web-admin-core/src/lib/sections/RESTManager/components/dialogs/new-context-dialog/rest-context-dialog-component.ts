@@ -35,6 +35,11 @@ export class RESTContextDialogComponent implements OnInit {
     domain: string;
     application: string;
 
+    private _nameEditingWarningDisplay:boolean;
+    private _urlEditingWarningDisplay:boolean;
+    private _applicationEditingWarningDisplay;
+    private _domainEditingWarningDisplay;
+
     @Output() confirm: EventEmitter<RESTContextDialogResult> = new EventEmitter();
     @Output() cancel: EventEmitter<void> = new EventEmitter();
 
@@ -99,19 +104,23 @@ export class RESTContextDialogComponent implements OnInit {
     }
 
     get urlEditingWarningDisplay():boolean {
-        return false;
+        return this._urlEditingWarningDisplay;
     }
 
     get nameEditingWarningDisplay(): boolean {
-        return false;
+        return this._nameEditingWarningDisplay;
     }
 
-    get typeEditingWarningDisplay(): boolean {
-        return false;
+    get domainEditingWarningDisplay(): boolean {
+        return this._domainEditingWarningDisplay;
+    }
+
+    get applicationEditingWarningDisplay(): boolean {
+        return this._applicationEditingWarningDisplay;
     }
 
     private validate(): boolean {
-        /*
+        
         let validate = true;
         if (!this.name  || this.name === '') {
             this._nameEditingWarningDisplay = true;
@@ -119,15 +128,29 @@ export class RESTContextDialogComponent implements OnInit {
         } else {
             this._nameEditingWarningDisplay = false;
         }
-        if (!this.type  || !this.type.code ) {
-            this._typeEditingWarningDisplay = true;
+
+        if (!this.url  || this.url === '' ) {
+            this._urlEditingWarningDisplay = true;
             validate = false;
         } else {
-            this._typeEditingWarningDisplay = false;
+            this._urlEditingWarningDisplay = false;
+        }
+
+        if (!this.selectedDomain){
+            this._domainEditingWarningDisplay = true;
+            validate = false;
+        } else {
+            this._domainEditingWarningDisplay = false;
+        }
+
+        if (!this.selectedApplication){
+            this._applicationEditingWarningDisplay = true;
+            validate = false;
+        } else {
+            this._applicationEditingWarningDisplay = false;
         }
         return validate;
-        */
-       return true;
+        
     }
 
     onTypeValueChange(event) {
