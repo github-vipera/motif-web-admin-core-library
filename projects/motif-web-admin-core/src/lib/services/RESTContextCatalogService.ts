@@ -9,7 +9,7 @@ import { ServicesService,
     ServiceCreate,
     OperationsService,
     ServiceOperation } from '@wa-motif-open-api/catalog-service';
-import { ContextsService, ServiceContext, RestContextCreate } from '@wa-motif-open-api/rest-context-service';
+import { ContextsService, ServiceContext, RestContextCreate, RestContextUpdate } from '@wa-motif-open-api/rest-context-service';
 
 import { Observable } from 'rxjs';
 import { NGXLogger } from 'web-console-core';
@@ -39,6 +39,14 @@ export class RESTContextCatalogService {
             url: url
         };
         return this.contextService.createContext(domain, application, createObj);
+    }
+
+    public updateRESTContext(domain:string, application:string, contextName:string, url:string) : Observable<ServiceContext> {
+        this.logger.debug(LOG_TAG, 'updateRESTContext called for ', domain, application, contextName, url );
+        let updateObj: RestContextUpdate = {
+            url: url
+        };
+        return this.contextService.updateContext(domain, application, contextName, updateObj);
     }
 
     /**
