@@ -7,6 +7,7 @@
         <div class='wc-service-catalog-editor-namespace wc-truncate-text'>URL {{namespace}}</div>
 
         <div class='wc-service-catalog-editor-commands'>
+            <button kendoButton look="flat" icon="plus-sm" class='left-button' (click)="onAddPropertyClick($event)" >Add Property</button>
             <button kendoButton look="flat" icon="save" class='right-button' (click)="onSaveButtonClick($event)" >Save</button>
             <button kendoButton look="flat" icon="reload" (click)='onReloadButtonClick($event)' >Reload</button>
         </div>

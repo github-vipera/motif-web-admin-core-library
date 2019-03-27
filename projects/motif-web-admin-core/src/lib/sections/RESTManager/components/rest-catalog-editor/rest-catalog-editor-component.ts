@@ -130,6 +130,10 @@ export class RESTCatalogEditorComponent implements OnInit, OnDestroy {
         }
     }
 
+    onAddPropertyClick(event){
+        alert("TODO!!");
+    }
+
     onSaveButtonClick(event) {
         /*        
         if (this.editorContext.editingType === EditingType.Domain) {
@@ -144,17 +148,7 @@ export class RESTCatalogEditorComponent implements OnInit, OnDestroy {
     }
 
     onReloadButtonClick(event) {
-        /*
-        if (this.editorContext.editingType === EditingType.Domain) {
-            this._domainEditor.discardChanges();
-        } else if (this.editorContext.editingType === EditingType.Application) {
-            this._applicationEditor.discardChanges();
-        } else if (this.editorContext.editingType === EditingType.Service) {
-            this._serviceEditor.discardChanges();
-        } else if (this.editorContext.editingType === EditingType.Operation) {
-            this._operationEditor.discardChanges();
-        }
-        */
+        this.reloadData();
     }
 
     onDataSaved(changes: any) {
