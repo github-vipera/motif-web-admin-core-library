@@ -28,6 +28,7 @@ export class RESTContextDialogComponent implements OnInit {
     dialogMode: DialogMode;
     display: boolean;
     dialogTitle: string;
+    createButtonCaption: string;
 
     selectedDomain: any;
     selectedApplication: any;
@@ -72,6 +73,7 @@ export class RESTContextDialogComponent implements OnInit {
         this.logger.debug(LOG_TAG, 'prepare called');
         // set the fields
         this.dialogTitle = "Edit REST Context";
+        this.createButtonCaption = "Update";
         this.name = contextName;
         this.url = url;
         this.domainSelector.selectedDomainName = domain;
@@ -83,6 +85,7 @@ export class RESTContextDialogComponent implements OnInit {
         this.logger.debug(LOG_TAG, 'prepare called');
         // empty the fields
         this.dialogTitle = "Create New REST Context";
+        this.createButtonCaption = "Create";
         this.name = '';
         this.url = null;
         this.selectedApplication = null;
