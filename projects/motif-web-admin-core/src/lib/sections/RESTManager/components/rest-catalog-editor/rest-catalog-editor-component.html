@@ -14,7 +14,7 @@
 
         <div class="wc-service-catalog-editor-scrollable-content">
             <div class='inspector'>
-                <wc-property-editor (propertyChange)="onPropertyValueChanged($event)" [model]="propertyModel"> </wc-property-editor>
+                <wc-property-editor #propertyEditor (newPropertyRequired)="onNewPropertyRequired($event)" (propertyChange)="onPropertyValueChanged($event)" [model]="propertyModel"> </wc-property-editor>
             </div>
         </div>
     

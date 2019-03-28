@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ChangeDetectorRef, Renderer2, OnDestroy, 
 import { NGXLogger } from 'web-console-core';
 import { ContextsService, ServiceContext, ServiceContextValue } from '@wa-motif-open-api/rest-context-service';
 import { RESTCatalogNode } from '../rest-catalog-commons'
-import { WCPropertyEditorModel, WCPropertyEditorItemType, WCPropertyEditorItem } from 'web-console-ui-kit';
+import { WCPropertyEditorModel, WCPropertyEditorItemType, WCPropertyEditorItem, WCPropertyEditorComponent } from 'web-console-ui-kit';
 
 const LOG_TAG = '[RESTTreeEditorComponent]';
 
@@ -17,6 +17,8 @@ export class RESTCatalogEditorComponent implements OnInit, OnDestroy {
     private _currentServiceContext: ServiceContext;
     private _title = 'No selection.';
     isBusy: boolean;
+
+    @ViewChild('propertyEditor') _propertyEditor : WCPropertyEditorComponent;
 
     public propertyModel: WCPropertyEditorModel = {
         items: [
@@ -132,8 +134,18 @@ export class RESTCatalogEditorComponent implements OnInit, OnDestroy {
     }
 
     onAddPropertyClick(event){
-        alert("TODO!!");
+        this._propertyEditor.promptForNewProperty(["uno","due","tre"]);
     }
+
+    onNewPropertyRequired(propertyName:string){
+        this._propertyEditor.addProperty({
+          field: propertyName,
+          name: propertyName,
+          type: WCPropertyEditorItemType.String,
+          allowRemove: true      
+        })
+      }
+    
 
     onSaveButtonClick(event) {
         /*        

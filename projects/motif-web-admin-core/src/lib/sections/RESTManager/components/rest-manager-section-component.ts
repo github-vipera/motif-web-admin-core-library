@@ -152,7 +152,7 @@ export class RESTManagerSectionComponent implements OnInit, OnDestroy {
                     message: 'REST Context deleted successfully.',
                     type: NotificationType.Success
                 });
-                this.reloadData();
+                this.restCatalogSelector.reloadData();
 
 
             }, (error)=>{
