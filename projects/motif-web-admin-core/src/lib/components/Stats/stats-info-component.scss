@@ -1,0 +1,38 @@
+
+.wc-stats-info-container {
+    position: absolute;
+    top: 65px;
+    right: 17px;
+    display: flex;
+    flex-direction: row;
+    font-family: montserrat;
+}
+
+.wc-stats-info-item-container {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    margin-right: 10px;
+    span {
+        white-space: nowrap;
+        margin-right: 4px;
+        font-size: 1.8rem;
+        a {
+            white-space: nowrap;
+            margin-left: 4px;
+            font-size: .9rem;
+        }
+    }
+}
+
+.green-stats-info {
+    color: #5db85d;
+}
+
+.gray-stats-info {
+    color: gray;
+}
+
+.red-stats-info {
+    color: #f62626;
+}

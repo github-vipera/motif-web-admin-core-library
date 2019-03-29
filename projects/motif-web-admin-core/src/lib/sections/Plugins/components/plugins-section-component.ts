@@ -5,6 +5,9 @@ import { RegistryService, Plugin } from '@wa-motif-open-api/plugin-registry-serv
 import { SafeStyle } from '@angular/platform-browser';
 import { process, State } from '@progress/kendo-data-query';
 import { WCSubscriptionHandler } from '../../../components/Commons/wc-subscription-handler';
+import * as _ from 'lodash'
+
+
 
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/debounceTime';
@@ -14,6 +17,7 @@ import {
     GridDataResult
 } from '@progress/kendo-angular-grid';
 import * as _ from 'lodash';
+import { WCStatsInfoModel } from '../../../components/Stats/stats-info-component';
 
 const LOG_TAG = '[PluginsSection]';
 
@@ -32,6 +36,8 @@ export class PluginsSectionComponent implements OnInit, OnDestroy {
     public loading: boolean;
     private filterValue: string;
     private _subHandler: WCSubscriptionHandler = new WCSubscriptionHandler();
+
+    statsModel: WCStatsInfoModel = { items: [] };
 
     public state: State = {
     };
@@ -72,6 +78,7 @@ export class PluginsSectionComponent implements OnInit, OnDestroy {
         this._subHandler.add(this.registryService.getPlugins(true, 'REGISTERED').subscribe((data: Array<Plugin>) => {
             this.data = data;
             this.displayData();
+            this.rebuildStatsInfo();
             this.loading = false;
             // console.log("refreshData: ", data);
         }, (error) => {
@@ -79,6 +86,28 @@ export class PluginsSectionComponent implements OnInit, OnDestroy {
             this.gridData = process([], this.state);
             this.loading = false;
         }));
+    }
+
+    private rebuildStatsInfo(){
+        const active = _.sumBy(
+            this.data,
+            ({ status }) => Number(status === "ACTIVE")
+        );
+        const inactive = _.sumBy(
+            this.data,
+            ({ status }) => Number(status === "RESOLVED")
+        );
+        const inError = _.sumBy(
+            this.data,
+            ({ status }) => Number(status === "INSTALLED")
+        );
+        this.statsModel = {
+            items: [
+                { label: "active", value: active, visible: true, cssClass:"green-stats-info" },
+                { label: "inactive", value: inactive, visible: true, cssClass:"gray-stats-info" },
+                { label: "in error", value: inError, visible: true, cssClass:"red-stats-info" }
+            ]
+        } 
     }
 
     public statusColorCode(plugin: Plugin): SafeStyle {

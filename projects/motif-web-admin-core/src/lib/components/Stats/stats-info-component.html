@@ -1,0 +1,22 @@
+<div class="wc-stats-info-container">
+
+        <div *ngFor="let item of model.items"  class="wc-stats-info-item-container {{item.cssClass}}">
+            <span *ngIf="item.visible" class="wc-stats-info-item-value">{{item.value}}<a>{{item.label}}</a></span>
+        </div>
+    
+    
+    <!--
+        <div class="wc-stats-info-item-container green-stats-info">
+            <span class="wc-stats-info-item-value">50<a>active</a></span>
+        </div>
+
+        <div class="wc-stats-info-item-container gray-stats-info">
+            <span class="wc-stats-info-item-value">7<a>inactive</a></span>
+        </div>
+
+        <div class="wc-stats-info-item-container red-stats-info">
+            <span class="wc-stats-info-item-value">2<a>in error</a></span>
+        </div>
+    -->
+
+</div>
