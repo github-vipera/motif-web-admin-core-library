@@ -1,5 +1,7 @@
 <p-contextMenu #tableContextMenu [target]="servicetableContainer" [model]="menuItems" [styleClass]="'wc-context-menu'"></p-contextMenu>
 
+<wc-stats-info-component [model]="statsModel"></wc-stats-info-component>
+
 <wa-services-section-newitem-dialog #newItemDialog (confirm)='onNewItemConfirm($event)'></wa-services-section-newitem-dialog>
 <wa-services-section-new-operation-dialog #newOperationDialog (confirm)='onNewServiceOperationConfirm($event)'></wa-services-section-new-operation-dialog>
 <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle" baseZIndex="999999999"></p-confirmDialog>
