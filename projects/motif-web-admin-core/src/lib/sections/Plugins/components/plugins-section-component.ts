@@ -18,7 +18,7 @@ import {
 } from '@progress/kendo-angular-grid';
 
 import { WCStatsInfoModel } from '../../../components/Stats/stats-info-component';
-import { UninstallConfirmationDialogComponent } from '../dialogs/uninstall-confirmation-dialog-component';
+import { UninstallConfirmationDialogComponent, UninstallDialogResult } from '../dialogs/uninstall-confirmation-dialog-component';
 
 const LOG_TAG = '[PluginsSection]';
 
@@ -153,7 +153,7 @@ export class PluginsSectionComponent implements OnInit, OnDestroy {
         this._uninstallConfirmationDialog.show(pluginName, version);
     }
 
-    public doUninstallPlugin(pluginName:string) {
+    public doUninstallPlugin(pluginName:string, deleteConfig:boolean) {
         this.logger.debug(LOG_TAG , 'doUninstallPlugin called for:', pluginName);
         this.loading = true;
         this._subHandler.add(this.registryService.uninstallPlugin(pluginName, { removeConfig: true }).subscribe((results) => {
@@ -166,7 +166,7 @@ export class PluginsSectionComponent implements OnInit, OnDestroy {
         }));
     }
 
-    onUninstallConfirmed(event){
-        alert(JSON.stringify(event));
+    onUninstallConfirmed(event: UninstallDialogResult){
+        this.doUninstallPlugin(event.pluginName, event.deleteConfig);
     }
 }
