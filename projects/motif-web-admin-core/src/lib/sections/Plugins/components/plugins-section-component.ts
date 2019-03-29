@@ -101,11 +101,11 @@ export class PluginsSectionComponent implements OnInit, OnDestroy {
             this.data,
             ({ status }) => Number(status === "INSTALLED")
         );
-        this.statsModel = {
+        this.statsModel = { //cssClass:"green-stats-info"
             items: [
-                { label: "active", value: active, visible: true, cssClass:"green-stats-info" },
-                { label: "inactive", value: inactive, visible: true, cssClass:"gray-stats-info" },
-                { label: "in error", value: inError, visible: true, cssClass:"red-stats-info" }
+                { label: "active", value: active, color:"#84a4d8" },
+                { label: "inactive", value: inactive, cssClass:"gray-stats-info" },
+                { label: "in error", value: inError, cssClass:"red-stats-info" }
             ]
         } 
     }

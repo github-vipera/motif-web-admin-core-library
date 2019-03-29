@@ -6,8 +6,9 @@ const LOG_TAG = '[WCStatsInfoComponent]';
 export interface WCStatsInfoItem {
     label: string;
     value: string;
-    visible: boolean;
-    cssClass: string;
+    hidden?: boolean;
+    cssClass?: string;
+    color?: string;
 }
 
 export interface WCStatsInfoModel {
