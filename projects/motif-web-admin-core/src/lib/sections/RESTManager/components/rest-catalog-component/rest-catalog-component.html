@@ -51,14 +51,34 @@ class="rest-tree-filtered"
       <td class="service-catalog-row" [ngClass]="{ treeFiltered : tableModel.isFiltered, rowFiltered : rowData.filtered  }">{{ rowData.name }}</td>
       <td class="service-catalog-row" [ngClass]="{ treeFiltered : tableModel.isFiltered, rowFiltered : rowData.filtered  }">{{ rowData.domain }}</td>
       <td class="service-catalog-row" [ngClass]="{ treeFiltered : tableModel.isFiltered, rowFiltered : rowData.filtered  }">{{ rowData.application }}</td>
+
       <td class="service-catalog-row" [ngClass]="{ treeFiltered : tableModel.isFiltered, rowFiltered : rowData.filtered  }">
-        <span *ngIf="rowData.status==='Enabled'" class="badge badge-status badge-enabled">
-            ENABLED
-        </span>
-        <span *ngIf="rowData.status==='Disabled'" class="badge badge-status  badge-disabled">
+          <wc-grid-editor-command
+            [rowIndex]="rowIndex"
+            [hasConfirmation]="true"
+            [confirmationTitleProvider]="statusConfirmationTitleProvider"
+            [columnIndex]="4"
+            [column]="{}"
+            [value]="rowData.status"
+            [dataItem]="rowData"
+            (commandConfirm)="doToggleContextStatus(rowData)"
+          > 
+            <span
+              *ngIf="rowData.status==='Enabled'"
+              class="badge badge-status badge-enabled"
+            >
+              ENABLED
+            </span>
+            <span
+              *ngIf="rowData.status==='Disabled'"
+              class="badge badge-status  badge-disabled"
+            >
               DISABLED
-        </span>
+            </span>
+          </wc-grid-editor-command>
+
       </td>
+
       <td class="service-catalog-row" [ngClass]="{ treeFiltered : tableModel.isFiltered, rowFiltered : rowData.filtered  }">
         <wc-grid-editor-commands-group *ngIf="rowData.canDelete"
           [commands]="commands"

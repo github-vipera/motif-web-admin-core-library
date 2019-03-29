@@ -38,6 +38,17 @@ export class RESTCatalogComponent implements OnInit, OnDestroy {
     @Output() nodeSelection: EventEmitter<RESTCatalogNodeSelectionEvent> = new EventEmitter();
     @Output() nodeCommand: EventEmitter<RESTCatalogNodeCommandEvent> = new EventEmitter();
 
+    statusConfirmationTitleProvider: WCConfirmationTitleProvider = {
+        getTitle(rowData): string {
+            if (rowData.enabled){
+                return "Disable ?";
+            } else {
+                return "Enable ?";
+            } 
+        }
+    }
+
+
     _selectedNode: TreeNode;
 
     commands: WCGridEditorCommandsConfig = [
@@ -164,5 +175,8 @@ export class RESTCatalogComponent implements OnInit, OnDestroy {
         })
     }
 
+    doToggleContextStatus(data){
+        alert("TODO " + JSON.stringify(data));
+    }
 
 }
