@@ -1,0 +1,31 @@
+<p-dialog
+  #newItemDialog
+  [(visible)]="display"
+  [modal]="true"
+  [responsive]="true"
+  [style]="{ width: '450px', minWidth: '400px' }"
+  [minY]="70"
+  [baseZIndex]="10000"
+>
+  <p-header> Plugin Uninstallation </p-header>
+
+  <div style="min-width: 350px;display:flex;flex-direction: column;">
+
+    <a style="font-size: .9rem; padding-bottom: 10px;">Do you confirm that you want to uninstall <strong>'{{pluginName}}'</strong> plugin?</a>
+
+  <label class="switch-control-label"> 
+      Delete Configuration
+  </label>
+  <p-inputSwitch [(ngModel)]="deleteConfiguration"></p-inputSwitch>
+
+
+</div>
+
+  <p-footer>
+    <kendo-buttongroup look="flat">
+      <button kendoButton [toggleable]="false" (click)="onCancel();">Cancel</button>
+      <button kendoButton [toggleable]="false" [primary]="true" (click)="onConfirm();">Uninstall</button>
+    </kendo-buttongroup>
+  </p-footer>
+
+</p-dialog>

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { PluginView } from 'web-console-core';
 import { NGXLogger} from 'web-console-core';
 import { RegistryService, Plugin } from '@wa-motif-open-api/plugin-registry-service';
@@ -16,8 +16,9 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import {
     GridDataResult
 } from '@progress/kendo-angular-grid';
-import * as _ from 'lodash';
+
 import { WCStatsInfoModel } from '../../../components/Stats/stats-info-component';
+import { UninstallConfirmationDialogComponent } from '../dialogs/uninstall-confirmation-dialog-component';
 
 const LOG_TAG = '[PluginsSection]';
 
@@ -36,6 +37,8 @@ export class PluginsSectionComponent implements OnInit, OnDestroy {
     public loading: boolean;
     private filterValue: string;
     private _subHandler: WCSubscriptionHandler = new WCSubscriptionHandler();
+
+    @ViewChild('uninstallConfirmationDialog') _uninstallConfirmationDialog: UninstallConfirmationDialogComponent;
 
     statsModel: WCStatsInfoModel = { items: [] };
 
@@ -74,6 +77,7 @@ export class PluginsSectionComponent implements OnInit, OnDestroy {
     }
 
     public refreshData() {
+        this.logger.debug(LOG_TAG , 'refreshData called.');
         this.loading = true;
         this._subHandler.add(this.registryService.getPlugins(true, 'REGISTERED').subscribe((data: Array<Plugin>) => {
             this.data = data;
@@ -124,6 +128,7 @@ export class PluginsSectionComponent implements OnInit, OnDestroy {
     }
 
     private displayData(): void {
+        this.logger.debug(LOG_TAG , 'displayData called.');
         let filteredData;
         if (this.filterValue) {
             filteredData = _.filter(this.data, (o) => {
@@ -139,5 +144,29 @@ export class PluginsSectionComponent implements OnInit, OnDestroy {
     private buildRegExp(filter: string) {
         const wildcarded = '*' + filter + '*';
         return new RegExp('^' + wildcarded.split('*').join('.*') + '$');
+    }
+
+    onUninstallOKPressed(event){
+        this.logger.debug(LOG_TAG , 'onUninstallOKPressed pressed for: ', event);
+        let pluginName = event.name;
+        let version = event.version;
+        this._uninstallConfirmationDialog.show(pluginName, version);
+    }
+
+    public doUninstallPlugin(pluginName:string) {
+        this.logger.debug(LOG_TAG , 'doUninstallPlugin called for:', pluginName);
+        this.loading = true;
+        this._subHandler.add(this.registryService.uninstallPlugin(pluginName, { removeConfig: true }).subscribe((results) => {
+            this.displayData();
+            this.rebuildStatsInfo();
+            this.loading = false;            // console.log("refreshData: ", data);
+        }, (error) => {
+            this.gridData = process([], this.state);
+            this.loading = false;
+        }));
+    }
+
+    onUninstallConfirmed(event){
+        alert(JSON.stringify(event));
     }
 }
