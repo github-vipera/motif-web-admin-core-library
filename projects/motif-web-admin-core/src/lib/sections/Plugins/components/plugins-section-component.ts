@@ -43,7 +43,7 @@ export class PluginsSectionComponent implements OnInit, OnDestroy {
     private filterValue: string;
     private _subHandler: WCSubscriptionHandler = new WCSubscriptionHandler();
     private overwriteExisting: boolean;
-    
+
     @ViewChild('uninstallConfirmationDialog') _uninstallConfirmationDialog: UninstallConfirmationDialogComponent;
 
     statsModel: WCStatsInfoModel = { items: [] };
@@ -191,7 +191,7 @@ export class PluginsSectionComponent implements OnInit, OnDestroy {
             message: 'Installing plugin...',
             type: NotificationType.Info
         });
-        this._subHandler.add(this.registryService.installPlugin(event.file).subscribe((data) => {
+        this._subHandler.add(this.registryService.installPlugin(event.file, this.overwriteExisting).subscribe((data) => {
             this.logger.info(LOG_TAG , 'Plugin installation done:', data);
             this.notificationCenter.post({
                 name: 'InstallPlugin',
