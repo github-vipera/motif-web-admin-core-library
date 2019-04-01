@@ -12,6 +12,12 @@
         <kendo-textbox-container floatingLabel="Filter">
             <input #filterInput kendoTextBox  (afterValueChanged)="onFilterChange($event)" />
         </kendo-textbox-container>
+        <div>
+            <label>&nbsp;</label>
+            <kendo-buttongroup look="flat">
+                <button kendoButton [toggleable]="false" (click)="installPluginSlideDownPanel.toggle()" ><fa-icon [icon]="faPuzzlePiece"></fa-icon>Install Plugin</button>
+            </kendo-buttongroup>
+        </div>
     </div>
 
     <div class="flex-cmd">
@@ -24,6 +30,9 @@
 
 <div class="row fill">
 
+    <div>
+
+        <wc-upload-panel #installPluginSlideDownPanel [confirmationTitle]="'Do install plugin?'" (upload)="onInstallPlugin($event)" (uploadError)="onInstallPluginError($event)"></wc-upload-panel>
 
         <kendo-grid #datagrid [data]="gridData"> 
 
@@ -61,4 +70,6 @@
     
     
             </kendo-grid>
+        </div>
+
 </div>

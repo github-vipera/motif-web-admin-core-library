@@ -6,7 +6,9 @@ import { SafeStyle } from '@angular/platform-browser';
 import { process, State } from '@progress/kendo-data-query';
 import { WCSubscriptionHandler } from '../../../components/Commons/wc-subscription-handler';
 import * as _ from 'lodash'
+import { WCNotificationCenter, NotificationType } from 'web-console-ui-kit';
 
+import { faPuzzlePiece } from '@fortawesome/free-solid-svg-icons';
 
 
 import { Subject } from 'rxjs/Subject';
@@ -19,6 +21,7 @@ import {
 
 import { WCStatsInfoModel } from '../../../components/Stats/stats-info-component';
 import { UninstallConfirmationDialogComponent, UninstallDialogResult } from '../dialogs/uninstall-confirmation-dialog-component';
+import { WCUploadPanelEvent } from '../../../components';
 
 const LOG_TAG = '[PluginsSection]';
 
@@ -31,6 +34,8 @@ const LOG_TAG = '[PluginsSection]';
     iconName: 'wa-ico-plugins'
 })
 export class PluginsSectionComponent implements OnInit, OnDestroy {
+
+    faPuzzlePiece = faPuzzlePiece;
 
     public data: Array<Plugin>;
     public gridData: GridDataResult; // = process(sampleProducts, this.state);
@@ -46,7 +51,8 @@ export class PluginsSectionComponent implements OnInit, OnDestroy {
     };
 
     constructor(private logger: NGXLogger,
-        private registryService: RegistryService) {
+        private registryService: RegistryService,
+        private notificationCenter: WCNotificationCenter) {
         this.logger.debug(LOG_TAG , 'Opening...');
 
     }
@@ -174,4 +180,48 @@ export class PluginsSectionComponent implements OnInit, OnDestroy {
     onUninstallConfirmed(event: UninstallDialogResult){
         this.doUninstallPlugin(event.pluginName, event.deleteConfig);
     }
+
+
+    onInstallPlugin(event: WCUploadPanelEvent){
+        this.logger.debug(LOG_TAG , 'onInstallPlugin event:', event);
+        this.notificationCenter.post({
+            name: 'InstallPlugin',
+            title: 'Plugin Install',
+            message: 'Installing plugin...',
+            type: NotificationType.Info
+        });
+        this._subHandler.add(this.registryService.installPlugin(event.file).subscribe((data) => {
+            this.logger.info(LOG_TAG , 'Plugin installation done:', data);
+            this.notificationCenter.post({
+                name: 'InstallPlugin',
+                title: 'Plugin Install',
+                message: 'Plugin installed successfully.',
+                type: NotificationType.Success
+            });
+            this.refreshData();
+          }, (error) => {
+            this.logger.error(LOG_TAG, 'Import license error:', error);
+            this.notificationCenter.post({
+                name: 'InstallPluginError',
+                title: 'Plugin Install',
+                message: 'Error installing plugin:',
+                type: NotificationType.Error,
+                error: error,
+                closable: true
+            });
+        }));    
+    } 
+    
+    onInstallPluginError(error){
+        this.logger.error(LOG_TAG , 'onInstallPluginError error:', error);
+        this.notificationCenter.post({
+            name: 'InstallPluginError',
+            title: 'Install Plugin',
+            message: 'Error installing plugin:',
+            type: NotificationType.Error,
+            error: error,
+            closable: true
+        });
+    }
+
 }
