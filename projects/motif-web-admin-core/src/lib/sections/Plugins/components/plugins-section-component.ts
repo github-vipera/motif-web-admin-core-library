@@ -86,10 +86,15 @@ export class PluginsSectionComponent implements OnInit, OnDestroy {
             this.loading = false;
             // console.log("refreshData: ", data);
         }, (error) => {
+            this.clearStatsInfo();
             // console.error("refreshData error: ", error);
             this.gridData = process([], this.state);
             this.loading = false;
         }));
+    }
+
+    private clearStatsInfo(){
+        this.statsModel = { items: [] };
     }
 
     private rebuildStatsInfo(){

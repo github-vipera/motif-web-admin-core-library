@@ -152,7 +152,13 @@ export class ServicesSectionComponent implements OnInit, OnDestroy {
     public refreshData() {
         this._serviceCatalog.reloadData().subscribe((data)=>{
             this.buildStats(data);
+        }, (error)=>{
+            this.clearStatsInfo();
         })
+    }
+
+    private clearStatsInfo(){
+        this.statsModel = { items: [] };
     }
 
     private buildStats(data){

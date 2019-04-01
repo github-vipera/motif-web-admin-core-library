@@ -131,7 +131,7 @@ export class WebContentSectionComponent implements OnInit, OnDestroy {
         }, (error) => {
             this.logger.error(LOG_TAG, 'Get bundle statuses failed: ', error);
             this.loading = false;
-
+            this.clearStatsInfo();
             this.notificationCenter.post({
                 name: 'GetBundleStatusesError',
                 title: 'Get Bundle Statuses',
@@ -142,6 +142,10 @@ export class WebContentSectionComponent implements OnInit, OnDestroy {
             });
         }));
         
+    }
+
+    private clearStatsInfo(){
+        this.statsModel = { items: [] };
     }
 
     private rebuildStatsInfo(){

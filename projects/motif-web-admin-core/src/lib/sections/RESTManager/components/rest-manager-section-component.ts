@@ -74,27 +74,6 @@ export class RESTManagerSectionComponent implements OnInit, OnDestroy {
                 { label: "disabled", value: ""+disabledContexts, cssClass:"red-stats-info" }
             ]
         } 
-        /*
-        const active = _.sumBy(
-            this.data,
-            ({ status }) => Number(status === "ACTIVE")
-        );
-        const inactive = _.sumBy(
-            this.data,
-            ({ status }) => Number(status === "RESOLVED")
-        );
-        const inError = _.sumBy(
-            this.data,
-            ({ status }) => Number(status === "INSTALLED")
-        );
-        this.statsModel = { //cssClass:"green-stats-info"
-            items: [
-                { label: "active", value: active, color:"#84a4d8" },
-                { label: "inactive", value: inactive, cssClass:"gray-stats-info" },
-                { label: "in error", value: inError, cssClass:"red-stats-info" }
-            ]
-        } 
-        */
     }
 
     onCatalogDataReload(event) {
