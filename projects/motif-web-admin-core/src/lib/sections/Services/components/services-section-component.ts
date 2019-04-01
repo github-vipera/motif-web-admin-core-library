@@ -181,9 +181,9 @@ export class ServicesSectionComponent implements OnInit, OnDestroy {
             }
         }
         this.statsModel = {
-        items: [
-            { label: "JSON operations", value: ""+jsonCalls, color:"#8484c1" },
-            { label: "REST operations", value: ""+restCalls, color:"green" }
+        items: [ 
+            { label: "JSON operations", value: ""+jsonCalls, cssClass:"stats-info-json-services" },
+            { label: "REST operations", value: ""+restCalls, cssClass:"stats-info-rest-services" }
         ]
     } 
 

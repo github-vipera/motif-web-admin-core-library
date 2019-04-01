@@ -69,9 +69,9 @@ export class RESTManagerSectionComponent implements OnInit, OnDestroy {
         const disabledContexts = this.restCatalogSelector.tableModel.getDisabledContextsCount();
         this.statsModel = { 
             items: [
-                { label: "active", value: ""+totalContexts, color:"#84a4d8" },
-                { label: "enabled", value: ""+enabledContexts, cssClass:"gray-stats-info" },
-                { label: "disabled", value: ""+disabledContexts, cssClass:"red-stats-info" }
+                { label: "active", value: ""+totalContexts, cssClass:"stats-info-primary" },
+                { label: "enabled", value: ""+enabledContexts, cssClass:"stats-info-ok" },
+                { label: "disabled", value: ""+disabledContexts, cssClass:"stats-info-ko" }
             ]
         } 
     }

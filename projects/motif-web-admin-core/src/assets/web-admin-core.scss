@@ -465,6 +465,30 @@ section .header.sub-header h1 {
   color: $grid_selected_row_command_color !important;
 }
 
+// Stats Info
+.stats-info-primary {
+  color: $stats_info_color_primary;// #84a4d8;
+}
+
+.stats-info-default {
+  color: $stats_info_color_default; //gray;
+}
+
+.stats-info-ok {
+  color: $stats_info_color_ok; //#5db85d;
+}
+
+.stats-info-ko {
+  color: $stats_info_color_ko;//#f62626;
+}
+
+.stats-info-json-services {
+  color: #8484c1;
+} 
+
+.stats-info-rest-services {
+  color: green; 
+}
 
 @import './web-admin-core-toolbar.scss';
 @import './web-admin-core-tabs.scss';

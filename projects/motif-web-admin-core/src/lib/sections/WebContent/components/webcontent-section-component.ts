@@ -161,9 +161,9 @@ export class WebContentSectionComponent implements OnInit, OnDestroy {
 
         this.statsModel = { 
             items: [
-                { label: "bundles", value: ""+total, color:"#84a4d8" },
-                { label: "published", value: ""+published.true, cssClass:"gray-stats-info" },
-                { label: "unpublished", value: ""+published.false, cssClass:"red-stats-info" }
+                { label: "bundles", value: ""+total, cssClass: "stats-info-primary" },
+                { label: "published", value: ""+published.true, cssClass:"stats-info-ok" },
+                { label: "unpublished", value: ""+published.false, cssClass:"stats-info-ko" }
             ]
         } 
     }

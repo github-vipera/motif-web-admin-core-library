@@ -112,9 +112,9 @@ export class PluginsSectionComponent implements OnInit, OnDestroy {
         );
         this.statsModel = { //cssClass:"green-stats-info"
             items: [
-                { label: "active", value: active, color:"#84a4d8" },
-                { label: "inactive", value: inactive, cssClass:"gray-stats-info" },
-                { label: "in error", value: inError, cssClass:"red-stats-info" }
+                { label: "active", value: active, cssClass:"stats-info-primary" },
+                { label: "inactive", value: inactive, cssClass:"stats-info-default" },
+                { label: "in error", value: inError, cssClass:"stats-info-ko" }
             ]
         } 
     }
