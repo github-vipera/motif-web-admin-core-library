@@ -32,7 +32,14 @@
 
     <div>
 
-        <wc-upload-panel #installPluginSlideDownPanel [confirmationTitle]="'Do install plugin?'" (upload)="onInstallPlugin($event)" (uploadError)="onInstallPluginError($event)"></wc-upload-panel>
+        <wc-upload-panel #installPluginSlideDownPanel [confirmationTitle]="'Do install plugin?'" (upload)="onInstallPlugin($event)" (uploadError)="onInstallPluginError($event)">
+            <div style="padding-top:8px;display: flex;">
+                <label class="switch-control-label" style="padding-top: 0.3rem;padding-right: 10px;"> 
+                    Overwrite Existing
+                </label>
+                <p-inputSwitch [styleClass]="'mini-switch'" [(ngModel)]="overwriteExisting"></p-inputSwitch>
+            </div>
+        </wc-upload-panel>
 
         <kendo-grid #datagrid [data]="gridData"> 
 

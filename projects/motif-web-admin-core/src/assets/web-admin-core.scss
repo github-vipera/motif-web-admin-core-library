@@ -490,6 +490,34 @@ section .header.sub-header h1 {
   color: green; 
 }
 
+.mini-switch .ui-inputswitch-slider:before {
+  left: 0.16em;
+  bottom: .18em;
+  height: .6em;
+  width: .6em;
+  transition: .1s;
+}
+
+
+
+.mini-switch .ui-inputswitch-slider {
+  height: 15px;
+  width: 29px;
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: .3s;
+  border-radius: 30px;
+}
+
+.mini-switch.ui-inputswitch-checked .ui-inputswitch-slider:before {
+  -webkit-transform: translateX(0.8em);
+  transform: translateX(0.8em);
+}
+
 @import './web-admin-core-toolbar.scss';
 @import './web-admin-core-tabs.scss';
 @import './web-admin-core-buttons.scss';
