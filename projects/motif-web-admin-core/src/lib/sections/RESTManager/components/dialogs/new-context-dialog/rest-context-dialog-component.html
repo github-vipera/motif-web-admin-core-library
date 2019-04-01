@@ -39,7 +39,11 @@
     <wc-application-selector-combobox #applicationSelector [domain]="(selectedDomain ? selectedDomain.name : null)" [(ngModel)]="selectedApplication"></wc-application-selector-combobox>
     <label class="warning-label" *ngIf="applicationEditingWarningDisplay">Invalid Application</label>
 
-    
+    <label class="switch-control-label"> 
+      Enabled
+    </label>
+    <p-inputSwitch [(ngModel)]="enabled"></p-inputSwitch>
+
   </div>
 
   <p-footer>

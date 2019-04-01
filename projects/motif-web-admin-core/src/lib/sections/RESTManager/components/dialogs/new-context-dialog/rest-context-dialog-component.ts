@@ -10,7 +10,8 @@ export interface RESTContextDialogResult {
     url: string;
     domain: string;
     application: string;
-    dialogMode: DialogMode
+    dialogMode: DialogMode;
+    enabled: boolean;
 }
 
 export enum DialogMode {
@@ -37,6 +38,7 @@ export class RESTContextDialogComponent implements OnInit {
     url: string;
     domain: string;
     application: string;
+    enabled: boolean;
 
     private _nameEditingWarningDisplay:boolean;
     private _urlEditingWarningDisplay:boolean;
@@ -55,8 +57,8 @@ export class RESTContextDialogComponent implements OnInit {
         this.logger.debug(LOG_TAG, 'Initializing...');
     }
 
-    public showForEdit(domain: string, application: string, contextName:string, url:string): void {
-        this.prepareForEdit(domain, application, contextName, url);
+    public showForEdit(domain: string, application: string, contextName:string, url:string, enabled: boolean): void {
+        this.prepareForEdit(domain, application, contextName, url, enabled);
         this.display = true;
     }
 
@@ -69,9 +71,10 @@ export class RESTContextDialogComponent implements OnInit {
         this.display = false;
     }
 
-    private prepareForEdit(domain: string, application: string, contextName:string, url:string): void {
+    private prepareForEdit(domain: string, application: string, contextName:string, url:string, enabled: boolean): void {
         this.logger.debug(LOG_TAG, 'prepare called');
         // set the fields
+        this.dialogMode = DialogMode.Edit;
         this.dialogTitle = "Edit REST Context";
         this.createButtonCaption = "Update";
         this.name = contextName;
@@ -79,11 +82,13 @@ export class RESTContextDialogComponent implements OnInit {
         this.domainSelector.selectedDomainName = domain;
         this.applicationSelector.domain = domain;
         this.applicationSelector.selectedApplicationName = application;
+        this.enabled = enabled;
     }
 
     private prepareForNew(): void {
         this.logger.debug(LOG_TAG, 'prepare called');
         // empty the fields
+        this.dialogMode = DialogMode.New;
         this.dialogTitle = "Create New REST Context";
         this.createButtonCaption = "Create";
         this.name = '';
@@ -109,7 +114,8 @@ export class RESTContextDialogComponent implements OnInit {
             name: this.name,
             url: this.url,
             application: this.selectedApplication.name,
-            domain: this.selectedDomain.name
+            domain: this.selectedDomain.name,
+            enabled: this.enabled
         };
         this.confirm.emit(event);
     }

@@ -12,6 +12,7 @@ import { RESTCatalogEditorComponent } from './components/rest-catalog-editor/res
 import { RESTContextDialogComponent } from './components/dialogs/new-context-dialog/rest-context-dialog-component';
 import { TreeTableModule } from 'primeng/treetable';
 import { DialogModule } from 'primeng/dialog';
+import { InputSwitchModule } from 'primeng/inputswitch';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { DialogModule } from 'primeng/dialog';
         TreeTableModule,
         WCUIKitDirectivesModule,
         DialogModule,
-        CommonSelectorsModule
+        CommonSelectorsModule,
+        InputSwitchModule
     ],
     entryComponents: [
         RESTManagerSectionComponent

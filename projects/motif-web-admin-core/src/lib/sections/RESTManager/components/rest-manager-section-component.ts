@@ -140,7 +140,7 @@ export class RESTManagerSectionComponent implements OnInit, OnDestroy {
 
     doUpdateRESTContext(event:RESTContextDialogResult){
         this._subHandler.add(
-            this.restCatalogService.updateRESTContext(event.domain, event.application, event.name, event.url).subscribe( (results)=> {
+            this.restCatalogService.updateRESTContext(event.domain, event.application, event.name, event.url, event.enabled).subscribe( (results)=> {
 
                 this.logger.info(LOG_TAG , 'REST context updated:', results);
                 this.notificationCenter.post({
@@ -189,7 +189,7 @@ export class RESTManagerSectionComponent implements OnInit, OnDestroy {
                 this.notificationCenter.post({
                     name: 'ChangeStatusRESTContextError',
                     title: 'Change REST Context Status',
-                    message: 'Error changin REST context status:',
+                    message: 'Error changing REST context status: ',
                     type: NotificationType.Error,
                     error: error,
                     closable: true
@@ -242,7 +242,7 @@ export class RESTManagerSectionComponent implements OnInit, OnDestroy {
         } else if (command.command===GridCommandType.Edit){
             this.contextEditDialog.showForEdit(command.node.domain, 
                 command.node.application, 
-                command.node.name, command.node.url);
+                command.node.name, command.node.url, command.node["enabled"]);
         } else if (command.command===GridCommandType.PublishToggle){
             this.doToggleContextStatus(command.node.domain, command.node.application, command.node.name, command.node.url, !command.node["enabled"]);
         }
