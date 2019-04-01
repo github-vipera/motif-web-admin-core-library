@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { Component, OnInit, ViewChild, ChangeDetectorRef, Renderer2, OnDestroy } from '@angular/core';
 import { PluginView } from 'web-console-core';
 import { NGXLogger } from 'web-console-core';
@@ -7,6 +8,7 @@ import { RESTContextDialogComponent, RESTContextDialogResult, DialogMode } from 
 import { RESTContextCatalogService } from '../../../services';
 import { WCSubscriptionHandler } from '../../../components/Commons/wc-subscription-handler';
 import { WCNotificationCenter, NotificationType } from 'web-console-ui-kit';
+import { WCStatsInfoModel } from '../../../components/Stats/stats-info-component';
 
 const LOG_TAG = '[RESTManagerSectionComponent]';
 
@@ -25,6 +27,8 @@ export class RESTManagerSectionComponent implements OnInit, OnDestroy {
     @ViewChild('contextEditDialog') contextEditDialog: RESTContextDialogComponent;
 
     private _subHandler: WCSubscriptionHandler= new WCSubscriptionHandler();
+
+    statsModel: WCStatsInfoModel = { items: [] };
 
     constructor(private logger: NGXLogger,
         private renderer2: Renderer2,
@@ -53,6 +57,52 @@ export class RESTManagerSectionComponent implements OnInit, OnDestroy {
 
     onRefreshClicked(){
         this.restCatalogSelector.reloadData();
+    }
+
+    private clearStatsInfo(){
+        this.statsModel = { items: [] };
+    }
+
+    private rebuildStatsInfo(){
+        const totalContexts = this.restCatalogSelector.tableModel.getContextsCount();
+        const enabledContexts = this.restCatalogSelector.tableModel.getEnabledContextsCount();
+        const disabledContexts = this.restCatalogSelector.tableModel.getDisabledContextsCount();
+        this.statsModel = { 
+            items: [
+                { label: "active", value: ""+totalContexts, color:"#84a4d8" },
+                { label: "enabled", value: ""+enabledContexts, cssClass:"gray-stats-info" },
+                { label: "disabled", value: ""+disabledContexts, cssClass:"red-stats-info" }
+            ]
+        } 
+        /*
+        const active = _.sumBy(
+            this.data,
+            ({ status }) => Number(status === "ACTIVE")
+        );
+        const inactive = _.sumBy(
+            this.data,
+            ({ status }) => Number(status === "RESOLVED")
+        );
+        const inError = _.sumBy(
+            this.data,
+            ({ status }) => Number(status === "INSTALLED")
+        );
+        this.statsModel = { //cssClass:"green-stats-info"
+            items: [
+                { label: "active", value: active, color:"#84a4d8" },
+                { label: "inactive", value: inactive, cssClass:"gray-stats-info" },
+                { label: "in error", value: inError, cssClass:"red-stats-info" }
+            ]
+        } 
+        */
+    }
+
+    onCatalogDataReload(event) {
+        this.rebuildStatsInfo();
+    }
+
+    onCatalogDataReloadError(event){
+        this.clearStatsInfo();
     }
 
     public onChangesSaved(event: any) {

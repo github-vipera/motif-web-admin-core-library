@@ -41,10 +41,13 @@ export interface RESTEntry {
 
 export class RESTTreeTableModel {
   private _model: TreeNode[] = [];
-  //private _rootNode: TreeNode;
   
   private _filter: string;
   private _filterRegExp: RegExp;
+
+  private _contextCounts: number = 0;
+  private _enabledContextCounts: number = 0;
+  private _disabledContextCounts: number = 0;
 
   constructor() {}
 
@@ -111,8 +114,15 @@ export class RESTTreeTableModel {
     });
     // Sort entries by depth
     entries = _.orderBy(entries, ['depth'],['asc']); // Use Lodash to sort array by 'name'
-    
-    
+    this._contextCounts = entries.length;
+    for (let i=0;i<entries.length;i++){
+      if (entries[i].enabled){
+        this._enabledContextCounts++;
+      } else {
+        this._disabledContextCounts++;
+      }
+    }
+
     // create the temporary model
     let tempModel = [];
 
@@ -242,8 +252,17 @@ export class RESTTreeTableModel {
     }
   }
 
+  public getContextsCount():number {
+    return this._contextCounts;
+  }
 
+  public getEnabledContextsCount():number {
+    return this._enabledContextCounts;
+  }
 
+  public getDisabledContextsCount():number {
+    return this._disabledContextCounts;
+  }
 }
 
 class RESTEntryWrapper {

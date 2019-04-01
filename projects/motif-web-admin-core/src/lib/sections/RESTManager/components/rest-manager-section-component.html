@@ -1,4 +1,5 @@
 <wc-dashboard-header [title]="'REST Manager'"></wc-dashboard-header>
+<wc-stats-info-component [model]="statsModel"></wc-stats-info-component>
 
 <wa-rest-context-dialog #contextEditDialog (confirm)="onDialogConfirmation($event)"></wa-rest-context-dialog>
 
@@ -51,6 +52,8 @@
       <div style="height: 100%;">
         <wa-rest-catalog-component (nodeCommand)="onNodeCommand($event)"
           (nodeSelection)="nodeSelect($event)"
+          (dataReload)="onCatalogDataReload($event)"
+          (dataReloadError)="onCatalogDataReloadError($event)"
           #restCatalogSelector
         ></wa-rest-catalog-component>
       </div>

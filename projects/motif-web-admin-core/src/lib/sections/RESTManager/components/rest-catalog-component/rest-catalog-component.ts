@@ -7,6 +7,7 @@ import { RESTCatalogNode } from '../rest-catalog-commons'
 import { WCGridEditorCommandsConfig, WCConfirmationTitleProvider, WCGridEditorCommandComponentEvent } from 'web-console-ui-kit';
 import { WCNotificationCenter, NotificationType } from 'web-console-ui-kit';
 import { WCSubscriptionHandler } from '../../../../components/Commons/wc-subscription-handler';
+import { Observable } from 'rxjs';
 
 const LOG_TAG = '[RESTCatalogComponent]'; 
 
@@ -14,6 +15,15 @@ export enum GridCommandType {
     Delete = "Delete",
     Edit = "Edit"
 } 
+
+export interface RESTCatalogDataEvent {
+    component: RESTCatalogComponent;
+}
+
+export interface RESTCatalogDataErrorEvent {
+    component: RESTCatalogComponent;
+    error: any;
+}
 
 export interface RESTCatalogNodeSelectionEvent {
     node: RESTCatalogNode
@@ -37,6 +47,9 @@ export class RESTCatalogComponent implements OnInit, OnDestroy {
 
     @Output() nodeSelection: EventEmitter<RESTCatalogNodeSelectionEvent> = new EventEmitter();
     @Output() nodeCommand: EventEmitter<RESTCatalogNodeCommandEvent> = new EventEmitter();
+    @Output() dataReload: EventEmitter<RESTCatalogDataEvent> = new EventEmitter();
+    @Output() dataReloadError: EventEmitter<RESTCatalogDataErrorEvent> = new EventEmitter();
+
 
     statusConfirmationTitleProvider: WCConfirmationTitleProvider = {
         getTitle(rowData): string {
@@ -98,21 +111,18 @@ export class RESTCatalogComponent implements OnInit, OnDestroy {
         this._subHandler = null;
    }
 
-    public reloadData() {
+    public reloadData(){
         this.logger.debug(LOG_TAG, 'reloadData called');
         this._loading = true;
-        this.restCatalogService.getRESTContextCatalog().subscribe((catalog) => {
+        this._subHandler.add(this.restCatalogService.getRESTContextCatalog().subscribe((catalog) => {
             this._tableModel.loadData(catalog);
             this._loading = false;
             this.logger.debug(LOG_TAG, 'reloadData results:', catalog);
+            this.dataReload.emit({ component: this });
         }, (error) => {
             this._loading = false;
-            
-        });
-        /*
-        let modDataProvider = new RESTTreeDataProviderMock();
-        this._tableModel.loadData(modDataProvider.getData());
-        */
+            this.dataReloadError.emit( {component: this, error: error} );
+        }));
     }
 
     public clear() {

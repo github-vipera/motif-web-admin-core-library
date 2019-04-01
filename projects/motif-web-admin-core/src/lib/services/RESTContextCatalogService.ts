@@ -13,6 +13,7 @@ import { ContextsService, ServiceContext, RestContextCreate, RestContextUpdate }
 
 import { Observable } from 'rxjs';
 import { NGXLogger } from 'web-console-core';
+import { WCSubscriptionHandler } from '../components';
 
 const LOG_TAG = '[RESTContextCatalogService]';
 
