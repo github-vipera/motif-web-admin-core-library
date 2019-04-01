@@ -72,6 +72,7 @@ export class RESTCatalogEditorComponent implements OnInit, OnDestroy {
 
     
     public reloadData():void {
+        this._propertyEditor.cancelNewPropertyPrompt();
         if (this._currentNode){
             this.restContextService.getContext(this._currentNode.domain, this._currentNode.application, this._currentNode.name).subscribe( (data:ServiceContext) => {
                 this.logger.debug(LOG_TAG, 'reloadData results: ', data);
