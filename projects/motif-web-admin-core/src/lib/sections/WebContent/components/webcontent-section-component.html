@@ -1,6 +1,8 @@
 <wc-loading-overlay [visible]="loading"></wc-loading-overlay>
 <wa-webcontent-update-dialog #updateDialog (confirm)="onUpdateConfirm($event)"></wa-webcontent-update-dialog>
 
+<wc-stats-info-component [model]="statsModel"></wc-stats-info-component>
+
 <wc-dashboard-header [title]="'Web Content'"></wc-dashboard-header>
 
 <div class="row spread">
