@@ -169,6 +169,35 @@ export class RESTManagerSectionComponent implements OnInit, OnDestroy {
         );
     }
 
+    doToggleContextStatus(domain:string, application: string, contextName:string, url:string, enabled:boolean){
+        this.logger.debug(LOG_TAG, 'doToggleContextStatus : ', domain, application, contextName, url, enabled);
+        this._subHandler.add(
+            this.restCatalogService.updateRESTContext(domain, application, name, url, enabled).subscribe((result)=>{
+
+                this.logger.info(LOG_TAG , 'REST context status change:', result);
+                this.notificationCenter.post({
+                    name: 'ChangeStatusRESTContext',
+                    title: 'Change REST Context Status',
+                    message: 'REST Context status changed successfully.',
+                    type: NotificationType.Success
+                });
+                this.restCatalogSelector.reloadData();
+
+
+            }, (error)=>{
+                this.logger.error(LOG_TAG, 'Changin REST Context status error:', error);
+                this.notificationCenter.post({
+                    name: 'ChangeStatusRESTContextError',
+                    title: 'Change REST Context Status',
+                    message: 'Error changin REST context status:',
+                    type: NotificationType.Error,
+                    error: error,
+                    closable: true
+                });
+            })
+        );    
+    }
+
     doDeleteContext(domain:string, application: string, contextName:string){
         this.logger.debug(LOG_TAG, 'deleteContext : ', domain, application, contextName);
         this._subHandler.add(
@@ -214,6 +243,8 @@ export class RESTManagerSectionComponent implements OnInit, OnDestroy {
             this.contextEditDialog.showForEdit(command.node.domain, 
                 command.node.application, 
                 command.node.name, command.node.url);
+        } else if (command.command===GridCommandType.PublishToggle){
+            this.doToggleContextStatus(command.node.domain, command.node.application, command.node.name, command.node.url, !command.node["enabled"]);
         }
     }
 

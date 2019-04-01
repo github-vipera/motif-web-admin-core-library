@@ -13,7 +13,8 @@ const LOG_TAG = '[RESTCatalogComponent]';
 
 export enum GridCommandType {
     Delete = "Delete",
-    Edit = "Edit"
+    Edit = "Edit",
+    PublishToggle = "PublishToggle"
 } 
 
 export interface RESTCatalogDataEvent {
@@ -186,7 +187,11 @@ export class RESTCatalogComponent implements OnInit, OnDestroy {
     }
 
     doToggleContextStatus(data){
-        alert("TODO " + JSON.stringify(data));
+        this.logger.debug(LOG_TAG, 'doToggleContextStatus : ', data);
+        this.nodeCommand.emit({
+            node: data,
+            command: GridCommandType.PublishToggle
+        })
     }
 
 }

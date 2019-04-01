@@ -29,6 +29,7 @@ export class RESTContextCatalogService {
         private logger: NGXLogger) {
     }
 
+
     public deleteRESTContext(domain:string, application:string, contextName:string) : Observable<any> {
         return this.contextService.deleteContext(domain, application, contextName);
     }
@@ -42,8 +43,8 @@ export class RESTContextCatalogService {
         return this.contextService.createContext(domain, application, createObj);
     }
 
-    public updateRESTContext(domain:string, application:string, contextName:string, url:string) : Observable<ServiceContext> {
-        this.logger.debug(LOG_TAG, 'updateRESTContext called for ', domain, application, contextName, url );
+    public updateRESTContext(domain:string, application:string, contextName:string, url:string, enabled: boolean) : Observable<ServiceContext> {
+        this.logger.debug(LOG_TAG, 'updateRESTContext called for ', domain, application, contextName, url, enabled );
         let updateObj: RestContextUpdate = {
             url: url
         };
