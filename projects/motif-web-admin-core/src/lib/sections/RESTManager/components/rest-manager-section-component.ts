@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { Component, OnInit, ViewChild, ChangeDetectorRef, Renderer2, OnDestroy } from '@angular/core';
 import { PluginView } from 'web-console-core';
 import { NGXLogger } from 'web-console-core';
-import { RESTCatalogComponent, RESTCatalogNodeSelectionEvent, GridCommandType, RESTCatalogNodeCommandEvent } from './rest-catalog-component/rest-catalog-component';
+import { RESTCatalogComponent, RESTCatalogNodeSelectionEvent, GridCommandType, RESTCatalogNodeCommandEvent, RESTCatalogDataErrorEvent } from './rest-catalog-component/rest-catalog-component';
 import { RESTCatalogEditorComponent } from './rest-catalog-editor/rest-catalog-editor-component';
 import { RESTContextDialogComponent, RESTContextDialogResult, DialogMode } from './dialogs/new-context-dialog/rest-context-dialog-component';
 import { RESTContextCatalogService } from '../../../services';
@@ -80,8 +80,17 @@ export class RESTManagerSectionComponent implements OnInit, OnDestroy {
         this.rebuildStatsInfo();
     }
 
-    onCatalogDataReloadError(event){
+    onCatalogDataReloadError(event: RESTCatalogDataErrorEvent){
+        this.logger.error(LOG_TAG, 'onCatalogDataReloadError error:', event);
         this.clearStatsInfo();
+        this.notificationCenter.post({
+            name: 'LoadRESTContextError',
+            title: 'REST Context Load',
+            message: 'Error loading REST contexts:',
+            type: NotificationType.Error,
+            error: event.error,
+            closable: true
+        });
     }
 
     public onChangesSaved(event: any) {
