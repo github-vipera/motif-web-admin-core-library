@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
 import { WebContentUpdateDialogComponent, UpdateDialogResult } from './dialog/webcontent-update-dialog';
 import { WCUploadPanelEvent } from '../../../components/UI/wc-upload-panel-component/wc-upload-panel-component';
+import { WCStatsInfoModel } from '../../../components/Stats/stats-info-component';
 
 const LOG_TAG = '[WebContentSectionComponent]';
 
@@ -33,6 +34,8 @@ enum CommandType {
     iconName: 'wa-ico-web',
   })
 export class WebContentSectionComponent implements OnInit, OnDestroy {
+
+    statsModel: WCStatsInfoModel = { items: [] };
 
     faUpload = faUpload;
     gridData: BundleStatus[];
@@ -116,12 +119,19 @@ export class WebContentSectionComponent implements OnInit, OnDestroy {
                 element.info["syntheticStatus"] = this.buildSyntheticStatus(element);
             });
 
+            this.logger.debug(LOG_TAG, '*** Get bundle statuses results gridData:', this.gridData);
+
             this.gridData = data;
+
+            this.logger.debug(LOG_TAG, '*** Get bundle statuses results gridData:', this.gridData);
+
+            this.rebuildStatsInfo();
             this.loading = false;
+            
         }, (error) => {
             this.logger.error(LOG_TAG, 'Get bundle statuses failed: ', error);
             this.loading = false;
-
+            this.clearStatsInfo();
             this.notificationCenter.post({
                 name: 'GetBundleStatusesError',
                 title: 'Get Bundle Statuses',
@@ -134,6 +144,29 @@ export class WebContentSectionComponent implements OnInit, OnDestroy {
         
     }
 
+    private clearStatsInfo(){
+        this.statsModel = { items: [] };
+    }
+
+    private rebuildStatsInfo(){
+
+        const statuses = _.map(this.gridData, 'info.syntheticStatus');
+
+        const total = statuses.length;
+
+        const published = _.countBy(
+            statuses,
+            (status) => (status === "PUBLISHED")
+        );
+
+        this.statsModel = { 
+            items: [
+                { label: "bundles", value: ""+total, cssClass: "stats-info-primary" },
+                { label: "published", value: ""+published.true, cssClass:"stats-info-ok" },
+                { label: "unpublished", value: ""+published.false, cssClass:"stats-info-ko" }
+            ]
+        } 
+    }
     
     private buildSyntheticStatus(statusInfo: BundleStatus): string {
         let published: number = 0;  

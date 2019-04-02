@@ -1,0 +1,7 @@
+<div class="wc-stats-info-container">
+
+        <div *ngFor="let item of model.items"  class="wc-stats-info-item-container {{item.cssClass}}">
+            <span *ngIf="!(item.hidden)" class="wc-stats-info-item-value" [ngStyle]="{'color': item.color }">{{item.value}}<a>{{item.label}}</a></span>
+        </div>
+    
+</div>

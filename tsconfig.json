@@ -20,10 +20,12 @@
     ],
     "paths": {
       "motif-web-admin-core": [
-        "dist/motif-web-admin-core"
+        "projects/motif-web-admin-core/src/public_api"
+        //"dist/motif-web-admin-core"
       ],
       "motif-web-admin-core/*": [
-        "dist/motif-web-admin-core/*"
+        "projects/motif-web-admin-core/src/public_api"
+        //"dist/motif-web-admin-core/*"
       ]
     }
   }
