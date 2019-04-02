@@ -72,6 +72,7 @@ export class RESTCatalogEditorComponent implements OnInit, OnDestroy {
 
     
     public reloadData():void {
+        this.logger.debug(LOG_TAG, 'reloadData called.');
         this._propertyEditor.cancelNewPropertyPrompt();
         if (this._currentNode){
             this.restContextService.getContext(this._currentNode.domain, this._currentNode.application, this._currentNode.name).subscribe( (data:ServiceContext) => {
@@ -86,6 +87,7 @@ export class RESTCatalogEditorComponent implements OnInit, OnDestroy {
     }
 
     private rebuildPropertyModel(): void {
+        this.logger.debug(LOG_TAG, 'rebuildPropertyModel called.');
         let items = [];
         let values:Array<ServiceContextValue> = this._currentServiceContext.valuesList;
         for (let i=0;i<values.length;i++){
@@ -99,22 +101,39 @@ export class RESTCatalogEditorComponent implements OnInit, OnDestroy {
     }
 
     private buildPropertyItemForValueItem(valueItem: ServiceContextValue): WCPropertyEditorItem {
+        this.logger.debug(LOG_TAG, 'buildPropertyItemForValueItem called for:', valueItem);
         let valueType = WCPropertyEditorItemType.String;
         let value:any = valueItem.value;
         if (valueItem.attribute.type.toLowerCase()==="boolean"){
             valueType = WCPropertyEditorItemType.Boolean;
             value = (valueItem.value === "true" ? true : false );
         }
+        let isInherited = this.isValueInherited(valueItem);
         return {
             name : valueItem.attribute.name,
             field: valueItem.attribute.name,
             description: valueItem.attribute.name,
             type: valueType,
             value: value,
-            badge: "I",
-            allowRemove: true
+            badge: (isInherited? "I" : null),
+            allowRemove: (isInherited? false:true)
         }
         //(valueItem.attribute["inherited"] ? 'I' : null)
+    }
+
+    isValueInherited(valueItem: ServiceContextValue):boolean {
+        if (valueItem.properties){
+            for (let i=0;i<valueItem.properties.length;i++){
+                if (valueItem.properties[i].key === "inherited"){
+                    return this.stringToBool(valueItem.properties[i].value);
+                }
+            }
+        }
+        return false;
+    }
+
+    stringToBool(value:string):boolean {
+        return (value.toUpperCase()==="TRUE");
     }
 
     onPropertyValueChanged(event:any){
