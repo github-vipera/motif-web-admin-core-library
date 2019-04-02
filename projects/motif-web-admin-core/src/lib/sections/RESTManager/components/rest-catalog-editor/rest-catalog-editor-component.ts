@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef, Renderer2, OnDestroy, Input } from '@angular/core';
 import { NGXLogger } from 'web-console-core';
-import { ContextsService, ServiceContext, ServiceContextValue } from '@wa-motif-open-api/rest-content-service';
+import { ContextsService, ServiceContext, ServiceContextValue, RestContextUpdate } from '@wa-motif-open-api/rest-content-service';
+import { ValuesService, ValueCreate, Value } from '@wa-motif-open-api/context-service';
 import { RESTCatalogNode } from '../rest-catalog-commons'
-import { WCPropertyEditorModel, WCPropertyEditorItemType, WCPropertyEditorItem, WCPropertyEditorComponent } from 'web-console-ui-kit';
+import { WCPropertyEditorModel, WCPropertyEditorItemType, WCPropertyEditorItem, WCPropertyEditorComponent, WCNotificationCenter, NotificationType } from 'web-console-ui-kit';
 import { ServiceContextAttribute } from '@wa-motif-open-api/web-content-service';
 import { WCSubscriptionHandler } from '../../../../components/Commons/wc-subscription-handler';
 import * as _ from 'lodash'
@@ -34,7 +35,9 @@ export class RESTCatalogEditorComponent implements OnInit, OnDestroy {
     constructor(private logger: NGXLogger,
         private renderer2: Renderer2,
         private changeDetector: ChangeDetectorRef,
-        private restContextService: ContextsService
+        private restContextService: ContextsService,
+        private valuesService: ValuesService,
+        private notificationCenter: WCNotificationCenter
         ) {
         this.logger.debug(LOG_TAG, 'Opening...');
 
@@ -119,10 +122,9 @@ export class RESTCatalogEditorComponent implements OnInit, OnDestroy {
 
     private buildPropertyItemForValueItem(valueItem: ServiceContextValue): WCPropertyEditorItem {
         this.logger.debug(LOG_TAG, 'buildPropertyItemForValueItem called for:', valueItem);
-        let valueType = WCPropertyEditorItemType.String;
+        let valueType = this.propertyTypeForAttribute(valueItem.attribute);
         let value:any = valueItem.value;
         if (valueItem.attribute.type.toLowerCase()==="boolean"){
-            valueType = WCPropertyEditorItemType.Boolean;
             value = (valueItem.value === "true" ? true : false );
         }
         let isInherited = this.isValueInherited(valueItem);
@@ -135,7 +137,6 @@ export class RESTCatalogEditorComponent implements OnInit, OnDestroy {
             badge: (isInherited? "I" : null),
             allowRemove: (isInherited? false:true)
         }
-        //(valueItem.attribute["inherited"] ? 'I' : null)
     }
 
     isValueInherited(valueItem: ServiceContextValue):boolean {
@@ -197,37 +198,119 @@ export class RESTCatalogEditorComponent implements OnInit, OnDestroy {
     }
 
     onNewPropertyRequired(propertyName:string){
+        let attr:ServiceContextAttribute = _.find(this._supportedAttributes, (attribute:ServiceContextAttribute)=>{
+            return (attribute.name===propertyName);
+        });
         this._propertyEditor.addProperty({
-          field: propertyName,
-          name: propertyName,
-          type: WCPropertyEditorItemType.String,
+          field: attr.name,
+          name: attr.name,
+          type: this.propertyTypeForAttribute(attr),
           allowRemove: true      
         })
       }
     
+      propertyTypeForAttribute(attr:ServiceContextAttribute):WCPropertyEditorItemType {
+        let valueType = WCPropertyEditorItemType.String;
+        if (attr.type.toLowerCase()==="boolean"){
+            valueType = WCPropertyEditorItemType.Boolean;
+        }
+        return valueType;
+      }
+
+    saveChanges(){
+        this.logger.debug(LOG_TAG, 'saveChanges called for:', this.propertyModel);
+        let restContextUpdate:RestContextUpdate = {
+            
+        };
+
+        // get removed properties
+        const removedProperties = _.filter(this.propertyModel.items, (o:WCPropertyEditorItem) => {
+            if (o.removed) return o;
+        });
+
+        // get changed properties
+        const changedProperties = _.filter(this.propertyModel.items, (o:WCPropertyEditorItem) => {
+            if (o.valueChanged) return o;
+        });
+        
+        const filtered = this.filterProperties(changedProperties);
+        const newProperties = filtered.newProps;
+        const updatedProperties = filtered.updatedProps;
+
+        this.logger.debug(LOG_TAG, "saveChanges REMOVED PROPS:", removedProperties);
+        this.logger.debug(LOG_TAG, "saveChanges CHANGED PROPS:", changedProperties);
+        this.logger.debug(LOG_TAG, "saveChanges NEW PROPS:", newProperties);
+        this.logger.debug(LOG_TAG, "saveChanges UPDATED PROPS:", updatedProperties);
+
+        /*        
+        let valueCreate:ValueCreate = null;
+        this.valuesService.createValue("domain", "application", "context", valueCreate);
+
+        let attrValue:Value = null;
+        this.valuesService.updateValue("domain", "application", "context", "attribute", attrValue);
+
+        this.valuesService.deleteValue("domain", "application", "context", "attribute");
+        */
+
+        /*
+        this._subHandler.add(this.restContextService.updateContext(this._currentNode.domain, 
+            this._currentNode.application, 
+            this._currentNode.name, 
+            restContextUpdate).subscribe((results)=>{
+
+            this.notificationCenter.post({
+                name: 'UpdateRESTContextAttributes',
+                title: 'REST Context Attributes Update',
+                message: 'REST Context attributes updated successfully.',
+                type: NotificationType.Success
+            });
+
+            this.reloadData();
+    
+        }, (error)=>{
+            this.logger.error(LOG_TAG, 'UpdateRESTContextAttributesError error: ', error);
+            this.notificationCenter.post({
+                name: 'UpdateRESTContextAttributesError',
+                title: 'REST Context Attributes Update',
+                message: 'Error updating REST context attributes:',
+                type: NotificationType.Error,
+                error: error,
+                closable: true
+            });
+        }));
+        */
+    }
+
+    private filterProperties(props:Array<WCPropertyEditorItem>): any {
+        this.logger.debug(LOG_TAG, 'filterNewProperties called for:', props, this._currentServiceContext);
+        let updatedProps: Array<WCPropertyEditorItem> = [];
+        let newProps: Array<WCPropertyEditorItem> = [];
+        props.forEach(property => {
+           const attr = _.find(this._currentServiceContext.valuesList, (item:ServiceContextValue)=>{
+                return (item.attribute.name === property.field)
+           });
+           if (attr){
+            updatedProps.push(property);
+           } else {
+            newProps.push(property);
+           }  
+        });
+        return { "newProps": newProps, "updatedProps": updatedProps };
+    }
+
+    private filterUpdatedProperties(props:Array<WCPropertyEditorItem>):Array<WCPropertyEditorItem>{
+        return [];
+    }
 
     onSaveButtonClick(event) {
-        /*        
-        if (this.editorContext.editingType === EditingType.Domain) {
-            this._domainEditor.saveChanges();
-        } else if (this.editorContext.editingType === EditingType.Application) {
-            this._applicationEditor.saveChanges();
-        } else if (this.editorContext.editingType === EditingType.Service) {
-            this._serviceEditor.saveChanges();
-        } else if (this.editorContext.editingType === EditingType.Operation) {
-            this._operationEditor.saveChanges();
-           }*/
+        this.logger.debug(LOG_TAG, 'onSaveButtonClick called');
+        this.saveChanges();
     }
 
     onReloadButtonClick(event) {
+        this.logger.debug(LOG_TAG, 'onReloadButtonClick called');
         this.reloadData();
     }
 
-    onDataSaved(changes: any) {
-        /*
-        this.logger.debug(LOG_TAG, 'onDataSaved: ', changes);
-        this.changesSaved.emit(changes);
-        */
-    }
-    
+
 }
