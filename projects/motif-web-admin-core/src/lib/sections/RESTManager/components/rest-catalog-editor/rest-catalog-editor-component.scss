@@ -1,0 +1,47 @@
+.wc-service-catalog-editor-title {
+    color: #8e8e8e;
+    padding: 0.38rem;
+    font-weight: bold;
+    border-bottom: 1px dotted;
+}
+
+.wc-service-catalog-editor-container {
+    padding: 0.38rem;
+}
+
+.wc-service-catalog-editor-namespace {
+    font-size: 0.7rem;
+    color: #315f79;
+    
+}
+
+.wc-service-catalog-editor-commands {
+    display: flex;
+    flex-direction: row;
+} 
+
+.right-button {
+    margin-left: auto;
+}
+
+.wc-service-catalog-editor-commands {
+    button {
+        color: #bbb;    
+    } 
+}
+
+.wc-service-catalog-editor-container {
+    overflow: hidden; 
+    height: 100%;
+}
+
+.wc-service-catalog-editor-main-container {
+    overflow: hidden; 
+    height: 100%;
+}
+
+.wc-service-catalog-editor-scrollable-content {
+    overflow-y: auto;
+    height: 100%;
+    padding: 10px;
+}

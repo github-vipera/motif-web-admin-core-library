@@ -136,8 +136,6 @@ export class DefaultThemeModel implements ThemeModel {
     return ret;
   }
   
-  
-  
 
   private createToolbarGroup(): ThemeGroup {
     let ret = new ThemeGroup();

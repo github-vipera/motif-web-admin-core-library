@@ -82,6 +82,12 @@ body {
     @include define-custom-property('input-focus-background-color', $input_focus_background_color);
     @include define-custom-property('input-focus-color', $input_focus_color);
 
+    // Stats info
+    @include define-custom-property('stats-info-color-primary', $stats_info_color_primary);
+    @include define-custom-property('stats-info-color-default', $stats_info_color_default);
+    @include define-custom-property('stats-info-color-ok', $stats_info_color_ok);
+    @include define-custom-property('stats-info-color-ko', $stats_info_color_ko);
+
 }
 
 $main_background_color: var(--main-background-color);
@@ -110,6 +116,12 @@ $grid_selected_row_color: var(--grid-row-selected-background-color);
 $grid_selected_row: var(--grid-row-selected-color);
 $grid_command_color: var(--grid-command-color);
 $grid_selected_row_command_color: var(--grid-selected-row-command-color);
+
+// Stats Info
+$stats_info_color_primary:var(--stats-info-color-primary);//#84a4d8;
+$stats_info_color_default:var(--stats-info-color-default);//gray;
+$stats_info_color_ok:var(--stats-info-color-ok);//#5db85d;
+$stats_info_color_ko:var(--stats-info-color-ko);//#f62626;
 
 
 // Toolbar

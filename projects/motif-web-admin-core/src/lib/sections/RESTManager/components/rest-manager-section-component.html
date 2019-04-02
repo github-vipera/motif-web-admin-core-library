@@ -1,0 +1,69 @@
+<wc-dashboard-header [title]="'REST Manager'"></wc-dashboard-header>
+<wc-stats-info-component [model]="statsModel"></wc-stats-info-component>
+
+<wa-rest-context-dialog #contextEditDialog (confirm)="onDialogConfirmation($event)"></wa-rest-context-dialog>
+
+
+<div class="row spread" #target>
+  <div class="flex-toolbar" style="display:flex;align-items: center;">
+
+    <kendo-textbox-container floatingLabel="Filter">
+      <input
+        #filterInput
+        kendoTextBox
+        (afterValueChanged)="onFilterChange($event)"
+      />
+    </kendo-textbox-container>
+
+    <div>
+      <label>&nbsp;</label>
+      <kendo-buttongroup look="flat">
+        <button
+          kendoButton
+          [toggleable]="false"
+          [icon]="'globe-outline'"
+          (click)="onAddRESTContextPressed()"
+        >
+          Create New Contex
+        </button>
+      </kendo-buttongroup>
+    </div>
+
+  </div>
+
+  <div class="flex-cmd">
+    <kendo-buttongroup look="flat">
+      <button
+        kendoButton
+        [toggleable]="false"
+        [icon]="'refresh'"
+        (click)="onRefreshClicked()"
+      >
+        Refresh
+      </button>
+    </kendo-buttongroup>
+  </div>
+
+</div>
+
+<div class="row fill">
+  <kendo-splitter>
+    <kendo-splitter-pane style="overflow: hidden;">
+      <div style="height: 100%;">
+        <wa-rest-catalog-component (nodeCommand)="onNodeCommand($event)"
+          (nodeSelection)="nodeSelect($event)"
+          (dataReload)="onCatalogDataReload($event)"
+          (dataReloadError)="onCatalogDataReloadError($event)"
+          #restCatalogSelector
+        ></wa-rest-catalog-component>
+      </div>
+    </kendo-splitter-pane>
+
+    <kendo-splitter-pane [collapsible]="true" size="30%">
+      <wa-rest-catalog-editor-component
+        #restCatalogEditor
+        (changesSaved)="onChangesSaved($event)"
+      ></wa-rest-catalog-editor-component>
+    </kendo-splitter-pane>
+  </kendo-splitter>
+</div>

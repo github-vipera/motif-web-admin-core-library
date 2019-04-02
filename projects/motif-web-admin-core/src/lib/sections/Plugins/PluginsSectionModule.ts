@@ -13,6 +13,10 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { PluginsSectionComponent } from './components/plugins-section-component';
 import { PluginRegistryServiceModule } from '@wa-motif-open-api/plugin-registry-service';
 import { CommonsUIModule } from '../../components/CommonsUIModule';
+import { DialogModule } from 'primeng/dialog';
+import { UninstallConfirmationDialogComponent } from './dialogs/uninstall-confirmation-dialog-component';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { WCUploadPanelModule } from '../../components/UI/wc-upload-panel-component/WCUploadPanelModule';
 
 @NgModule({
     imports: [
@@ -28,13 +32,16 @@ import { CommonsUIModule } from '../../components/CommonsUIModule';
         PluginRegistryServiceModule,
         CommonsUIModule,
         WCUIKitGridModule,
-        WCUIKitDirectivesModule
+        WCUIKitDirectivesModule,
+        DialogModule,
+        InputSwitchModule,
+        WCUploadPanelModule
     ],
     entryComponents:[
         PluginsSectionComponent
     ],
     declarations: [
-        PluginsSectionComponent
+        PluginsSectionComponent, UninstallConfirmationDialogComponent
     ],
     exports: [ PluginsSectionComponent ],
     providers: [

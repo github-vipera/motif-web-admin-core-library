@@ -37,6 +37,8 @@ export class ApplicationSelectorComboBoxComponent implements OnInit, OnDestroy {
     private _subHandler: WCSubscriptionHandler = new WCSubscriptionHandler();
     @ViewChild('combo') combo: ComboBoxComponent;
 
+    private _selectedApplicationName: string;
+
     constructor(private logger: NGXLogger,
         private applicationService: ApplicationsService,
         private notificationCenter: WCNotificationCenter) {
@@ -76,6 +78,7 @@ export class ApplicationSelectorComboBoxComponent implements OnInit, OnDestroy {
             this._subHandler.add(this.applicationService.getApplications(this._domain).subscribe(data => {
                 this.applicationsList = data;
                 this.data = this.applicationsList;
+                this.onApplicationListReady();
                 }, error => {
                     this.logger.debug(LOG_TAG , 'refreshApplicationList error:', error);
                     this.notificationCenter.post({
@@ -125,6 +128,31 @@ export class ApplicationSelectorComboBoxComponent implements OnInit, OnDestroy {
             this.selectionCancelled.emit();
             this.propagateChange(null);
         }
+    }
+    
+    private onApplicationListReady(){
+        if (this._selectedApplicationName){
+            this.selectedApplication = this.findApplicationByName(this._selectedApplicationName);
+            this._selectedApplicationName = null;
+        }
+    }
+
+    public findApplicationByName(applicationName: string): Application {
+        if (this.applicationsList){
+            for (let i=0;i<this.applicationsList.length;i++){
+                let application = this.applicationsList[i];
+                if (application.name === applicationName){
+                    return application;
+                }
+            }            
+        }
+        return null;
+    }
+
+    @Input('selectedApplicatioName')
+    public set selectedApplicationName(applicationName: string){
+        this._selectedApplicationName = applicationName;
+        this.refreshApplicationList();
     }
 
     public get selectedApplication(): Application {
