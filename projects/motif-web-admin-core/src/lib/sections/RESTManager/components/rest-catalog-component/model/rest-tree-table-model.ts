@@ -115,6 +115,8 @@ export class RESTTreeTableModel {
     // Sort entries by depth
     entries = _.orderBy(entries, ['depth'],['asc']); // Use Lodash to sort array by 'name'
     this._contextCounts = entries.length;
+    this._enabledContextCounts = 0;
+    this._disabledContextCounts = 0;
     for (let i=0;i<entries.length;i++){
       if (entries[i].enabled){
         this._enabledContextCounts++;

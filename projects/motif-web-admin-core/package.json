@@ -53,6 +53,7 @@
     "@wa-motif-open-api/security-service": "^0.2.4",
     "@wa-motif-open-api/web-content-service": "^0.2.4",
     "@wa-motif-open-api/rest-content-service": "^0.2.4",
+    "@wa-motif-open-api/context-service": "^0.2.4",
     "angular-gridster2": "^7.1.0",
     "b64-to-blob": "^1.2.19",
     "core-js": "^2.5.4",

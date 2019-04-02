@@ -149,7 +149,7 @@ export class RESTManagerSectionComponent implements OnInit, OnDestroy {
 
     doUpdateRESTContext(event:RESTContextDialogResult){
         this._subHandler.add(
-            this.restCatalogService.updateRESTContext(event.domain, event.application, event.name, event.url, event.enabled).subscribe( (results)=> {
+            this.restCatalogService.updateRESTContext(event.domain, event.application, event.name, event.url).subscribe( (results)=> {
 
                 this.logger.info(LOG_TAG , 'REST context updated:', results);
                 this.notificationCenter.post({
@@ -181,7 +181,7 @@ export class RESTManagerSectionComponent implements OnInit, OnDestroy {
     doToggleContextStatus(domain:string, application: string, contextName:string, url:string, enabled:boolean){
         this.logger.debug(LOG_TAG, 'doToggleContextStatus : ', domain, application, contextName, url, enabled);
         this._subHandler.add(
-            this.restCatalogService.updateRESTContext(domain, application, name, url, enabled).subscribe((result)=>{
+            this.restCatalogService.enableRESTContext(domain, application, contextName, enabled).subscribe((result)=>{
 
                 this.logger.info(LOG_TAG , 'REST context status change:', result);
                 this.notificationCenter.post({

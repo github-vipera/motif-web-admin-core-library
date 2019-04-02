@@ -9,7 +9,8 @@ import { ServicesService,
     ServiceCreate,
     OperationsService,
     ServiceOperation } from '@wa-motif-open-api/catalog-service';
-import { ContextsService, ServiceContext, RestContextCreate, RestContextUpdate } from '@wa-motif-open-api/rest-content-service';
+import { ContextsService as RESTContextService, ServiceContext, RestContextCreate, RestContextUpdate } from '@wa-motif-open-api/rest-content-service';
+import { ContextsService } from '@wa-motif-open-api/context-service';
 
 import { Observable } from 'rxjs';
 import { NGXLogger } from 'web-console-core';
@@ -25,13 +26,14 @@ export class RESTContextCatalogService {
 
     constructor(private domainService: DomainsService,
         private applicationService: ApplicationsService,
+        private restContextService: RESTContextService,
         private contextService: ContextsService,
         private logger: NGXLogger) {
     }
 
 
     public deleteRESTContext(domain:string, application:string, contextName:string) : Observable<any> {
-        return this.contextService.deleteContext(domain, application, contextName);
+        return this.restContextService.deleteContext(domain, application, contextName);
     }
 
     public createRESTContext(domain:string, application:string, contextName:string, url:string) : Observable<ServiceContext> {
@@ -40,15 +42,24 @@ export class RESTContextCatalogService {
             context: contextName,
             url: url
         };
-        return this.contextService.createContext(domain, application, createObj);
+        return this.restContextService.createContext(domain, application, createObj);
     }
 
-    public updateRESTContext(domain:string, application:string, contextName:string, url:string, enabled: boolean) : Observable<ServiceContext> {
-        this.logger.debug(LOG_TAG, 'updateRESTContext called for ', domain, application, contextName, url, enabled );
+    public enableRESTContext(domain:string, application:string, contextName:string, enabled: boolean) : Observable<ServiceContext> {
+        this.logger.debug(LOG_TAG, 'enableRESTContext called for ', domain, application, contextName, enabled );
+        if (enabled){
+            return this.contextService.enableContext(domain, application, contextName);
+        } else {
+            return this.contextService.disableContext(domain, application, contextName);
+        }
+    }
+
+    public updateRESTContext(domain:string, application:string, contextName:string, url:string) : Observable<ServiceContext> {
+        this.logger.debug(LOG_TAG, 'updateRESTContext called for ', domain, application, contextName, url );
         let updateObj: RestContextUpdate = {
             url: url
         };
-        return this.contextService.updateContext(domain, application, contextName, updateObj);
+        return this.restContextService.updateContext(domain, application, contextName, updateObj);
     }
 
     /**
@@ -84,7 +95,7 @@ export class RESTContextCatalogService {
                         for (const application of applications ) {
                             const applicationInfo: any = application;
 
-                            this.contextService.getContexts(domain.name, application.name).subscribe((contexts:Array<ServiceContext>)=>{
+                            this.restContextService.getContexts(domain.name, application.name).subscribe((contexts:Array<ServiceContext>)=>{
 
                                 this.logger.debug(LOG_TAG, 'getRESTContextCatalog contexts[' + application.name + '@' + domain.name + ']:', contexts );
                                 restContextCatalog = restContextCatalog.concat(contexts);
