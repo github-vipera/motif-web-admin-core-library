@@ -158,6 +158,19 @@ export class WebContentSectionComponent implements OnInit, OnDestroy {
             statuses,
             (status) => (status === "PUBLISHED")
         );
+        
+        if (!published){
+            published.true = 0;
+            published.false = 0;
+        }
+
+        if (!published.true){
+            published.true = 0;
+        }
+
+        if (!published.false){
+            published.false = 0;
+        }
 
         this.statsModel = { 
             items: [
