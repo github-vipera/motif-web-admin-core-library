@@ -31,7 +31,7 @@
   <kendo-splitter>
     <kendo-splitter-pane style="overflow: hidden;">
       <div #servicetableContainer style="height: 100%;">
-          <wa-service-catalog-selector (nodeSelection)="nodeSelect($event)" #serviceCatalog></wa-service-catalog-selector>
+          <wa-service-catalog-selector [editable]="true" (nodeCommand)="onNodeCommand($event)" (nodeSelection)="nodeSelect($event)" #serviceCatalog></wa-service-catalog-selector>
       </div>
     </kendo-splitter-pane>
 
