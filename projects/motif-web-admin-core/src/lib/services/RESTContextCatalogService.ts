@@ -9,7 +9,7 @@ import { ServicesService,
     ServiceCreate,
     OperationsService,
     ServiceOperation } from '@wa-motif-open-api/catalog-service';
-import { ContextsService, ServiceContext, RestContextCreate, RestContextUpdate } from '@wa-motif-open-api/rest-context-service';
+import { ContextsService, ServiceContext, RestContextCreate, RestContextUpdate } from '@wa-motif-open-api/rest-content-service';
 
 import { Observable } from 'rxjs';
 import { NGXLogger } from 'web-console-core';

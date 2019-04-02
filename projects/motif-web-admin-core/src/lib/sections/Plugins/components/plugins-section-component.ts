@@ -42,7 +42,7 @@ export class PluginsSectionComponent implements OnInit, OnDestroy {
     public loading: boolean;
     private filterValue: string;
     private _subHandler: WCSubscriptionHandler = new WCSubscriptionHandler();
-    private overwriteExisting: boolean;
+    overwriteExisting: boolean;
 
     @ViewChild('uninstallConfirmationDialog') _uninstallConfirmationDialog: UninstallConfirmationDialogComponent;
 

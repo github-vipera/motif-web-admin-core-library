@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef, Renderer2, OnDestroy, Input } from '@angular/core';
 import { NGXLogger } from 'web-console-core';
-import { ContextsService, ServiceContext, ServiceContextValue } from '@wa-motif-open-api/rest-context-service';
+import { ContextsService, ServiceContext, ServiceContextValue } from '@wa-motif-open-api/rest-content-service';
 import { RESTCatalogNode } from '../rest-catalog-commons'
 import { WCPropertyEditorModel, WCPropertyEditorItemType, WCPropertyEditorItem, WCPropertyEditorComponent } from 'web-console-ui-kit';
 
