@@ -146,7 +146,7 @@ export class RESTTreeTableModel {
 
   buildNodeForEntry(entry: RESTEntryWrapper, model: TreeNode[]): TreeNode {
     let newNode = this.buildNode(entry, false);
-    let parentNode = this.getParentNodeByURL(entry.parentURL, model);
+    let parentNode = this.getParentNodeByURL(entry.URL, model);
     if (parentNode){
       parentNode.children.push(newNode);
     } else {
