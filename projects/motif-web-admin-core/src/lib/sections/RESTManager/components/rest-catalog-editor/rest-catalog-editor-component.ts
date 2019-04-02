@@ -7,7 +7,7 @@ import { WCPropertyEditorModel, WCPropertyEditorItemType, WCPropertyEditorItem, 
 import { ServiceContextAttribute } from '@wa-motif-open-api/web-content-service';
 import { WCSubscriptionHandler } from '../../../../components/Commons/wc-subscription-handler';
 import * as _ from 'lodash'
-
+import { Observable, forkJoin } from 'rxjs'
 
 const LOG_TAG = '[RESTTreeEditorComponent]';
 
@@ -242,22 +242,30 @@ export class RESTCatalogEditorComponent implements OnInit, OnDestroy {
         this.logger.debug(LOG_TAG, "saveChanges NEW PROPS:", newProperties);
         this.logger.debug(LOG_TAG, "saveChanges UPDATED PROPS:", updatedProperties);
 
-        /*        
-        let valueCreate:ValueCreate = null;
-        this.valuesService.createValue("domain", "application", "context", valueCreate);
+        let requests = [];
 
-        let attrValue:Value = null;
-        this.valuesService.updateValue("domain", "application", "context", "attribute", attrValue);
+        newProperties.forEach( (element:WCPropertyEditorItem) => {
+            let valueCreate:ValueCreate = {
+                attribute: element.field,
+                value: this.toAttributeValue(element)
+            };
+            const o:Observable<any> = this.valuesService.createValue(this._currentNode.domain, this._currentNode.application, this._currentNode.name, valueCreate);
+            requests.push(o);
+        });
 
-        this.valuesService.deleteValue("domain", "application", "context", "attribute");
-        */
+        changedProperties.forEach((element:WCPropertyEditorItem) => {
+            let attrValue:Value = this.toAttributeValue(element);
+            const o:Observable<any> = this.valuesService.updateValue(this._currentNode.domain, this._currentNode.application, this._currentNode.name, element.field, attrValue);
+            requests.push(o);
+        });
 
-        /*
-        this._subHandler.add(this.restContextService.updateContext(this._currentNode.domain, 
-            this._currentNode.application, 
-            this._currentNode.name, 
-            restContextUpdate).subscribe((results)=>{
+        removedProperties.forEach((element:WCPropertyEditorItem) => {
+            const o:Observable<any> = this.valuesService.deleteValue(this._currentNode.domain, this._currentNode.application, this._currentNode.name, element.field);
+            requests.push(o);
+        });
 
+        this._subHandler.add(forkJoin(requests).subscribe((results) => {
+            this.logger.debug(LOG_TAG, "saveChanges results:", results);
             this.notificationCenter.post({
                 name: 'UpdateRESTContextAttributes',
                 title: 'REST Context Attributes Update',
@@ -266,19 +274,30 @@ export class RESTCatalogEditorComponent implements OnInit, OnDestroy {
             });
 
             this.reloadData();
-    
-        }, (error)=>{
-            this.logger.error(LOG_TAG, 'UpdateRESTContextAttributesError error: ', error);
+
+        }, (errors) => {
+            this.logger.error(LOG_TAG, 'UpdateRESTContextAttributesError error: ', errors);
             this.notificationCenter.post({
                 name: 'UpdateRESTContextAttributesError',
                 title: 'REST Context Attributes Update',
                 message: 'Error updating REST context attributes:',
                 type: NotificationType.Error,
-                error: error,
+                error: errors,
                 closable: true
             });
+
         }));
-        */
+
+    }
+
+    toAttributeValue(prop:WCPropertyEditorItem): any {
+        if (prop.type==WCPropertyEditorItemType.String){
+            return prop.value;
+        } else if (prop.type==WCPropertyEditorItemType.Boolean){
+            return (prop.value ? "true" : "false");
+        } else {
+            return prop.value;            
+        }
     }
 
     private filterProperties(props:Array<WCPropertyEditorItem>): any {
