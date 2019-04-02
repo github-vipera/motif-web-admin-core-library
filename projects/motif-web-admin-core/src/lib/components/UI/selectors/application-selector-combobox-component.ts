@@ -22,7 +22,7 @@ export const WC_APPLICATION_SELECTOR_CONTROL_VALUE_ACCESSOR: any = {
     template: `
     <kendo-combobox #combo style="width:100%;" [data]="data"   [filterable]="true" (filterChange)="handleFilter($event)"
     [allowCustom]="false" [valueField]="'name'" [textField]="'name'" [popupSettings]="{ 'popupClass' : 'wa-kui-combobox-popup', 'animate' : false }"
-    [(ngModel)]="selectedApplication"></kendo-combobox>
+    [(ngModel)]="selectedApplication" [attr.disabled]="disabled?true:null"></kendo-combobox>
     `,
     providers: [WC_APPLICATION_SELECTOR_CONTROL_VALUE_ACCESSOR]
 })
@@ -36,6 +36,7 @@ export class ApplicationSelectorComboBoxComponent implements OnInit, OnDestroy {
     @Output() selectionCancelled: EventEmitter<any> = new EventEmitter();
     private _subHandler: WCSubscriptionHandler = new WCSubscriptionHandler();
     @ViewChild('combo') combo: ComboBoxComponent;
+    @Input() public disabled: boolean;
 
     private _selectedApplicationName: string;
 

@@ -11,7 +11,6 @@ export interface RESTContextDialogResult {
     domain: string;
     application: string;
     dialogMode: DialogMode;
-    enabled: boolean;
 }
 
 export enum DialogMode {
@@ -38,7 +37,6 @@ export class RESTContextDialogComponent implements OnInit {
     url: string;
     domain: string;
     application: string;
-    enabled: boolean;
 
     private _nameEditingWarningDisplay:boolean;
     private _urlEditingWarningDisplay:boolean;
@@ -82,7 +80,6 @@ export class RESTContextDialogComponent implements OnInit {
         this.domainSelector.selectedDomainName = domain;
         this.applicationSelector.domain = domain;
         this.applicationSelector.selectedApplicationName = application;
-        this.enabled = enabled;
     }
 
     private prepareForNew(): void {
@@ -114,8 +111,7 @@ export class RESTContextDialogComponent implements OnInit {
             name: this.name,
             url: this.url,
             application: this.selectedApplication.name,
-            domain: this.selectedDomain.name,
-            enabled: this.enabled
+            domain: this.selectedDomain.name
         };
         this.confirm.emit(event);
     }
@@ -172,6 +168,14 @@ export class RESTContextDialogComponent implements OnInit {
 
     onTypeValueChange(event) {
         this.validate();
+    }
+
+    public get editMode():boolean {
+        return this.dialogMode === DialogMode.Edit;
+    }
+
+    public get newMode():boolean {
+        return this.dialogMode === DialogMode.New;
     }
 
 }

@@ -26,7 +26,8 @@ export const WC_DOMAIN_SELECTOR_CONTROL_VALUE_ACCESSOR: any = {
     [valueField]="'name'"  
     [popupSettings]="{ 'popupClass' : 'wa-kui-combobox-popup', 'animate' : false  }"
     [textField]="'name'" 
-    [(ngModel)]="selectedDomain"></kendo-combobox>
+    [(ngModel)]="selectedDomain" 
+    [attr.disabled]="disabled?true:null"></kendo-combobox>
     `,
     providers: [WC_DOMAIN_SELECTOR_CONTROL_VALUE_ACCESSOR]
 })
@@ -39,6 +40,8 @@ export class DomainSelectorComboBoxComponent implements OnInit, OnDestroy {
     @Output() selectionCancelled: EventEmitter<any> = new EventEmitter();
     private _subHandler: WCSubscriptionHandler = new WCSubscriptionHandler();
     @ViewChild('combo') combo: ComboBoxComponent;
+    
+    @Input() public disabled: boolean;
 
     constructor(private logger: NGXLogger,
         private domainsService: DomainsService,
