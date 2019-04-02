@@ -1,4 +1,4 @@
-import { ServiceCatalogSelectorComponent, ServiceCatalogNodeSelectionEvent } from './../../../components/UI/selectors/service-catalog-selector/service-catalog-selector-component';
+import { ServiceCatalogSelectorComponent, ServiceCatalogNodeSelectionEvent, ServiceCatalogNodeCommandEvent } from './../../../components/UI/selectors/service-catalog-selector/service-catalog-selector-component';
 import { Component, OnInit, ViewChild, ChangeDetectorRef, Renderer2, OnDestroy } from '@angular/core';
 import { PluginView } from 'web-console-core';
 import { NGXLogger } from 'web-console-core';
@@ -652,5 +652,18 @@ export class ServicesSectionComponent implements OnInit, OnDestroy {
         return this.selectedNode.data.catalogEntry.channel;
     }
 
+    onNodeCommand(event:ServiceCatalogNodeCommandEvent){
+        this.logger.debug(LOG_TAG , 'onNodeCommand event: ', event);
+        let catalogEntry:CatalogEntry = {
+            application: event.node.application,
+            domain: event.node.domain,
+            channel: event.node.channel,
+            operation: event.node.operation,
+            service: event.node.service
 
+        };
+        if (event.command==='Delete'){
+            this.handleDeleteRequest(catalogEntry);
+        }
+    }
 }
