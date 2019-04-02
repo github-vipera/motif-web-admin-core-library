@@ -3,6 +3,10 @@ import { NGXLogger } from 'web-console-core';
 import { ContextsService, ServiceContext, ServiceContextValue } from '@wa-motif-open-api/rest-content-service';
 import { RESTCatalogNode } from '../rest-catalog-commons'
 import { WCPropertyEditorModel, WCPropertyEditorItemType, WCPropertyEditorItem, WCPropertyEditorComponent } from 'web-console-ui-kit';
+import { ServiceContextAttribute } from '@wa-motif-open-api/web-content-service';
+import { WCSubscriptionHandler } from '../../../../components/Commons/wc-subscription-handler';
+import * as _ from 'lodash'
+
 
 const LOG_TAG = '[RESTTreeEditorComponent]';
 
@@ -17,6 +21,8 @@ export class RESTCatalogEditorComponent implements OnInit, OnDestroy {
     private _currentServiceContext: ServiceContext;
     private _title = 'No selection.';
     isBusy: boolean;
+    private _subHandler: WCSubscriptionHandler = new WCSubscriptionHandler();
+    private _supportedAttributes: Array<ServiceContextAttribute>;
 
     @ViewChild('propertyEditor') _propertyEditor : WCPropertyEditorComponent;
 
@@ -47,6 +53,8 @@ export class RESTCatalogEditorComponent implements OnInit, OnDestroy {
     }
 
     freeMem() {
+        this._subHandler.unsubscribe();
+        this._subHandler = null;
     }
 
     @Input() get title(): string {
@@ -75,14 +83,23 @@ export class RESTCatalogEditorComponent implements OnInit, OnDestroy {
         this.logger.debug(LOG_TAG, 'reloadData called.');
         this._propertyEditor.cancelNewPropertyPrompt();
         if (this._currentNode){
-            this.restContextService.getContext(this._currentNode.domain, this._currentNode.application, this._currentNode.name).subscribe( (data:ServiceContext) => {
+
+            this._subHandler.add(this.restContextService.getContext(this._currentNode.domain, this._currentNode.application, this._currentNode.name).subscribe( (data:ServiceContext) => {
                 this.logger.debug(LOG_TAG, 'reloadData results: ', data);
                 this._currentServiceContext = data;
                 this.rebuildPropertyModel();
             }, (error) => {
-                this.logger.error(LOG_TAG, 'reloadData error: ', error);
+                this.logger.error(LOG_TAG, 'reloadData [context] error: ', error);
     
-            });
+            }));
+
+            this._subHandler.add(this.restContextService.getSupportedAttributes().subscribe((results:Array<ServiceContextAttribute>)=>{
+                this.logger.debug(LOG_TAG, 'getSupportedAttributes results: ', results);
+                this._supportedAttributes = results;
+            }, (error)=>{
+                this.logger.error(LOG_TAG, 'reloadData [supportedAttributes] error: ', error);
+
+            }));
         }
     }
 
@@ -154,7 +171,29 @@ export class RESTCatalogEditorComponent implements OnInit, OnDestroy {
     }
 
     onAddPropertyClick(event){
-        this._propertyEditor.promptForNewProperty(["uno","due","tre"]);
+        let availableProperties = this.buildAvailableAttributes();
+        let avaliablePropertyNames = _.map(availableProperties, 'name'); 
+        this._propertyEditor.promptForNewProperty(avaliablePropertyNames);
+    }
+
+    private buildAvailableAttributes():Array<ServiceContextAttribute> {
+        const ret : Array<ServiceContextAttribute> = [];
+        for (let i=0;i<this._supportedAttributes.length;i++){
+            if (!this.isAttributeConfigured(this._supportedAttributes[i].name)){
+                ret.push(this._supportedAttributes[i]);
+            }
+        }
+        return ret;
+    }
+
+    private isAttributeConfigured(attributeName: string):boolean {
+        return (this.getConfiguredAttribute(attributeName)!=null);
+    }
+
+    private getConfiguredAttribute(attributeName:string):WCPropertyEditorItem {
+        return _.find(this.propertyModel.items, (obj:WCPropertyEditorItem)=>{
+            return (obj.field === attributeName && !obj.removed);
+        });
     }
 
     onNewPropertyRequired(propertyName:string){
