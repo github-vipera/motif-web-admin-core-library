@@ -81,7 +81,19 @@
               UNPUBLISHED
             </span>
             <span
-              *ngIf="dataItem.info.syntheticStatus === 'IN ERROR'"
+              *ngIf="dataItem.info.syntheticStatus === 'PUBLISHING'"
+              class="badge badge-status  badge-disabled"
+            >
+              PUBLISHING
+            </span>
+            <span
+              *ngIf="dataItem.info.syntheticStatus === 'UNPUBLISHING'"
+              class="badge badge-status  badge-disabled"
+            >
+              UNPUBLISHING
+            </span>
+            <span
+              *ngIf="dataItem.info.syntheticStatus === 'ERROR'"
               class="badge badge-status  badge-error"
             >
               IN ERROR
