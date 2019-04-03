@@ -155,7 +155,6 @@ export class RESTCatalogEditorComponent implements OnInit, OnDestroy {
     }
 
     onPropertyValueChanged(event:any){
-        console.log(">>>>>  onPropertyValueChanged:", event);
         if (event.item.valueChanged){
             event.item.badge = null;
         } else {
@@ -305,10 +304,10 @@ export class RESTCatalogEditorComponent implements OnInit, OnDestroy {
         let updatedProps: Array<WCPropertyEditorItem> = [];
         let newProps: Array<WCPropertyEditorItem> = [];
         props.forEach(property => {
-           const attr = _.find(this._currentServiceContext.valuesList, (item:ServiceContextValue)=>{
+           const attr:ServiceContextValue = _.find(this._currentServiceContext.valuesList, (item:ServiceContextValue)=>{
                 return (item.attribute.name === property.field)
            });
-           if (attr){
+           if (attr && !this.isValueInherited(attr)){
             updatedProps.push(property);
            } else {
             newProps.push(property);
