@@ -247,13 +247,13 @@ export class RESTCatalogEditorComponent implements OnInit, OnDestroy {
         newProperties.forEach( (element:WCPropertyEditorItem) => {
             let valueCreate:ValueCreate = {
                 attribute: element.field,
-                value: this.toAttributeValue(element)
+                value: this.toAttributeValue(element).value
             };
             const o:Observable<any> = this.valuesService.createValue(this._currentNode.domain, this._currentNode.application, this._currentNode.name, valueCreate);
             requests.push(o);
         });
 
-        changedProperties.forEach((element:WCPropertyEditorItem) => {
+        updatedProperties.forEach((element:WCPropertyEditorItem) => {
             let attrValue:Value = this.toAttributeValue(element);
             const o:Observable<any> = this.valuesService.updateValue(this._currentNode.domain, this._currentNode.application, this._currentNode.name, element.field, attrValue);
             requests.push(o);
@@ -290,13 +290,13 @@ export class RESTCatalogEditorComponent implements OnInit, OnDestroy {
 
     }
 
-    toAttributeValue(prop:WCPropertyEditorItem): any {
+    toAttributeValue(prop:WCPropertyEditorItem): Value {
         if (prop.type==WCPropertyEditorItemType.String){
-            return prop.value;
+            return { value: prop.value };
         } else if (prop.type==WCPropertyEditorItemType.Boolean){
-            return (prop.value ? "true" : "false");
+            return (prop.value ? { value: "true" } : {value : "false" });
         } else {
-            return prop.value;            
+            return { value: prop.value };            
         }
     }
 
