@@ -183,6 +183,14 @@ aside h1 {
   border-bottom:1px solid $aside_border_color;
 }
 
+textarea {
+  outline: none;
+}
+
+input {
+  outline: none;
+}
+
 /*
 .inspector input:focus {
    background-color: $inspector_input_focus_background_color;
