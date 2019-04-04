@@ -1,4 +1,4 @@
-import { BundleStatus } from '@wa-motif-open-api/web-content-service';
+import { BundleStatus, ClusterBundleStatus } from '@wa-motif-open-api/web-content-service';
 
 export enum PublishingStatus {
     Published = 'PUBLISHED',
