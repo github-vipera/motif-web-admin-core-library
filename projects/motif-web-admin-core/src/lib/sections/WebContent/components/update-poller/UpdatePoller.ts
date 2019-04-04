@@ -53,6 +53,7 @@ export class UpdatePoller {
                 this.logger.debug(LOG_TAG , 'Poll event: ', res);
                 this._bundleStatus = res; 
                 let pubStatus:PublishingStatus = BundleUtils.buildSyntheticStatus(res);
+                res.info["syntheticStatus"] = pubStatus;
                 if ((pubStatus === PublishingStatus.Published) || (pubStatus === PublishingStatus.Error)){
                     this.stop();
                     observer.next({ source: this, status: UpdatePollerEventStatus.Complete, bundleStatus: this._bundleStatus });

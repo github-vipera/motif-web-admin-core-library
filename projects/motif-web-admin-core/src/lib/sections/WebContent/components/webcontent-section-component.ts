@@ -107,8 +107,19 @@ export class WebContentSectionComponent implements OnInit, OnDestroy {
         this.refreshData();
     }
 
+    updateModelWith(bundleStatus:BundleStatus){
+        let index = _.findIndex(this.gridData, (item:BundleStatus)=>{
+            return (item==bundleStatus);
+        });
+        if (index>=0){
+            this.gridData[index] = bundleStatus;
+        }
+    }
+
     refreshData(){
-        
+
+        this.logger.debug(LOG_TAG, 'refreshData called.');
+
         this.loading = true;
         this._subHandler.add(this.webContentService.getBundlesList().subscribe( (data: Array<BundleStatus>) => {
             this.logger.debug(LOG_TAG, 'Get bundle statuses results:', data);
@@ -209,7 +220,7 @@ export class WebContentSectionComponent implements OnInit, OnDestroy {
             this._pollers.push(newPoller);
             newPoller.start(3, 3000, item).subscribe( (results:UpdatePollerEvent) => {
                 if (results.status === UpdatePollerEventStatus.Complete){
-                    this.refreshData();
+                    this.updateModelWith(results.bundleStatus);
                 }
                 let test = _.remove(this._pollers, function(poller: UpdatePoller) {
                     return (results.source===poller);
