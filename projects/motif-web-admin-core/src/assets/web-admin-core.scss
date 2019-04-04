@@ -195,6 +195,10 @@ input {
   color: $button_color;
 }
 
+.wc-property-editor-mini-button[disabled] {
+  color: $button_disabled_color;
+}
+
 
 /*
 .inspector input:focus {
