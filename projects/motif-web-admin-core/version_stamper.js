@@ -1,5 +1,13 @@
+/**
+ *   Pre-Build Library script
+ *   Vipera Srl, 2019
+ * 
+ *   Author: Marco Bonati (marcp.bonati@vipera.com)
+ * 
+ */
+
 const pkg = require('./package.json');
-const { resolve, relative } = require('path');
+const { resolve } = require('path');
 const { writeFileSync, ensureFileSync } = require('fs-extra');
 
 const version = pkg.version;
@@ -30,15 +38,4 @@ writeFileSync(file,
     `, { encoding: 'utf-8' });
 
 
-console.log(`Wrote version info ${JSON.stringify(libInfo)} to ${file}`);
-
-/*
-
-
-const { pkg } = require('../package.json');
-const { resolve, relative } = require('path');
-const { writeFileSync } = require('fs-extra');
-
-const file = resolve(__dirname, '..', 'src', 'lib', 'pkg.ts');
-
-*/
+console.log(`>> Wrote version info ${JSON.stringify(libInfo)} to ${file}`);
