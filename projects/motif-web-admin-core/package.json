@@ -12,7 +12,8 @@
     "build" : "ng build",
     "build:prod" : "ng build",
     "version:stamper": "node version_stamper.js",
-    "prebuild:prod" : "npm run version:stamper"
+    "prebuild:prod" : "npm run version:stamper",
+    "prebuild" : "npm run version:stamper"
   },
   "peerDependencies": {
     "@angular/animations": "^7.2.1",

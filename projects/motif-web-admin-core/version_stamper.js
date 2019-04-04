@@ -6,7 +6,11 @@ const version = pkg.version;
 const buildDate = Date.now()
 const libInfo = {
     version: version,
-    timestamp: buildDate
+    timestamp: buildDate,
+    date: new Date(),
+    description: pkg.description,
+    contributors : pkg.contributors,
+    license: pkg.license
 }
 
 console.log(">>>>>> Library Version Stamper <<<<<<");

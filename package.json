@@ -2,6 +2,7 @@
   "name": "motif-web-admin-core-library",
   "version": "0.0.0",
   "scripts": {
+    "build:lib:prod": "npm run --prefix ./projects/motif-web-admin-core/ build:prod",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
