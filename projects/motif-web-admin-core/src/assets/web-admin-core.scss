@@ -191,6 +191,11 @@ input {
   outline: none;
 }
 
+.wc-property-editor-mini-button {
+  color: $button_color;
+}
+
+
 /*
 .inspector input:focus {
    background-color: $inspector_input_focus_background_color;
