@@ -4,18 +4,20 @@ import { interval } from "rxjs/internal/observable/interval";
 import { startWith, switchMap, takeUntil, takeWhile } from "rxjs/operators";
 import { NGXLogger } from 'ngx-logger';
 import { Observable, Subscription, Subject } from "rxjs";
+import { BundleUtils, PublishingStatus } from '../BundleUtils';
 
 const LOG_TAG = '[UpdatePoller]';
 
 export enum UpdatePollerEventStatus {
-    Finished = "Finished",
-    Error = "Error",
-    Stopped = "Stopped"
+    Complete = "Complete",
+    Stopped = "Stopped",
+    Error = "Error"
 }
 
 export interface UpdatePollerEvent {
     source: UpdatePoller; 
-    status: UpdatePollerEventStatus
+    status: UpdatePollerEventStatus,
+    bundleStatus: BundleStatus
 }
 
 export class UpdatePoller {
@@ -24,8 +26,6 @@ export class UpdatePoller {
 
     private _bundleStatus: BundleStatus;
     private _interval: Observable<any>;
-    private _stopNotifier: Subject<UpdatePollerEventStatus>;
-    private _onPoll:EventEmitter<UpdatePollerEvent> = new EventEmitter<UpdatePollerEvent>();
     private _pollCount = 0;
     private _pollTime = 0;
     private _currentPollCount = 0;
@@ -36,25 +36,38 @@ export class UpdatePoller {
         private logger: NGXLogger){}
 
 
-    public start(pollcount: number, polltime:number, userData: any){
+    public start(pollcount: number, polltime:number, userData: any) : Observable<UpdatePollerEvent> {
 
         this._userData = userData;
         this._pollCount = pollcount;
         this._pollTime = polltime;
 
-        this._stopNotifier = Subject.create();
+        return new Observable((observer)=>{
+            this._interval = interval(polltime)
+            .pipe(
+                takeWhile(it => this._currentPollCount < this._pollCount),
+                startWith(0),
+                switchMap(() => this.webContentService.getBundle(this.bundleName, this.bundleVersion) )
+            );
+            this._interval.subscribe( (res:BundleStatus) => { 
+                this.logger.debug(LOG_TAG , 'Poll event: ', res);
+                this._bundleStatus = res; 
+                let pubStatus:PublishingStatus = BundleUtils.buildSyntheticStatus(res);
+                if ((pubStatus === PublishingStatus.Published) || (pubStatus === PublishingStatus.Error)){
+                    this.stop();
+                    observer.next({ source: this, status: UpdatePollerEventStatus.Complete, bundleStatus: this._bundleStatus });
+                    observer.complete();
+                    return;
+                } else {
+                    this._currentPollCount++;
+                }
+                if (this._currentPollCount >= this._pollCount){
+                    observer.next({ source: this, status: UpdatePollerEventStatus.Stopped, bundleStatus: this._bundleStatus });
+                    observer.complete();
+                }
+            } );
+        });
 
-        this._interval = interval(polltime)
-        .pipe(
-            takeWhile(it => this._currentPollCount < this._pollCount),
-            startWith(0),
-            switchMap(() => this.webContentService.getBundle(this.bundleName, this.bundleVersion) )
-        );
-        this._interval.subscribe(res => { 
-            this.logger.debug(LOG_TAG , 'Poll event: ', res);
-            this._bundleStatus = res; 
-            this._currentPollCount++;
-        } );
     } 
 
     public stop(){
@@ -64,14 +77,6 @@ export class UpdatePoller {
 
     public get userData():any {
         return this._userData;
-    }
-
-    public onPoll():EventEmitter<UpdatePollerEvent> {
-        return this._onPoll;
-    }
-
-    private notifyEvent(status:UpdatePollerEventStatus){
-        this._onPoll.emit({ source: this, status: status });
     }
 
     public get pollCount():number{

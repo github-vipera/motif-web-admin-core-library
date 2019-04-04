@@ -10,17 +10,10 @@ import { faUpload } from '@fortawesome/free-solid-svg-icons';
 import { WebContentUpdateDialogComponent, UpdateDialogResult } from './dialog/webcontent-update-dialog';
 import { WCUploadPanelEvent } from '../../../components/UI/wc-upload-panel-component/wc-upload-panel-component';
 import { WCStatsInfoModel } from '../../../components/Stats/stats-info-component';
+import { UpdatePoller, UpdatePollerEvent, UpdatePollerEventStatus } from './update-poller/UpdatePoller';
+import { BundleUtils, PublishingStatus } from './BundleUtils';
 
 const LOG_TAG = '[WebContentSectionComponent]';
-
-export enum PublishingStatus {
-    Published = 'PUBLISHED',
-    Unpublished = 'UNPUBLISHED',
-    Unpublishing = 'UNPUBLISHING',
-    Publishing = 'PUBLISHING',
-    Error = 'ERROR',
-    Unknown = 'UNKNOWN'
-}
 
 enum CommandType {
     Edit = 'cmdEdit',
@@ -45,6 +38,8 @@ export class WebContentSectionComponent implements OnInit, OnDestroy {
 
     private _subHandler: WCSubscriptionHandler = new WCSubscriptionHandler();
     @ViewChild('updateDialog') _updateDialog: WebContentUpdateDialogComponent;
+
+    private _pollers : Array<UpdatePoller> = [];
 
     // Data binding
     public loading = false;
@@ -119,7 +114,7 @@ export class WebContentSectionComponent implements OnInit, OnDestroy {
             this.logger.debug(LOG_TAG, 'Get bundle statuses results:', data);
 
             this.gridData = _.forEach(data, (element: BundleStatus) => {
-                element.info["syntheticStatus"] = this.buildSyntheticStatus(element);
+                element.info["syntheticStatus"] = BundleUtils.buildSyntheticStatus(element);
             });
 
             this.logger.debug(LOG_TAG, '*** Get bundle statuses results gridData:', this.gridData);
@@ -184,51 +179,6 @@ export class WebContentSectionComponent implements OnInit, OnDestroy {
         } 
     }
     
-    private buildSyntheticStatus(statusInfo: BundleStatus): string {
-        let published: number = 0;  
-        let unpublished: number = 0;  
-        let inError: number = 0;
-        let publishing: number = 0;  
-        let unpublishing: number = 0;  
-        if (statusInfo.status){
-            for (let i=0;i<statusInfo.status.length;i++){
-                const clusterStatus:ClusterBundleStatus = statusInfo.status[i];
-                if (clusterStatus.status === PublishingStatus.Unpublished) {
-                    unpublished++;
-                }
-                if (clusterStatus.status === PublishingStatus.Published) {
-                    published++;
-                }
-                if (clusterStatus.status === PublishingStatus.Publishing) {
-                    publishing++;
-                }
-                if (clusterStatus.status === PublishingStatus.Unpublishing) {
-                    unpublishing++;
-                }
-                if ((clusterStatus.status === PublishingStatus.Error)||(clusterStatus.status === PublishingStatus.Unknown)) {
-                    inError++;
-                }
-            }
-        }
-        this.logger.debug(LOG_TAG, 'buildSyntheticStatus (published count vs unpublished count): ', published, unpublished);
-        if ((published===0) && (unpublished > 0) && (publishing==0) && (unpublishing==0) && (inError==0) ) {
-            return PublishingStatus.Unpublished;
-        } else if ((publishing > 0) && (inError==0) ) {
-            return PublishingStatus.Publishing;
-        } else if ((unpublishing > 0) && (inError==0) ) {
-            return PublishingStatus.Unpublishing;
-        } else if ((published > 0) && (inError==0) && (publishing==0) && (unpublishing==0))  {
-            return PublishingStatus.Published;
-        } else {
-            return PublishingStatus.Error;
-        }
-    }
-    
-    /*
-    private buildSyntheticStatusXXX(statusInfo: BundleStatus): string {
-        return PublishingStatus.Unpublished;
-    }
-    */
 
     doTogglePublishBundle(item: BundleStatus):void {
         this.logger.debug(LOG_TAG, 'doTogglePublishBundle: ', item);
@@ -253,7 +203,19 @@ export class WebContentSectionComponent implements OnInit, OnDestroy {
                 message: 'Bundle publish request sent successfully.',
                 type: NotificationType.Info
             });
-
+            
+            // Create arefresh poller
+            let newPoller = new UpdatePoller(item.info.name, item.info.version, this.webContentService, this.logger);
+            this._pollers.push(newPoller);
+            newPoller.start(3, 3000, item).subscribe( (results:UpdatePollerEvent) => {
+                if (results.status === UpdatePollerEventStatus.Complete){
+                    this.refreshData();
+                }
+                let test = _.remove(this._pollers, function(poller: UpdatePoller) {
+                    return (results.source===poller);
+                });
+            });
+            
 
         }, (error)=>{
 
