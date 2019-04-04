@@ -1,6 +1,19 @@
 {
   "name": "motif-web-admin-core",
   "version": "0.0.19",
+  "author": {
+    "name": "Vipera",
+    "url": "http://vipera.com"
+  },
+  "description": "MOTIF Web Admin Console",
+  "contributors": [ "Marco Tormento (marco.tormento@vipera.com)", "Marco Bonati (marco.bonati@vipera.com)", "Enrico Mazzucchelli (enrico.mazzucchelli@vipera.com)" ],
+  "license": "Vipera Commercial",
+  "scripts": {
+    "build" : "ng build",
+    "build:prod" : "ng build",
+    "version:stamper": "node version_stamper.js",
+    "prebuild:prod" : "npm run version:stamper"
+  },
   "peerDependencies": {
     "@angular/animations": "^7.2.1",
     "@angular/cdk": "^7.2.1",

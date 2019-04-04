@@ -5,6 +5,7 @@ import { LoggerModule } from 'ngx-logger'
 import { CatalogServiceModule } from '@wa-motif-open-api/catalog-service'
 import { PlatformServiceModule } from '@wa-motif-open-api/platform-service'
 import { RestContentServiceModule } from '@wa-motif-open-api/rest-content-service';
+import { WebAdminCoreInfoService } from './webAdminCoreInfoService';
 
 @NgModule({
     imports: [
@@ -16,7 +17,7 @@ import { RestContentServiceModule } from '@wa-motif-open-api/rest-content-servic
     ],
     exports: [ ],
     providers: [ 
-        ServiceCatalogService, RESTContextCatalogService
+        ServiceCatalogService, RESTContextCatalogService, WebAdminCoreInfoService
     ]
     
   })
