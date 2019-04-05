@@ -24,7 +24,7 @@ export class EEHook {
     
     @HostListener('document:keypress', ['$event'])
     public processKeyEvent(event: KeyboardEvent){
-        console.log(">>>>>>>>>>>>>>>>>>>>>>> processKeyEvent ", event, event.key, event.keyCode);
+        //console.log(">>>>>>>>>>>>>>>>>>>>>>> processKeyEvent ", event, event.key, event.keyCode);
         this.checkForTimer();
         if (event.keyCode) {
             this.sequence.push(event.keyCode.toString());
@@ -60,7 +60,7 @@ export class EEHook {
 
 
     private triggerEvent(){
-        console.log(">>>>>>>>>>>>>>>>>>>>>>> FIRE!");
+        //console.log(">>>>>>>>>>>>>>>>>>>>>>> FIRE!");
         this.eehook.emit();
         if (this._timer){
             this._timerSub.unsubscribe();
