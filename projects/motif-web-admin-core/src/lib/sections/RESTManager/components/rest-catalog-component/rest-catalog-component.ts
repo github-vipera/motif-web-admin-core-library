@@ -98,7 +98,6 @@ export class RESTCatalogComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.logger.debug(LOG_TAG, 'Initializing...');
         this._tableModel = new RESTTreeTableModel();
-        this.reloadData();
     }
 
     ngOnDestroy() {
