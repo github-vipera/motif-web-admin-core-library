@@ -47,7 +47,7 @@
             rowData.channel
           }}</span>
         </td>
-        <td *ngIf="editable" class="service-catalog-row" [ngClass]="{ treeFiltered : tableModel.isFiltered, rowFiltered : rowData.filtered  }">
+        <td *ngIf="editable" class="service-catalog-row">
           <wc-grid-editor-commands-group 
             [commands]="commands"
             [alignMode]="'end'"
@@ -56,7 +56,6 @@
             [column]="{}"
             [value]="rowData"
             [dataItem]="rowData"
-            (commandClick)="onGridCommandClick($event)"
             (commandConfirm)="onGridCommandConfirm($event)"
           ></wc-grid-editor-commands-group>        
         </td>

@@ -2,8 +2,8 @@ import { SessionService } from './../Commons/session-service';
 import { Component, Input, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { AuthService, StatusBarService, NGXLogger } from 'web-console-core';
-import * as moment_ from 'moment'
-const moment = moment_;
+import * as moment from 'moment'
+//const moment = moment_;
 
 const LOG_TAG = '[TopMenuComponent]';
 
@@ -45,8 +45,10 @@ export class TopMenuComponent implements OnInit {
     private getLastAccessStr(): string {
         this.logger.debug(LOG_TAG, 'getLastAccessStr for:', this.sessionService.currentUser.lastAccess);
         try {
-            return moment(this.sessionService.currentUser.lastAccess).format('ddd, h:mm A');
-            //return dateFormat(this.sessionService.currentUser.lastAccess, "mm/dd/yyyy h:MM:ss TT");
+            return "TODO!!";
+            //let myMoment: moment.Moment = moment(this.sessionService.currentUser.lastAccess);
+            //return myMoment.format('ddd, h:mm A');
+            //return moment(this.sessionService.currentUser.lastAccess).format('ddd, h:mm A');
         } catch (err) {
             this.logger.error(LOG_TAG, 'getLastAccessStr error:', err);
             return 'n.a.'
