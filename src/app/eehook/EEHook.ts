@@ -62,15 +62,19 @@ export class EEHook {
     private triggerEvent(){
         //console.log(">>>>>>>>>>>>>>>>>>>>>>> FIRE!");
         this.eehook.emit();
-        if (this._timer){
-            this._timerSub.unsubscribe();
-            this._timer = null;
-        }
         this.resetSequence();
     }
 
     private resetSequence(){
         this.sequence = [];
+        this.resetTimer();
+    }
+
+    private resetTimer(){
+        if (this._timer){
+            this._timerSub.unsubscribe();
+            this._timer = null;
+        }
     }
 
 }
