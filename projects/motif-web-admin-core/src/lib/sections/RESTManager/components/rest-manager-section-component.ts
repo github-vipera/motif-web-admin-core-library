@@ -10,7 +10,6 @@ import { RESTContextCatalogService } from '../../../services';
 import { WCSubscriptionHandler } from '../../../components/Commons/wc-subscription-handler';
 import { WCNotificationCenter, NotificationType } from 'web-console-ui-kit';
 import { WCStatsInfoModel } from '../../../components/Stats/stats-info-component';
-import { WebAdminCoreInfoService } from '../../../services/webAdminCoreInfoService';
 
 const LOG_TAG = '[RESTManagerSectionComponent]';
 
@@ -39,8 +38,7 @@ export class RESTManagerSectionComponent implements OnInit, OnDestroy {
         private renderer2: Renderer2,
         private changeDetector: ChangeDetectorRef,
         private restCatalogService: RESTContextCatalogService,
-        private notificationCenter: WCNotificationCenter,
-        private coreInfoService: WebAdminCoreInfoService
+        private notificationCenter: WCNotificationCenter
         ) {
         this.logger.debug(LOG_TAG, 'Opening...');
 
@@ -300,7 +298,4 @@ export class RESTManagerSectionComponent implements OnInit, OnDestroy {
         }
     }
 
-    public get currentLibraryVersion():String {
-        return this.coreInfoService.currentLibraryVersion();
-    }
 }   
