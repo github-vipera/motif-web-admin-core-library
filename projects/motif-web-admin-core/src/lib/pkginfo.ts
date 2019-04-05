@@ -2,8 +2,8 @@
     /* tslint:disable */
     export const PKGINFO = {
     "version": "0.0.20",
-    "timestamp": 1554467017273,
-    "date": "2019-04-05T12:23:37.273Z",
+    "timestamp": 1554467236587,
+    "date": "2019-04-05T12:27:16.587Z",
     "description": "MOTIF Web Admin Console",
     "contributors": [
         "Marco Tormento (marco.tormento@vipera.com)",

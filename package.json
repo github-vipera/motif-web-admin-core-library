@@ -11,7 +11,7 @@
     "e2e": "ng e2e",
     "version:stamper": "node version_stamper.js",
     "copy_assets": "cp -rf ./projects/motif-web-admin-core/src/assets ./dist/motif-web-admin-core/assets/",
-    "prebuildlib": "npm run version:stamper",
+    "prebuildlib:inactive": "npm run version:stamper",
     "buildlib": "ng build --prod motif-web-admin-core",
     "packlib": "npm pack ./dist/motif-web-admin-core",
     "publishlib": "OF=(motif-web-admin-core-*.tgz);curl -F package=@$OF https://28ALIT-wxVO63R2xXS4frtYkYW13tyGgc@push.fury.io/vipera-npm-registry/; rm $OF;",
