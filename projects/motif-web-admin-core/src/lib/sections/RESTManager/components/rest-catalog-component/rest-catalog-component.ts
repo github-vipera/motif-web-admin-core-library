@@ -112,10 +112,15 @@ export class RESTCatalogComponent implements OnInit, OnDestroy {
         this._subHandler = null;
    }
 
-    public reloadData(){
+    public reloadData(domain:string, application:string){
         this.logger.debug(LOG_TAG, 'reloadData called');
+        if (!domain || !application){
+            this._tableModel.loadData([]);
+            this.dataReload.emit({ component: this });
+            return;
+        }
         this._loading = true;
-        this._subHandler.add(this.restCatalogService.getRESTContextCatalog().subscribe((catalog) => {
+        this._subHandler.add(this.restCatalogService.getRESTContextCatalogFor(domain, application).subscribe((catalog) => {
             this._tableModel.loadData(catalog);
             this._loading = false;
             this.logger.debug(LOG_TAG, 'reloadData results:', catalog);

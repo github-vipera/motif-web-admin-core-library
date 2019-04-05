@@ -1,5 +1,6 @@
+import { Domain, Application } from '@wa-motif-open-api/platform-service';
 import { Observable } from 'rxjs';
-import { Component, OnInit, ViewChild, ChangeDetectorRef, Renderer2, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef, Renderer2, OnDestroy, Input } from '@angular/core';
 import { PluginView } from 'web-console-core';
 import { NGXLogger } from 'web-console-core';
 import { RESTCatalogComponent, RESTCatalogNodeSelectionEvent, GridCommandType, RESTCatalogNodeCommandEvent, RESTCatalogDataErrorEvent } from './rest-catalog-component/rest-catalog-component';
@@ -26,6 +27,9 @@ export class RESTManagerSectionComponent implements OnInit, OnDestroy {
     @ViewChild('restCatalogSelector') restCatalogSelector: RESTCatalogComponent;
     @ViewChild('restCatalogEditor') restCatalogEditor: RESTCatalogEditorComponent;
     @ViewChild('contextEditDialog') contextEditDialog: RESTContextDialogComponent;
+
+    @Input() public selectedDomain: Domain;
+    public _selectedApplication: Application; // combo box selection
 
     private _subHandler: WCSubscriptionHandler= new WCSubscriptionHandler();
 
@@ -55,14 +59,29 @@ export class RESTManagerSectionComponent implements OnInit, OnDestroy {
     }
 
     freeMem() {
+        this.selectedDomain = null;
+        this._selectedApplication = null;
     }
 
     onRefreshClicked(){
-        this.restCatalogSelector.reloadData();
+        this.refreshCatalog();
     }
 
     private clearStatsInfo(){
         this.statsModel = { items: [] };
+    }
+
+    private refreshCatalog(){
+        this.restCatalogSelector.reloadData(this.selectedDomain.name, this._selectedApplication.name);
+    }
+    
+   /**
+    * Set the selcted application
+    */
+   @Input()
+   public set selectedApplication(application: Application) {
+       this._selectedApplication = application;
+       this.refreshCatalog();
     }
 
     private rebuildStatsInfo(){
@@ -129,7 +148,7 @@ export class RESTManagerSectionComponent implements OnInit, OnDestroy {
                     message: 'REST Context created successfully.',
                     type: NotificationType.Success
                 });
-                this.restCatalogSelector.reloadData();
+                this.refreshCatalog();
 
                 
             }, (error) => {
@@ -160,7 +179,7 @@ export class RESTManagerSectionComponent implements OnInit, OnDestroy {
                     message: 'REST Context updated successfully.',
                     type: NotificationType.Success
                 });
-                this.restCatalogSelector.reloadData();
+                this.refreshCatalog();
 
                 
             }, (error) => {
@@ -192,7 +211,7 @@ export class RESTManagerSectionComponent implements OnInit, OnDestroy {
                     message: 'REST Context status changed successfully.',
                     type: NotificationType.Success
                 });
-                this.restCatalogSelector.reloadData();
+                this.refreshCatalog();
 
 
             }, (error)=>{
@@ -221,7 +240,7 @@ export class RESTManagerSectionComponent implements OnInit, OnDestroy {
                     message: 'REST Context deleted successfully.',
                     type: NotificationType.Success
                 });
-                this.restCatalogSelector.reloadData();
+                this.refreshCatalog();
 
 
             }, (error)=>{

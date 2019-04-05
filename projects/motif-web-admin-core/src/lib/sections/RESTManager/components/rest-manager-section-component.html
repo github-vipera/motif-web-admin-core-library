@@ -7,6 +7,16 @@
 <div class="row spread" #target>
   <div class="flex-toolbar" style="display:flex;align-items: center;">
 
+    <div style="margin-right:10px;width:60%;max-width: 400px;min-width: 250px;">
+      <label>Domain</label>
+      <wc-domain-selector-combobox #domainSelector [(ngModel)]="selectedDomain"></wc-domain-selector-combobox>
+    </div>
+
+    <div style="margin-left: 40px;margin-right:10px;width:60%;max-width: 400px;min-width: 250px;">
+      <label>Application</label>
+      <wc-application-selector-combobox #applicationSelector [domain]="(selectedDomain ? selectedDomain.name : null)" [(ngModel)]="selectedApplication"></wc-application-selector-combobox>
+    </div>
+
     <kendo-textbox-container floatingLabel="Filter">
       <input
         #filterInput
@@ -14,6 +24,7 @@
         (afterValueChanged)="onFilterChange($event)"
       />
     </kendo-textbox-container>
+
 
     <div>
       <label>&nbsp;</label>
