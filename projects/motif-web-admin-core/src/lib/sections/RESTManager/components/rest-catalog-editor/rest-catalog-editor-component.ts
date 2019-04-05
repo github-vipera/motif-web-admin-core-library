@@ -11,6 +11,8 @@ import { Observable, forkJoin } from 'rxjs'
 
 const LOG_TAG = '[RESTTreeEditorComponent]';
 
+const DEFAULT_TITLE = 'No selection.';
+
 @Component({
     selector: 'wa-rest-catalog-editor-component',
     styleUrls: ['./rest-catalog-editor-component.scss'],
@@ -18,9 +20,10 @@ const LOG_TAG = '[RESTTreeEditorComponent]';
 })
 export class RESTCatalogEditorComponent implements OnInit, OnDestroy {
 
+
     private _currentNode : RESTCatalogNode;
     private _currentServiceContext: ServiceContext;
-    private _title = 'No selection.';
+    private _title = DEFAULT_TITLE;
     isBusy: boolean;
     private _subHandler: WCSubscriptionHandler = new WCSubscriptionHandler();
     private _supportedAttributes: Array<ServiceContextAttribute>;
@@ -68,6 +71,14 @@ export class RESTCatalogEditorComponent implements OnInit, OnDestroy {
         this._title = title;
     }
 
+    public clear(){
+        this._currentNode = null;
+        this.setTitle(DEFAULT_TITLE);
+        this.propertyModel= {
+            items: [
+            ]
+        };
+    }
     
     public startEdit(node: RESTCatalogNode){
         this._currentNode = node;

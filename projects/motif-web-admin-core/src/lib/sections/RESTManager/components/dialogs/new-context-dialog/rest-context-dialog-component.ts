@@ -29,14 +29,12 @@ export class RESTContextDialogComponent implements OnInit {
     display: boolean;
     dialogTitle: string;
     createButtonCaption: string;
+    domain: string;
+    application: string;
 
-    selectedDomain: any;
-    selectedApplication: any;
 
     name: string;
     url: string;
-    domain: string;
-    application: string;
 
     private _nameEditingWarningDisplay:boolean;
     private _urlEditingWarningDisplay:boolean;
@@ -45,9 +43,6 @@ export class RESTContextDialogComponent implements OnInit {
 
     @Output() confirm: EventEmitter<RESTContextDialogResult> = new EventEmitter();
     @Output() cancel: EventEmitter<void> = new EventEmitter();
-
-    @ViewChild('domainSelector') domainSelector: DomainSelectorComboBoxComponent;
-    @ViewChild('applicationSelector') applicationSelector: ApplicationSelectorComboBoxComponent;
 
     constructor(private logger: NGXLogger) {}
 
@@ -60,8 +55,8 @@ export class RESTContextDialogComponent implements OnInit {
         this.display = true;
     }
 
-    public showForNew(): void {
-        this.prepareForNew();
+    public showForNew(domain:string, application:string): void {
+        this.prepareForNew(domain, application);
         this.display = true;
     }
 
@@ -77,12 +72,11 @@ export class RESTContextDialogComponent implements OnInit {
         this.createButtonCaption = "Update";
         this.name = contextName;
         this.url = url;
-        this.domainSelector.selectedDomainName = domain;
-        this.applicationSelector.domain = domain;
-        this.applicationSelector.selectedApplicationName = application;
+        this.domain = domain;
+        this.application = application;
     }
 
-    private prepareForNew(): void {
+    private prepareForNew(domain: string, application: string): void {
         this.logger.debug(LOG_TAG, 'prepare called');
         // empty the fields
         this.dialogMode = DialogMode.New;
@@ -90,10 +84,8 @@ export class RESTContextDialogComponent implements OnInit {
         this.createButtonCaption = "Create";
         this.name = '';
         this.url = null;
-        this.selectedApplication = null;
-        this.selectedDomain = null;
-        this.domainSelector.selectedDomain = null;
-        this.applicationSelector.selectedApplication = null;
+        this.domain = domain;
+        this.application = application;
     }
 
     onCancel(): void {
@@ -110,8 +102,8 @@ export class RESTContextDialogComponent implements OnInit {
             dialogMode: this.dialogMode,
             name: this.name,
             url: this.url,
-            application: this.selectedApplication.name,
-            domain: this.selectedDomain.name
+            application: this.application,
+            domain: this.domain
         };
         this.confirm.emit(event);
     }
@@ -149,19 +141,6 @@ export class RESTContextDialogComponent implements OnInit {
             this._urlEditingWarningDisplay = false;
         }
 
-        if (!this.selectedDomain){
-            this._domainEditingWarningDisplay = true;
-            validate = false;
-        } else {
-            this._domainEditingWarningDisplay = false;
-        }
-
-        if (!this.selectedApplication){
-            this._applicationEditingWarningDisplay = true;
-            validate = false;
-        } else {
-            this._applicationEditingWarningDisplay = false;
-        }
         return validate;
 
     }

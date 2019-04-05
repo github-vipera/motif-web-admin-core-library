@@ -65,7 +65,7 @@ export class RESTContextCatalogService {
     /**
      * Returns a JSON with the Service Catalog Structure
      */
-    public getRESTContextCatalog(): Observable<any> {
+    public getRESTContextCatalog(): Observable<Array<ServiceContext>> {
         return new Observable((observer) => {
 
             this.logger.debug(LOG_TAG, 'getRESTContextCatalog called' );
@@ -154,6 +154,10 @@ export class RESTContextCatalogService {
 
 
         });
+    }
+
+    public getRESTContextCatalogFor(domain:string, application:string): Observable<Array<ServiceContext>> {
+        return this.restContextService.getContexts(domain, application);
     }
 
 }
