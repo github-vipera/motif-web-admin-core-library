@@ -109,6 +109,7 @@ export class RESTManagerSectionComponent implements OnInit, OnDestroy {
     }
 
     onCatalogDataReload(event) {
+        this.restCatalogEditor.clear();
         this.rebuildStatsInfo();
     }
 
