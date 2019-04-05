@@ -11,6 +11,7 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "target": "es5",
+    "allowSyntheticDefaultImports": true,
     "typeRoots": [
       "node_modules/@types"
     ],
@@ -20,10 +21,12 @@
     ],
     "paths": {
       "motif-web-admin-core": [
-        "dist/motif-web-admin-core"
+        "projects/motif-web-admin-core/src/public_api"
+        //"dist/motif-web-admin-core"
       ],
       "motif-web-admin-core/*": [
-        "dist/motif-web-admin-core/*"
+        "projects/motif-web-admin-core/src/public_api"
+        //"dist/motif-web-admin-core/*"
       ]
     }
   }

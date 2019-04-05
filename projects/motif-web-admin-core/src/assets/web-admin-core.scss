@@ -183,6 +183,23 @@ aside h1 {
   border-bottom:1px solid $aside_border_color;
 }
 
+textarea {
+  outline: none;
+}
+
+input {
+  outline: none;
+}
+
+.wc-property-editor-mini-button {
+  color: $button_color;
+}
+
+.wc-property-editor-mini-button[disabled] {
+  color: $button_disabled_color;
+}
+
+
 /*
 .inspector input:focus {
    background-color: $inspector_input_focus_background_color;
@@ -465,6 +482,58 @@ section .header.sub-header h1 {
   color: $grid_selected_row_command_color !important;
 }
 
+// Stats Info
+.stats-info-primary {
+  color: $stats_info_color_primary;// #84a4d8;
+}
+
+.stats-info-default {
+  color: $stats_info_color_default; //gray;
+}
+
+.stats-info-ok {
+  color: $stats_info_color_ok; //#5db85d;
+}
+
+.stats-info-ko {
+  color: $stats_info_color_ko;//#f62626;
+}
+
+.stats-info-json-services {
+  color: #8484c1;
+} 
+
+.stats-info-rest-services {
+  color: green; 
+}
+
+.mini-switch .ui-inputswitch-slider:before {
+  left: 0.16em;
+  bottom: .18em;
+  height: .6em;
+  width: .6em;
+  transition: .1s;
+}
+
+
+
+.mini-switch .ui-inputswitch-slider {
+  height: 15px;
+  width: 29px;
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: .3s;
+  border-radius: 30px;
+}
+
+.mini-switch.ui-inputswitch-checked .ui-inputswitch-slider:before {
+  -webkit-transform: translateX(0.8em);
+  transform: translateX(0.8em);
+}
 
 @import './web-admin-core-toolbar.scss';
 @import './web-admin-core-tabs.scss';

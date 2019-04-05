@@ -3,20 +3,17 @@ import { Component, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/co
 import { PluginView } from 'web-console-core';
 import { NGXLogger} from 'web-console-core';
 import { WCNotificationCenter, NotificationType } from 'web-console-ui-kit';
-import { BundlesService, BundleStatus, ClusterBundleStatus, Bundle } from '@wa-motif-open-api/web-content-service';
+import { BundlesService, BundleStatus, ClusterBundleStatus, Bundle, BundleUpdate } from '@wa-motif-open-api/web-content-service';
 import { WCSubscriptionHandler } from '../../../components/Commons/wc-subscription-handler';
 import * as _ from 'lodash';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
-import { WebContentUpdateDialogComponent } from './dialog/webcontent-update-dialog';
+import { WebContentUpdateDialogComponent, UpdateDialogResult } from './dialog/webcontent-update-dialog';
 import { WCUploadPanelEvent } from '../../../components/UI/wc-upload-panel-component/wc-upload-panel-component';
+import { WCStatsInfoModel } from '../../../components/Stats/stats-info-component';
+import { UpdatePoller, UpdatePollerEvent, UpdatePollerEventStatus } from './update-poller/UpdatePoller';
+import { BundleUtils, PublishingStatus } from './BundleUtils';
 
 const LOG_TAG = '[WebContentSectionComponent]';
-
-export enum PublishingStatus {
-    Published = 'PUBLISHED',
-    Unpublished = 'UNPUBLISHED',
-    Error = 'IN ERROR'
-}
 
 enum CommandType {
     Edit = 'cmdEdit',
@@ -34,11 +31,15 @@ enum CommandType {
   })
 export class WebContentSectionComponent implements OnInit, OnDestroy {
 
+    statsModel: WCStatsInfoModel = { items: [] };
+
     faUpload = faUpload;
     gridData: BundleStatus[];
 
     private _subHandler: WCSubscriptionHandler = new WCSubscriptionHandler();
     @ViewChild('updateDialog') _updateDialog: WebContentUpdateDialogComponent;
+
+    private _pollers : Array<UpdatePoller> = [];
 
     // Data binding
     public loading = false;
@@ -106,23 +107,40 @@ export class WebContentSectionComponent implements OnInit, OnDestroy {
         this.refreshData();
     }
 
+    updateModelWith(bundleStatus:BundleStatus){
+        let index = _.findIndex(this.gridData, (item:BundleStatus)=>{
+            return (item==bundleStatus);
+        });
+        if (index>=0){
+            this.gridData[index] = bundleStatus;
+        }
+    }
+
     refreshData(){
-        
+
+        this.logger.debug(LOG_TAG, 'refreshData called.');
+
         this.loading = true;
         this._subHandler.add(this.webContentService.getBundlesList().subscribe( (data: Array<BundleStatus>) => {
             this.logger.debug(LOG_TAG, 'Get bundle statuses results:', data);
 
             this.gridData = _.forEach(data, (element: BundleStatus) => {
-                element.info["syntheticStatus"] = this.buildSyntheticStatus(element);
+                element.info["syntheticStatus"] = BundleUtils.buildSyntheticStatus(element);
             });
 
+            this.logger.debug(LOG_TAG, '*** Get bundle statuses results gridData:', this.gridData);
 
             this.gridData = data;
+
+            this.logger.debug(LOG_TAG, '*** Get bundle statuses results gridData:', this.gridData);
+
+            this.rebuildStatsInfo();
             this.loading = false;
+            
         }, (error) => {
             this.logger.error(LOG_TAG, 'Get bundle statuses failed: ', error);
             this.loading = false;
-
+            this.clearStatsInfo();
             this.notificationCenter.post({
                 name: 'GetBundleStatusesError',
                 title: 'Get Bundle Statuses',
@@ -135,38 +153,127 @@ export class WebContentSectionComponent implements OnInit, OnDestroy {
         
     }
 
-    
-    private buildSyntheticStatus(statusInfo: BundleStatus): string {
-        let published: number = 0;  
-        let unpusblished: number = 0;  
-        for (let i=0;i<statusInfo.status.length;i++){
-            const clusterStatus:ClusterBundleStatus = statusInfo.status[i];
-            if (clusterStatus.status === PublishingStatus.Unpublished) {
-                unpusblished++;
-            }
-            if (clusterStatus.status === PublishingStatus.Published) {
-                published++;
-            }
-        }
-        this.logger.debug(LOG_TAG, 'buildSyntheticStatus (published count vs unpublished count): ', published, unpusblished);
-        if ((published===0) && (unpusblished > 0)) {
-            return PublishingStatus.Unpublished;
-        } else if ((unpusblished===0) && (published > 0)) {
-            return PublishingStatus.Published;
-        } else {
-            return PublishingStatus.Error;
-        }
+    private clearStatsInfo(){
+        this.statsModel = { items: [] };
     }
-    
 
-    private buildSyntheticStatusXXX(statusInfo: BundleStatus): string {
-        return PublishingStatus.Unpublished;
+    private rebuildStatsInfo(){
+
+        const statuses = _.map(this.gridData, 'info.syntheticStatus');
+
+        const total = statuses.length;
+
+        const published = _.countBy(
+            statuses,
+            (status) => (status === "PUBLISHED")
+        );
+        
+        if (!published){
+            published.true = 0;
+            published.false = 0;
+        }
+
+        if (!published.true){
+            published.true = 0;
+        }
+
+        if (!published.false){
+            published.false = 0;
+        }
+
+        this.statsModel = { 
+            items: [
+                { label: "bundles", value: ""+total, cssClass: "stats-info-primary" },
+                { label: "published", value: ""+published.true, cssClass:"stats-info-ok" },
+                { label: "unpublished", value: ""+published.false, cssClass:"stats-info-ko" }
+            ]
+        } 
     }
+    
 
     doTogglePublishBundle(item: BundleStatus):void {
         this.logger.debug(LOG_TAG, 'doTogglePublishBundle: ', item);
-        alert("TODO!! doTogglePublishBundle")
+        if (item.info["syntheticStatus"] === PublishingStatus.Unpublished){
+            this.doPublishBundle(item);
+        } else if (item.info["syntheticStatus"] === PublishingStatus.Published){
+            this.doUnpublishBundle(item);
+        } else if (item.info["syntheticStatus"] === PublishingStatus.Error){
+            this.doUnpublishBundle(item);
+        }
     }
+
+    doPublishBundle(item: BundleStatus):void {
+        this.logger.debug(LOG_TAG, 'doPublishBundle: ', item);
+        this._subHandler.add(this.webContentService.publishBundle(item.info.name, item.info.version).subscribe( (data)=> {
+
+            this.logger.debug(LOG_TAG, 'Bundle published successfully: ', data);
+            this.refreshData();
+            this.notificationCenter.post({
+                name: 'PublishBundleSuccess',
+                title: 'Publishing Bundle',
+                message: 'Bundle publish request sent successfully.',
+                type: NotificationType.Info
+            });
+            
+            // Create arefresh poller
+            let newPoller = new UpdatePoller(item.info.name, item.info.version, this.webContentService, this.logger);
+            this._pollers.push(newPoller);
+            newPoller.start(3, 3000, item).subscribe( (results:UpdatePollerEvent) => {
+                if (results.status === UpdatePollerEventStatus.Complete){
+                    this.updateModelWith(results.bundleStatus);
+                }
+                let test = _.remove(this._pollers, function(poller: UpdatePoller) {
+                    return (results.source===poller);
+                });
+            });
+            
+
+        }, (error)=>{
+
+            this.logger.error(LOG_TAG, 'Download Bundle failed: ', error);
+            this.loading = false;
+
+            this.notificationCenter.post({
+                name: 'PublishBundleError',
+                title: 'Publish Bundle',
+                message: 'Error publishing bundle:',
+                type: NotificationType.Error,
+                error: error,
+                closable: true
+            });
+        }));
+    }
+
+    doUnpublishBundle(item: BundleStatus):void {
+        this.logger.debug(LOG_TAG, 'doUnpublishBundle: ', item);
+        this._subHandler.add(this.webContentService.unpublishBundle(item.info.name, item.info.version).subscribe( (data)=> {
+
+            this.logger.debug(LOG_TAG, 'Bundle unpublished successfully: ', data);
+            this.refreshData();
+            this.notificationCenter.post({
+                name: 'UnpublishBundleSuccess',
+                title: 'Unpublish Bundle',
+                message: 'Bundle unpublished successfully.',
+                type: NotificationType.Info
+            });
+
+
+        }, (error)=>{
+
+            this.logger.error(LOG_TAG, 'Unpublish Bundle failed: ', error);
+            this.loading = false;
+
+            this.notificationCenter.post({
+                name: 'UnpublishBundleError',
+                title: 'Unpublish Bundle',
+                message: 'Error unpublishing bundle:',
+                type: NotificationType.Error,
+                error: error,
+                closable: true
+            });
+        }));
+    }
+
 
     doDownloadBundle(item: BundleStatus):void {
 
@@ -208,7 +315,35 @@ export class WebContentSectionComponent implements OnInit, OnDestroy {
 
     doDeleteBundle(item: BundleStatus):void {
         this.logger.debug(LOG_TAG, 'doDeleteBundle: ', item);
-        alert("TODO!! doDeleteBundle")
+        let bundleName = item.info.name;
+        let bundleVersion = item.info.version;
+        this.logger.debug(LOG_TAG, "doDeleteBundle bundleName='"+bundleName+"' bundleVersion='" + bundleVersion + "'");
+        this._subHandler.add(this.webContentService.deleteBundle(bundleName, bundleVersion).subscribe( (data) => {
+
+            this.logger.debug(LOG_TAG, 'Delete Bundle success: ', data);
+            this.notificationCenter.post({
+                name: 'DeleteBundleSuccess',
+                title: 'Delete Bundle',
+                message: 'Bundle deleted successfully.',
+                type: NotificationType.Info
+            });
+
+            this.refreshData();
+
+        }, (error) => {
+
+            this.logger.error(LOG_TAG, 'Delete Bundle failed: ', error);
+
+            this.notificationCenter.post({
+                name: 'DeleteBundleError',
+                title: 'Delete Bundle',
+                message: 'Error deleting bundle:',
+                type: NotificationType.Error,
+                error: error,
+                closable: true
+            });
+
+        })) ;      
     }
 
     onCommandConfirm(event: WCGridEditorCommandComponentEvent) {
@@ -234,7 +369,8 @@ export class WebContentSectionComponent implements OnInit, OnDestroy {
     }
 
     doEditBundle(event: WCGridEditorCommandComponentEvent) {
-        this._updateDialog.show('domain', 'app', event.rowData.dataItem.info.context);
+        this.logger.debug(LOG_TAG, 'doEditBundle : ', event);
+        this._updateDialog.show(event.rowData.dataItem.info.name, event.rowData.dataItem.info.version, "", "", event.rowData.dataItem.info.context);
     }
 
     onUploadError(error){
@@ -271,7 +407,7 @@ export class WebContentSectionComponent implements OnInit, OnDestroy {
             });
 
         }, (error) => {
-            this.logger.debug(LOG_TAG, 'Error uploading bundle: ', error);
+            this.logger.error(LOG_TAG, 'Error uploading bundle: ', error);
 
             this.notificationCenter.post({
                 name: 'UploadBundleError',
@@ -281,6 +417,45 @@ export class WebContentSectionComponent implements OnInit, OnDestroy {
                 error: error,
                 closable: true
             });
+        }));
+    }
+
+    onUpdateConfirm(event:UpdateDialogResult){
+        this.logger.debug(LOG_TAG, 'onUpdateConfirm: ', event);
+        let bundleName = event.bundleName;
+        let bundleVersion = event.bundleVersion;
+        let bundleUpdate:BundleUpdate = {
+            application: event.application,
+            context: event.context,
+            domain: event.domain
+        };
+        this.logger.debug(LOG_TAG, 'onUpdateConfirm: ', bundleName, bundleVersion, bundleUpdate);
+        this._subHandler.add(this.webContentService.updateBundle(bundleName, bundleVersion, bundleUpdate).subscribe( (data) => {
+
+            this.refreshData();
+            this.logger.debug(LOG_TAG, 'Bundle updated successfully: ', event);
+
+            this.notificationCenter.post({
+                name: 'UpdateBundleSuccess',
+                title: 'Update Bundle',
+                message: 'The bundle has been successfully updated.',
+                type: NotificationType.Success
+            });
+
+
+        }, (error) => {
+
+            this.logger.error(LOG_TAG, 'Error updating bundle: ', error);
+
+            this.notificationCenter.post({
+                name: 'UpdateBundleError',
+                title: 'Update Bundle',
+                message: 'Error updating bundle:',
+                type: NotificationType.Error,
+                error: error,
+                closable: true
+            });
+
         }));
     }
 

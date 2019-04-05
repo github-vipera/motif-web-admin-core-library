@@ -1,5 +1,7 @@
 <wc-loading-overlay [visible]="loading"></wc-loading-overlay>
-<wa-webcontent-update-dialog #updateDialog></wa-webcontent-update-dialog>
+<wa-webcontent-update-dialog #updateDialog (confirm)="onUpdateConfirm($event)"></wa-webcontent-update-dialog>
+
+<wc-stats-info-component [model]="statsModel"></wc-stats-info-component>
 
 <wc-dashboard-header [title]="'Web Content'"></wc-dashboard-header>
 
@@ -48,6 +50,12 @@
       <kendo-grid-column field="info.context" title="Context">
       </kendo-grid-column>
 
+      <kendo-grid-column field="info.domain" title="Domain">
+      </kendo-grid-column>
+
+      <kendo-grid-column field="info.application" title="Application">
+      </kendo-grid-column>
+
       <kendo-grid-column field="info.syntheticStatus" title="Status">
         <ng-template
           kendoGridCellTemplate
@@ -79,7 +87,19 @@
               UNPUBLISHED
             </span>
             <span
-              *ngIf="dataItem.info.syntheticStatus === 'IN ERROR'"
+              *ngIf="dataItem.info.syntheticStatus === 'PUBLISHING'"
+              class="badge badge-status  badge-disabled"
+            >
+              PUBLISHING
+            </span>
+            <span
+              *ngIf="dataItem.info.syntheticStatus === 'UNPUBLISHING'"
+              class="badge badge-status  badge-disabled"
+            >
+              UNPUBLISHING
+            </span>
+            <span
+              *ngIf="dataItem.info.syntheticStatus === 'ERROR'"
               class="badge badge-status  badge-error"
             >
               IN ERROR

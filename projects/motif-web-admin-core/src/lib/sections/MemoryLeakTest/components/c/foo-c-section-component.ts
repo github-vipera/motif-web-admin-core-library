@@ -14,9 +14,11 @@ const LOG_TAG = '[FooCSection]';
     styleUrls: [ './foo-c-section-component.scss' ],
     templateUrl: './foo-c-section-component.html'
   })
+  /*
   @PluginView('FooC', {
     iconName: 'wa-ico-plugins'
 })
+*/
 export class FooCSectionComponent implements OnInit, OnDestroy {
 
     constructor(private logger: NGXLogger) {

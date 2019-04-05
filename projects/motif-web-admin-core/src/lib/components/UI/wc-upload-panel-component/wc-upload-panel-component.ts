@@ -1,6 +1,6 @@
 import { WCFileDropPanelComponent } from './wc-file-drop-panel-component';
  
-import { Component, OnInit, ElementRef, Renderer2, ViewChild, EventEmitter,Output } from '@angular/core';
+import { Component, OnInit, ElementRef, Renderer2, ViewChild, EventEmitter,Output, Input } from '@angular/core';
 import { WCSlidePanelComponent } from 'web-console-ui-kit';
 import { NGXLogger } from 'ngx-logger';
 import { WCSubscriptionHandler } from '../../Commons/wc-subscription-handler';
@@ -20,6 +20,9 @@ export interface WCUploadPanelEvent {
  export class WCUploadPanelComponent implements OnInit {
 
     private _subHandler: WCSubscriptionHandler = new WCSubscriptionHandler();
+
+    @Input()
+    public confirmationTitle = "Do Upload?";
 
     @ViewChild('fileDrop') fileDrop: WCFileDropPanelComponent;
     @ViewChild('uploadSlideDownPanel') _uploadSlideDownPanel: WCSlidePanelComponent;

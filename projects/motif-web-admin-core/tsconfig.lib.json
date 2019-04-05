@@ -11,11 +11,14 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
+    "allowSyntheticDefaultImports": true,
     "types": [],
     "lib": [
       "dom",
       "es2018"
-    ]
+    ],
+    "resolveJsonModule": true,
+    "esModuleInterop": true
   },
   "angularCompilerOptions": {
     "annotateForClosureCompiler": true,

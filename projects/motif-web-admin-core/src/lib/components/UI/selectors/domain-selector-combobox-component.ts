@@ -5,6 +5,7 @@ import { WCNotificationCenter, NotificationType } from 'web-console-ui-kit';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { WCSubscriptionHandler } from '../../Commons/wc-subscription-handler';
 import { ComboBoxComponent } from '@progress/kendo-angular-dropdowns';
+import { dom } from '@fortawesome/fontawesome-svg-core';
 
 const LOG_TAG = '[DomainSelectorComboBoxComponent]';
 
@@ -21,8 +22,12 @@ export const WC_DOMAIN_SELECTOR_CONTROL_VALUE_ACCESSOR: any = {
     ],
     template: `
     <kendo-combobox #combo style="width:100%;" [data]="data"   [filterable]="true" (filterChange)="handleFilter($event)"
-    [allowCustom]="false" [valueField]="'name'"  [popupSettings]="{ 'popupClass' : 'wa-kui-combobox-popup', 'animate' : false  }"
-    [textField]="'name'" [(ngModel)]="selectedDomain"></kendo-combobox>
+    [allowCustom]="false" 
+    [valueField]="'name'"  
+    [popupSettings]="{ 'popupClass' : 'wa-kui-combobox-popup', 'animate' : false  }"
+    [textField]="'name'" 
+    [(ngModel)]="selectedDomain" 
+    [attr.disabled]="disabled?true:null"></kendo-combobox>
     `,
     providers: [WC_DOMAIN_SELECTOR_CONTROL_VALUE_ACCESSOR]
 })
@@ -35,6 +40,8 @@ export class DomainSelectorComboBoxComponent implements OnInit, OnDestroy {
     @Output() selectionCancelled: EventEmitter<any> = new EventEmitter();
     private _subHandler: WCSubscriptionHandler = new WCSubscriptionHandler();
     @ViewChild('combo') combo: ComboBoxComponent;
+    
+    @Input() public disabled: boolean;
 
     constructor(private logger: NGXLogger,
         private domainsService: DomainsService,
@@ -85,6 +92,18 @@ export class DomainSelectorComboBoxComponent implements OnInit, OnDestroy {
         }));
     }
 
+    public findDomainByName(domainName: string): Domain {
+        if (this.domainList){
+            for (let i=0;i<this.domainList.length;i++){
+                let domain = this.domainList[i];
+                if (domain.name === domainName){
+                    return domain;
+                }
+            }            
+        }
+        return null;
+    }
+
     /**
      * Set the selcted domain
      */
@@ -96,10 +115,16 @@ export class DomainSelectorComboBoxComponent implements OnInit, OnDestroy {
             this.domainSelected.emit(this._selectedDomain);
             this.propagateChange(domain);
         } else {
+            this.combo.reset();
             this.logger.debug(LOG_TAG, 'selectedDomain domain=no selection');
             this.selectionCancelled.emit();
             this.propagateChange(null);
         }
+    }
+
+    @Input()
+    public set selectedDomainName(domainName: string){
+        this.selectedDomain = this.findDomainByName(domainName);
     }
 
     public get selectedDomain(): Domain {

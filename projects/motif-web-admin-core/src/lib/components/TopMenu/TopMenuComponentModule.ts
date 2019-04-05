@@ -1,4 +1,6 @@
+import { TopLogoComponent } from './logo/top-logo-component';
 import { CommonsUIModule } from './../CommonsUIModule';
+import { TopInfoComponent } from './info/top-info-component';
 import { TopMenuComponent } from './top-menu-component';
 import { NgModule } from '@angular/core';
 import { MenuModule } from 'primeng/menu';
@@ -11,18 +13,19 @@ import { WebConsoleCoreModule } from 'web-console-core';
         MenuModule, ButtonModule, FontAwesomeModule, WebConsoleCoreModule, CommonsUIModule
     ],
     entryComponents: [
-        TopMenuComponent
+        TopMenuComponent, TopInfoComponent, TopLogoComponent
     ],
     declarations: [
-        TopMenuComponent
+        TopMenuComponent, TopInfoComponent, TopLogoComponent
     ],
     exports: [
-        TopMenuComponent ],
+        TopMenuComponent, TopInfoComponent, TopLogoComponent
+    ],
     providers: [
-
     ]
   })
   export class TopMenuComponentModule { }
 
 
 
+ 

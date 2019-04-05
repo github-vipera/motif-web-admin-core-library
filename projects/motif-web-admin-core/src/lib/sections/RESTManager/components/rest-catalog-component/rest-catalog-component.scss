@@ -1,0 +1,113 @@
+
+.channel-label,
+.badge {
+  font-size: 12px;
+  font-size: 0.75rem;
+  line-height: 2;
+  font-weight: bold;
+  padding: 3px 7px;
+  text-align: center;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+
+.channel-label {
+  border-radius: 4px;
+  display: inline;
+}
+
+.badge {
+  border-radius: 10px;
+  display: inline-block;
+  padding: 1px 7px;
+}
+
+.channel-label[href]:hover, .channel-label[href]:focus {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+a.badge:hover, a.badge:focus {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.channel-label a,
+.badge a {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.channel-label:empty,
+.badge:empty {
+  display: none;
+}
+
+.channel-label {
+    font-size: 0.63rem;
+}
+
+.service-catalog-row {
+    padding: .6rem !important;
+}
+
+.treetable-xss {
+    height: 100%;
+    transition: color 0.3s ease;
+  }
+
+wa-rest-catalog-component p-treetable table th {
+    padding: .6rem !important;
+}
+
+wa-rest-catalog-component p-treetable table  td {
+    padding: .6rem !important;
+}
+
+.service-catalog-row {
+  transition: color 0.2s ease;
+}
+
+.treeFiltered {
+  color: #686868 !important;
+  transition: color 0.2s ease;
+}
+
+.treeFiltered.rowFiltered {
+  color: #dfdfdf !important;
+  transition: color 0.2s ease;
+}
+
+.badge {
+  border-radius: 4px;
+  display: inline-block;
+  padding: 1px 7px;
+}
+
+.badge-status {
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 0.63rem;
+  line-height: 1.3;
+  font-weight: bold;
+  padding: 3px 7px;
+  text-align: center;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+
+.counter-info-row-details {
+  padding: 0px;
+}
+
+.counter-info-row-details {
+  p {
+      margin: 0px;
+      padding: 0px;
+      padding-top: 0.1rem;
+      padding-bottom: 0.1rem;
+      a {
+          margin-left: 10px;
+      }
+  }
+}

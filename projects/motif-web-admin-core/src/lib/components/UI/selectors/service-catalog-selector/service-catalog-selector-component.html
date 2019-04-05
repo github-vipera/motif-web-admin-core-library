@@ -20,6 +20,7 @@
         <th>Description</th>
         <th>Type</th>
         <th>Channel</th>
+        <th *ngIf="editable"></th> 
       </tr>
     </ng-template>
     <ng-template
@@ -27,7 +28,8 @@
       let-rowNode
       let-rowData="rowData"
       let-columns="columns"
-    >
+      let-rowIndex="rowIndex"
+      >
       <tr [ttRow]="rowNode" [ttContextMenuRow]="rowNode" [ttSelectableRow]="rowNode" style="height:30px">
         <td class="service-catalog-row">
           <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
@@ -44,6 +46,18 @@
           <span class="channel-label badge-channel-{{rowData.channel}}">{{
             rowData.channel
           }}</span>
+        </td>
+        <td *ngIf="editable" class="service-catalog-row">
+          <wc-grid-editor-commands-group 
+            [commands]="commands"
+            [alignMode]="'end'"
+            [rowIndex]="rowIndex"
+            [columnIndex]="5"
+            [column]="{}"
+            [value]="rowData"
+            [dataItem]="rowData"
+            (commandConfirm)="onGridCommandConfirm($event)"
+          ></wc-grid-editor-commands-group>        
         </td>
       </tr>
     </ng-template>

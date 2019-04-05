@@ -1,3 +1,4 @@
+import { WCStatsInfoComponent } from './Stats/stats-info-component';
 import { NgModule } from '@angular/core';
 import { GridModule } from '@progress/kendo-angular-grid';
 import { LogServiceModule } from '@wa-motif-open-api/log-service';
@@ -28,10 +29,10 @@ import { SessionService } from './Commons/session-service';
         ConfirmationDialogComponent
     ],
     declarations: [
-        ConfirmationDialogComponent
+        ConfirmationDialogComponent, WCStatsInfoComponent
     ],
     exports: [ 
-        ConfirmationDialogComponent
+        ConfirmationDialogComponent, WCStatsInfoComponent
     ],
     providers: [
         LocalesService, SessionService

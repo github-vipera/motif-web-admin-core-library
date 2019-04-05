@@ -22,7 +22,7 @@ export const WC_APPLICATION_SELECTOR_CONTROL_VALUE_ACCESSOR: any = {
     template: `
     <kendo-combobox #combo style="width:100%;" [data]="data"   [filterable]="true" (filterChange)="handleFilter($event)"
     [allowCustom]="false" [valueField]="'name'" [textField]="'name'" [popupSettings]="{ 'popupClass' : 'wa-kui-combobox-popup', 'animate' : false }"
-    [(ngModel)]="selectedApplication"></kendo-combobox>
+    [(ngModel)]="selectedApplication" [attr.disabled]="disabled?true:null"></kendo-combobox>
     `,
     providers: [WC_APPLICATION_SELECTOR_CONTROL_VALUE_ACCESSOR]
 })
@@ -36,6 +36,9 @@ export class ApplicationSelectorComboBoxComponent implements OnInit, OnDestroy {
     @Output() selectionCancelled: EventEmitter<any> = new EventEmitter();
     private _subHandler: WCSubscriptionHandler = new WCSubscriptionHandler();
     @ViewChild('combo') combo: ComboBoxComponent;
+    @Input() public disabled: boolean;
+
+    private _selectedApplicationName: string;
 
     constructor(private logger: NGXLogger,
         private applicationService: ApplicationsService,
@@ -76,6 +79,7 @@ export class ApplicationSelectorComboBoxComponent implements OnInit, OnDestroy {
             this._subHandler.add(this.applicationService.getApplications(this._domain).subscribe(data => {
                 this.applicationsList = data;
                 this.data = this.applicationsList;
+                this.onApplicationListReady();
                 }, error => {
                     this.logger.debug(LOG_TAG , 'refreshApplicationList error:', error);
                     this.notificationCenter.post({
@@ -125,6 +129,31 @@ export class ApplicationSelectorComboBoxComponent implements OnInit, OnDestroy {
             this.selectionCancelled.emit();
             this.propagateChange(null);
         }
+    }
+    
+    private onApplicationListReady(){
+        if (this._selectedApplicationName){
+            this.selectedApplication = this.findApplicationByName(this._selectedApplicationName);
+            this._selectedApplicationName = null;
+        }
+    }
+
+    public findApplicationByName(applicationName: string): Application {
+        if (this.applicationsList){
+            for (let i=0;i<this.applicationsList.length;i++){
+                let application = this.applicationsList[i];
+                if (application.name === applicationName){
+                    return application;
+                }
+            }            
+        }
+        return null;
+    }
+
+    @Input('selectedApplicatioName')
+    public set selectedApplicationName(applicationName: string){
+        this._selectedApplicationName = applicationName;
+        this.refreshApplicationList();
     }
 
     public get selectedApplication(): Application {

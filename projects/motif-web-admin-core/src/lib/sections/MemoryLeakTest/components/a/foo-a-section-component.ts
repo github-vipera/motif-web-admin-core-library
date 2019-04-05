@@ -15,9 +15,11 @@ const LOG_TAG = '[FooASection]';
     styleUrls: [ './foo-a-section-component.scss' ],
     templateUrl: './foo-a-section-component.html'
   })
+/*
   @PluginView('FooA', {
     iconName: 'wa-ico-plugins'
 })
+*/
 export class FooASectionComponent implements OnInit, OnDestroy {
 
     public gridDataLeft: any[] = [

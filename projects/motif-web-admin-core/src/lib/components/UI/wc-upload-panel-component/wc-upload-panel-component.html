@@ -1,21 +1,30 @@
 <wc-slide-panel #uploadSlideDownPanel (close)="onSlideEditorClose()">
-    <div class="wc-slide-down-editor-pane" style="display:flex;height: 45px;">
-        <div style="width:350px;height: 100%;">
-                <wc-file-drop-panel #fileDrop></wc-file-drop-panel>
+    
+    <div class="zzzz-container" style="display: flex;flex-direction: column;">
+
+        <div style="display: flex;">
+            <div class="wc-slide-down-editor-pane" style="display:flex;height: 45px;">
+                <div style="width:350px;height: 100%;">
+                        <wc-file-drop-panel #fileDrop></wc-file-drop-panel>
+                </div>
+            </div>
+        
+            <div class="cmd" style="align-items: center;">
+                <label style="padding-bottom: 0px;padding-left: 10px;padding-right: 10px;">{{confirmationTitle}}</label>
+                <a (click)="onBundleUploadConfirm()" style="margin-right: 3px;">
+                    <i class="ok icon wa-ico-ok confirmation-icon" data-id="ok"></i>
+                </a>
+                <a (click)="onBundleUploadCancel()" data-slideup="#user-add">
+                    <i class="ko icon wa-ico-ko confirmation-icon" data-id="ko"></i>
+                </a>
+            </div>
         </div>
+
+        <div>
+            <ng-content>
+            </ng-content>
+        </div>
+        
     </div>
 
-    <div class="cmd" style="align-items: center;">
-        <label style="padding-bottom: 0px;padding-left: 10px;padding-right: 10px;">Do Upload?</label>
-        <a (click)="onBundleUploadConfirm()">
-            <svg class="ok" data-id="ok">
-                <use xlink:href="./assets/img/icons.svg#ico-ok"></use>
-            </svg>
-        </a>
-        <a (click)="onBundleUploadCancel()" data-slideup="#user-add">
-            <svg class="ko" data-id="ko">
-                <use xlink:href="./assets/img/icons.svg#ico-ko"></use>
-            </svg>
-        </a>
-    </div>
 </wc-slide-panel>

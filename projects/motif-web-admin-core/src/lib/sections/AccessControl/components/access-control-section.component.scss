@@ -1,7 +1,31 @@
+:host { 
+    height: 100%;
+}
+
 .tabs {
     margin-top: 0;
+}
+
+.tab {
+    height: calc(100% - 2.3rem);
 }
 
 .acl-label {
     margin: 10px;
 }
+
+.users-list {
+    height: 100%;
+}
+
+.add-button {
+    padding-top: 13px;
+}
+
+.refresh-button {
+    padding-top: 13px;
+}
+
+.k-grid tr.dragging {
+    background-color: #f45c42;
+};

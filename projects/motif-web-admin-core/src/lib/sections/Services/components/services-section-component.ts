@@ -1,4 +1,4 @@
-import { ServiceCatalogSelectorComponent, ServiceCatalogNodeSelectionEvent } from './../../../components/UI/selectors/service-catalog-selector/service-catalog-selector-component';
+import { ServiceCatalogSelectorComponent, ServiceCatalogNodeSelectionEvent, ServiceCatalogNodeCommandEvent } from './../../../components/UI/selectors/service-catalog-selector/service-catalog-selector-component';
 import { Component, OnInit, ViewChild, ChangeDetectorRef, Renderer2, OnDestroy } from '@angular/core';
 import { PluginView } from 'web-console-core';
 import { NGXLogger } from 'web-console-core';
@@ -18,6 +18,7 @@ import { Domain, Application } from '@wa-motif-open-api/platform-service';
 import { Service, ServiceOperation } from '@wa-motif-open-api/catalog-service';
 import { ConfirmationService } from 'primeng/api';
 import { WCSubscriptionHandler } from '../../../components/Commons/wc-subscription-handler';
+import { WCStatsInfoModel } from '../../../components/Stats/stats-info-component';
 
 const LOG_TAG = '[ServicesSection]';
 
@@ -58,6 +59,8 @@ export class ServicesSectionComponent implements OnInit, OnDestroy {
     private _addServiceMenuItem: MenuItem;
     private _addOperationMenuItem: MenuItem;
     private _addMenuItem: MenuItem;
+
+    statsModel: WCStatsInfoModel = { items: [] };
 
     private _subHandler: WCSubscriptionHandler = new WCSubscriptionHandler();
 
@@ -147,7 +150,43 @@ export class ServicesSectionComponent implements OnInit, OnDestroy {
     }
 
     public refreshData() {
-        this._serviceCatalog.reloadData();
+        this._serviceCatalog.reloadData().subscribe((data)=>{
+            this.buildStats(data);
+        }, (error)=>{
+            this.clearStatsInfo();
+        })
+    }
+
+    private clearStatsInfo(){
+        this.statsModel = { items: [] };
+    }
+
+    private buildStats(data){
+        let services = [];
+        let jsonCalls = 0;
+        let restCalls = 0;
+        for (let i=0;i<data.length;i++){
+            let domain = data[i];
+            for (let y=0;y<domain.applications.length;y++){
+                let application = domain.applications[y];
+                for (let z=0;z<application.services.length;z++){
+                    let service = application.services[z];
+                    if (service.channel === "REST"){
+                        restCalls += service.serviceOperationList.length;
+                    }
+                    if (service.channel === "JSON"){
+                        jsonCalls += service.serviceOperationList.length;
+                    }
+                }            
+            }
+        }
+        this.statsModel = {
+        items: [ 
+            { label: "JSON operations", value: ""+jsonCalls, cssClass:"stats-info-json-services" },
+            { label: "REST operations", value: ""+restCalls, cssClass:"stats-info-rest-services" }
+        ]
+    } 
+
     }
 
     nodeSelect(nodeEvent: ServiceCatalogNodeSelectionEvent) {
@@ -613,5 +652,18 @@ export class ServicesSectionComponent implements OnInit, OnDestroy {
         return this.selectedNode.data.catalogEntry.channel;
     }
 
+    onNodeCommand(event:ServiceCatalogNodeCommandEvent){
+        this.logger.debug(LOG_TAG , 'onNodeCommand event: ', event);
+        let catalogEntry:CatalogEntry = {
+            application: event.node.application,
+            domain: event.node.domain,
+            channel: event.node.channel,
+            operation: event.node.operation,
+            service: event.node.service
 
+        };
+        if (event.command==='Delete'){
+            this.handleDeleteRequest(catalogEntry);
+        }
+    }
 }

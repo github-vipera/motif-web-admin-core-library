@@ -20,9 +20,11 @@ export class Student {
     styleUrls: [ './foo-b-section-component.scss' ],
     templateUrl: './foo-b-section-component.html'
   })
+  /*
   @PluginView('FooB', {
     iconName: 'wa-ico-plugins'
 })
+*/
 export class FooBSectionComponent implements OnInit, OnDestroy {
 
     students: Student[] = [];

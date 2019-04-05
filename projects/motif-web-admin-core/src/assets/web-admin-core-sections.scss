@@ -102,7 +102,6 @@ wa-service-catalog-selector .node-icon-Service {
     color: $service_catalog_icon_color;
 }
 
-
 wa-service-catalog-selector .ui-state-highlight {
     background-color: $grid_selected_row_color;
     color: $grid_selected_row;
@@ -131,3 +130,45 @@ wa-service-catalog-selector p-treetable table  td:focus {
 wa-service-catalog-selector p-treetable table  tr:focus {
   outline: none;
 }
+
+wa-rest-catalog-component .node-icon-Domain {
+    color: $service_catalog_icon_color;
+}
+
+wa-rest-catalog-component .node-icon-Application {
+    color: $service_catalog_icon_color;
+}
+
+wa-rest-catalog-component .node-icon-Service {
+    color: $service_catalog_icon_color;
+}
+
+wa-rest-catalog-component .ui-state-highlight {
+    background-color: $grid_selected_row_color;
+    color: $grid_selected_row;
+}
+
+wa-rest-catalog-component .ui-state-highlight>td {
+    color: $grid_selected_row;
+}
+
+wa-rest-catalog-component .ui-state-highlight>tr {
+  color: $grid_selected_row;
+}
+
+wa-rest-catalog-component p-treetable table th {
+    border-bottom: 1px solid $grid_border_color;
+}
+
+wa-rest-catalog-component p-treetable table  td {
+    border-bottom: 1px dotted $grid_border_color;
+}
+
+wa-rest-catalog-component p-treetable table  td:focus {
+  outline: none;
+}
+
+wa-rest-catalog-component p-treetable table  tr:focus {
+  outline: none;
+}
+
