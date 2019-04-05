@@ -72,9 +72,20 @@ export class RESTManagerSectionComponent implements OnInit, OnDestroy {
     }
 
     private refreshCatalog(){
-        this.restCatalogSelector.reloadData(this.selectedDomain.name, this._selectedApplication.name);
+        let domain = (this.selectedDomain?this.selectedDomain.name:null);
+        let application = (this._selectedApplication?this._selectedApplication.name:null);
+        this.restCatalogSelector.reloadData(domain, application);
     }
     
+    onDomainSelectionClear(event){
+        this.selectedDomain = null;
+        //this.selectedApplication = null;
+    }
+
+    onApplicationSelectionClear(event){
+        this.selectedApplication = null;
+    }
+
    /**
     * Set the selcted application
     */
