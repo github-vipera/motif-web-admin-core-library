@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NGXLogger } from 'web-console-core';
-import { WebAdminCoreInfoService } from '../../../services/webAdminCoreInfoService';
+import { WebAdminCoreInfoService } from '../../../services/WebAdminCoreInfoService';
 
 const LOG_TAG = '[TopInfoComponent]';
 
