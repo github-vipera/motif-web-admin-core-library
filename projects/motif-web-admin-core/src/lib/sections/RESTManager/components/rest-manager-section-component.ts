@@ -95,6 +95,10 @@ export class RESTManagerSectionComponent implements OnInit, OnDestroy {
        this.refreshCatalog();
     }
 
+    public get selectedApplication():Application {
+        return this._selectedApplication;
+    }
+
     private rebuildStatsInfo(){
         const totalContexts = this.restCatalogSelector.tableModel.getContextsCount();
         const enabledContexts = this.restCatalogSelector.tableModel.getEnabledContextsCount();
@@ -146,7 +150,13 @@ export class RESTManagerSectionComponent implements OnInit, OnDestroy {
     }
 
     onAddRESTContextPressed(){
-        this.contextEditDialog.showForNew();
+        if (this.canAddNewContext){
+            this.contextEditDialog.showForNew(this.selectedDomain.name, this.selectedApplication.name);
+        }
+    }
+
+    public get canAddNewContext():boolean{
+        return (this.selectedDomain!=null && this.selectedApplication!=null);
     }
 
     doCreateRESTContext(event:RESTContextDialogResult){
