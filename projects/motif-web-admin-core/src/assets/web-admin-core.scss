@@ -9,6 +9,10 @@ body {
    background:$body_background_color;
 }
 
+.web-console-container {
+  overflow: hidden;
+} 
+
 .row > div .label {
    background: $main_background_color;
 }

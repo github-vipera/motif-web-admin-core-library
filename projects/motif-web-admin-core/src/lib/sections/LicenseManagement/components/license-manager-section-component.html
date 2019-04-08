@@ -22,7 +22,7 @@
 
 <div class="row fill">
 
-    <div>
+    <div style="height: 100%;">
 
         <wc-upload-panel #uploadSlideDownPanelEx (upload)="uploadLicense($event)" (uploadError)="onUploadError($event)"></wc-upload-panel>
 
@@ -34,15 +34,15 @@
                 </kendo-grid-column>
 
                 <kendo-grid-column
-                    field="productVersion" title="Product Version" width="360">
+                    field="productVersion" title="Product Version">
                 </kendo-grid-column>
 
                 <kendo-grid-column
-                    field="issueDate" title="Issue Date" width="360" format="{0:dd/MM/yyyy HH:mm:ss}">
+                    field="issueDate" title="Issue Date" format="{0:dd/MM/yyyy HH:mm:ss}">
                 </kendo-grid-column>
 
                 <kendo-grid-column
-                    field="expiryDate" title="Expiry Date" width="360" format="{0:dd/MM/yyyy HH:mm:ss}">
+                    field="expiryDate" title="Expiry Date" format="{0:dd/MM/yyyy HH:mm:ss}">
                 </kendo-grid-column>
 
                 <kendo-grid-column title="" width="150" minResizableWidth="140">
