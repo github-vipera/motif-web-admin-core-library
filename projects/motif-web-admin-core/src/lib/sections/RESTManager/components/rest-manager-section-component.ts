@@ -6,11 +6,10 @@ import { NGXLogger } from 'web-console-core';
 import { RESTCatalogComponent, RESTCatalogNodeSelectionEvent, GridCommandType, RESTCatalogNodeCommandEvent, RESTCatalogDataErrorEvent } from './rest-catalog-component/rest-catalog-component';
 import { RESTCatalogEditorComponent } from './rest-catalog-editor/rest-catalog-editor-component';
 import { RESTContextDialogComponent, RESTContextDialogResult, DialogMode } from './dialogs/new-context-dialog/rest-context-dialog-component';
-import { RESTContextCatalogService } from '../../../services';
 import { WCSubscriptionHandler } from '../../../components/Commons/wc-subscription-handler';
 import { WCNotificationCenter, NotificationType } from 'web-console-ui-kit';
 import { WCStatsInfoModel } from '../../../components/Stats/stats-info-component';
-import { WebAdminCoreInfoService } from '../../../services/webAdminCoreInfoService';
+import { RESTContextCatalogService } from '../../../services/RESTContextCatalogService';
 
 const LOG_TAG = '[RESTManagerSectionComponent]';
 
@@ -36,11 +35,8 @@ export class RESTManagerSectionComponent implements OnInit, OnDestroy {
     statsModel: WCStatsInfoModel = { items: [] };
 
     constructor(private logger: NGXLogger,
-        private renderer2: Renderer2,
-        private changeDetector: ChangeDetectorRef,
         private restCatalogService: RESTContextCatalogService,
-        private notificationCenter: WCNotificationCenter,
-        private coreInfoService: WebAdminCoreInfoService
+        private notificationCenter: WCNotificationCenter
         ) {
         this.logger.debug(LOG_TAG, 'Opening...');
 
@@ -300,7 +296,4 @@ export class RESTManagerSectionComponent implements OnInit, OnDestroy {
         }
     }
 
-    public get currentLibraryVersion():String {
-        return this.coreInfoService.currentLibraryVersion();
-    }
 }   
