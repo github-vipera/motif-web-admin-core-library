@@ -2,12 +2,12 @@
 
   <kendo-splitter orientation="vertical" style="border: none;">
     
-    <kendo-splitter-pane [scrollable]="false">
-        <wa-counter-infos-pane-component [(ngModel)]="selectedCounterInfo"></wa-counter-infos-pane-component>
+    <kendo-splitter-pane [scrollable]="false" style="display:flex;">
+        <wa-counter-infos-pane-component [(ngModel)]="selectedCounterInfo" style="flex:1;"></wa-counter-infos-pane-component>
       </kendo-splitter-pane>
       
-      <kendo-splitter-pane [scrollable]="false">
-          <wa-thresholds-pane-component [counterInfo]="selectedCounterInfo"></wa-thresholds-pane-component>
+      <kendo-splitter-pane [scrollable]="false" style="display:flex;">
+          <wa-thresholds-pane-component [counterInfo]="selectedCounterInfo" style="flex:1;"></wa-thresholds-pane-component>
         </kendo-splitter-pane>
 
     </kendo-splitter>
