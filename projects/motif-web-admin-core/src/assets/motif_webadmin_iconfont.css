@@ -6,8 +6,8 @@ Generated using nucleoapp.com
 -------------------------------- */
 @font-face {
   font-family: 'MotifWebAdminIconFont';
-  src: url('../fonts/MotifWebAdminIconFont.eot');
-  src: url('../fonts/MotifWebAdminIconFont.eot') format('embedded-opentype'), url('../fonts/MotifWebAdminIconFont.woff2') format('woff2'), url('../fonts/MotifWebAdminIconFont.woff') format('woff'), url('../fonts/MotifWebAdminIconFont.ttf') format('truetype'), url('../fonts/MotifWebAdminIconFont.svg') format('svg');
+  src: url('./fonts/MotifWebAdminIconFont.eot');
+  src: url('./fonts/MotifWebAdminIconFont.eot') format('embedded-opentype'), url('./fonts/MotifWebAdminIconFont.woff2') format('woff2'), url('./fonts/MotifWebAdminIconFont.woff') format('woff'), url('./fonts/MotifWebAdminIconFont.ttf') format('truetype'), url('./fonts/MotifWebAdminIconFont.svg') format('svg');
   font-weight: normal;
   font-style: normal;
 }
