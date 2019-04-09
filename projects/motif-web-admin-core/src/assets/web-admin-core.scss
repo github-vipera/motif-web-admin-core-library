@@ -522,6 +522,9 @@ section .header.sub-header h1 {
   transition: .1s;
 }
 
+.row.fill {
+  overflow:hidden;
+}
 
 
 .mini-switch .ui-inputswitch-slider {
