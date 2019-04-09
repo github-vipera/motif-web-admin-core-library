@@ -22,32 +22,36 @@
 
 <div class="row fill">
 
-    <div>
+    <div style="height: 100%;">
 
         <wc-upload-panel #uploadSlideDownPanelEx (upload)="uploadLicense($event)" (uploadError)="onUploadError($event)"></wc-upload-panel>
 
         <kendo-grid #datagrid [data]="_licenses" 
-                [navigable]="false"> 
+                [navigable]="false"
+                [selectable]="true"
+                (selectionChange)="onSelectionChange($event)"> 
 
                 <kendo-grid-column
                     field="productName" title="Product Name" >
                 </kendo-grid-column>
 
                 <kendo-grid-column
-                    field="productVersion" title="Product Version" width="360">
+                    field="productVersion" title="Product Version">
                 </kendo-grid-column>
 
                 <kendo-grid-column
-                    field="issueDate" title="Issue Date" width="360" format="{0:dd/MM/yyyy HH:mm:ss}">
+                    field="issueDate" title="Issue Date" format="{0:dd/MM/yyyy HH:mm:ss}">
                 </kendo-grid-column>
 
                 <kendo-grid-column
-                    field="expiryDate" title="Expiry Date" width="360" format="{0:dd/MM/yyyy HH:mm:ss}">
+                    field="expiryDate" title="Expiry Date" format="{0:dd/MM/yyyy HH:mm:ss}">
                 </kendo-grid-column>
 
                 <kendo-grid-column title="" width="150" minResizableWidth="140">
                     <ng-template kendoGridCellTemplate let-dataItem let-columnIndex="columnIndex" let-rowIndex="rowIndex" let-column="column">
                             <wc-grid-editor-command 
+                                [cssClass]="'k-icon'"
+                                [stopPropagation]="true"
                                 [alignMode]="'end'"
                                 [hasConfirmation]="true"
                                 [confirmationTitle]="'Delete ?'"

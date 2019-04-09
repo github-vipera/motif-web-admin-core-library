@@ -9,6 +9,10 @@ body {
    background:$body_background_color;
 }
 
+.web-console-container {
+  overflow: hidden;
+} 
+
 .row > div .label {
    background: $main_background_color;
 }
@@ -299,6 +303,9 @@ table .tablesorter-childRow div div:first-child {
   color:$list_key_value;
 }
 
+.top-menu {
+  background-color:  $main_background_color;
+}
 
 footer {
   background:$footer_background_color;
@@ -515,6 +522,9 @@ section .header.sub-header h1 {
   transition: .1s;
 }
 
+.row.fill {
+  overflow:hidden;
+}
 
 
 .mini-switch .ui-inputswitch-slider {
