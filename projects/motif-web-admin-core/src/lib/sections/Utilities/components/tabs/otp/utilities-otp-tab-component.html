@@ -1,6 +1,6 @@
 <wa-utilities-otp-component-new-otp-dialog  #newOtpDialog (confirm)="onNewOtpConfirm($event)" [domain]="(dataSource.domain ? dataSource.domain.name : null)"></wa-utilities-otp-component-new-otp-dialog>
 
-<div>
+<div style="height:100%;">
 
     <div class="row spread">
         <div class="flex-toolbar" style="display:flex;align-items: center;">
@@ -14,7 +14,7 @@
                 <label>User</label>
                 <wc-user-selector-combobox #userSelector [domain]="(dataSource.domain ? dataSource.domain.name : null)"
                 [(ngModel)]="dataSource.user"
-                ></wc-user-selector-combobox>
+                ></wc-user-selector-combobox> 
             </div>
 
             <kendo-buttongroup look="flat">
@@ -32,36 +32,36 @@
 
     </div>
 
-    <div class="row fill">
+    <div class="row fill" style="height:90%;">
         
-        <div>
+        <div style="height:100%;">
             
             <kendo-grid [data]="dataSource.data" [scrollable]="true" [resizable]="true"
                 [reorderable]="true" 
             >
 
-                <kendo-grid-column field="id" title="ID" width="30">
+                <kendo-grid-column field="id" title="ID">
                 </kendo-grid-column>
 
-                <kendo-grid-column field="created" title="Created" width="100" format="{0:dd/MM/yyyy HH:mm:ss}">
+                <kendo-grid-column field="created" title="Created" format="{0:dd/MM/yyyy HH:mm:ss}">
                 </kendo-grid-column>
         
-                <kendo-grid-column field="consumed" title="Consumed" width="45">
+                <kendo-grid-column field="consumed" title="Consumed">
                     <ng-template kendoGridCellTemplate let-dataItem>
                         <label class="k-icon grid-cell-checkbox grid-cell-checkbox-{{dataItem.consumed}}"></label>
                     </ng-template>
                 </kendo-grid-column>
         
-                <kendo-grid-column field="key" title="Key (HASHED)" width="260">
+                <kendo-grid-column field="key" title="Key (HASHED)" >
                 </kendo-grid-column>
                 
-                <kendo-grid-column field="maxFail" title="Max Fail" width="40">
+                <kendo-grid-column field="maxFail" title="Max Fail" >
                 </kendo-grid-column>
         
-                <kendo-grid-column field="scope" title="Scope" width="200">
+                <kendo-grid-column field="scope" title="Scope">
                 </kendo-grid-column>
 
-                <kendo-grid-column field="expiry" title="Expiry" width="40">
+                <kendo-grid-column field="expiry" title="Expiry">
                 </kendo-grid-column>
 
                 <kendo-grid-column title="" width="150" minResizableWidth="140">
