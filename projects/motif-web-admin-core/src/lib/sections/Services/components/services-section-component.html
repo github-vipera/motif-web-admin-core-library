@@ -28,7 +28,7 @@
 </div>
 
 <div class="row fill">
-  <kendo-splitter>
+  <kendo-splitter style="height:100%;width:100%;">
     <kendo-splitter-pane style="overflow: hidden;">
       <div #servicetableContainer style="height: 100%;">
           <wa-service-catalog-selector [editable]="true" (nodeCommand)="onNodeCommand($event)" (nodeSelection)="nodeSelect($event)" #serviceCatalog></wa-service-catalog-selector>
