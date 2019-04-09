@@ -50,7 +50,7 @@
     "@progress/kendo-data-query": "^1.5.1",
     "@progress/kendo-drawing": "^1.5.10",
     "@progress/kendo-file-saver": "^1.0.7",
-    "@progress/kendo-theme-default": "^3.5.0",
+    "@progress/kendo-theme-default": "^3.5.1",
     "@swimlane/ngx-charts": "^10.1.0",
     "@types/dat-gui": "^0.6.3",
     "@types/file-saver": "^2.0.0",
@@ -93,7 +93,7 @@
     "uuid": "^3.3.2",
     "web-console-core": "^0.4.0",
     "web-console-login": "^0.1.1",
-    "web-console-ui-kit": "^0.7.0",
+    "web-console-ui-kit": "^0.8.0",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {
