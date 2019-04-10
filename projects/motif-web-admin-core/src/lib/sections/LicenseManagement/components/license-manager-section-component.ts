@@ -53,6 +53,10 @@ export class LicenseManagerSectionComponent implements OnInit, OnDestroy {
         this._subHandler = null;
     }
 
+    onSelectionChange(event){
+        console.log(">>>>>>>>>>> onSelectionChange");
+    }
+
     public refreshData(): void {
         this.loading = true;
         this._subHandler.add(this.licenseManager.listLicenses().subscribe((data) => {
@@ -160,4 +164,5 @@ export class LicenseManagerSectionComponent implements OnInit, OnDestroy {
             });
         }));
     }
+
 }

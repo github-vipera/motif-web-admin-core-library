@@ -1,7 +1,7 @@
 <wc-loading-overlay [visible]='loading'></wc-loading-overlay>
 
 <kendo-grid #datagrid [data]="tableModel.data" [selectable]="selectableSettings" (selectionChange)="onSelectionChange($event)"
->
+ style="height: 70%;">
 
   <kendo-grid-column field="name" title="Name" width="150">
   </kendo-grid-column>

@@ -9,6 +9,10 @@ body {
    background:$body_background_color;
 }
 
+.web-console-container {
+  overflow: hidden;
+} 
+
 .row > div .label {
    background: $main_background_color;
 }
@@ -518,6 +522,9 @@ section .header.sub-header h1 {
   transition: .1s;
 }
 
+.row.fill {
+  overflow:hidden;
+}
 
 
 .mini-switch .ui-inputswitch-slider {
@@ -537,6 +544,11 @@ section .header.sub-header h1 {
   -webkit-transform: translateX(0.8em);
   transform: translateX(0.8em);
 }
+
+.ui-progressbar-determinate .ui-progressbar-value {
+	background-color: #dadada;
+}
+
 
 @import './web-admin-core-toolbar.scss';
 @import './web-admin-core-tabs.scss';

@@ -27,9 +27,9 @@
 
 <div class="row fill">
 
-    <div>
+    <div style="height: 98%;">
 
-        <kendo-grid [data]="gridView" [columnMenu]="true" [resizable]="true" [reorderable]="true" [sort]="sort" (sortChange)="sortChange($event)" [sortable]="{ allowUnsort: true, mode: 'multiple' }"
+        <kendo-grid style="flex:1;" [data]="gridView" [columnMenu]="true" [resizable]="true" [reorderable]="true" [sort]="sort" (sortChange)="sortChange($event)" [sortable]="{ allowUnsort: true, mode: 'multiple' }"
             [scrollable]="true" [pageSize]="pageSize" [skip]="skip" [pageable]="{
                 buttonCount: 5,
                 info: true,
