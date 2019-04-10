@@ -1,4 +1,16 @@
 <wc-dashboard-header [title]="'Dashboard'"></wc-dashboard-header>
 
-<gridster [options]="options" class="row">
-</gridster>
+<div class="row fill">
+
+    <gridster [options]="options">
+
+        <gridster-item [item]="sessionCountItem">
+            <wc-panel [title]="'Sessions Count'">
+                <wc-data-counter [title]="'Sessions'" [value]="11"></wc-data-counter>
+            </wc-panel>
+        </gridster-item>
+        
+
+    </gridster>
+
+</div>

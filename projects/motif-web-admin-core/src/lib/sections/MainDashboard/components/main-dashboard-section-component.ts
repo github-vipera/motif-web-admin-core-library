@@ -50,6 +50,9 @@ export class MainDashboardSectionComponent implements OnInit, OnDestroy {
           };
     }
 
+    sessionCountItem:Gridster.GridsterItem = {cols: 3, rows: 2, y: 0, x: 0};
+
+
     /**
      * Angular ngOnInit
      */
