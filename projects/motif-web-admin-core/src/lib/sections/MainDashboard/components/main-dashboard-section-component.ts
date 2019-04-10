@@ -50,8 +50,8 @@ export class MainDashboardSectionComponent implements OnInit, OnDestroy {
           };
     }
 
+    currentMotifInstanceVersion:Gridster.GridsterItem = {cols: 3, rows: 1, y: 0, x: 0};
     sessionCountItem:Gridster.GridsterItem = {cols: 3, rows: 2, y: 0, x: 0};
-
 
     /**
      * Angular ngOnInit
