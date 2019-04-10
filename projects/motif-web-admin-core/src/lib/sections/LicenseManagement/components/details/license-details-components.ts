@@ -48,7 +48,7 @@ export class LicenseDetailsComponent implements OnInit {
         title: title,
         message: message,
         type: NotificationType.Info,
-        closable: true
+        closable: false
     });
 }
 
