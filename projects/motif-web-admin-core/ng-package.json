@@ -66,6 +66,7 @@
     "web-console-ui-kit",
     "zone.js",
     "color-parse",
-    "color-string"
+    "color-string",
+    "ngx-scrollbar"
   ]
 }
