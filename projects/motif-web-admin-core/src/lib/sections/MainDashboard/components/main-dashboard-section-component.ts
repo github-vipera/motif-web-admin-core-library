@@ -81,6 +81,7 @@ export class MainDashboardSectionComponent implements OnInit, OnDestroy {
     }
 
     freeMem() {
+        this.refreshInterval.unsubscribe();
     }
 
     private initModel(){
