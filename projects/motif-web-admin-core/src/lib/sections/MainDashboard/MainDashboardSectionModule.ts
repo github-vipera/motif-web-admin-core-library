@@ -5,6 +5,7 @@ import { LoggerModule } from 'ngx-logger';
 import { WCUIKitCoreModule, 
          WCUIKitDataModule, 
          WCUIKitKendoProviderModule, 
+         WCUIKitGridsterProviderModule,
          WCUIKitGridModule, 
          WCUIKitDirectivesModule } from 'web-console-ui-kit';
 import { ClipboardModule } from 'ngx-clipboard';
@@ -30,7 +31,8 @@ import { MainDashboardSectionComponent } from './components/main-dashboard-secti
         CommonsUIModule,
         WCUIKitGridModule,
         WCUIKitDirectivesModule,
-        DialogModule
+        DialogModule,
+        WCUIKitGridsterProviderModule
     ],
     entryComponents:[
         MainDashboardSectionComponent
