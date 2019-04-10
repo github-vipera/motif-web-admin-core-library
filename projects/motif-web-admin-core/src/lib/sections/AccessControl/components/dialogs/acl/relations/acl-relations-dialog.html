@@ -2,7 +2,8 @@
   [style]="{ width: '1280px', minWidth: '1024px', height: '800px'}" [minY]="70" [baseZIndex]="10000">
   <p-header> {{ dialogTitle }} <strong>[{{ entityName }}]</strong></p-header>
 
-  <div class="row fill" style="height: 100%;">
+
+  <div class="row fill noselect" style="height: 100%;">
     <kendo-splitter>
       <kendo-splitter-pane orientation="horizontal" [collapsible]="false" size="45%" [scrollable]="false">
         <label class="acl-label">CURRENT</label>
@@ -41,11 +42,17 @@
           </kendo-grid>
         </div>
       </kendo-splitter-pane>
-      <kendo-splitter-pane [collapsible]="false" size="10%">
-        <button kendoButton look="flat" [toggleable]="false" [disabled]="isAddSelectedDisabled" (click)="onAddSelected();">Add Selected</button>
-        <button kendoButton look="flat" [toggleable]="false" [disabled]="isAddAllDisabled" (click)="onAddAll();">Add All</button>
-        <button kendoButton look="flat" [toggleable]="false" [disabled]="isRemoveSelectedDisabled" (click)="onRemoveSelected();">Remove Selected</button>
-        <button kendoButton look="flat" [toggleable]="false" [disabled]="isRemoveAllDisabled" (click)="onRemoveAll();">Remove All</button>
+      <kendo-splitter-pane [collapsible]="false" [resizable]="false" size="10%">
+        <div class="button-grp">
+          <button kendoButton look="flat" [toggleable]="false" [disabled]="isAddSelectedDisabled" (click)="onAddSelected();">Add
+            Selected</button>
+          <button kendoButton look="flat" [toggleable]="false" [disabled]="isAddAllDisabled" (click)="onAddAll();">Add
+            All</button>
+          <button kendoButton look="flat" [toggleable]="false" [disabled]="isRemoveSelectedDisabled"
+            (click)="onRemoveSelected();">Remove Selected</button>
+          <button kendoButton look="flat" [toggleable]="false" [disabled]="isRemoveAllDisabled" (click)="onRemoveAll();">Remove
+            All</button>
+        </div>
       </kendo-splitter-pane>
       <kendo-splitter-pane [collapsible]="false" [scrollable]="false">
         <label class="acl-label">AVAILABLE</label>

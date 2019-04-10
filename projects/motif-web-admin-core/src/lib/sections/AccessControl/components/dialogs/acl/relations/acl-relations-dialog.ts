@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2, NgZone, ViewEncapsulation, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Renderer2, NgZone, ViewEncapsulation, Input, ViewChild, OnDestroy } from '@angular/core';
 import { NGXLogger } from 'web-console-core';
 import { EntityType } from '../../../editors/acl-editor-context';
 import { process, State } from '@progress/kendo-data-query';
@@ -14,28 +14,15 @@ import {
     ActionAssign,
     Permission
 } from '@wa-motif-open-api/auth-access-control-service';
-import { forkJoin, throwError, Observable, Subscription } from 'rxjs';
-import { take } from 'rxjs/operators/take';
-import { tap } from 'rxjs/operators/tap';
-import { fromEvent } from 'rxjs/observable/fromEvent';
+import { forkJoin, Observable, concat } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 const LOG_TAG = '[AclRelationsDialogComponent]';
 
 export enum GridType {
     CURRENT,
     AVAILABLE
-}
-
-export interface DragDropGridConfig {
-    selector: string;
-    grid: any;
-    provides: string;
-    accepts: Array<string>;
-}
-
-export interface DragData {
-    source: string;
-    data: any;
 }
 
 const tableRow = node => node.tagName.toLowerCase() === 'tr';
@@ -48,7 +35,7 @@ const closest = (node, predicate) => {
 };
 
 @Component({
-    selector: 'wa-platform-section-acl-relations-dialog',
+    selector: 'wa-access-control-section-acl-relations-dialog',
     styleUrls: ['./acl-relations-dialog.scss'],
     templateUrl: './acl-relations-dialog.html'
 })
@@ -64,23 +51,6 @@ export class AclRelationsDialogComponent implements OnInit, OnDestroy {
     isAddAllDisabled: boolean;
     isRemoveSelectedDisabled: boolean;
     isRemoveAllDisabled: boolean;
-
-    private dragDropConfigs: Array<DragDropGridConfig> = [
-        {
-            selector: '#currentGrid',
-            grid: 'currentGridView',
-            provides: 'current',
-            accepts: ['available']
-        },
-        {
-            selector: '#availableGrid',
-            grid: 'availableGridView',
-            provides: 'available',
-            accepts: ['current']
-        }
-    ];
-    private dragDropSubscriptions: Array<Subscription> = new Array(7);
-    private currentDragData: DragData;
 
     private currentItem: any;
     public currentData: any[] = [];
@@ -113,6 +83,8 @@ export class AclRelationsDialogComponent implements OnInit, OnDestroy {
         mode: 'multiple'
     };
 
+    private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
+
     constructor(private logger: NGXLogger,
         private usersService: UsersService,
         private groupsService: GroupsService,
@@ -128,15 +100,13 @@ export class AclRelationsDialogComponent implements OnInit, OnDestroy {
         this.adjustGridsHeight();
     }
 
-    public ngOnDestroy(): void {
-        for (let idx = 0; idx < this.dragDropSubscriptions.length; idx++) {
-            this.unsubscribeDragDrop(idx);
-        }
+    ngOnDestroy() {
+        this.logger.debug(LOG_TAG , 'ngOnDestroy');
+        this.destroy.next(null);
     }
 
     public show(entityType: EntityType, dataItem?: any, selectedDomain?: string): void {
         this.prepare(entityType, dataItem);
-        this.display = true;
     }
 
     public hide() {
@@ -163,6 +133,10 @@ export class AclRelationsDialogComponent implements OnInit, OnDestroy {
         this.currentSelection = [];
         this.availableSelection = [];
         switch (this._currentEntityType) {
+            case EntityType.User:
+                this.dialogTitle = 'User Groups';
+                this.entityName = dataItem.userId;
+                break;
             case EntityType.Admin:
                 this.dialogTitle = 'Admin Groups';
                 this.entityName = dataItem.userId;
@@ -185,90 +159,6 @@ export class AclRelationsDialogComponent implements OnInit, OnDestroy {
                 break;
         }
         this.loadGrids(dataItem);
-    }
-
-    private subscribeDragDrop(gridType: GridType): void {
-        this.unsubscribeDragDrop(gridType);
-        this.zone.onStable.pipe(take(1)).subscribe(() =>
-            this.dragDropSubscriptions[gridType] = this.handleDragAndDrop(this.dragDropConfigs[gridType]));
-    }
-
-    private unsubscribeDragDrop(gridType: GridType): void {
-        if (this.dragDropSubscriptions[gridType]) {
-            this.dragDropSubscriptions[gridType].unsubscribe();
-        }
-    }
-
-    private handleDragAndDrop(dragDropConfig: DragDropGridConfig): Subscription {
-        const sub = new Subscription(() => { });
-
-        const container: Element = document.querySelector(dragDropConfig.selector);
-        const tableRows = Array.from(container.querySelectorAll('.k-grid tr'));
-        tableRows.forEach(item => {
-            this.renderer.setAttribute(item, 'draggable', 'true');
-            const dragStart = fromEvent<DragEvent>(item, 'dragstart');
-            const dragOver = fromEvent(item, 'dragover');
-            const drop = fromEvent(item, 'drop');
-            const dragEnd = fromEvent(item, 'dragend');
-
-            sub.add(dragStart.pipe(
-                tap(({ dataTransfer }) => {
-                    try {
-                        const dragImgEl = document.createElement('span');
-                        dragImgEl.setAttribute('style', 'position: absolute; display: block; top: 0; left: 0; width: 0; height: 0;');
-                        document.body.appendChild(dragImgEl);
-                        dataTransfer.setDragImage(dragImgEl, 0, 0);
-                    } catch (err) {
-                        // IE doesn't support setDragImage
-                    }
-                    try {
-                        // Firefox won't drag without setting data
-                        dataTransfer.setData('application/json', '');
-                    } catch (err) {
-                        // IE doesn't support MIME types in setData
-                    }
-                })
-            ).subscribe(({ target }) => {
-                const row: HTMLTableRowElement = <HTMLTableRowElement>target;
-                const dataItem = this[dragDropConfig.grid].data[row.rowIndex];
-                dataItem.dragging = true;
-                this.currentDragData = {
-                    source: dragDropConfig.provides,
-                    data: dataItem
-                };
-                console.log('drag started for ' + this.currentDragData.source);
-            }));
-
-            sub.add(dragOver.subscribe((e: any) => {
-                if (dragDropConfig.accepts.includes(this.currentDragData.source)) {
-                    e.preventDefault();
-                    //        const dataItem = gridData.data.splice(draggedItemIndex, 1)[0];
-                    const dropIndex = closest(e.target, tableRow).rowIndex;
-                    const dropItem = this[dragDropConfig.grid].data[dropIndex];
-
-                    console.log(this.currentDragData.source + ' to ' + dragDropConfig.provides + ' is valid');
-                } else {
-                    console.log(this.currentDragData.source + ' to ' + dragDropConfig.provides + ' is NOT valid');
-                }
-            }));
-
-            sub.add(drop.subscribe((e: any) => {
-                if (dragDropConfig.accepts.includes(this.currentDragData.source)) {
-                    e.preventDefault();
-                    console.log('dropped item from ' + this.currentDragData.source + ' to ' + dragDropConfig.provides);
-                } else {
-                    console.log('cannot drop item from ' + this.currentDragData.source + ' to ' + dragDropConfig.provides);
-                }
-            }));
-
-            sub.add(dragEnd.subscribe((e: any) => {
-                e.preventDefault();
-                this.currentDragData.data.dragging = false;
-                console.log('drag ended for ' + this.currentDragData.source);
-            }));
-        });
-
-        return sub;
     }
 
     private adjustGridsHeight(): void {
@@ -300,12 +190,13 @@ export class AclRelationsDialogComponent implements OnInit, OnDestroy {
                 break;
         }
 
-        forkJoin(getCurrent, getAvailable).subscribe(response => {
+        forkJoin(getCurrent, getAvailable).pipe(takeUntil(this.destroy)).subscribe(response => {
             this.currentData = response[0];
             this.availableData = response[1];
             this.filterAvailable();
             this.refreshCurrent();
             this.refreshAvailable();
+            this.display = true;
         }, error => {
             this.logger.warn(LOG_TAG, 'Error loading data: ', error);
         });
@@ -325,14 +216,10 @@ export class AclRelationsDialogComponent implements OnInit, OnDestroy {
 
     private refreshCurrent(): void {
         this.currentGridView = process(this.currentData, this.currentDataState);
-
-        this.subscribeDragDrop(GridType.CURRENT);
     }
 
     private refreshAvailable(): void {
         this.availableGridView = process(this.availableData, this.availableDataState);
-
-        this.subscribeDragDrop(GridType.AVAILABLE);
     }
 
     onConfirm(): void {
@@ -413,25 +300,25 @@ export class AclRelationsDialogComponent implements OnInit, OnDestroy {
                 itemsToAdd.forEach(i => {
                     const ga: GroupAssign = {
                         name: i.name
-                    }
+                    };
                     addToCurrent.push(this.usersService.assignGroupToUser(this.currentItem.domain, this.currentItem.userId, ga));
-                });
+                }, this);
                 break;
             case EntityType.Group:
                 itemsToAdd.forEach(i => {
                     const ra: RoleAssign = {
                         name: i.name
-                    }
+                    };
                     addToCurrent.push(this.groupsService.assignRoleToGroup(this.currentItem.domain, this.currentItem.name, ra));
-                });
+                }, this);
                 break;
             case EntityType.Role:
                 itemsToAdd.forEach(i => {
                     const aa: ActionAssign = {
                         name: i.name
-                    }
+                    };
                     addToCurrent.push(this.rolesService.assignActionToRole(this.currentItem.name, aa));
-                });
+                }, this);
                 break;
             case EntityType.Action:
                 itemsToAdd.forEach(i => {
@@ -439,13 +326,13 @@ export class AclRelationsDialogComponent implements OnInit, OnDestroy {
                         component: i.component,
                         action: i.action,
                         target: i.target
-                    }
+                    };
                     addToCurrent.push(this.actionsService.assignPermissionToAction(this.currentItem.name, p));
-                });
+                }, this);
                 break;
         }
 
-        forkJoin(addToCurrent).subscribe(response => {
+        forkJoin(addToCurrent).pipe(takeUntil(this.destroy)).subscribe(response => {
             this.loadGrids(this.currentItem);
         }, error => {
             this.logger.warn(LOG_TAG, 'Error writing data: ', error);
@@ -460,27 +347,27 @@ export class AclRelationsDialogComponent implements OnInit, OnDestroy {
             case EntityType.Client:
                 itemsToRemove.forEach(i => {
                     removeFromCurrent.push(this.usersService.removeGroupFromUser(this.currentItem.domain, this.currentItem.userId, i.name));
-                });
+                }, this);
                 break;
             case EntityType.Group:
                 itemsToRemove.forEach(i => {
                     removeFromCurrent.push(this.groupsService.removeRoleFromGroup(this.currentItem.domain, this.currentItem.name, i.name));
-                });
+                }, this);
                 break;
             case EntityType.Role:
                 itemsToRemove.forEach(i => {
                     removeFromCurrent.push(this.rolesService.removeActionFromRole(this.currentItem.name, i.name));
-                });
+                }, this);
                 break;
             case EntityType.Action:
                 itemsToRemove.forEach(i => {
                     removeFromCurrent.push(this.actionsService.
                         removePermissionFromAction(this.currentItem.name, i.component, i.action, i.target));
-                });
+                }, this);
                 break;
         }
 
-        forkJoin(removeFromCurrent).subscribe(response => {
+        forkJoin(removeFromCurrent).pipe(takeUntil(this.destroy)).subscribe(response => {
             this.loadGrids(this.currentItem);
         }, error => {
             this.logger.warn(LOG_TAG, 'Error writing data: ', error);

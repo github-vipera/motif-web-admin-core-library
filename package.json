@@ -68,6 +68,7 @@
     "@wa-motif-open-api/platform-service": "^0.2.5",
     "@wa-motif-open-api/plugin-registry-service": "^0.2.5",
     "@wa-motif-open-api/rest-content-service": "^0.2.5",
+    "@wa-motif-open-api/scheduler-service": "^0.2.5",
     "@wa-motif-open-api/security-service": "^0.2.5",
     "@wa-motif-open-api/web-content-service": "^0.2.5",
     "angular-gridster2": "^7.1.0",

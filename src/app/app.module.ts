@@ -32,6 +32,7 @@ import { WebContentSectionModule } from 'motif-web-admin-core';
 import { WAThemeDesignerModule } from 'motif-web-admin-core';
 import { WAThemeDesignerService } from 'motif-web-admin-core';
 import { RESTManagerSectionModule } from 'motif-web-admin-core';
+import { SchedulerSectionModule } from 'motif-web-admin-core';
 
 const LoggerModuleConfigured = LoggerModule.forRoot({
   level: (environment.production ? NgxLoggerLevel.OFF : NgxLoggerLevel.DEBUG),
@@ -81,7 +82,8 @@ const appRoutes: Routes = [
     UtilitiesSectionModule,
     CountersAndThresholdsSectionModule,
     WebContentSectionModule,
-    RESTManagerSectionModule
+    RESTManagerSectionModule,
+    SchedulerSectionModule
   ],
   providers: [
     { provide: WC_API_BASE_PATH, useValue: environment.API_BASE_PATH },

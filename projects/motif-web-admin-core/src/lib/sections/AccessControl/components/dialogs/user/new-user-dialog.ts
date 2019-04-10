@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ElementRef, Renderer2, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, Renderer2, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { NGXLogger } from 'web-console-core';
 import { DialogType, EntityType } from '../../editors/acl-editor-context';
 
@@ -20,7 +20,7 @@ interface State {
 }
 
 @Component({
-    selector: 'wa-platform-section-new-user-dialog',
+    selector: 'wa-access-control-section-new-user-dialog',
     styleUrls: ['./new-user-dialog.scss'],
     templateUrl: './new-user-dialog.html'
 })
@@ -57,6 +57,10 @@ export class NewUserDialogComponent implements OnInit {
         this.logger.debug(LOG_TAG, 'Initializing...');
     }
 
+    ngOnDestroy() {
+        this.logger.debug(LOG_TAG , 'ngOnDestroy');
+      }
+    
     public show(dialogType:DialogType, entityType: EntityType, dataItem?:any): void {
         this.prepare(dialogType, entityType, dataItem);
         this.display = true;

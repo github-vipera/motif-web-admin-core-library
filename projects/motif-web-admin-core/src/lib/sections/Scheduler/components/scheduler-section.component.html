@@ -1,0 +1,65 @@
+<wc-dashboard-header [title]="'Scheduler Management'"></wc-dashboard-header>
+<wc-loading-overlay [visible]='loading'></wc-loading-overlay>
+
+<div class="row spread">
+    <div class="flex-cmd">
+        <kendo-buttongroup look="flat">
+          <button
+            kendoButton
+            [toggleable]="false"
+            [icon]="'refresh'"
+            (click)="onRefreshClicked()"
+          >
+            Refresh
+          </button>
+        </kendo-buttongroup>
+      </div>
+</div>
+
+<div class="row fill">
+    <div>
+        <kendo-grid [data]="scheduledTasksList" [scrollable]="true">
+            <kendo-grid-column field="created" title="Created" format="{0:dd/MM/yyyy HH:mm:ss}">
+            </kendo-grid-column>
+            <kendo-grid-column field="updated" title="Updated" format="{0:dd/MM/yyyy HH:mm:ss}">
+            </kendo-grid-column>
+            <kendo-grid-column field="name" title="Name" witdh="30">
+            </kendo-grid-column>
+            <kendo-grid-column field="cronPattern" title="Cron">
+            </kendo-grid-column>
+            <kendo-grid-column field="enabled" title="Enabled" witdth="20">
+            </kendo-grid-column>
+            <kendo-grid-column field="serviceName" title="Service" witdh="50">
+            </kendo-grid-column>
+            <kendo-grid-column field="serviceMethod" title="Method" witdh="50">
+            </kendo-grid-column>
+            <kendo-grid-column field="failurePolicy" title="On Failure">
+            </kendo-grid-column>
+            <kendo-grid-column field="clusterExecutionPolicy" title="Cluster Policy">
+            </kendo-grid-column>
+            
+            <kendo-grid-column title="" width="150" minResizableWidth="140">
+                <ng-template kendoGridCellTemplate let-dataItem let-columnIndex="columnIndex" let-rowIndex="rowIndex" let-column="column">
+                        <wc-grid-editor-command 
+                            [alignMode]="'end'"
+                            [hasConfirmation]="true"
+                            [confirmationTitle]="'Revoke ?'"
+                            [rowIndex]="rowIndex" 
+                            [columnIndex]="columnIndex" 
+                            [column]="column" 
+                            [commandIcon]="'wa-ico-no'"
+                            [dataItem]="dataItem"
+                            (commandConfirm)="onDeleteOKPressed(dataItem)"  
+                            >
+                        </wc-grid-editor-command>
+                </ng-template>
+            </kendo-grid-column>
+
+            <div *kendoGridDetailTemplate="let dataItem">
+                <wa-scheduler-section-task-details [scheduledTask]="dataItem.name"></wa-scheduler-section-task-details>
+            </div>
+        </kendo-grid>
+
+    </div>
+
+</div>
