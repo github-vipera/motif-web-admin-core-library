@@ -14,7 +14,7 @@ const LOG_TAG = '[SchedulerSection]';
   templateUrl: './scheduler-section.component.html'
 })
 @PluginView('Scheduler', {
-  iconName: 'wa-ico-users'
+  iconName: 'wa-ico-scheduler'
 })
 export class SchedulerSectionComponent implements OnInit, OnDestroy {
 

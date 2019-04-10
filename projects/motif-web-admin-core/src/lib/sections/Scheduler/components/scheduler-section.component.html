@@ -27,8 +27,34 @@
             </kendo-grid-column>
             <kendo-grid-column field="cronPattern" title="Cron">
             </kendo-grid-column>
+
+            <!--
             <kendo-grid-column field="enabled" title="Enabled" witdth="20">
             </kendo-grid-column>
+            -->
+
+            <kendo-grid-column field="enabled" title="Status">
+                <ng-template kendoGridCellTemplate let-dataItem let-columnIndex="columnIndex" let-rowIndex="rowIndex" let-column="column">
+                        <wc-grid-editor-command
+                        [rowIndex]="rowIndex" 
+                        [hasConfirmation]="true"
+                        [confirmationTitleProvider]="statusConfirmationTitleProvider"
+                        [columnIndex]="columnIndex" 
+                        [column]="column" 
+                        [value]="dataItem[column.field]" 
+                        [dataItem]="dataItem"
+                        (commandConfirm)="onStatusTogglePressed(dataItem)"  
+                        >
+                        <span *ngIf="dataItem.enabled" class="badge badge-status badge-enabled">
+                                ENABLED
+                            </span>
+                            <span *ngIf="!dataItem.enabled" class="badge badge-status  badge-disabled">
+                                    DISABLED
+                            </span>
+                        </wc-grid-editor-command>
+                </ng-template>
+          </kendo-grid-column>
+
             <kendo-grid-column field="serviceName" title="Service" witdh="50">
             </kendo-grid-column>
             <kendo-grid-column field="serviceMethod" title="Method" witdh="50">
