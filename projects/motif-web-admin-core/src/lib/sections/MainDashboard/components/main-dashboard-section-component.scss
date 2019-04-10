@@ -1,0 +1,18 @@
+:host{
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+ }
+
+ .dashboard-item-label {
+    text-align: center;
+    padding: 4px;
+}
+
+ .dashboard-item-label-primary {
+    font-size: 1rem;
+ }
+
+ .dashboard-item-label-secondary {
+}
+

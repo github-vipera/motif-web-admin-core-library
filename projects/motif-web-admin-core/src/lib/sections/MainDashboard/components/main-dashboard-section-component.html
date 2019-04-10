@@ -1,0 +1,26 @@
+<wc-dashboard-header [title]="'Dashboard'"></wc-dashboard-header>
+
+<div class="row fill">
+
+    <gridster [options]="options">
+
+        <gridster-item [item]="currentMotifInstanceVersion">
+            <wc-panel [title]="'MOTIF Server Instance'">
+                <div style="display: flex;flex-direction: column;">
+                    <label class="dashboard-item-label dashboard-item-label-primary">{{model.serverInstance.version}}</label>
+                    <label class="dashboard-item-label dashboard-item-label-secondary">{{model.serverInstance.nodeRunning}}</label>
+                </div>
+            </wc-panel>
+        </gridster-item>
+    
+        
+        <gridster-item [item]="sessionCountItem">
+            <wc-panel [title]="'Sessions Count'">
+                <wc-data-counter [title]="'Active Sessions'" [value]="model.security.sessions.activeCount"></wc-data-counter>
+            </wc-panel>
+        </gridster-item>
+        
+
+    </gridster>
+
+</div>

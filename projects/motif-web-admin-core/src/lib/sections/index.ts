@@ -13,3 +13,4 @@ export * from './Utilities/UtilitiesSectionModule';
 export * from './WebContent/WebContentSectionModule';
 export * from './RESTManager/RESTManagerSectionModule';
 export * from './Scheduler/SchedulerSectionModule';
+export * from './MainDashboard/MainDashboardSectionModule';
