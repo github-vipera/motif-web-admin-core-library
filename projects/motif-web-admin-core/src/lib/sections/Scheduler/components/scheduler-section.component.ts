@@ -5,6 +5,7 @@ import * as _ from 'lodash';
 import { WCNotificationCenter, NotificationType } from 'web-console-ui-kit';
 import { ScheduledTask, ScheduledTaskExecutionEntity, SchedulerService } from '@wa-motif-open-api/scheduler-service';
 import { GridComponent } from '@progress/kendo-angular-grid';
+import { WCGridEditorCommandsConfig, WCGridEditorCommandComponentEvent, WCConfirmationTitleProvider } from 'web-console-ui-kit';
 
 const LOG_TAG = '[SchedulerSection]';
 
@@ -26,6 +27,18 @@ export class SchedulerSectionComponent implements OnInit, OnDestroy {
 
   //Grid Options
   loading: boolean;
+
+
+  statusConfirmationTitleProvider: WCConfirmationTitleProvider = {
+    getTitle(rowData): string {
+        if (rowData.enabled){
+            return "Disable ?";
+        } else {
+            return "Enable ?";
+        }
+    }
+}
+
 
   constructor(private logger: NGXLogger,
     private schedulerService: SchedulerService,
@@ -96,4 +109,63 @@ export class SchedulerSectionComponent implements OnInit, OnDestroy {
   onRefreshClicked() {
     this.refreshData();
   }
+
+  onStatusTogglePressed(dataItem): void {
+    this.logger.debug(LOG_TAG, 'onStatusTogglePressed dataItem: ', dataItem);
+    this.changeTaskStatus(dataItem.name, !dataItem.enabled);
+  }
+
+
+  private changeTaskStatus(taskName:string, enabled:boolean) {
+    if (enabled){
+      this.enabledTask(taskName);
+    } else {
+      this.disableTask(taskName);
+    }
+  }
+
+  private disableTask(taskName:string){
+    this.schedulerService.disableTask(taskName).subscribe(value => {
+      this.refreshData();
+      this.notificationCenter.post({
+        name: 'DisableScheduledTaskSuccess',
+        title: 'Disable Scheduled Task',
+        message: 'The Scheduled Task has been successfully disabled',
+        type: NotificationType.Success
+    });
+
+    }, (error) => {
+      this.notificationCenter.post({
+        name: 'DisableScheduledTaskError',
+        title: 'Disable Scheduled Task',
+        message: 'The Scheduled Task could not be disabled.',
+        type: NotificationType.Error,
+        error: error,
+        closable: true
+      });
+    });
+  }
+
+  private enabledTask(taskName:string){
+    this.schedulerService.enableTask(taskName).subscribe(value => {
+      this.refreshData();
+      this.notificationCenter.post({
+        name: 'EnableScheduledTaskSuccess',
+        title: 'Enable Scheduled Task',
+        message: 'The Scheduled Task has been successfully enabled',
+        type: NotificationType.Success
+    });
+
+    }, (error) => {
+      this.notificationCenter.post({
+        name: 'EnableScheduledTaskError',
+        title: 'Enable Scheduled Task',
+        message: 'The Scheduled Task could not be enabled.',
+        type: NotificationType.Error,
+        error: error,
+        closable: true
+      });
+    });
+  }
+
 }
