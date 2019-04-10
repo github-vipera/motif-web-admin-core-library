@@ -47,9 +47,28 @@
       <kendo-grid-column field="info.version" title="Version">
       </kendo-grid-column>
 
+      <!--
       <kendo-grid-column field="info.context" title="Context">
       </kendo-grid-column>
+      -->
 
+      <kendo-grid-column field="info.context" title="Context">
+          <ng-template
+          kendoGridCellTemplate
+          let-dataItem
+          let-columnIndex="columnIndex"
+          let-rowIndex="rowIndex"
+          let-column="column"
+        >
+          <a *ngIf="dataItem.info.syntheticStatus === 'PUBLISHED'; else notPublished" class="wc-web-content-url" 
+            href="{{dataItem.info.url}}" target="_blank">{{dataItem.info.context}}</a> 
+            <ng-template #notPublished>
+                {{dataItem.info.context}}
+            </ng-template>
+
+        </ng-template>
+      </kendo-grid-column>
+  
       <kendo-grid-column field="info.domain" title="Domain">
       </kendo-grid-column>
 

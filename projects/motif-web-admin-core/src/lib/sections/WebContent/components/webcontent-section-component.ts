@@ -126,6 +126,7 @@ export class WebContentSectionComponent implements OnInit, OnDestroy {
 
             this.gridData = _.forEach(data, (element: BundleStatus) => {
                 element.info["syntheticStatus"] = BundleUtils.buildSyntheticStatus(element);
+                element.info["url"] = BundleUtils.buildUrl(element);
             });
 
             this.logger.debug(LOG_TAG, '*** Get bundle statuses results gridData:', this.gridData);
