@@ -12,7 +12,7 @@ const LOG_TAG = '[MainDashboardSectionComponent]';
     templateUrl: './main-dashboard-section-component.html'
   })
   @PluginView('Dashboard', {
-    iconName: 'wa-ico-plugins'
+    iconName: 'wa-ico-dashboard'
 })
 export class MainDashboardSectionComponent implements OnInit, OnDestroy {
 
