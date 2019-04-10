@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs';
 import { DashboardModel } from './../data/dashboard-model';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { PluginView } from 'web-console-core';
@@ -24,6 +25,7 @@ export class MainDashboardSectionComponent implements OnInit, OnDestroy {
     options: Gridster.GridsterConfig;
 
     private refreshInterval: any;
+    private intervalSubscription: Subscription;
 
     constructor(private logger: NGXLogger,
         private securityService: SecurityService,
@@ -70,7 +72,7 @@ export class MainDashboardSectionComponent implements OnInit, OnDestroy {
         this.initModel();
         this.loadData();
         this.refreshInterval = interval(4000);
-        this.refreshInterval.subscribe((tick)=>{
+        this.intervalSubscription = this.refreshInterval.subscribe((tick)=>{
             this.loadData();
         })
     }
@@ -81,7 +83,7 @@ export class MainDashboardSectionComponent implements OnInit, OnDestroy {
     }
 
     freeMem() {
-        this.refreshInterval.unsubscribe();
+        this.intervalSubscription.unsubscribe();
     }
 
     private initModel(){
