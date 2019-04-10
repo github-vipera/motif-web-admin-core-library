@@ -1,7 +1,10 @@
+import { DashboardModel } from './../data/dashboard-model';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { PluginView } from 'web-console-core';
 import { NGXLogger} from 'web-console-core';
 import { Gridster } from 'web-console-ui-kit'
+import { SecurityService, Session } from '@wa-motif-open-api/security-service'
+import { interval } from 'rxjs';
 
 const LOG_TAG = '[MainDashboardSectionComponent]';
 
@@ -16,9 +19,15 @@ const LOG_TAG = '[MainDashboardSectionComponent]';
 })
 export class MainDashboardSectionComponent implements OnInit, OnDestroy {
 
+    model: DashboardModel;
+
     options: Gridster.GridsterConfig;
 
-    constructor(private logger: NGXLogger) {
+    private refreshInterval: any;
+
+    constructor(private logger: NGXLogger,
+        private securityService: SecurityService,
+        ) {
         this.logger.debug(LOG_TAG , 'Opening...');
 
         this.options = {
@@ -50,14 +59,20 @@ export class MainDashboardSectionComponent implements OnInit, OnDestroy {
           };
     }
 
-    currentMotifInstanceVersion:Gridster.GridsterItem = {cols: 3, rows: 1, y: 0, x: 0};
-    sessionCountItem:Gridster.GridsterItem = {cols: 3, rows: 2, y: 0, x: 0};
+    currentMotifInstanceVersion:Gridster.GridsterItem = {cols: 3, rows: 2, y: 0, x: 0};
+    sessionCountItem:Gridster.GridsterItem = {cols: 3, rows: 2, y: 0, x: 3};
 
     /**
      * Angular ngOnInit
      */
     ngOnInit() {
         this.logger.debug(LOG_TAG , 'Initializing...');
+        this.initModel();
+        this.loadData();
+        this.refreshInterval = interval(4000);
+        this.refreshInterval.subscribe((tick)=>{
+            this.loadData();
+        })
     }
 
     ngOnDestroy() {
@@ -68,6 +83,23 @@ export class MainDashboardSectionComponent implements OnInit, OnDestroy {
     freeMem() {
     }
 
+    private initModel(){
+        this.model = {
+            security: {
+                sessions: {
+                    activeCount: '...'
+                },
+                oauth2: {
+                    activeTokens: 'Loading...'
+                }
+            },
+            serverInstance: {
+                nodeRunning: "Loading...",
+                version: "Loading..."
+            }
+        }
+    }
+
     private itemChange(item, itemComponent) {
         console.info('itemChanged', item, itemComponent);
     }
@@ -76,5 +108,12 @@ export class MainDashboardSectionComponent implements OnInit, OnDestroy {
         console.info('itemResized', item, itemComponent);
     }
 
+    private loadData(){
+        this.securityService.getSessions().subscribe((results:Array<Session>)=>{
+            this.model.security.sessions.activeCount = "" + results.length;
+        }, (error)=>{
+            alert(JSON.stringify(error));
+        });
+    }
 
 }

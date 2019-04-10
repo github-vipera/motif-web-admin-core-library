@@ -7,19 +7,19 @@
         <gridster-item [item]="currentMotifInstanceVersion">
             <wc-panel [title]="'MOTIF Server Instance'">
                 <div style="display: flex;flex-direction: column;">
-                    <label class="dashboard-item-label dashboard-item-label-primary">Motif 2.0.1 Beta 1</label>
-                    <label class="dashboard-item-label dashboard-item-label-secondary">Local Node</label>
+                    <label class="dashboard-item-label dashboard-item-label-primary">{{model.serverInstance.version}}</label>
+                    <label class="dashboard-item-label dashboard-item-label-secondary">{{model.serverInstance.nodeRunning}}</label>
                 </div>
             </wc-panel>
         </gridster-item>
     
         
         <gridster-item [item]="sessionCountItem">
-                <wc-panel [title]="'Sessions Count'">
-                    <wc-data-counter [title]="'Active Sessions'" [value]="11"></wc-data-counter>
-                </wc-panel>
-            </gridster-item>
-    
+            <wc-panel [title]="'Sessions Count'">
+                <wc-data-counter [title]="'Active Sessions'" [value]="model.security.sessions.activeCount"></wc-data-counter>
+            </wc-panel>
+        </gridster-item>
+        
 
     </gridster>
 
