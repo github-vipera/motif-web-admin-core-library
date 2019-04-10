@@ -12,3 +12,4 @@ export * from './Sessions/SessionsSectionModule';
 export * from './Utilities/UtilitiesSectionModule';
 export * from './WebContent/WebContentSectionModule';
 export * from './RESTManager/RESTManagerSectionModule';
+export * from './MainDashboard/MainDashboardSectionModule';
