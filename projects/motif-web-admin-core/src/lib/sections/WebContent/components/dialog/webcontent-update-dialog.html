@@ -12,12 +12,12 @@
   <label class="switch-control-label"> 
     Domain
 </label>
-  <wc-domain-selector-combobox [(ngModel)]="selectedDomain"></wc-domain-selector-combobox>
+  <wc-domain-selector-combobox #domainSelector [(ngModel)]="selectedDomain" [disabled]="domain?true:null"></wc-domain-selector-combobox>
 
   <label class="switch-control-label"> 
     Application
   </label>
-  <wc-application-selector-combobox [domain]="(selectedDomain ? selectedDomain.name : null)" [(ngModel)]="selectedApplication"></wc-application-selector-combobox>
+  <wc-application-selector-combobox #applicationSelector [domain]="(selectedDomain ? selectedDomain.name : null)" [(ngModel)]="selectedApplication"  [disabled]="application?true:null"></wc-application-selector-combobox>
 
 <kendo-textbox-container
 floatingLabel="Context"

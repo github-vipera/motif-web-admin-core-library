@@ -371,7 +371,7 @@ export class WebContentSectionComponent implements OnInit, OnDestroy {
 
     doEditBundle(event: WCGridEditorCommandComponentEvent) {
         this.logger.debug(LOG_TAG, 'doEditBundle : ', event);
-        this._updateDialog.show(event.rowData.dataItem.info.name, event.rowData.dataItem.info.version, "", "", event.rowData.dataItem.info.context);
+        this._updateDialog.show(event.rowData.dataItem.info.name, event.rowData.dataItem.info.version, event.rowData.dataItem.info.domain, event.rowData.dataItem.info.application, event.rowData.dataItem.info.context);
     }
 
     onUploadError(error){
