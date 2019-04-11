@@ -1,3 +1,4 @@
+import { StatusBarService } from 'web-console-core';
 import { BundleStatus, ClusterBundleStatus } from '@wa-motif-open-api/web-content-service';
 
 export enum PublishingStatus {
@@ -51,4 +52,12 @@ export class BundleUtils {
             return PublishingStatus.Error;
         }
     }
+
+
+    public static buildUrl(statusInfo: BundleStatus): string {
+        let currentUrl = window.location.href;
+        let arr = currentUrl.split("/");
+        return arr[0] + "//" + arr[2] + "/" + statusInfo.info.context;
+    }
+
 }

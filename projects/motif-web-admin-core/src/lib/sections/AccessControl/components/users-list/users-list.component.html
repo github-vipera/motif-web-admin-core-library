@@ -37,14 +37,10 @@
             </ng-template>
             <ng-template kendoGridCellTemplate let-dataItem let-columnIndex="columnIndex" let-rowIndex="rowIndex"
                 let-column="column">
-                <wc-grid-editor-command [rowIndex]="rowIndex" [hasConfirmation]="true"
-                    [confirmationTitleProvider]="statusConfirmationTitleProvider" [columnIndex]="columnIndex" [column]="column"
-                    [value]="dataItem[column.field]" [dataItem]="dataItem" (commandConfirm)="onStatusChangeOKPressed(dataItem)">
-                    <span class="badge badge-status user-status-{{dataItem[column.field]}}">
-                        {{dataItem[column.field]}}
-                    </span>
-                </wc-grid-editor-command>
-            </ng-template>
+                <span class="badge badge-status user-status-{{dataItem[column.field]}}">
+                    {{dataItem[column.field]}}
+                </span>
+        </ng-template>
         </kendo-grid-column>
         <kendo-grid-column title="" width="150" minResizableWidth="140">
             <ng-template kendoGridCellTemplate let-dataItem let-columnIndex="columnIndex" let-rowIndex="rowIndex"

@@ -74,7 +74,8 @@ export class ServiceCatalogSelectorDialogComponent {
         this.title = title;
         this.userData = userData;
         this.opened = true;
-        this._serviceSelector.reloadData();
+        this._serviceSelector.reloadData().subscribe((data)=>{
+        });
     }
 
     get canSelect(): boolean {

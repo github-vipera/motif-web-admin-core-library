@@ -5,6 +5,12 @@ export enum DialogType {
     Edit = 'Edit'
 }
 
+export enum RowCommandType {
+    Relations = 'Relations',
+    Edit = 'Edit',
+    Delete = 'Delete'
+  }
+  
 export enum EntityType {
     None,
     User,

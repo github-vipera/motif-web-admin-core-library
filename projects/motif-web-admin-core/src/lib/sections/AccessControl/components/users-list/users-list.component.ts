@@ -1,26 +1,24 @@
-import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-import { WCToasterService, WCConfirmationTitleProvider, WCGridEditorCommandsConfig, WCGridEditorCommandComponentEvent } from 'web-console-ui-kit'
-import { SortDescriptor, orderBy, GroupDescriptor, process, DataResult, FilterDescriptor, CompositeFilterDescriptor } from '@progress/kendo-data-query';
-import { PageChangeEvent, GridComponent, DataStateChangeEvent } from '@progress/kendo-angular-grid';
-import { MotifQueryFilter, MotifQuerySort, MotifQueryResults, MotifQueryService, MotifPagedQuery } from 'web-console-core';
-import { SelectableSettings, SelectionEvent, RowArgs } from '@progress/kendo-angular-grid';
-import { DomainsService, Domain, UsersService, User } from '@wa-motif-open-api/platform-service'
-import { String, StringBuilder } from 'typescript-string-operations'
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { WCConfirmationTitleProvider, WCGridEditorCommandsConfig,
+  WCGridEditorCommandComponentEvent } from 'web-console-ui-kit';
+import { SortDescriptor, DataResult, FilterDescriptor,
+  CompositeFilterDescriptor } from '@progress/kendo-data-query';
+import { PageChangeEvent, GridComponent } from '@progress/kendo-angular-grid';
+import { MotifQueryFilter, MotifQuerySort, MotifQueryResults, MotifQueryService } from 'web-console-core';
+import { SelectableSettings, SelectionEvent } from '@progress/kendo-angular-grid';
+import { DomainsService, Domain, UsersService, User } from '@wa-motif-open-api/platform-service';
+import { String } from 'typescript-string-operations';
 import * as _ from 'lodash';
 import { HttpParams } from '@angular/common/http';
 import { WCSubscriptionHandler } from '../../../../components/Commons/wc-subscription-handler';
-import { Observable } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { NGXLogger } from 'web-console-core';
-import { WCNotificationCenter, NotificationType } from 'web-console-ui-kit';
+import { WCNotificationCenter } from 'web-console-ui-kit';
+import { RowCommandType } from '../editors/acl-editor-context';
 
-const LOG_TAG = "[AccessControlSection/UsersList]";
-const USERS_LIST_ENDPOINT = "/platform/domains/{0}/users"
-
-export enum RowCommandType {
-  Relations = 'Relations',
-  Edit = 'Edit',
-  Delete = 'Delete'
-}
+const LOG_TAG = '[AccessControlSection/UsersList]';
+const USERS_LIST_ENDPOINT = '/platform/domains/{0}/users';
 
 export interface RowCommandEvent {
   commandType: RowCommandType,
@@ -35,11 +33,11 @@ export interface NewUserModel {
 }
 
 @Component({
-  selector: "wa-users-list",
-  styleUrls: ["./users-list.component.scss"],
-  templateUrl: "./users-list.component.html"
+  selector: 'wa-access-control-section-users-list',
+  styleUrls: ['./users-list.component.scss'],
+  templateUrl: './users-list.component.html'
 })
-export class UsersListComponent implements OnInit {
+export class UsersListComponent implements OnInit, OnDestroy {
   @ViewChild(GridComponent) _grid: GridComponent;
 
   //Data
@@ -47,14 +45,14 @@ export class UsersListComponent implements OnInit {
   public domainList: Array<Domain> = [];
 
   public _selectedDomain: string; //combo box selection
-  @Input("selection")
+  @Input('selection')
   selectedKeys: Array<string> = [];
 
   //Grid Options
   public filter: CompositeFilterDescriptor;
   public sort: SortDescriptor[] = [];
   public gridView: DataResult;
-  public type: "numeric" | "input" = "numeric";
+  public type: 'numeric' | 'input' = 'numeric';
   public pageSize = 15;
   public skip = 0;
   public currentPage = 1;
@@ -63,25 +61,33 @@ export class UsersListComponent implements OnInit {
   public isFieldSortable = false;
   public selectableSettings: SelectableSettings = {
     checkboxOnly: false,
-    mode: "single"
+    mode: 'single'
   };
+
+  private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
   commands: WCGridEditorCommandsConfig = [
     {
-      commandIcon: "wa-ico-edit",
-      commandId: RowCommandType.Edit,
-      title: "Edit"
+      cssClass: 'k-icon',
+      commandIcon: 'wa-ico-links',
+      commandId: RowCommandType.Relations,
+      title: 'Relations'
     },
     {
-      commandIcon: "wa-ico-no",
+      cssClass: 'k-icon',
+      commandIcon: 'wa-ico-edit',
+      commandId: RowCommandType.Edit,
+      title: 'Edit'
+    },
+    {
+      cssClass: 'k-icon',
+      commandIcon: 'wa-ico-no',
       commandId: RowCommandType.Delete,
-      title: "Delete",
+      title: 'Delete',
       hasConfirmation: true,
-      confirmationTitle: "Delete ?"
+      confirmationTitle: 'Delete?'
     }
   ];
-
-  private _subHandler: WCSubscriptionHandler = new WCSubscriptionHandler();
 
   @Output() rowCommandClick: EventEmitter<RowCommandEvent> = new EventEmitter<
     RowCommandEvent
@@ -104,20 +110,8 @@ export class UsersListComponent implements OnInit {
   selectionChange = new EventEmitter<SelectionEvent>();
 
   //new user form
-  @Input("newUserId") newUserId: string = "";
-  @Input("newUserModel") newUserModel: NewUserModel = {};
-
-  statusConfirmationTitleProvider: WCConfirmationTitleProvider = {
-    getTitle(rowData): string {
-      if (rowData.state && rowData.state.toUpperCase() === "ACTIVE") {
-        return "Suspend?";
-      } else if (rowData.state && rowData.state.toUpperCase() === "PREACTIVE") {
-        return "Activate?";
-      } else {
-        return "";
-      }
-    }
-  };
+  @Input('newUserId') newUserId: string = '';
+  @Input('newUserModel') newUserModel: NewUserModel = {};
 
   constructor(
     private logger: NGXLogger,
@@ -126,10 +120,15 @@ export class UsersListComponent implements OnInit {
     private motifQueryService: MotifQueryService,
     private notificationCenter: WCNotificationCenter
   ) {
-    console.log("usersService=", usersService);
+    console.log('usersService=', usersService);
   }
 
   ngOnInit() {}
+
+  ngOnDestroy() {
+    this.logger.debug(LOG_TAG , 'ngOnDestroy');
+    this.destroy.next(null);
+  }
 
   public pageChange({ skip, take }: PageChangeEvent): void {
     this.skip = skip;
@@ -140,7 +139,7 @@ export class UsersListComponent implements OnInit {
 
   private loadData(domain: string, pageIndex: number, pageSize: number) {
     if (this._selectedDomain) {
-      console.log("loadData pageIndex=" + pageIndex + " pageSize=" + pageSize);
+      console.log('loadData pageIndex=' + pageIndex + ' pageSize=' + pageSize);
 
       let sort: MotifQuerySort = this.buildQuerySort();
 
@@ -150,11 +149,11 @@ export class UsersListComponent implements OnInit {
       let state: string = null;
       if (this.filter) {
         this.filter.filters.forEach((filter: FilterDescriptor) => {
-          if (filter.field === "userId") {
+          if (filter.field === 'userId') {
             userId = filter.value;
-          } else if (filter.field === "userIdInt") {
+          } else if (filter.field === 'userIdInt') {
             userIdInt = filter.value;
-          } else if (filter.field === "state") {
+          } else if (filter.field === 'state') {
             state = filter.value;
           }
         });
@@ -168,10 +167,11 @@ export class UsersListComponent implements OnInit {
           state,
           pageIndex,
           pageSize,
-          sort.encode(new HttpParams()).get("sort"),
-          "response",
+          sort.encode(new HttpParams()).get('sort'),
+          'response',
           false
         )
+        .pipe(takeUntil(this.destroy))
         .subscribe(
           response => {
             let results: MotifQueryResults = MotifQueryResults.fromHttpResponse(
@@ -191,7 +191,7 @@ export class UsersListComponent implements OnInit {
             this.currentPage = results.pageIndex;
           },
           error => {
-            console.log("MotifPagedQueryInterceptor test query error: ", error);
+            console.log('MotifPagedQueryInterceptor test query error: ', error);
           }
         );
     }
@@ -208,8 +208,9 @@ export class UsersListComponent implements OnInit {
       let endpoint = String.Format(USERS_LIST_ENDPOINT, domain);
       this.motifQueryService
         .query(endpoint, pageIndex, pageSize, sort, filter)
+        .pipe(takeUntil(this.destroy))
         .subscribe(queryResponse => {
-          console.log("Get Users List done: ", queryResponse);
+          console.log('Get Users List done: ', queryResponse);
           resolve(queryResponse);
         }, reject);
     });
@@ -220,14 +221,14 @@ export class UsersListComponent implements OnInit {
   }
 
   private buildQuerySort(): MotifQuerySort {
-    console.log("*****SORT ", this.sort);
+    console.log('*****SORT ', this.sort);
     let querySort = new MotifQuerySort();
     if (this.sort) {
       for (let i = 0; i < this.sort.length; i++) {
         let sortInfo = this.sort[i];
-        if (sortInfo.dir && sortInfo.dir === "asc") {
+        if (sortInfo.dir && sortInfo.dir === 'asc') {
           querySort.orderAscendingBy(sortInfo.field);
-        } else if (sortInfo.dir && sortInfo.dir === "desc") {
+        } else if (sortInfo.dir && sortInfo.dir === 'desc') {
           querySort.orderDescendingBy(sortInfo.field);
         }
       }
@@ -256,14 +257,8 @@ export class UsersListComponent implements OnInit {
     this.selectionChange.emit(e);
   }
 
-  onStatusChangeOKPressed(dataItem: any): void {
-    //TODO: Implement
-  }
-
-  onStatusChangeCancelPressed(dataItem: any): void {}
-
   onCommandConfirm(event: WCGridEditorCommandComponentEvent) {
-    this.logger.debug(LOG_TAG, "onCommandConfirm event: ", event);
+    this.logger.debug(LOG_TAG, 'onCommandConfirm event: ', event);
     switch (event.id) {
       case RowCommandType.Delete:
         this.rowCommandClick.emit({
@@ -275,38 +270,20 @@ export class UsersListComponent implements OnInit {
   }
 
   onCommandClick(event: WCGridEditorCommandComponentEvent) {
-    this.logger.debug(LOG_TAG, "onCommandClick event: ", event);
+    this.logger.debug(LOG_TAG, 'onCommandClick event: ', event);
     switch (event.id) {
+      case RowCommandType.Relations:
+        this.rowCommandClick.emit({
+          commandType: RowCommandType.Relations,
+          dataItem: event.rowData.dataItem
+        });
+        break;
       case RowCommandType.Edit:
         this.rowCommandClick.emit({
           commandType: RowCommandType.Edit,
           dataItem: event.rowData.dataItem
         });
         break;
-    }
-  }
-
-  get statusButtonClass(): string {
-    return "btn status-activated";
-  }
-
-  public getStatusButtonClass(statusStr: string): string {
-    if (statusStr && statusStr.toUpperCase() === "ACTIVE") {
-      return "btn user-status-active";
-    } else if (statusStr && statusStr.toUpperCase() === "PREACTIVE") {
-      return "btn user-status-preactive";
-    } else {
-      return "";
-    }
-  }
-
-  public getStatusButtonQuestion(statusStr: string): string {
-    if (statusStr && statusStr.toUpperCase() === "ACTIVE") {
-      return "Suspend?";
-    } else if (statusStr && statusStr.toUpperCase() === "PREACTIVE") {
-      return "Activate?";
-    } else {
-      return "";
     }
   }
 }

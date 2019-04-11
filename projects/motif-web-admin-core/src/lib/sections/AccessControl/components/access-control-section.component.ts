@@ -18,9 +18,11 @@ import { NewUserDialogComponent, UserDialogResult } from './dialogs/user/new-use
 import { NewAclEntityDialogComponent, DialogResult as AclDialogResult} from './dialogs/acl/entities/new-acl-entity-dialog';
 import { DialogType, EntityType } from './editors/acl-editor-context';
 import { WCSubscriptionHandler } from '../../../components/Commons/wc-subscription-handler';
-import { Observable } from 'rxjs';
-import { RowCommandType, UsersListComponent } from './users-list/users-list.component';
+import { Observable, Subscription, ReplaySubject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { UsersListComponent } from './users-list/users-list.component';
 import { AclRelationsDialogComponent } from './dialogs/acl/relations/acl-relations-dialog';
+import { RowCommandType } from './editors/acl-editor-context';
 
 const LOG_TAG = '[AccessControlSection]';
 const BIT_LOAD_USERS = 1;
@@ -38,22 +40,12 @@ const BIT_LOAD_ALL = BIT_LOAD_USERS | BIT_LOAD_GROUPS | BIT_LOAD_ROLES | BIT_LOA
 @PluginView('AccessControl', {
   iconName: 'wa-ico-users'
 })
-export class AccessControlSectionComponent implements OnInit, AfterViewInit  {
+export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnDestroy  {
 
   public size = '450px';
   public height = '330';
 
-  statusConfirmationTitleProvider: WCConfirmationTitleProvider = {
-    getTitle(rowData): string {
-      if (rowData.state && rowData.state.toUpperCase() === 'ACTIVE') {
-        return 'Suspend?';
-      } else if (rowData.state && rowData.state.toUpperCase() === 'PREACTIVE') {
-        return 'Activate?';
-      } else {
-        return '';
-      }
-    }
-  };
+  private destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
   @ViewChild('newAclEntityDialog') _newAclEntityDialog: NewAclEntityDialogComponent;
   @ViewChild('newUserDialog') _newUserDialog: NewUserDialogComponent;
@@ -62,16 +54,19 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit  {
 
   commands: WCGridEditorCommandsConfig = [
     {
-      commandIcon: 'wa-ico-edit',
+      cssClass: 'k-icon',
+      commandIcon: 'wa-ico-links',
       commandId: RowCommandType.Relations,
       title: 'Relations'
     },
     {
+      cssClass: 'k-icon',
       commandIcon: 'wa-ico-edit',
       commandId: RowCommandType.Edit,
       title: 'Edit'
     },
     {
+      cssClass: 'k-icon',
       commandIcon: 'wa-ico-no',
       commandId: RowCommandType.Delete,
       title: 'Delete',
@@ -152,8 +147,6 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit  {
     mode: 'single'
   };
 
-  private _subHandler: WCSubscriptionHandler = new WCSubscriptionHandler();
-
   public permissionKey(context: RowArgs): string {
     return context.dataItem.component + ':' + context.dataItem.action + ':' + context.dataItem.target;
   }
@@ -180,6 +173,11 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit  {
 
     this.loadGrids(BIT_LOAD_ROLES | BIT_LOAD_ACTIONS | BIT_LOAD_PERMISSIONS);
 
+  }
+
+  ngOnDestroy() {
+    this.logger.debug(LOG_TAG , 'ngOnDestroy');
+    this.destroy.next(null);
   }
 
   public ngAfterViewInit(): void {
@@ -310,13 +308,21 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit  {
       // Load users if required
       if (BIT_LOAD_USERS & gridsToLoadBitfield) {
         this._usersListGrid.refreshData();
-        this.platformAdminsService.getAdminUsersList(this.selectedDomain).subscribe(response => {
+        this.platformAdminsService.getAdminUsersList(this.selectedDomain).pipe(takeUntil(this.destroy)).subscribe(response => {
           this.adminsData = response;
+          _.forEach(this.adminsData, function(element) {
+            element.created = new Date(element.created);
+            element.lastLogin = new Date(element.lastLogin);
+          });
         }, error => {
           this.logger.warn(LOG_TAG, 'Error loading admins: ', error);
         });
-        this.platformClientsService.getClientUsersList(this.selectedDomain).subscribe(response => {
+        this.platformClientsService.getClientUsersList(this.selectedDomain).pipe(takeUntil(this.destroy)).subscribe(response => {
           this.clientsData = response;
+          _.forEach(this.clientsData, function(element) {
+            element.created = new Date(element.created);
+            element.lastLogin = new Date(element.lastLogin);
+          });
         }, error => {
           this.logger.warn(LOG_TAG, 'Error loading clients: ', error);
         });
@@ -330,7 +336,7 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit  {
       }
 
       if (BIT_LOAD_GROUPS & gridsToLoadBitfield) {
-        getGroups.subscribe(response => {
+        getGroups.pipe(takeUntil(this.destroy)).subscribe(response => {
           this.groupsData = response;
         }, error => {
           this.logger.warn(LOG_TAG, 'Error loading groups: ', error);
@@ -372,7 +378,7 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit  {
     }
 
     if (BIT_LOAD_ROLES & gridsToLoadBitfield) {
-      getRoles.subscribe(response => {
+      getRoles.pipe(takeUntil(this.destroy)).subscribe(response => {
         this.rolesData = response;
       }, error => {
         this.logger.warn(LOG_TAG, "Error loading roles: ", error);
@@ -380,7 +386,7 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit  {
     }
 
     if (BIT_LOAD_ACTIONS & gridsToLoadBitfield) {
-      getActions.subscribe(response => {
+      getActions.pipe(takeUntil(this.destroy)).subscribe(response => {
         this.actionsData = response;
         this.loadActions();
       }, error => {
@@ -389,7 +395,7 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit  {
     }
 
     if (BIT_LOAD_PERMISSIONS & gridsToLoadBitfield) {
-      getPermissions.subscribe(response => {
+      getPermissions.pipe(takeUntil(this.destroy)).subscribe(response => {
         this.permissionsData = response;
         this.loadPermissions();
       }, error => {
@@ -491,7 +497,9 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit  {
   }
 
   onUserRowCommandClick(event: any): void {
-    if (event.commandType === RowCommandType.Edit) {
+    if (event.commandType === RowCommandType.Relations) {
+      this._aclRelationsDialog.show(EntityType.User, event.dataItem);
+    } if (event.commandType === RowCommandType.Edit) {
       this._newUserDialog.show(DialogType.Edit, EntityType.User, event.dataItem);
     } else if (event.commandType === RowCommandType.Delete) {
       this.deleteEntity(EntityType.User, event.dataItem);
@@ -520,6 +528,10 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit  {
 
   onNewUserConfirm(event: UserDialogResult): void {
     this.createOrUpdateEntity(event.dialogType, event.entityType, { userId: event.userId, userIdInt: event.userIdInt, state: event.state });
+  }
+
+  onTabChange(): void {
+    this.onResetClicked();
   }
 
   private deleteEntity(entityType: EntityType, data: any): void {
@@ -560,14 +572,14 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit  {
         whatToReload = BIT_LOAD_ACTIONS;
         break;
       case EntityType.Permission:
-        deleteEntity = this.permissionsService.deletePermission(data.rowData.dataItem.component, data.rowData.dataItem.action,
-          data.rowData.dataItem.target);
+        deleteEntity = this.permissionsService.deletePermission(data.component, data.action,
+          data.target);
         entity = 'Permission';
         whatToReload = BIT_LOAD_PERMISSIONS;
         break;
     }
 
-    this._subHandler.add(deleteEntity.subscribe(any => {
+    deleteEntity.pipe(takeUntil(this.destroy)).subscribe(any => {
 
       this.logger.debug(LOG_TAG, entity, ' deleted. ');
 
@@ -593,7 +605,7 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit  {
         closable: true
       });
 
-    }));
+    });
   }
 
   private createOrUpdateEntity(dialogType: DialogType, entityType: EntityType, data: any): void {
@@ -739,7 +751,7 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit  {
         break;
     }
 
-    this._subHandler.add(action.subscribe((newEntity: any) => {
+    action.pipe(takeUntil(this.destroy)).subscribe((newEntity: any) => {
 
       this.logger.debug(LOG_TAG, dialogType + ' ', entity, ' completed', newEntity ? (': ' + newEntity) : '');
 
@@ -765,6 +777,6 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit  {
         closable: true
       });
 
-    }));
+    });
   }
 }

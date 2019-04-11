@@ -1,13 +1,11 @@
+
 :host{
     display: flex;
     flex: 1;
     flex-direction: column;
  }
  
+
 :host ::ng-deep .grid-btn-editor.wc-table-delete-command {
     justify-content: center; 
-}
-
-.wc-web-content-url:hover {
-    text-decoration: underline;
 }

@@ -12,7 +12,7 @@ export interface DialogResult {
 }
 
 @Component({
-    selector: 'wa-platform-section-new-acl-entity-dialog',
+    selector: 'wa-access-control-section-new-acl-entity-dialog',
     styleUrls: ['./new-acl-entity-dialog.scss'],
     templateUrl: './new-acl-entity-dialog.html'
 })

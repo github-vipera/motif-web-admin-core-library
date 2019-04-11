@@ -1,0 +1,22 @@
+<kendo-grid [data]="gridView" [columnMenu]="true" [resizable]="true" [reorderable]="true" [sort]="sort" 
+    (sortChange)="sortChange($event)" [sortable]="{ allowUnsort: true, mode: 'multiple' }"
+    [scrollable]="true" [pageSize]="pageSize" [skip]="skip" [pageable]="{
+                buttonCount: 5,
+                info: true,
+                type: type,
+                pageSizes: true,
+                previousNext: true
+                }" (pageChange)="pageChange($event)">
+    <kendo-grid-column field="created" title="Created" width="25" format="{0:dd/MM/yyyy HH:mm:ss}">
+    </kendo-grid-column>
+    <kendo-grid-column field="taskExecId" title="Execution ID" width="80">
+    </kendo-grid-column>
+    <kendo-grid-column field="resultCode" title="Result Code" width="30">
+    </kendo-grid-column>
+    <kendo-grid-column field="resultDesc" title="Result Desc" width="100">
+    </kendo-grid-column>
+    <kendo-grid-column field="elapsed" title="Elapsed" width="30">
+    </kendo-grid-column>
+    <kendo-grid-column field="workerId" title="WorkerId" width="30">
+    </kendo-grid-column>
+</kendo-grid>

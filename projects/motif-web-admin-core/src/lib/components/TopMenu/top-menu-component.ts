@@ -2,8 +2,7 @@ import { SessionService } from './../Commons/session-service';
 import { Component, Input, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { AuthService, StatusBarService, NGXLogger } from 'web-console-core';
-import * as moment from 'moment'
-//const moment = moment_;
+import * as moment from 'moment';
 
 const LOG_TAG = '[TopMenuComponent]';
 
@@ -42,13 +41,30 @@ export class TopMenuComponent implements OnInit {
         return 'Current user: ' + this.sessionService.currentUser.userName;
     }
 
+    private formatDate(date) {
+        var monthNames = [
+          "January", "February", "March",
+          "April", "May", "June", "July",
+          "August", "September", "October",
+          "November", "December"
+        ];
+      
+        var day = date.getDate();
+        var monthIndex = date.getMonth();
+        var year = date.getFullYear();
+      
+        return day + ' ' + monthNames[monthIndex] + ' ' + year;
+      }
+      
+
     private getLastAccessStr(): string {
         this.logger.debug(LOG_TAG, 'getLastAccessStr for:', this.sessionService.currentUser.lastAccess);
         try {
-            return "TODO!!";
-            //let myMoment: moment.Moment = moment(this.sessionService.currentUser.lastAccess);
+            //let now = moment().format('LLLL');
+            //moment("20111031", "YYYYMMDD").fromNow();// this.sessionService.currentUser.lastAccess);
             //return myMoment.format('ddd, h:mm A');
             //return moment(this.sessionService.currentUser.lastAccess).format('ddd, h:mm A');
+            return this.formatDate(new Date(this.sessionService.currentUser.lastAccess));
         } catch (err) {
             this.logger.error(LOG_TAG, 'getLastAccessStr error:', err);
             return 'n.a.'

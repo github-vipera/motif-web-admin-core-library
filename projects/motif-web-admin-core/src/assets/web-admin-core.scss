@@ -545,6 +545,17 @@ section .header.sub-header h1 {
   transform: translateX(0.8em);
 }
 
+.ui-progressbar-determinate .ui-progressbar-value {
+	background-color: #dadada;
+}
+
+/*
+.grid-edit-command-center-align {
+  justify-content: normal !important;  
+}
+*/
+
+
 @import './web-admin-core-toolbar.scss';
 @import './web-admin-core-tabs.scss';
 @import './web-admin-core-buttons.scss';
