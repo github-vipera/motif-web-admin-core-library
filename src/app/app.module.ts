@@ -34,6 +34,7 @@ import { WAThemeDesignerService } from 'motif-web-admin-core';
 import { RESTManagerSectionModule } from 'motif-web-admin-core';
 import { SchedulerSectionModule } from 'motif-web-admin-core';
 import { MainDashboardSectionModule } from 'motif-web-admin-core';
+import { moduleRoutes } from 'motif-web-admin-core';
 
 const LoggerModuleConfigured = LoggerModule.forRoot({
   level: (environment.production ? NgxLoggerLevel.OFF : NgxLoggerLevel.DEBUG),
@@ -45,7 +46,7 @@ const LoggerModuleConfigured = LoggerModule.forRoot({
 const appRoutes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'login', component: WebConsoleLoginComponent },
-  { path: 'dashboard', component: WebConsoleComponent, canActivate: [AuthGuard] }
+  { path: 'dashboard', component: WebConsoleComponent, canActivate: [AuthGuard] , children:moduleRoutes }
 ];
 
 @NgModule({
