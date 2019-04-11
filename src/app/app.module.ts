@@ -44,7 +44,7 @@ const LoggerModuleConfigured = LoggerModule.forRoot({
 
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  { path: '', redirectTo: '/dashboard/Main%20Dashboard', pathMatch: 'full' },
   { path: 'login', component: WebConsoleLoginComponent },
   { path: 'dashboard', component: WebConsoleComponent, canActivate: [AuthGuard] , children:moduleRoutes }
 ];
