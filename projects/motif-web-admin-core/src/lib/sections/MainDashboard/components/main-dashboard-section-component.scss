@@ -14,5 +14,10 @@
  }
 
  .dashboard-item-label-secondary {
+   font-size: .8rem;
 }
 
+wc-panel .serverInstanceInfo.counter .value  {
+   font-size: 3rem !important;
+   padding-bottom: 20px !important; 
+}

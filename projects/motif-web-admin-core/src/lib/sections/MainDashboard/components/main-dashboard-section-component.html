@@ -10,19 +10,17 @@
             </wc-panel>
         </gridster-item>
 
-        <!--
-        <gridster-item [item]="processLoadItem">
-            <wc-panel [title]="'Process Load'">
-                <wc-data-counter [title]="'Process Load'" [value]="serverStatus.processLoad"></wc-data-counter>
+        <gridster-item [item]="motifSeriverInstanceNameItem">
+            <wc-panel [title]="'Current MOTIF Instance'">
+                <wc-data-counter  [class]="'serverInstanceInfo'" [title]="serverInfo.motifVersion" [value]="serverInfo.instanceName"></wc-data-counter>
             </wc-panel>
         </gridster-item>
-        -->
-        
+
         <gridster-item [item]="processLoadGaugeItem">
                 <wc-panel [title]="'Process CPU Usage'">
                     <ngx-gauge [type]="'semi'" 
                         [value]="serverStatus.processLoad*100" 
-                        [label]="'Proc. Load'"  
+                        [label]="''"  
                         [append]="'%'"
                         [thick]="10"
                         [foregroundColor]="'#fc0'"

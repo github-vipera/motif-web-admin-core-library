@@ -8,6 +8,7 @@ import { SecurityService, Session } from '@wa-motif-open-api/security-service'
 import { interval } from 'rxjs';
 import { InfoService, ServerInfo, ServerStatus } from '@wa-motif-open-api/info-service'
 import { ServerStatusUpdater } from '../data/updaters/ServerInfo/ServerStatusUpdater';
+import { ServerInfoUpdater } from '../data/updaters/ServerInfo/ServerInfoUpdater';
 
 const LOG_TAG = '[MainDashboardSectionComponent]';
 
@@ -27,6 +28,7 @@ export class MainDashboardSectionComponent implements OnInit, OnDestroy {
     options: Gridster.GridsterConfig;
 
     private statusUpdater:ServerStatusUpdater;
+    private infoUpdater:ServerInfoUpdater;
 
     private refreshInterval: any;
     
@@ -66,10 +68,11 @@ export class MainDashboardSectionComponent implements OnInit, OnDestroy {
           };
     }
 
-    motifSeriverInstanceItem:Gridster.GridsterItem = {cols: 8, rows: 3, y: 0, x: 0};
+    motifSeriverInstanceNameItem:Gridster.GridsterItem = {cols: 8, rows: 2, y: 0, x: 0};
+    motifSeriverInstanceItem:Gridster.GridsterItem = {cols: 8, rows: 3, y: 2, x: 0};
     processLoadGaugeItem:Gridster.GridsterItem = {cols: 3, rows: 3, y: 0, x: 8};
     cpuLoadGaugeItem:Gridster.GridsterItem = {cols: 3, rows: 3, y: 0, x: 11};
-    
+
     //processLoadItem:Gridster.GridsterItem = {cols: 3, rows: 2, y: 0, x: 8};
     //currentMotifInstanceVersion:Gridster.GridsterItem = {cols: 3, rows: 2, y: 0, x: 9};
     
@@ -80,6 +83,10 @@ export class MainDashboardSectionComponent implements OnInit, OnDestroy {
         this.logger.debug(LOG_TAG , 'Initializing...');
         this.statusUpdater = new ServerStatusUpdater(this.logger, this.infoService);
         this.statusUpdater.start(4 * 1000);
+
+        this.infoUpdater = new ServerInfoUpdater(this.logger, this.infoService);
+        this.infoUpdater.start(60 * 1000);
+
     }
 
     ngOnDestroy() {
@@ -103,4 +110,7 @@ export class MainDashboardSectionComponent implements OnInit, OnDestroy {
       return this.statusUpdater.data;
     }
 
+    public get serverInfo(): ServerInfo {
+      return this.infoUpdater.data;
+    }
 }
