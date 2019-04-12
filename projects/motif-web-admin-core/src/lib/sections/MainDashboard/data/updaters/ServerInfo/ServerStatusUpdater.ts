@@ -67,7 +67,12 @@ export class ServerStatusUpdater {
             this._data["processLoadPerc"] = Number((results.processLoad*100).toFixed(1));
             this._data["systemLoadPerc"] = Number((results.systemLoad*100).toFixed(1));
             this._data.memoryUsage["heapFreePerc"] = Number((results.memoryUsage.heapFree/results.memoryUsage.heapTotal)*100).toFixed(1);
-            this._data.memoryUsage["heapUsedPerc"] =100 - this._data.memoryUsage["heapFreePerc"];
+            this._data.memoryUsage["heapUsedPerc"] = 100 - this._data.memoryUsage["heapFreePerc"];
+
+
+            this._data.diskUsage["diskFreePerc"] = Number((results.diskUsage[0].free/results.diskUsage[0].total)*100).toFixed(1);
+            this._data.diskUsage["diskUsedPerc"] = 100 - this._data.diskUsage["diskFreePerc"];
+
             this._dataReady.emit(this._data);
         }, (error)=>{
             this.logger.error(LOG_TAG , 'getServerStatus error: ', error);

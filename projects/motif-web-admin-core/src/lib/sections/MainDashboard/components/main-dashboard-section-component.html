@@ -55,6 +55,18 @@
                 </wc-panel>
         </gridster-item>
 
+        <gridster-item [item]="diskInfoGaugeItem">
+                <wc-panel [title]="'Disk - Space Used'">
+                    <ngx-gauge [type]="'semi'" 
+                        [value]="serverStatus.diskUsage.diskUsedPerc" 
+                        [label]="''"  
+                        [append]="'%'"
+                        [thick]="10"
+                        [foregroundColor]="'#fc0'"
+                        [cap]="'flat'">
+                    </ngx-gauge>
+                </wc-panel>
+        </gridster-item>
 
         <gridster-item [item]="memoryInfoItem">
                 <wc-panel [title]="'Memory Info'">
@@ -74,26 +86,6 @@
             </wc-panel>
          </gridster-item>
 
-        <!--
-        <gridster-item [item]="currentMotifInstanceVersion">
-            <wc-panel [title]="'MOTIF Server Instance'">
-                <div style="display: flex;flex-direction: column;">
-                    <label class="dashboard-item-label dashboard-item-label-primary">pippo</label>
-                    <label class="dashboard-item-label dashboard-item-label-secondary">pluto</label>
-                </div>
-            </wc-panel>
-        </gridster-item>
-    -->
-
-    <!--        
-        <gridster-item [item]="sessionCountItem">
-            <wc-panel [title]="'Sessions Count'">
-                <wc-data-counter [title]="'Active Sessions'" [value]="model.security.sessions.activeCount"></wc-data-counter>
-            </wc-panel>
-        </gridster-item>
-        -->
-        
-        
 
     </gridster>
 
