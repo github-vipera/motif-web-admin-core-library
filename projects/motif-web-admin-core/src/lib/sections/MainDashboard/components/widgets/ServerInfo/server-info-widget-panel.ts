@@ -14,6 +14,15 @@ export class ServerInfoWidgetPanelComponent implements OnInit, OnDestroy {
 
     private _dataUpdater: ServerInfoUpdater;
 
+    private loadingModel:ServerInfo = {
+        instanceName: "Loading...",
+        ip: "",
+        jdkInfo: "",
+        motifVersion: "",
+        os: "",
+        startTime: null
+    }
+
     constructor(private logger: NGXLogger,
         private infoService: InfoService
         ) {
@@ -26,7 +35,7 @@ export class ServerInfoWidgetPanelComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.logger.debug(LOG_TAG , 'Initializing...');
         this._dataUpdater = new ServerInfoUpdater(this.logger, this.infoService);
-        this._dataUpdater.start(10 * 1000);
+        this._dataUpdater.start(60 * 1000);
     }
 
     ngOnDestroy() {
@@ -35,12 +44,13 @@ export class ServerInfoWidgetPanelComponent implements OnInit, OnDestroy {
         }
     }
 
-    public get model():Array<ServerInfo> {
-        if (!this._dataUpdater){
-            return [];
+    public get model():ServerInfo {
+        if (!this._dataUpdater || (this._dataUpdater.data==null)){
+            return this.loadingModel;
         } else {
             return this._dataUpdater.data;
         }
     }
+
 
 }

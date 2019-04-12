@@ -1,17 +1,22 @@
 import { EventEmitter } from '@angular/core';
 import { NGXLogger} from 'web-console-core';
-import { InfoService, ServerInfo } from '@wa-motif-open-api/info-service'
+import { InfoService, UsersInfo } from '@wa-motif-open-api/info-service'
 import { Subscription, interval } from 'rxjs';
 
-const LOG_TAG = '[ServerInfoUpdater]';
+const LOG_TAG = '[UsersInfoUpdater]';
 
-export class ServerInfoUpdater {
+export class UsersInfoUpdater {
 
     private _interval:number;
     private _intervalTimer:any;
     private _intervalSubscription:Subscription;
-    private _data:ServerInfo;
-    private _dataReady:EventEmitter<ServerInfo>;
+    private _data:UsersInfo = {
+        active: 0,
+        blocked: 0,
+        preactive: 0,
+        total: 0
+    }
+    private _dataReady:EventEmitter<UsersInfo>;
     private _dataError:EventEmitter<any>;
 
     constructor(private logger: NGXLogger,
@@ -52,17 +57,17 @@ export class ServerInfoUpdater {
 
     public reloadData(){
         this.logger.debug(LOG_TAG , 'reloadData called');
-        this.infoService.getServerInfo().subscribe((results:ServerInfo)=>{
-            this.logger.debug(LOG_TAG , 'getServerInfo results: ', results);
+        this.infoService.getUsersInfo().subscribe((results:UsersInfo)=>{
+            this.logger.debug(LOG_TAG , 'getUsersInfo results: ', results);
             this._data = results;
             this._dataReady.emit(this._data);
         }, (error)=>{
-            this.logger.error(LOG_TAG , 'getServerInfo error: ', error);
+            this.logger.error(LOG_TAG , 'getUsersInfo error: ', error);
             this._dataError.emit(error);
         });
     }
 
-    public get data():ServerInfo {
+    public get data():UsersInfo {
         return this._data;
     }
 
