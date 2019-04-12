@@ -6,6 +6,7 @@ import { NGXLogger} from 'web-console-core';
 import { Gridster } from 'web-console-ui-kit'
 import { SecurityService, Session } from '@wa-motif-open-api/security-service'
 import { interval } from 'rxjs';
+import { InfoService, ServerInfo } from '@wa-motif-open-api/info-service'
 
 const LOG_TAG = '[MainDashboardSectionComponent]';
 
@@ -29,9 +30,11 @@ export class MainDashboardSectionComponent implements OnInit, OnDestroy {
 
     constructor(private logger: NGXLogger,
         private securityService: SecurityService,
+        private infoService: InfoService
         ) {
         this.logger.debug(LOG_TAG , 'Opening...');
-
+        
+        
         this.options = {
             itemChangeCallback: this.itemChange,
             itemResizeCallback: this.itemResize,
@@ -117,6 +120,13 @@ export class MainDashboardSectionComponent implements OnInit, OnDestroy {
         }, (error)=>{
             alert(JSON.stringify(error));
         });
+
+        this.infoService.getServerInfo().subscribe((data:Array<ServerInfo>)=>{
+
+        }, (error)=>{
+
+        });
+
     }
 
 }

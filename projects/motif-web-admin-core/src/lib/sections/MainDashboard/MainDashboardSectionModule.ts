@@ -15,6 +15,7 @@ import { PluginRegistryServiceModule } from '@wa-motif-open-api/plugin-registry-
 import { CommonsUIModule } from '../../components/CommonsUIModule';
 import { DialogModule } from 'primeng/dialog';
 import { MainDashboardSectionComponent } from './components/main-dashboard-section-component';
+import { ServerInfoWidgetPanelComponent } from './components/widgets/ServerInfo/server-info-widget-panel';
 
 @NgModule({
     imports: [
@@ -35,12 +36,12 @@ import { MainDashboardSectionComponent } from './components/main-dashboard-secti
         WCUIKitGridsterProviderModule
     ],
     entryComponents:[
-        MainDashboardSectionComponent
+        MainDashboardSectionComponent, ServerInfoWidgetPanelComponent
     ],
     declarations: [
-        MainDashboardSectionComponent
+        MainDashboardSectionComponent, ServerInfoWidgetPanelComponent
     ],
-    exports: [ MainDashboardSectionComponent ],
+    exports: [ MainDashboardSectionComponent, ServerInfoWidgetPanelComponent ],
     providers: [
     ]
 

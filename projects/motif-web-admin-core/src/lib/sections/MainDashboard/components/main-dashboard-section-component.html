@@ -13,10 +13,17 @@
             </wc-panel>
         </gridster-item>
     
-        
+    <!--        
         <gridster-item [item]="sessionCountItem">
             <wc-panel [title]="'Sessions Count'">
                 <wc-data-counter [title]="'Active Sessions'" [value]="model.security.sessions.activeCount"></wc-data-counter>
+            </wc-panel>
+        </gridster-item>
+        -->
+        
+        <gridster-item [item]="sessionCountItem">
+            <wc-panel [title]="'Sessions Count'">
+                <wa-server-info-widget-panel></wa-server-info-widget-panel>
             </wc-panel>
         </gridster-item>
         
