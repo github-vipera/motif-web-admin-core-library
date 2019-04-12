@@ -16,6 +16,7 @@ import { CommonsUIModule } from '../../components/CommonsUIModule';
 import { DialogModule } from 'primeng/dialog';
 import { MainDashboardSectionComponent } from './components/main-dashboard-section-component';
 import { ServerInfoWidgetPanelComponent } from './components/widgets/ServerInfo/server-info-widget-panel';
+import { MemoryInfoWidgetPanelComponent } from './components/widgets/MemoryInfo/memory-info-widget-panel';
 
 @NgModule({
     imports: [
@@ -36,12 +37,12 @@ import { ServerInfoWidgetPanelComponent } from './components/widgets/ServerInfo/
         WCUIKitGridsterProviderModule
     ],
     entryComponents:[
-        MainDashboardSectionComponent, ServerInfoWidgetPanelComponent
+        MainDashboardSectionComponent, ServerInfoWidgetPanelComponent, MemoryInfoWidgetPanelComponent
     ],
     declarations: [
-        MainDashboardSectionComponent, ServerInfoWidgetPanelComponent
+        MainDashboardSectionComponent, ServerInfoWidgetPanelComponent, MemoryInfoWidgetPanelComponent
     ],
-    exports: [ MainDashboardSectionComponent, ServerInfoWidgetPanelComponent ],
+    exports: [ MainDashboardSectionComponent, ServerInfoWidgetPanelComponent, MemoryInfoWidgetPanelComponent ],
     providers: [
     ]
 

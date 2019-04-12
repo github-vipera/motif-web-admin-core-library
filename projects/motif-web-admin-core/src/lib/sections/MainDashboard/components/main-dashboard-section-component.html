@@ -56,6 +56,12 @@
         </gridster-item>
 
 
+        <gridster-item [item]="memoryInfoItem">
+                <wc-panel [title]="'Memory Info'">
+                    <wa-memory-info-widget-panel [serverStatus]="serverStatus" ></wa-memory-info-widget-panel>
+                </wc-panel>
+        </gridster-item>
+
         <!--
         <gridster-item [item]="currentMotifInstanceVersion">
             <wc-panel [title]="'MOTIF Server Instance'">
