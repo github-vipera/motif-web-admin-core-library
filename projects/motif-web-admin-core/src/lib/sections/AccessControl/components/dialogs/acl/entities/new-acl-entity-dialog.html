@@ -1,6 +1,6 @@
 <p-dialog #newAclEntityDialog [(visible)]="display" [modal]="true" [responsive]="true"
   [style]="{ width: '450px', minWidth: '400px' }" [minY]="70" [baseZIndex]="10000">
-  <p-header> {{ dialogTitle }} <strong>[{{ isEdit ? name : ''}}]</strong></p-header>
+  <p-header> {{ dialogTitle }} <strong>[{{ isEdit ? name : 'NEW'}}]</strong></p-header>
 
   <div style="min-width: 350px;display:flex;flex-direction: column;">
 

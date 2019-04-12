@@ -42,6 +42,13 @@ const BIT_LOAD_ALL = BIT_LOAD_USERS | BIT_LOAD_GROUPS | BIT_LOAD_ROLES | BIT_LOA
 })
 export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnDestroy  {
 
+  public adminsLoading = false;
+  public clientsLoading = false;
+  public groupsLoading = false;
+  public rolesLoading = false;
+  public actionsLoading = false;
+  public permissionsLoading = false;
+
   public size = '450px';
   public height = '330';
 
@@ -308,23 +315,29 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
       // Load users if required
       if (BIT_LOAD_USERS & gridsToLoadBitfield) {
         this._usersListGrid.refreshData();
+        this.adminsLoading = true;
         this.platformAdminsService.getAdminUsersList(this.selectedDomain).pipe(takeUntil(this.destroy)).subscribe(response => {
           this.adminsData = response;
           _.forEach(this.adminsData, function(element) {
             element.created = new Date(element.created);
             element.lastLogin = new Date(element.lastLogin);
           });
+          this.adminsLoading = false;
         }, error => {
           this.logger.warn(LOG_TAG, 'Error loading admins: ', error);
+          this.adminsLoading = false;
         });
+        this.clientsLoading = true;
         this.platformClientsService.getClientUsersList(this.selectedDomain).pipe(takeUntil(this.destroy)).subscribe(response => {
           this.clientsData = response;
           _.forEach(this.clientsData, function(element) {
             element.created = new Date(element.created);
             element.lastLogin = new Date(element.lastLogin);
           });
+          this.clientsLoading = false;
         }, error => {
           this.logger.warn(LOG_TAG, 'Error loading clients: ', error);
+          this.clientsLoading = false;
         });
       }
 
@@ -336,10 +349,13 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
       }
 
       if (BIT_LOAD_GROUPS & gridsToLoadBitfield) {
+        this.groupsLoading = true;
         getGroups.pipe(takeUntil(this.destroy)).subscribe(response => {
           this.groupsData = response;
+          this.groupsLoading = false;
         }, error => {
           this.logger.warn(LOG_TAG, 'Error loading groups: ', error);
+          this.groupsLoading = false;
         });
       }
     }
@@ -378,28 +394,37 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
     }
 
     if (BIT_LOAD_ROLES & gridsToLoadBitfield) {
+      this.rolesLoading = true;
       getRoles.pipe(takeUntil(this.destroy)).subscribe(response => {
         this.rolesData = response;
+        this.rolesLoading = false;
       }, error => {
         this.logger.warn(LOG_TAG, "Error loading roles: ", error);
+        this.rolesLoading = false;
       });
     }
 
     if (BIT_LOAD_ACTIONS & gridsToLoadBitfield) {
+      this.actionsLoading = true;
       getActions.pipe(takeUntil(this.destroy)).subscribe(response => {
         this.actionsData = response;
         this.loadActions();
+        this.actionsLoading = false;
       }, error => {
         this.logger.warn(LOG_TAG, "Error loading actions: ", error);
+        this.actionsLoading = false;
       });
     }
 
     if (BIT_LOAD_PERMISSIONS & gridsToLoadBitfield) {
+      this.permissionsLoading = true;
       getPermissions.pipe(takeUntil(this.destroy)).subscribe(response => {
         this.permissionsData = response;
         this.loadPermissions();
+        this.permissionsLoading = false;
       }, error => {
         this.logger.warn(LOG_TAG, "Error loading permissions: ", error);
+        this.permissionsLoading = false;
       });
     }
   }

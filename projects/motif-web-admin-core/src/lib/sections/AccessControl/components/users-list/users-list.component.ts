@@ -40,6 +40,8 @@ export interface NewUserModel {
 export class UsersListComponent implements OnInit, OnDestroy {
   @ViewChild(GridComponent) _grid: GridComponent;
 
+  public loading = false;
+
   //Data
   public usersList: Array<User> = [];
   public domainList: Array<Domain> = [];
@@ -159,6 +161,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
         });
       }
 
+      this.loading = true;
       this.usersService
         .getUsersList(
           domain,
@@ -189,9 +192,11 @@ export class UsersListComponent implements OnInit, OnDestroy {
               total: results.totalRecords
             };
             this.currentPage = results.pageIndex;
+            this.loading = false;
           },
           error => {
             console.log('MotifPagedQueryInterceptor test query error: ', error);
+            this.loading = false;
           }
         );
     }

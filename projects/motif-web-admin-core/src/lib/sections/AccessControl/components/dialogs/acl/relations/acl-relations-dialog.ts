@@ -41,6 +41,8 @@ const closest = (node, predicate) => {
 })
 export class AclRelationsDialogComponent implements OnInit, OnDestroy {
 
+    loading = false;
+
     _currentEntityType: EntityType;
     dialogTitle = '';
     display: boolean;
@@ -158,6 +160,7 @@ export class AclRelationsDialogComponent implements OnInit, OnDestroy {
                 this.entityName = dataItem.name;
                 break;
         }
+        this.display = true;
         this.loadGrids(dataItem);
     }
 
@@ -190,15 +193,17 @@ export class AclRelationsDialogComponent implements OnInit, OnDestroy {
                 break;
         }
 
+        this.loading = true;
         forkJoin(getCurrent, getAvailable).pipe(takeUntil(this.destroy)).subscribe(response => {
             this.currentData = response[0];
             this.availableData = response[1];
             this.filterAvailable();
             this.refreshCurrent();
             this.refreshAvailable();
-            this.display = true;
+            this.loading = false;
         }, error => {
             this.logger.warn(LOG_TAG, 'Error loading data: ', error);
+            this.loading = false;
         });
     }
 
