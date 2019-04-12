@@ -1,3 +1,4 @@
+import { UsersInfoUpdater } from './../data/updaters/UsersInfoUpdater';
 import { Subscription } from 'rxjs';
 import { DashboardModel } from './../data/dashboard-model';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
@@ -6,7 +7,7 @@ import { NGXLogger} from 'web-console-core';
 import { Gridster } from 'web-console-ui-kit'
 import { SecurityService, Session } from '@wa-motif-open-api/security-service'
 import { interval } from 'rxjs';
-import { InfoService, ServerInfo, ServerStatus } from '@wa-motif-open-api/info-service'
+import { InfoService, ServerInfo, ServerStatus, UsersInfo } from '@wa-motif-open-api/info-service'
 import { ServerStatusUpdater } from '../data/updaters/ServerInfo/ServerStatusUpdater';
 import { ServerInfoUpdater } from '../data/updaters/ServerInfo/ServerInfoUpdater';
 
@@ -29,6 +30,7 @@ export class MainDashboardSectionComponent implements OnInit, OnDestroy {
 
     private statusUpdater:ServerStatusUpdater;
     private infoUpdater:ServerInfoUpdater;
+    private usersInfoUpdater: UsersInfoUpdater;
 
     private refreshInterval: any;
     
@@ -74,7 +76,9 @@ export class MainDashboardSectionComponent implements OnInit, OnDestroy {
     cpuLoadGaugeItem:Gridster.GridsterItem = {cols: 3, rows: 3, y: 0, x: 11};
     memoryInfoGaugeItem:Gridster.GridsterItem = {cols: 3, rows: 3, y: 2, x: 8 };
     memoryInfoItem:Gridster.GridsterItem = {cols: 3, rows: 2, y: 2, x: 8 };
-    
+    usersInfoItem:Gridster.GridsterItem = {cols: 3, rows: 2, y: 2, x: 8 };
+
+
     /**
      * Angular ngOnInit
      */
@@ -85,6 +89,9 @@ export class MainDashboardSectionComponent implements OnInit, OnDestroy {
 
         this.infoUpdater = new ServerInfoUpdater(this.logger, this.infoService);
         this.infoUpdater.start(60 * 1000);
+
+        this.usersInfoUpdater =  new UsersInfoUpdater(this.logger, this.infoService);
+        this.usersInfoUpdater.start(30 * 1000);
 
     }
 
@@ -112,4 +119,9 @@ export class MainDashboardSectionComponent implements OnInit, OnDestroy {
     public get serverInfo(): ServerInfo {
       return this.infoUpdater.data;
     }
+
+    public get usersInfo(): UsersInfo {
+      return this.usersInfoUpdater.data;
+    }
+
 }

@@ -62,6 +62,13 @@
                 </wc-panel>
         </gridster-item>
 
+        <gridster-item [item]="usersInfoItem">
+                <wc-panel [title]="'Users'">
+                        <wa-users-info-widget-panel [usersInfo]="usersInfo"></wa-users-info-widget-panel>
+                </wc-panel>
+        </gridster-item>
+        
+
         <!--
         <gridster-item [item]="currentMotifInstanceVersion">
             <wc-panel [title]="'MOTIF Server Instance'">
