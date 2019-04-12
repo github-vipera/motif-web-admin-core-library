@@ -76,7 +76,7 @@ export class MainDashboardSectionComponent implements OnInit, OnDestroy {
     cpuLoadGaugeItem:Gridster.GridsterItem = {cols: 3, rows: 3, y: 0, x: 11};
     memoryInfoGaugeItem:Gridster.GridsterItem = {cols: 3, rows: 3, y: 2, x: 8 };
     memoryInfoItem:Gridster.GridsterItem = {cols: 3, rows: 2, y: 2, x: 8 };
-    usersInfoItem:Gridster.GridsterItem = {cols: 3, rows: 2, y: 2, x: 8 };
+    usersInfoItem:Gridster.GridsterItem = {cols: 3, rows: 5, y: 0, x: 14 };
 
 
     /**
