@@ -4,6 +4,12 @@
 
     <gridster [options]="options">
 
+        <gridster-item [item]="motifSeriverInstanceItem">
+            <wc-panel [title]="'MOTIF Instance'">
+                <wa-server-info-widget-panel></wa-server-info-widget-panel>
+            </wc-panel>
+        </gridster-item>
+        
         <gridster-item [item]="currentMotifInstanceVersion">
             <wc-panel [title]="'MOTIF Server Instance'">
                 <div style="display: flex;flex-direction: column;">
@@ -21,11 +27,6 @@
         </gridster-item>
         -->
         
-        <gridster-item [item]="sessionCountItem">
-            <wc-panel [title]="'Sessions Count'">
-                <wa-server-info-widget-panel></wa-server-info-widget-panel>
-            </wc-panel>
-        </gridster-item>
         
 
     </gridster>

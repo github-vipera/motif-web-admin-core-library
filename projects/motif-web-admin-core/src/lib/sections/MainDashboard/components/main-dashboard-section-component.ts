@@ -64,8 +64,8 @@ export class MainDashboardSectionComponent implements OnInit, OnDestroy {
           };
     }
 
-    currentMotifInstanceVersion:Gridster.GridsterItem = {cols: 3, rows: 2, y: 0, x: 0};
-    sessionCountItem:Gridster.GridsterItem = {cols: 3, rows: 2, y: 0, x: 3};
+    motifSeriverInstanceItem:Gridster.GridsterItem = {cols: 8, rows: 3, y: 0, x: 0};
+    currentMotifInstanceVersion:Gridster.GridsterItem = {cols: 3, rows: 2, y: 0, x: 9};
 
     /**
      * Angular ngOnInit
@@ -115,6 +115,7 @@ export class MainDashboardSectionComponent implements OnInit, OnDestroy {
     }
 
     private loadData(){
+        /*
         this.securityService.getSessions().subscribe((results:Array<Session>)=>{
             this.model.security.sessions.activeCount = "" + results.length;
         }, (error)=>{
@@ -127,7 +128,7 @@ export class MainDashboardSectionComponent implements OnInit, OnDestroy {
         }, (error)=>{
 
         });
-
+        */
     }
 
 }

@@ -10,8 +10,8 @@ export class ServerInfoUpdater {
     private _interval:number;
     private _intervalTimer:any;
     private _intervalSubscription:Subscription;
-    private _data:Array<ServerInfo>;
-    private _dataReady:EventEmitter<Array<ServerInfo>>;
+    private _data:ServerInfo;
+    private _dataReady:EventEmitter<ServerInfo>;
     private _dataError:EventEmitter<any>;
 
     constructor(private logger: NGXLogger,
@@ -20,12 +20,18 @@ export class ServerInfoUpdater {
             this._dataError = new EventEmitter();
     }
 
-    start(interval){
-        this._interval = interval;
-        this._intervalTimer = interval(interval);
-        this._intervalSubscription = this._intervalTimer.subscribe(val => { 
-            this.reloadData();
-        });
+    start(intervalTime){
+        this.logger.debug(LOG_TAG , 'start called with interval: ', intervalTime);
+        try {
+            this._interval = intervalTime;
+            this._intervalTimer = interval(intervalTime);
+            this._intervalSubscription = this._intervalTimer.subscribe(val => { 
+                this.reloadData();
+            });
+        } catch (error){
+            this.logger.error(LOG_TAG , 'start error: ', error);
+        }
+        this.reloadData();
     }
 
     stop(){
@@ -45,7 +51,8 @@ export class ServerInfoUpdater {
     }
 
     public reloadData(){
-        this.infoService.getServerInfo().subscribe((results:Array<ServerInfo>)=>{
+        this.logger.debug(LOG_TAG , 'reloadData called');
+        this.infoService.getServerInfo().subscribe((results:ServerInfo)=>{
             this.logger.debug(LOG_TAG , 'getServerInfo results: ', results);
             this._data = results;
             this._dataReady.emit(this._data);
@@ -55,7 +62,7 @@ export class ServerInfoUpdater {
         });
     }
 
-    public get data():Array<ServerInfo> {
+    public get data():ServerInfo {
         return this._data;
     }
 

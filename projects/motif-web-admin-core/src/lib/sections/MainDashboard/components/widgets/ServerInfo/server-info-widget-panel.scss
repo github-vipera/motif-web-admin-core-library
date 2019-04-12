@@ -1,0 +1,23 @@
+.wc-siwp-container {
+    display:flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.wc-siwp-item {
+    display:flex;
+    flex-direction: row;
+    border-bottom: dotted 1px #dfdfdf38;
+    margin-bottom: 10px;
+}
+
+.wc-siwp-item-title-label {
+    width: 10rem;
+    max-width: 10rem;
+    min-width: 10rem;
+}
+
+.wc-siwp-item-value-label {
+    flex-grow: 1;
+    color: #46b746;
+}
