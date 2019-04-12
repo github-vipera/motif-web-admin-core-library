@@ -6,7 +6,8 @@ import { NGXLogger} from 'web-console-core';
 import { Gridster } from 'web-console-ui-kit'
 import { SecurityService, Session } from '@wa-motif-open-api/security-service'
 import { interval } from 'rxjs';
-import { InfoService, ServerInfo } from '@wa-motif-open-api/info-service'
+import { InfoService, ServerInfo, ServerStatus } from '@wa-motif-open-api/info-service'
+import { ServerStatusUpdater } from '../data/updaters/ServerInfo/ServerStatusUpdater';
 
 const LOG_TAG = '[MainDashboardSectionComponent]';
 
@@ -25,9 +26,10 @@ export class MainDashboardSectionComponent implements OnInit, OnDestroy {
 
     options: Gridster.GridsterConfig;
 
-    private refreshInterval: any;
-    private intervalSubscription: Subscription;
+    private statusUpdater:ServerStatusUpdater;
 
+    private refreshInterval: any;
+    
     constructor(private logger: NGXLogger,
         private securityService: SecurityService,
         private infoService: InfoService
@@ -65,19 +67,19 @@ export class MainDashboardSectionComponent implements OnInit, OnDestroy {
     }
 
     motifSeriverInstanceItem:Gridster.GridsterItem = {cols: 8, rows: 3, y: 0, x: 0};
-    currentMotifInstanceVersion:Gridster.GridsterItem = {cols: 3, rows: 2, y: 0, x: 9};
-
+    processLoadGaugeItem:Gridster.GridsterItem = {cols: 3, rows: 3, y: 0, x: 8};
+    cpuLoadGaugeItem:Gridster.GridsterItem = {cols: 3, rows: 3, y: 0, x: 11};
+    
+    //processLoadItem:Gridster.GridsterItem = {cols: 3, rows: 2, y: 0, x: 8};
+    //currentMotifInstanceVersion:Gridster.GridsterItem = {cols: 3, rows: 2, y: 0, x: 9};
+    
     /**
      * Angular ngOnInit
      */
     ngOnInit() {
         this.logger.debug(LOG_TAG , 'Initializing...');
-        this.initModel();
-        this.loadData();
-        this.refreshInterval = interval(4000);
-        this.intervalSubscription = this.refreshInterval.subscribe((tick)=>{
-            this.loadData();
-        })
+        this.statusUpdater = new ServerStatusUpdater(this.logger, this.infoService);
+        this.statusUpdater.start(4 * 1000);
     }
 
     ngOnDestroy() {
@@ -86,25 +88,8 @@ export class MainDashboardSectionComponent implements OnInit, OnDestroy {
     }
 
     freeMem() {
-        this.intervalSubscription.unsubscribe();
     }
 
-    private initModel(){
-        this.model = {
-            security: {
-                sessions: {
-                    activeCount: '...'
-                },
-                oauth2: {
-                    activeTokens: 'Loading...'
-                }
-            },
-            serverInstance: {
-                nodeRunning: "Loading...",
-                version: "Loading..."
-            }
-        }
-    }
 
     private itemChange(item, itemComponent) {
         console.info('itemChanged', item, itemComponent);
@@ -114,21 +99,8 @@ export class MainDashboardSectionComponent implements OnInit, OnDestroy {
         console.info('itemResized', item, itemComponent);
     }
 
-    private loadData(){
-        /*
-        this.securityService.getSessions().subscribe((results:Array<Session>)=>{
-            this.model.security.sessions.activeCount = "" + results.length;
-        }, (error)=>{
-            console.error("Load data error : ", error);
-            alert("Load data error:" + JSON.stringify(error));
-        });
-
-        this.infoService.getServerInfo().subscribe((data:Array<ServerInfo>)=>{
-
-        }, (error)=>{
-
-        });
-        */
+    public get serverStatus(): ServerStatus {
+      return this.statusUpdater.data;
     }
 
 }

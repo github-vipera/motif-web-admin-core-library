@@ -9,16 +9,53 @@
                 <wa-server-info-widget-panel></wa-server-info-widget-panel>
             </wc-panel>
         </gridster-item>
+
+        <!--
+        <gridster-item [item]="processLoadItem">
+            <wc-panel [title]="'Process Load'">
+                <wc-data-counter [title]="'Process Load'" [value]="serverStatus.processLoad"></wc-data-counter>
+            </wc-panel>
+        </gridster-item>
+        -->
         
+        <gridster-item [item]="processLoadGaugeItem">
+                <wc-panel [title]="'Process CPU Usage'">
+                    <ngx-gauge [type]="'semi'" 
+                        [value]="serverStatus.processLoad*100" 
+                        [label]="'Proc. Load'"  
+                        [append]="'%'"
+                        [thick]="10"
+                        [foregroundColor]="'#fc0'"
+                        [cap]="'flat'">
+                    </ngx-gauge>
+                </wc-panel>
+        </gridster-item>
+    
+        <gridster-item [item]="cpuLoadGaugeItem">
+                <wc-panel [title]="'System CPU Load'">
+                    <ngx-gauge [type]="'semi'" 
+                        [value]="serverStatus.systemLoad*100" 
+                        [label]="''"  
+                        [append]="'%'"
+                        [thick]="10"
+                        [foregroundColor]="'#fc0'"
+                        [cap]="'flat'">
+                    </ngx-gauge>
+                </wc-panel>
+        </gridster-item>
+
+
+        <!--
         <gridster-item [item]="currentMotifInstanceVersion">
             <wc-panel [title]="'MOTIF Server Instance'">
                 <div style="display: flex;flex-direction: column;">
-                    <label class="dashboard-item-label dashboard-item-label-primary">{{model.serverInstance.version}}</label>
-                    <label class="dashboard-item-label dashboard-item-label-secondary">{{model.serverInstance.nodeRunning}}</label>
+                    <label class="dashboard-item-label dashboard-item-label-primary">pippo</label>
+                    <label class="dashboard-item-label dashboard-item-label-secondary">pluto</label>
                 </div>
             </wc-panel>
         </gridster-item>
-    
+    -->
+
     <!--        
         <gridster-item [item]="sessionCountItem">
             <wc-panel [title]="'Sessions Count'">
