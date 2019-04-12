@@ -252,11 +252,26 @@ export class CounterInfosPaneComponent implements OnInit, OnDestroy {
     }
 
     onExportClicked(): void {
-        alert("TODO!! onExportClicked");
+        this.notificationCenter.post({
+            name: 'ExportCounterInfoWarn',
+            title: 'Export Counter Info',
+            message: 'This functionality is not yet implemented.',
+            type: NotificationType.Warning,
+            closable: false
+        });
+
+        //alert("TODO!! onExportClicked");
     }
 
     onImportClicked(): void {
-        alert("TODO!! onImportClicked");
+        this.notificationCenter.post({
+            name: 'ExportCounterInfoWarn',
+            title: 'Import Counter Info',
+            message: 'This functionality is not yet implemented.',
+            type: NotificationType.Warning,
+            closable: false
+        });
+        //alert("TODO!! onImportClicked");
     }
 
     propagateChange: any = () => {};
