@@ -16,6 +16,11 @@
 	color: $badge_warning_color;
 }
 
+.user-status-BLOCKED {
+    background-color: $badge_error_background_color;
+    color: $badge_error_color;
+}
+
 /* Application Content */
 
 /* Configuration */
