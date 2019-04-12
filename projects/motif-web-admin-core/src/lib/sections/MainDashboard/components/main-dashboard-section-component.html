@@ -19,7 +19,7 @@
         <gridster-item [item]="processLoadGaugeItem">
                 <wc-panel [title]="'Process CPU Usage'">
                     <ngx-gauge [type]="'semi'" 
-                        [value]="serverStatus.processLoad*100" 
+                        [value]="serverStatus.processLoadPerc" 
                         [label]="''"  
                         [append]="'%'"
                         [thick]="10"
@@ -32,7 +32,20 @@
         <gridster-item [item]="cpuLoadGaugeItem">
                 <wc-panel [title]="'System CPU Load'">
                     <ngx-gauge [type]="'semi'" 
-                        [value]="serverStatus.systemLoad*100" 
+                        [value]="serverStatus.systemLoadPerc" 
+                        [label]="''"  
+                        [append]="'%'"
+                        [thick]="10"
+                        [foregroundColor]="'#fc0'"
+                        [cap]="'flat'">
+                    </ngx-gauge>
+                </wc-panel>
+        </gridster-item>
+
+        <gridster-item [item]="memoryInfoGaugeItem">
+                <wc-panel [title]="'Memory - Used Heap'">
+                    <ngx-gauge [type]="'semi'" 
+                        [value]="serverStatus.memoryUsage.heapUsedPerc" 
                         [label]="''"  
                         [append]="'%'"
                         [thick]="10"

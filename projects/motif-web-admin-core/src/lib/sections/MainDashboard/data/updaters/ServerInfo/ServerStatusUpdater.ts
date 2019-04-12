@@ -62,8 +62,12 @@ export class ServerStatusUpdater {
     public reloadData(){
         this.logger.debug(LOG_TAG , 'reloadData called');
         this.infoService.getServerStatus().subscribe((results:ServerStatus)=>{
-            this.logger.debug(LOG_TAG , 'getServerInfo results: ', results);
+            this.logger.debug(LOG_TAG , 'getServerStatus results: ', results);
             this._data = results;
+            this._data["processLoadPerc"] = Number((results.processLoad*100).toFixed(1));
+            this._data["systemLoadPerc"] = Number((results.systemLoad*100).toFixed(1));
+            this._data.memoryUsage["heapFreePerc"] = Number((results.memoryUsage.heapFree/results.memoryUsage.heapTotal)*100).toFixed(1);
+            this._data.memoryUsage["heapUsedPerc"] =100 - this._data.memoryUsage["heapFreePerc"];
             this._dataReady.emit(this._data);
         }, (error)=>{
             this.logger.error(LOG_TAG , 'getServerInfo error: ', error);
