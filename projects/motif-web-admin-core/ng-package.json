@@ -46,6 +46,8 @@
     "@wa-motif-open-api/web-content-service",
     "@wa-motif-open-api/rest-content-service",
     "@wa-motif-open-api/context-service",
+    "@wa-motif-open-api/info-service",
+    "@wa-motif-open-api/scheduler-service",
     "angular-gridster2",
     "b64-to-blob",
     "core-js",

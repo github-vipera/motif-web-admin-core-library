@@ -116,11 +116,11 @@ export class MainDashboardSectionComponent implements OnInit, OnDestroy {
         console.info('itemResized', item, itemComponent);
     }
 
-    public get serverStatus(): ServerStatus {
+    public get serverStatus(): any {
       return this.statusUpdater.data;
     }
 
-    public get serverInfo(): ServerInfo {
+    public get serverInfo(): any {
       return this.infoUpdater.data;
     }
 
