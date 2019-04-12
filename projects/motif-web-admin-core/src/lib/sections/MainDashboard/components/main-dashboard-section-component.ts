@@ -7,9 +7,10 @@ import { NGXLogger} from 'web-console-core';
 import { Gridster } from 'web-console-ui-kit'
 import { SecurityService, Session } from '@wa-motif-open-api/security-service'
 import { interval } from 'rxjs';
-import { InfoService, ServerInfo, ServerStatus, UsersInfo } from '@wa-motif-open-api/info-service'
+import { InfoService, ServerInfo, ServerStatus, UsersInfo, OAuth2Info } from '@wa-motif-open-api/info-service'
 import { ServerStatusUpdater } from '../data/updaters/ServerInfo/ServerStatusUpdater';
 import { ServerInfoUpdater } from '../data/updaters/ServerInfo/ServerInfoUpdater';
+import { OAuth2InfoUpdater } from '../data/updaters/OAuth2InfoUpdater';
 
 const LOG_TAG = '[MainDashboardSectionComponent]';
 
@@ -31,6 +32,7 @@ export class MainDashboardSectionComponent implements OnInit, OnDestroy {
     private statusUpdater:ServerStatusUpdater;
     private infoUpdater:ServerInfoUpdater;
     private usersInfoUpdater: UsersInfoUpdater;
+    private oauth2InfoUpdater: OAuth2InfoUpdater;
 
     private refreshInterval: any;
     
@@ -77,7 +79,7 @@ export class MainDashboardSectionComponent implements OnInit, OnDestroy {
     memoryInfoGaugeItem:Gridster.GridsterItem = {cols: 3, rows: 3, y: 2, x: 8 };
     memoryInfoItem:Gridster.GridsterItem = {cols: 3, rows: 2, y: 2, x: 8 };
     usersInfoItem:Gridster.GridsterItem = {cols: 3, rows: 5, y: 0, x: 14 };
-
+    oauth2InfoItem:Gridster.GridsterItem = {cols: 3, rows: 2, y: 0, x: 0 };
 
     /**
      * Angular ngOnInit
@@ -93,6 +95,8 @@ export class MainDashboardSectionComponent implements OnInit, OnDestroy {
         this.usersInfoUpdater =  new UsersInfoUpdater(this.logger, this.infoService);
         this.usersInfoUpdater.start(30 * 1000);
 
+        this.oauth2InfoUpdater = new OAuth2InfoUpdater(this.logger, this.infoService);
+        this.oauth2InfoUpdater.start(5 * 1000);
     }
 
     ngOnDestroy() {
@@ -123,5 +127,9 @@ export class MainDashboardSectionComponent implements OnInit, OnDestroy {
     public get usersInfo(): UsersInfo {
       return this.usersInfoUpdater.data;
     }
+
+    public get oauth2Info(): OAuth2Info {
+      return this.oauth2InfoUpdater.data;
+    } 
 
 }

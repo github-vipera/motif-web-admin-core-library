@@ -68,6 +68,11 @@
                 </wc-panel>
         </gridster-item>
         
+        <gridster-item [item]="oauth2InfoItem">
+            <wc-panel [title]="'OAUTH2'">
+                <wa-oauth2-info-widget-panel [oauth2Info]="oauth2Info"></wa-oauth2-info-widget-panel>
+            </wc-panel>
+         </gridster-item>
 
         <!--
         <gridster-item [item]="currentMotifInstanceVersion">

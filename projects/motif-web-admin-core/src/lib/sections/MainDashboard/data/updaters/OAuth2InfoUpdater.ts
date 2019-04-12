@@ -1,22 +1,20 @@
 import { EventEmitter } from '@angular/core';
 import { NGXLogger} from 'web-console-core';
-import { InfoService, UsersInfo } from '@wa-motif-open-api/info-service'
+import { InfoService, OAuth2Info } from '@wa-motif-open-api/info-service'
 import { Subscription, interval } from 'rxjs';
 
-const LOG_TAG = '[UsersInfoUpdater]';
+const LOG_TAG = '[OAuth2InfoUpdater]';
 
-export class UsersInfoUpdater {
+export class OAuth2InfoUpdater {
 
     private _interval:number;
     private _intervalTimer:any;
     private _intervalSubscription:Subscription;
-    private _data:UsersInfo = {
-        active: 0,
-        blocked: 0,
-        preactive: 0,
-        total: 0
+    private _data:OAuth2Info = {
+        accessTokens: 0,
+        refreshTokens: 0
     }
-    private _dataReady:EventEmitter<UsersInfo>;
+    private _dataReady:EventEmitter<OAuth2Info>;
     private _dataError:EventEmitter<any>;
 
     constructor(private logger: NGXLogger,
@@ -57,17 +55,17 @@ export class UsersInfoUpdater {
 
     public reloadData(){
         this.logger.debug(LOG_TAG , 'reloadData called');
-        this.infoService.getUsersInfo().subscribe((results:UsersInfo)=>{
-            this.logger.debug(LOG_TAG , 'getUsersInfo results: ', results);
+        this.infoService.getOAuth2Info().subscribe((results:OAuth2Info)=>{
+            this.logger.debug(LOG_TAG , 'getOAuth2Info results: ', results);
             this._data = results;
             this._dataReady.emit(this._data);
         }, (error)=>{
-            this.logger.error(LOG_TAG , 'getUsersInfo error: ', error);
+            this.logger.error(LOG_TAG , 'getOAuth2Info error: ', error);
             this._dataError.emit(error);
         });
     }
 
-    public get data():UsersInfo {
+    public get data():OAuth2Info {
         return this._data;
     }
 

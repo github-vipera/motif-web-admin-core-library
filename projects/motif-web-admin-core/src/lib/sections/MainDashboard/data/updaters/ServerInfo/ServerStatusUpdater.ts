@@ -70,7 +70,7 @@ export class ServerStatusUpdater {
             this._data.memoryUsage["heapUsedPerc"] =100 - this._data.memoryUsage["heapFreePerc"];
             this._dataReady.emit(this._data);
         }, (error)=>{
-            this.logger.error(LOG_TAG , 'getServerInfo error: ', error);
+            this.logger.error(LOG_TAG , 'getServerStatus error: ', error);
             this._dataError.emit(error);
         });
     }
