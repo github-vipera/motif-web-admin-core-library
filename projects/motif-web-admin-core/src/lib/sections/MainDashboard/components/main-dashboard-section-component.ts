@@ -119,7 +119,7 @@ export class MainDashboardSectionComponent implements OnInit, OnDestroy {
             this.model.security.sessions.activeCount = "" + results.length;
         }, (error)=>{
             console.error("Load data error : ", error);
-            alert("Load data error:" + JSON.stringify(error));
+            //alert("Load data error:" + JSON.stringify(error));
         });
 
         this.infoService.getServerInfo().subscribe((data:Array<ServerInfo>)=>{
