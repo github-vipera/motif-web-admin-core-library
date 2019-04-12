@@ -118,7 +118,8 @@ export class MainDashboardSectionComponent implements OnInit, OnDestroy {
         this.securityService.getSessions().subscribe((results:Array<Session>)=>{
             this.model.security.sessions.activeCount = "" + results.length;
         }, (error)=>{
-            alert(JSON.stringify(error));
+            console.error("Load data error : ", error);
+            alert("Load data error:" + JSON.stringify(error));
         });
 
         this.infoService.getServerInfo().subscribe((data:Array<ServerInfo>)=>{
