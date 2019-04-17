@@ -16,7 +16,7 @@ import {
 } from '@wa-motif-open-api/auth-access-control-service';
 import { forkJoin, Observable, concat } from 'rxjs';
 import { ReplaySubject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, tap } from 'rxjs/operators';
 
 const LOG_TAG = '[AclRelationsDialogComponent]';
 
@@ -42,6 +42,9 @@ const closest = (node, predicate) => {
 export class AclRelationsDialogComponent implements OnInit, OnDestroy {
 
     loading = false;
+    useProgress = false;
+    progressTitle: string;
+    progressValue: number;
 
     _currentEntityType: EntityType;
     dialogTitle = '';
@@ -137,27 +140,33 @@ export class AclRelationsDialogComponent implements OnInit, OnDestroy {
         switch (this._currentEntityType) {
             case EntityType.User:
                 this.dialogTitle = 'User Groups';
-                this.entityName = dataItem.userId;
+                this.entityName = dataItem.domain + ' - ' + dataItem.userId;
+                this.progressTitle = 'Setting Groups on ' + this.entityName;
                 break;
             case EntityType.Admin:
                 this.dialogTitle = 'Admin Groups';
-                this.entityName = dataItem.userId;
+                this.entityName = dataItem.domain + ' - ' + dataItem.userId;
+                this.progressTitle = 'Setting Groups on ' + this.entityName;
                 break;
             case EntityType.Client:
                 this.dialogTitle = 'Client Groups';
-                this.entityName = dataItem.userId;
+                this.entityName = dataItem.domain + ' - ' + dataItem.userId;
+                this.progressTitle = 'Setting Groups on ' + this.entityName;
                 break;
             case EntityType.Group:
                 this.dialogTitle = 'Group Roles';
-                this.entityName = dataItem.name;
+                this.entityName = dataItem.domain + ' - ' + dataItem.name;
+                this.progressTitle = 'Setting Roles on ' + this.entityName;
                 break;
             case EntityType.Role:
                 this.dialogTitle = 'Role Actions';
                 this.entityName = dataItem.name;
+                this.progressTitle = 'Setting Actions on ' + this.entityName;
                 break;
             case EntityType.Action:
                 this.dialogTitle = 'Action Permissions';
                 this.entityName = dataItem.name;
+                this.progressTitle = 'Setting Permissions on ' + this.entityName;
                 break;
         }
         this.display = true;
@@ -194,6 +203,7 @@ export class AclRelationsDialogComponent implements OnInit, OnDestroy {
         }
 
         this.loading = true;
+        this.useProgress = false;
         forkJoin(getCurrent, getAvailable).pipe(takeUntil(this.destroy)).subscribe(response => {
             this.currentData = response[0];
             this.availableData = response[1];
@@ -296,7 +306,13 @@ export class AclRelationsDialogComponent implements OnInit, OnDestroy {
         });
     }
 
+    updateProgress(done: number, total: number) {
+        this.progressValue = Math.round(done * 100 / total);
+    }
+
     addToCurrent(itemsToAdd: any[]) {
+        let done = 0;
+        let total = 0;
         const addToCurrent: Observable<any>[] = [];
         switch (this._currentEntityType) {
             case EntityType.User:
@@ -306,7 +322,8 @@ export class AclRelationsDialogComponent implements OnInit, OnDestroy {
                     const ga: GroupAssign = {
                         name: i.name
                     };
-                    addToCurrent.push(this.usersService.assignGroupToUser(this.currentItem.domain, this.currentItem.userId, ga));
+                    addToCurrent.push(this.usersService.assignGroupToUser(this.currentItem.domain, this.currentItem.userId, ga)
+                        .pipe(tap(value => this.updateProgress(++done, total))));
                 }, this);
                 break;
             case EntityType.Group:
@@ -314,7 +331,8 @@ export class AclRelationsDialogComponent implements OnInit, OnDestroy {
                     const ra: RoleAssign = {
                         name: i.name
                     };
-                    addToCurrent.push(this.groupsService.assignRoleToGroup(this.currentItem.domain, this.currentItem.name, ra));
+                    addToCurrent.push(this.groupsService.assignRoleToGroup(this.currentItem.domain, this.currentItem.name, ra)
+                        .pipe(tap(value => this.updateProgress(++done, total))));
                 }, this);
                 break;
             case EntityType.Role:
@@ -322,7 +340,8 @@ export class AclRelationsDialogComponent implements OnInit, OnDestroy {
                     const aa: ActionAssign = {
                         name: i.name
                     };
-                    addToCurrent.push(this.rolesService.assignActionToRole(this.currentItem.name, aa));
+                    addToCurrent.push(this.rolesService.assignActionToRole(this.currentItem.name, aa)
+                        .pipe(tap(value => this.updateProgress(++done, total))));
                 }, this);
                 break;
             case EntityType.Action:
@@ -332,50 +351,69 @@ export class AclRelationsDialogComponent implements OnInit, OnDestroy {
                         action: i.action,
                         target: i.target
                     };
-                    addToCurrent.push(this.actionsService.assignPermissionToAction(this.currentItem.name, p));
+                    addToCurrent.push(this.actionsService.assignPermissionToAction(this.currentItem.name, p)
+                        .pipe(tap(value => this.updateProgress(++done, total))));
                 }, this);
                 break;
         }
 
+        total = addToCurrent.length;
+        this.loading = true;
+        this.progressValue = 0;
+        this.useProgress = true;
         forkJoin(addToCurrent).pipe(takeUntil(this.destroy)).subscribe(response => {
             this.loadGrids(this.currentItem);
+            this.loading = false;
         }, error => {
             this.logger.warn(LOG_TAG, 'Error writing data: ', error);
+            this.loading = false;
         });
     }
 
     removeFromCurrent(itemsToRemove: any[]) {
+        let done = 0;
+        let total = 0;
         const removeFromCurrent: Observable<any>[] = [];
         switch (this._currentEntityType) {
             case EntityType.User:
             case EntityType.Admin:
             case EntityType.Client:
                 itemsToRemove.forEach(i => {
-                    removeFromCurrent.push(this.usersService.removeGroupFromUser(this.currentItem.domain, this.currentItem.userId, i.name));
+                    removeFromCurrent.push(this.usersService.removeGroupFromUser(this.currentItem.domain, this.currentItem.userId, i.name)
+                        .pipe(tap(value => this.updateProgress(++done, total))));
                 }, this);
                 break;
             case EntityType.Group:
                 itemsToRemove.forEach(i => {
-                    removeFromCurrent.push(this.groupsService.removeRoleFromGroup(this.currentItem.domain, this.currentItem.name, i.name));
+                    removeFromCurrent.push(this.groupsService.removeRoleFromGroup(this.currentItem.domain, this.currentItem.name, i.name)
+                        .pipe(tap(value => this.updateProgress(++done, total))));
                 }, this);
                 break;
             case EntityType.Role:
                 itemsToRemove.forEach(i => {
-                    removeFromCurrent.push(this.rolesService.removeActionFromRole(this.currentItem.name, i.name));
+                    removeFromCurrent.push(this.rolesService.removeActionFromRole(this.currentItem.name, i.name)
+                        .pipe(tap(value => this.updateProgress(++done, total))));
                 }, this);
                 break;
             case EntityType.Action:
                 itemsToRemove.forEach(i => {
                     removeFromCurrent.push(this.actionsService.
-                        removePermissionFromAction(this.currentItem.name, i.component, i.action, i.target));
+                        removePermissionFromAction(this.currentItem.name, i.component, i.action, i.target)
+                            .pipe(tap(value => this.updateProgress(++done, total))));
                 }, this);
                 break;
         }
 
+        total = removeFromCurrent.length;
+        this.loading = true;
+        this.progressValue = 0;
+        this.useProgress = true;
         forkJoin(removeFromCurrent).pipe(takeUntil(this.destroy)).subscribe(response => {
             this.loadGrids(this.currentItem);
+            this.loading = false;
         }, error => {
             this.logger.warn(LOG_TAG, 'Error writing data: ', error);
+            this.loading = false;
         });
     }
 }

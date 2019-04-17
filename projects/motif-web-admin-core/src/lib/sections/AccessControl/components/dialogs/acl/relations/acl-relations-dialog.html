@@ -2,7 +2,7 @@
   [style]="{ width: '1280px', minWidth: '1024px', height: '800px'}" [minY]="70" [baseZIndex]="10000">
   <p-header> {{ dialogTitle }} <strong>[{{ entityName }}]</strong></p-header>
 
-  <wc-loading-overlay [visible]="loading"></wc-loading-overlay>
+  <wc-loading-overlay [visible]="loading" [useProgress]="useProgress" [progress]="progressValue" [progressTitle]="progressTitle"></wc-loading-overlay>
   <div class="row fill noselect" style="height: 100%;">
     <kendo-splitter>
       <kendo-splitter-pane orientation="horizontal" [collapsible]="false" size="45%" [scrollable]="false">
