@@ -91,7 +91,8 @@
     "zone.js": "^0.8.26",
     "color-parse": "^1.3.7",
     "color-string": "^1.5.3",
-    "ngx-scrollbar": "^4.1.1"
+    "ngx-scrollbar": "^4.1.1",
+    "grapesjs": "^0.14.57"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.12.1",

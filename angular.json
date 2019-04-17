@@ -33,9 +33,13 @@
               "node_modules/@progress/kendo-theme-default/scss/all.scss",
               "src/styles.scss",
               "projects/motif-web-admin-core/src/assets/style.css",
-              "projects/motif-web-admin-core/src/assets/motif_webadmin_iconfont.css"
+              "projects/motif-web-admin-core/src/assets/motif_webadmin_iconfont.css",
+              "node_modules/grapesjs/dist/css/grapes.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/grapesjs/dist/grapes.min.js"
+            ]
           },
           "configurations": {
             "production": {

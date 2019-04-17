@@ -69,6 +69,7 @@
     "zone.js",
     "color-parse",
     "color-string",
-    "ngx-scrollbar"
+    "ngx-scrollbar",
+    "grapesjs"
   ]
 }

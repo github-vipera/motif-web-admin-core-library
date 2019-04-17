@@ -36,6 +36,10 @@ import { SchedulerSectionModule } from 'motif-web-admin-core';
 import { MainDashboardSectionModule } from 'motif-web-admin-core';
 import { moduleRoutes } from 'motif-web-admin-core';
 
+// Web Console Designer
+import { WADesignerModule, WADesignerComponent } from 'motif-web-admin-core';
+
+
 const LoggerModuleConfigured = LoggerModule.forRoot({
   level: (environment.production ? NgxLoggerLevel.OFF : NgxLoggerLevel.DEBUG),
   serverLoggingUrl: '/api/logs',
@@ -46,6 +50,7 @@ const LoggerModuleConfigured = LoggerModule.forRoot({
 const appRoutes: Routes = [
   { path: '', redirectTo: '/dashboard/Main%20Dashboard', pathMatch: 'full' },
   { path: 'login', component: WebConsoleLoginComponent },
+  { path: 'designer', component: WADesignerComponent },
   { path: 'dashboard', component: WebConsoleComponent, canActivate: [AuthGuard] , children:moduleRoutes }
 ];
 
@@ -86,7 +91,8 @@ const appRoutes: Routes = [
     WebContentSectionModule,
     RESTManagerSectionModule,
     SchedulerSectionModule,
-    MainDashboardSectionModule
+    MainDashboardSectionModule,
+    WADesignerModule
   ],
   providers: [
     { provide: WC_API_BASE_PATH, useValue: environment.API_BASE_PATH },
