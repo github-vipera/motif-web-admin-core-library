@@ -15,6 +15,10 @@ import { PluginRegistryServiceModule } from '@wa-motif-open-api/plugin-registry-
 import { CommonsUIModule } from '../../components/CommonsUIModule';
 import { DialogModule } from 'primeng/dialog';
 import { MainDashboardSectionComponent } from './components/main-dashboard-section-component';
+import { ServerInfoWidgetPanelComponent } from './components/widgets/ServerInfo/server-info-widget-panel';
+import { MemoryInfoWidgetPanelComponent } from './components/widgets/MemoryInfo/memory-info-widget-panel';
+import { UsersInfoWidgetPanelComponent } from './components/widgets/UsersInfo/users-info-widget-panel';
+import { OAuth2InfoWidgetPanelComponent } from './components/widgets/OAuth2Info/oauth2-info-widget-panel';
 
 @NgModule({
     imports: [
@@ -35,12 +39,12 @@ import { MainDashboardSectionComponent } from './components/main-dashboard-secti
         WCUIKitGridsterProviderModule
     ],
     entryComponents:[
-        MainDashboardSectionComponent
+        MainDashboardSectionComponent, ServerInfoWidgetPanelComponent, MemoryInfoWidgetPanelComponent, UsersInfoWidgetPanelComponent, OAuth2InfoWidgetPanelComponent
     ],
     declarations: [
-        MainDashboardSectionComponent
+        MainDashboardSectionComponent, ServerInfoWidgetPanelComponent, MemoryInfoWidgetPanelComponent, UsersInfoWidgetPanelComponent, OAuth2InfoWidgetPanelComponent
     ],
-    exports: [ MainDashboardSectionComponent ],
+    exports: [ MainDashboardSectionComponent, ServerInfoWidgetPanelComponent, MemoryInfoWidgetPanelComponent, UsersInfoWidgetPanelComponent, OAuth2InfoWidgetPanelComponent ],
     providers: [
     ]
 

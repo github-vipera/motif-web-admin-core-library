@@ -41,28 +41,64 @@ export class CounterInfosDashboardComponent implements OnInit, OnDestroy {
     }
 
     onAddNewCounterInfoClicked(): void {
+        this.notificationCenter.post({
+            name: 'NewCounterInfoWarn',
+            title: 'New Counter Info',
+            message: 'This functionality is not yet implemented.',
+            type: NotificationType.Warning,
+            closable: false
+        });
+
         //TODO!!
-        alert("TODO!! Add New Counter Info");
+        //alert("TODO!! Add New Counter Info");
     }
 
     onAddNewThresholdClicked(): void {
         //TODO!!
-        alert("TODO!! Add New Threshold");
+        //alert("TODO!! Add New Threshold");
+        this.notificationCenter.post({
+            name: 'NewThresholdWarn',
+            title: 'New Threshold',
+            message: 'This functionality is not yet implemented.',
+            type: NotificationType.Warning,
+            closable: false
+        });
     }
 
     onRefreshClicked(): void {
         //TODO!!
-        alert("TODO!! Refresh");
+        //alert("TODO!! Refresh");
+        this.notificationCenter.post({
+            name: 'CounterInfoRefreshWarn',
+            title: 'Refresh',
+            message: 'This functionality is not yet implemented.',
+            type: NotificationType.Warning,
+            closable: false
+        });
     }
 
     onExportClicked(): void {
         //TODO!!
-        alert("TODO!! Export");
+        //alert("TODO!! Export");
+        this.notificationCenter.post({
+            name: 'CounterInfoExportWarn',
+            title: 'Export',
+            message: 'This functionality is not yet implemented.',
+            type: NotificationType.Warning,
+            closable: false
+        });
     }
 
     onImportClicked(): void {
         //TODO!!
-        alert("TODO!! Import");
+        //alert("TODO!! Import");
+        this.notificationCenter.post({
+            name: 'CounterInfoImportWarn',
+            title: 'Import',
+            message: 'This functionality is not yet implemented.',
+            type: NotificationType.Warning,
+            closable: false
+        });
     }
 
     onCounterInfoSelectionChange(selectionEvent: CounterInfoSelectionEvent){

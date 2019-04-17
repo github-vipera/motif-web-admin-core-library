@@ -166,3 +166,15 @@
     -webkit-transform: translateX(0.7em);
     transform: translateX(0.7em);
 }
+
+.ui-progressbar-determinate .ui-progressbar-value-animate {
+	-webkit-transition: none !important;
+	-moz-transition: none !important;
+	-o-transition: none !important;
+	transition: none !important;
+}
+
+.ui-progressbar-determinate .ui-progressbar-value {
+	background-color: #dedede70 !important;
+}
+

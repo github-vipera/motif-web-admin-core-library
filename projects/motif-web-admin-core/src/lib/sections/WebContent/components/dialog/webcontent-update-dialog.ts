@@ -1,3 +1,5 @@
+import { ApplicationSelectorComboBoxComponent } from './../../../../components/UI/selectors/application-selector-combobox-component';
+import { DomainSelectorComboBoxComponent } from './../../../../components/UI/selectors/domain-selector-combobox-component';
 import { Component, OnInit, Input, ViewChild, ElementRef, Renderer2, EventEmitter, Output } from '@angular/core';
 import { NGXLogger } from 'web-console-core';
 import { StringMap } from '@angular/compiler/src/compiler_facade_interface';
@@ -34,6 +36,9 @@ export class WebContentUpdateDialogComponent implements OnInit {
     @Output() confirm: EventEmitter<UpdateDialogResult> = new EventEmitter();
     @Output() cancel: EventEmitter<void> = new EventEmitter();
 
+    @ViewChild('domainSelector') domainSelector:DomainSelectorComboBoxComponent;
+    @ViewChild('applicationSelector') applicationSelector:ApplicationSelectorComboBoxComponent;
+
     constructor(private logger: NGXLogger) {}
 
     ngOnInit(): void {
@@ -41,7 +46,7 @@ export class WebContentUpdateDialogComponent implements OnInit {
     }
 
     public show(bundleName: string, bundleVersion: string, domain: string, application: string, context: string): void {
-        this.logger.debug(LOG_TAG, 'show called for: ', domain, application, context);
+        this.logger.debug(LOG_TAG, 'show called for: ',bundleName, bundleVersion, domain, application, context);
         this.prepare(bundleName, bundleVersion, domain, application, context);
         this.display = true;
     }
@@ -51,13 +56,23 @@ export class WebContentUpdateDialogComponent implements OnInit {
     }
 
     private prepare(bundleName: string, bundleVersion: string, domain: string, application: string, context: string): void {
-        this.logger.debug(LOG_TAG, 'show called for: ', domain, application, context);
+        this.logger.debug(LOG_TAG, 'prepare called for: ', bundleName, bundleVersion, domain, application, context);
         // fill the fields
         this.domain = domain;
         this.application = application;
         this.context = context;
         this.bundleName = bundleName;
         this.bundleVersion = bundleVersion;
+        if (domain){
+            this.domainSelector.selectedDomainName = domain;
+        } else {
+            this.domainSelector.selectedDomain = null;
+        }
+        if (application){
+            this.applicationSelector.selectedApplicationName = application;
+        } else {
+            this.applicationSelector.selectedApplication = null;
+        }
     }
 
     onCancel(): void {

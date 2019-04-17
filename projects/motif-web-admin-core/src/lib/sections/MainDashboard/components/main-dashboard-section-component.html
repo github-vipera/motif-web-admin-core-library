@@ -4,22 +4,88 @@
 
     <gridster [options]="options">
 
-        <gridster-item [item]="currentMotifInstanceVersion">
-            <wc-panel [title]="'MOTIF Server Instance'">
-                <div style="display: flex;flex-direction: column;">
-                    <label class="dashboard-item-label dashboard-item-label-primary">{{model.serverInstance.version}}</label>
-                    <label class="dashboard-item-label dashboard-item-label-secondary">{{model.serverInstance.nodeRunning}}</label>
-                </div>
+        <gridster-item [item]="motifSeriverInstanceItem">
+            <wc-panel [title]="'MOTIF Instance'">
+                <wa-server-info-widget-panel></wa-server-info-widget-panel>
             </wc-panel>
+        </gridster-item>
+
+        <gridster-item [item]="motifSeriverInstanceNameItem">
+            <wc-panel [title]="'Current MOTIF Instance'">
+                <wc-data-counter  [class]="'serverInstanceInfo'" [title]="serverInfo.motifVersion" [value]="serverInfo.instanceName"></wc-data-counter>
+            </wc-panel>
+        </gridster-item>
+
+        <gridster-item [item]="processLoadGaugeItem">
+                <wc-panel [title]="'Process CPU Usage'">
+                    <ngx-gauge [type]="'semi'" 
+                        [value]="serverStatus.processLoadPerc" 
+                        [label]="''"  
+                        [append]="'%'"
+                        [thick]="10"
+                        [foregroundColor]="'#fc0'"
+                        [cap]="'flat'">
+                    </ngx-gauge>
+                </wc-panel>
         </gridster-item>
     
-        
-        <gridster-item [item]="sessionCountItem">
-            <wc-panel [title]="'Sessions Count'">
-                <wc-data-counter [title]="'Active Sessions'" [value]="model.security.sessions.activeCount"></wc-data-counter>
-            </wc-panel>
+        <gridster-item [item]="cpuLoadGaugeItem">
+                <wc-panel [title]="'System CPU Load'">
+                    <ngx-gauge [type]="'semi'" 
+                        [value]="serverStatus.systemLoadPerc" 
+                        [label]="''"  
+                        [append]="'%'"
+                        [thick]="10"
+                        [foregroundColor]="'#fc0'"
+                        [cap]="'flat'">
+                    </ngx-gauge>
+                </wc-panel>
+        </gridster-item>
+
+        <gridster-item [item]="memoryInfoGaugeItem">
+                <wc-panel [title]="'Memory - Used Heap'">
+                    <ngx-gauge [type]="'semi'" 
+                        [value]="serverStatus.memoryUsage.heapUsedPerc" 
+                        [label]="''"  
+                        [append]="'%'"
+                        [thick]="10"
+                        [foregroundColor]="'#fc0'"
+                        [cap]="'flat'">
+                    </ngx-gauge>
+                </wc-panel>
+        </gridster-item>
+
+        <gridster-item [item]="diskInfoGaugeItem">
+                <wc-panel [title]="'Disk - Space Used'">
+                    <ngx-gauge [type]="'semi'" 
+                        [value]="serverStatus.diskUsage.diskUsedPerc" 
+                        [label]="''"  
+                        [append]="'%'"
+                        [thick]="10"
+                        [foregroundColor]="'#fc0'"
+                        [cap]="'flat'">
+                    </ngx-gauge>
+                </wc-panel>
+        </gridster-item>
+
+        <gridster-item [item]="memoryInfoItem">
+                <wc-panel [title]="'Memory Info'">
+                    <wa-memory-info-widget-panel [serverStatus]="serverStatus" ></wa-memory-info-widget-panel>
+                </wc-panel>
+        </gridster-item>
+
+        <gridster-item [item]="usersInfoItem">
+                <wc-panel [title]="'Users'">
+                        <wa-users-info-widget-panel [usersInfo]="usersInfo"></wa-users-info-widget-panel>
+                </wc-panel>
         </gridster-item>
         
+        <gridster-item [item]="oauth2InfoItem">
+            <wc-panel [title]="'OAUTH2'">
+                <wa-oauth2-info-widget-panel [oauth2Info]="oauth2Info"></wa-oauth2-info-widget-panel>
+            </wc-panel>
+         </gridster-item>
+
 
     </gridster>
 

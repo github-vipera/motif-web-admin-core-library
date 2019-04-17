@@ -1,4 +1,5 @@
 <div class="row fill">
+    <wc-loading-overlay [visible]="loading"></wc-loading-overlay>
     <kendo-grid [data]="gridView" [columnMenu]="true" [resizable]="true" [reorderable]="true" [sort]="sort"
         (sortChange)="sortChange($event)" (filterChange)="filterChange($event)" [sortable]="{ allowUnsort: true, mode: 'multiple' }" 
         [pageSize]="pageSize" [skip]="skip" [filterable]="true" [filter]="filter" [pageable]="{

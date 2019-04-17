@@ -56,7 +56,8 @@
 
 
             <div class="tab" id="tab-2">
-              <kendo-grid [data]="adminsData" [kendoGridSelectBy]="'userId'" [selectedKeys]="adminSelection"
+                <wc-loading-overlay [visible]="adminsLoading"></wc-loading-overlay>
+                <kendo-grid [data]="adminsData" [kendoGridSelectBy]="'userId'" [selectedKeys]="adminSelection"
                 (selectedKeysChange)="onUserSelectionChange($event)" [selectable]="selectableSettings">
                 <kendo-grid-column field="userId" title="UserID" width="30">
                 </kendo-grid-column>
@@ -86,6 +87,7 @@
             </div>
 
             <div class="tab" id="tab-3">
+              <wc-loading-overlay [visible]="clientsLoading"></wc-loading-overlay>
               <kendo-grid [data]="clientsData" [kendoGridSelectBy]="'userId'" [selectedKeys]="clientSelection"
                 (selectedKeysChange)="onUserSelectionChange($event)" [selectable]="selectableSettings">
                 <kendo-grid-column field="userId" title="UserID" width="100">
@@ -119,6 +121,7 @@
         <kendo-splitter-pane [collapsible]="false" size="30%" [scrollable]="false">
           <label class="acl-label">GROUPS</label>
           <div class="pane-content">
+            <wc-loading-overlay [visible]="groupsLoading"></wc-loading-overlay>
             <kendo-grid [data]="groupsData" [kendoGridSelectBy]="'name'" [selectedKeys]="groupSelection"
               (selectedKeysChange)="onGroupSelectionChange($event)" [selectable]="selectableSettings">
               <kendo-grid-column field="name" title="Name" width="100">
@@ -145,6 +148,7 @@
         <kendo-splitter-pane [collapsible]="false" size="23%">
           <label class="acl-label">ROLES</label>
           <div class="pane-content">
+            <wc-loading-overlay [visible]="rolesLoading"></wc-loading-overlay>
             <kendo-grid [data]="rolesData" [kendoGridSelectBy]="'name'" [height]="height" [selectedKeys]="roleSelection"
               (selectedKeysChange)="onRoleSelectionChange($event)" [selectable]="selectableSettings">
               <kendo-grid-column field="name" title="Name" width="30">
@@ -167,7 +171,8 @@
         <kendo-splitter-pane [collapsible]="false" size="31%" [scrollable]="false">
           <label class="acl-label">ACTIONS</label>
           <div class="pane-content">
-            <kendo-grid [data]="actionsGridView" [kendoGridSelectBy]="'name'" [selectedKeys]="actionSelection"
+              <wc-loading-overlay [visible]="actionsLoading"></wc-loading-overlay>
+              <kendo-grid [data]="actionsGridView" [kendoGridSelectBy]="'name'" [selectedKeys]="actionSelection"
               (selectedKeysChange)="onActionSelectionChange($event)" [selectable]="selectableSettings"
               [skip]="actionsDataState.skip" [pageSize]="actionsDataState.take" [scrollable]="'virtual'" [rowHeight]="35"
               [height]="height" (pageChange)="actionsPageChange($event)"
@@ -197,6 +202,7 @@
         <kendo-splitter-pane [collapsible]="false" [scrollable]="false">
           <label class="acl-label">PERMISSIONS</label>
           <div class="pane-content">
+            <wc-loading-overlay [visible]="permissionsLoading"></wc-loading-overlay>
             <kendo-grid id="permissionsGrid" [data]="permissionsGridView" [kendoGridSelectBy]="permissionKey"
               [selectedKeys]="permissionSelection" (selectedKeysChange)="onPermissionSelectionChange($event)"
               [selectable]="selectableSettings" [skip]="permissionsDataState.skip" [pageSize]="permissionsDataState.take"
@@ -217,7 +223,7 @@
               <kendo-grid-column title="" width="25" minResizableWidth="25" [filterable]="false">
                 <ng-template kendoGridCellTemplate let-dataItem let-columnIndex="columnIndex" let-rowIndex="rowIndex"
                     let-column="column">
-                    <wc-grid-editor-command [alignMode]="'end'" [hasConfirmation]="true" [confirmationTitle]="'Delete ?'"
+                    <wc-grid-editor-command [alignMode]="'end'" [hasConfirmation]="true" [confirmationTitle]="'Delete?'"
                         [rowIndex]="rowIndex" [columnIndex]="columnIndex" [column]="column" [commandIcon]="'wa-ico-no'"
                         [dataItem]="dataItem" (commandConfirm)="onDeletePermissionOKPressed(dataItem)">
                     </wc-grid-editor-command>

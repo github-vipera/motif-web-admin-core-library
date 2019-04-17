@@ -486,7 +486,7 @@ export class ServicesSectionComponent implements OnInit, OnDestroy {
                 event.name, event.channel);
         } else {
             this.logger.warn(LOG_TAG, 'onNewItemConfirm unknown for: ', event);
-            alert('Unknown event type: ' + event.editType);
+            //alert('Unknown event type: ' + event.editType);
         }
     }
 
