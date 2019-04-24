@@ -555,6 +555,14 @@ section .header.sub-header h1 {
 }
 */
 
+.main-toolbar-button-tooltip {
+  font-family:montserrat;
+  text-transform:uppercase;
+  font-size:.7rem;
+  color: #dadada !important;
+  opacity: 0.8 !important;
+}
+
 
 @import './web-admin-core-toolbar.scss';
 @import './web-admin-core-tabs.scss';
@@ -563,3 +571,4 @@ section .header.sub-header h1 {
 @import './web-admin-core-input.scss';
 @import './web-admin-core-sections.scss';
 
+ 
