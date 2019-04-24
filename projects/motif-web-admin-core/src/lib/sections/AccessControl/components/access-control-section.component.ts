@@ -443,7 +443,7 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
     console.log('layout changed: ' + this.size);
     const intHeight: number = (parseInt(this.size.replace(/px/, '')) - 120);
     this.height = '' + intHeight;
-    this.actionsDataState.take = this.permissionsDataState.take = Math.ceil(intHeight / 35) + 1;
+    this.actionsDataState.take = this.permissionsDataState.take = Math.ceil(intHeight / 35) * 3;
     this.loadActions();
     this.loadPermissions();
   }

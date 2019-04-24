@@ -1,7 +1,7 @@
 import { Component, OnInit, Renderer2, NgZone, ViewEncapsulation, Input, ViewChild, OnDestroy } from '@angular/core';
 import { NGXLogger } from 'web-console-core';
 import { EntityType } from '../../../editors/acl-editor-context';
-import { process, State } from '@progress/kendo-data-query';
+import { process, State, CompositeFilterDescriptor } from '@progress/kendo-data-query';
 import {
     SelectableSettings, SelectionEvent, RowArgs, PageChangeEvent, GridDataResult,
     DataStateChangeEvent, RowClassArgs
@@ -52,8 +52,10 @@ export class AclRelationsDialogComponent implements OnInit, OnDestroy {
     entityName = '';
     height = '665';
 
+    addAllButtonText = 'All';
     isAddSelectedDisabled: boolean;
     isAddAllDisabled: boolean;
+    removeAllButtonText = 'All';
     isRemoveSelectedDisabled: boolean;
     isRemoveAllDisabled: boolean;
 
@@ -111,6 +113,7 @@ export class AclRelationsDialogComponent implements OnInit, OnDestroy {
     }
 
     public show(entityType: EntityType, dataItem?: any, selectedDomain?: string): void {
+        this.display = true;
         this.prepare(entityType, dataItem);
     }
 
@@ -169,12 +172,11 @@ export class AclRelationsDialogComponent implements OnInit, OnDestroy {
                 this.progressTitle = 'Setting Permissions on ' + this.entityName;
                 break;
         }
-        this.display = true;
         this.loadGrids(dataItem);
     }
 
     private adjustGridsHeight(): void {
-        this.currentDataState.take = this.availableDataState.take = Math.ceil(parseInt(this.height) / 35) + 1;
+        this.currentDataState.take = this.availableDataState.take = Math.ceil(parseInt(this.height) / 35) * 3;
       }
 
     private loadGrids(dataItem: any): void {
@@ -231,10 +233,14 @@ export class AclRelationsDialogComponent implements OnInit, OnDestroy {
 
     private refreshCurrent(): void {
         this.currentGridView = process(this.currentData, this.currentDataState);
+        this.currentSelection = [];
+        this.isRemoveAllDisabled = this.isRemoveSelectedDisabled = true;
     }
 
     private refreshAvailable(): void {
         this.availableGridView = process(this.availableData, this.availableDataState);
+        this.availableSelection = [];
+        this.isAddAllDisabled = this.isAddSelectedDisabled = true;
     }
 
     onConfirm(): void {
@@ -273,12 +279,31 @@ export class AclRelationsDialogComponent implements OnInit, OnDestroy {
         this.refreshAvailable();
     }
 
+    onCurrentFilterChange(event: CompositeFilterDescriptor): void {
+        if (event.filters.length > 0) {
+            this.removeAllButtonText = 'Filtered';
+        } else {
+            this.removeAllButtonText = 'All';
+        }
+    }
+
+    onAvailableFilterChange(event: CompositeFilterDescriptor): void {
+        if (event.filters.length > 0) {
+            this.addAllButtonText = 'Filtered';
+        } else {
+            this.addAllButtonText = 'All';
+        }
+    }
+
     onAddSelected(): void {
         this.addToCurrent(this.mapSelectionToItems(this.availableSelection));
     }
 
     onAddAll(): void {
-        this.addToCurrent(this.availableData);
+        const state = { ...this.availableDataState };
+        state.skip = state.take = undefined;
+        const toAdd = process(this.availableData, state);
+        this.addToCurrent(toAdd.data);
     }
 
     onRemoveSelected(): void {
@@ -286,7 +311,10 @@ export class AclRelationsDialogComponent implements OnInit, OnDestroy {
     }
 
     onRemoveAll(): void {
-        this.removeFromCurrent(this.currentData);
+        const state = { ...this.currentDataState };
+        state.skip = state.take = undefined;
+        const toRemove = process(this.currentData, state);
+        this.removeFromCurrent(toRemove.data);
     }
 
     private mapSelectionToItems(selection: any[]): any[] {
@@ -361,9 +389,20 @@ export class AclRelationsDialogComponent implements OnInit, OnDestroy {
         this.loading = true;
         this.progressValue = 0;
         this.useProgress = true;
-        forkJoin(addToCurrent).pipe(takeUntil(this.destroy)).subscribe(response => {
-            this.loadGrids(this.currentItem);
-            this.loading = false;
+
+        const batchSize = 20;
+        const totalBatches = (Math.floor(total / batchSize));
+        this.add(0, batchSize, totalBatches, addToCurrent);
+    }
+
+    add(currentBatch, batchSize, totalBatches, array: Array<Observable<any>>): void {
+        const splitArray: Array<Observable<any>> = array.slice(currentBatch * batchSize, currentBatch * batchSize + batchSize);
+        forkJoin(splitArray).pipe(takeUntil(this.destroy)).subscribe(response => {
+            if (currentBatch < totalBatches) {
+                this.add(++currentBatch, batchSize, totalBatches, array);
+            } else {
+                this.loadGrids(this.currentItem);
+            }
         }, error => {
             this.logger.warn(LOG_TAG, 'Error writing data: ', error);
             this.loading = false;
@@ -408,9 +447,20 @@ export class AclRelationsDialogComponent implements OnInit, OnDestroy {
         this.loading = true;
         this.progressValue = 0;
         this.useProgress = true;
-        forkJoin(removeFromCurrent).pipe(takeUntil(this.destroy)).subscribe(response => {
-            this.loadGrids(this.currentItem);
-            this.loading = false;
+
+        const batchSize = 20;
+        const totalBatches = (Math.floor(total / batchSize));
+        this.remove(0, batchSize, totalBatches, removeFromCurrent);
+    }
+
+    remove(currentBatch, batchSize, totalBatches, array: Array<Observable<any>>): void {
+        const splitArray: Array<Observable<any>> = array.slice(currentBatch * batchSize, currentBatch * batchSize + batchSize);
+        forkJoin(splitArray).pipe(takeUntil(this.destroy)).subscribe(response => {
+            if (currentBatch < totalBatches) {
+                this.remove(++currentBatch, batchSize, totalBatches, array);
+            } else {
+                this.loadGrids(this.currentItem);
+            }
         }, error => {
             this.logger.warn(LOG_TAG, 'Error writing data: ', error);
             this.loading = false;
