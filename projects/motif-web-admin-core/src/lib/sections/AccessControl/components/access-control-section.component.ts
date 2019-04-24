@@ -448,8 +448,10 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
     this.loadPermissions();
   }
 
-  onStatusChangeOKPressed(event): void {
-    // TODO: Implement
+  onDialogClose(touched: Boolean): void {
+    if (touched) {
+      this.loadGrids(BIT_LOAD_ALL);
+    }
   }
 
   onEditAdminOKPressed(event): void {

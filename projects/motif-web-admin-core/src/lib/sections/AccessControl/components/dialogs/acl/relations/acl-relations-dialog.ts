@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2, NgZone, ViewEncapsulation, Input, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, Renderer2, NgZone, OnDestroy, EventEmitter, Output } from '@angular/core';
 import { NGXLogger } from 'web-console-core';
 import { EntityType } from '../../../editors/acl-editor-context';
 import { process, State, CompositeFilterDescriptor } from '@progress/kendo-data-query';
@@ -41,6 +41,9 @@ const closest = (node, predicate) => {
 })
 export class AclRelationsDialogComponent implements OnInit, OnDestroy {
 
+    @Output() dialogClose: EventEmitter<Boolean> = new EventEmitter();
+
+    touched = false;
     loading = false;
     useProgress = false;
     progressTitle: string;
@@ -114,11 +117,12 @@ export class AclRelationsDialogComponent implements OnInit, OnDestroy {
 
     public show(entityType: EntityType, dataItem?: any, selectedDomain?: string): void {
         this.display = true;
+        this.touched = false;
         this.prepare(entityType, dataItem);
     }
 
-    public hide() {
-        this.display = false;
+    private onHide() {
+        this.dialogClose.emit(this.touched);
     }
 
     public get currentEntityType(): EntityType {
@@ -142,32 +146,32 @@ export class AclRelationsDialogComponent implements OnInit, OnDestroy {
         this.availableSelection = [];
         switch (this._currentEntityType) {
             case EntityType.User:
-                this.dialogTitle = 'User Groups';
+                this.dialogTitle = 'Groups of User';
                 this.entityName = dataItem.domain + ' - ' + dataItem.userId;
                 this.progressTitle = 'Setting Groups on ' + this.entityName;
                 break;
             case EntityType.Admin:
-                this.dialogTitle = 'Admin Groups';
+                this.dialogTitle = 'Groups of Admin';
                 this.entityName = dataItem.domain + ' - ' + dataItem.userId;
                 this.progressTitle = 'Setting Groups on ' + this.entityName;
                 break;
             case EntityType.Client:
-                this.dialogTitle = 'Client Groups';
+                this.dialogTitle = 'Groups of Client';
                 this.entityName = dataItem.domain + ' - ' + dataItem.userId;
                 this.progressTitle = 'Setting Groups on ' + this.entityName;
                 break;
             case EntityType.Group:
-                this.dialogTitle = 'Group Roles';
+                this.dialogTitle = 'Roles of Group';
                 this.entityName = dataItem.domain + ' - ' + dataItem.name;
                 this.progressTitle = 'Setting Roles on ' + this.entityName;
                 break;
             case EntityType.Role:
-                this.dialogTitle = 'Role Actions';
+                this.dialogTitle = 'Actions of Role';
                 this.entityName = dataItem.name;
                 this.progressTitle = 'Setting Actions on ' + this.entityName;
                 break;
             case EntityType.Action:
-                this.dialogTitle = 'Action Permissions';
+                this.dialogTitle = 'Permissions of Action';
                 this.entityName = dataItem.name;
                 this.progressTitle = 'Setting Permissions on ' + this.entityName;
                 break;
@@ -339,6 +343,7 @@ export class AclRelationsDialogComponent implements OnInit, OnDestroy {
     }
 
     addToCurrent(itemsToAdd: any[]) {
+        this.touched = true;
         let done = 0;
         let total = 0;
         const addToCurrent: Observable<any>[] = [];
@@ -410,6 +415,7 @@ export class AclRelationsDialogComponent implements OnInit, OnDestroy {
     }
 
     removeFromCurrent(itemsToRemove: any[]) {
+        this.touched = true;
         let done = 0;
         let total = 0;
         const removeFromCurrent: Observable<any>[] = [];

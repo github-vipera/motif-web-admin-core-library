@@ -1,5 +1,5 @@
 <p-dialog #aclRelationsDialog [(visible)]="display" [modal]="true" [responsive]="true"
-  [style]="{ width: '1280px', minWidth: '1024px', height: '800px'}" [minY]="70" [baseZIndex]="10000">
+  [style]="{ width: '1280px', minWidth: '1024px', height: '800px'}" [minY]="70" [baseZIndex]="10000" (onHide)="onHide()">
   <p-header> {{ dialogTitle }} <strong>[{{ entityName }}]</strong></p-header>
 
   <wc-loading-overlay [visible]="loading" [useProgress]="useProgress" [progress]="progressValue" [progressTitle]="progressTitle"></wc-loading-overlay>
