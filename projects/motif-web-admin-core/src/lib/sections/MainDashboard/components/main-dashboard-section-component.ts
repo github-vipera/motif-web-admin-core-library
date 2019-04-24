@@ -106,7 +106,11 @@ export class MainDashboardSectionComponent implements OnInit, OnDestroy {
     }
 
     freeMem() {
-    }
+        this.statusUpdater.stop();
+        this.infoUpdater.stop();
+        this.usersInfoUpdater.stop();
+        this.oauth2InfoUpdater.stop();
+      }
 
 
     private itemChange(item, itemComponent) {
