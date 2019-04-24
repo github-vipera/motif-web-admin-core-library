@@ -549,11 +549,22 @@ section .header.sub-header h1 {
 	background-color: #dadada;
 }
 
-/*
-.grid-edit-command-center-align {
-  justify-content: normal !important;  
+// Login
+.web-console-login-panel .login-field {
+  border: none;
+  background: none;
+  border-bottom: solid 1px #353a3d;
+  padding: 0px;
 }
-*/
+
+.web-console-login-panel .login-buttons {
+  justify-content: normal !important;
+  margin-top: 20px;
+}
+
+.web-console-login-panel .login-button {
+  width: 100%;
+}
 
 
 @import './web-admin-core-toolbar.scss';
@@ -563,3 +574,4 @@ section .header.sub-header h1 {
 @import './web-admin-core-input.scss';
 @import './web-admin-core-sections.scss';
 
+ 
