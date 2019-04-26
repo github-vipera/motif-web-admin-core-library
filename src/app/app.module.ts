@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { RouterModule, Routes, RouteReuseStrategy } from '@angular/router'
-import { WebConsoleComponent, AuthGuard, WebConsoleCoreModule } from 'web-console-core'
+import { WebConsoleComponent, AuthGuard, WebConsoleCoreModule, PageNotFoundComponent } from 'web-console-core'
 import { WebConsoleLoginComponent } from 'web-console-login'
 import { ToolBarModule } from '@progress/kendo-angular-toolbar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -46,7 +46,11 @@ const LoggerModuleConfigured = LoggerModule.forRoot({
 const appRoutes: Routes = [
   { path: '', redirectTo: '/dashboard/Main%20Dashboard', pathMatch: 'full' },
   { path: 'login', component: WebConsoleLoginComponent },
-  { path: 'dashboard', component: WebConsoleComponent, canActivate: [AuthGuard] , children:moduleRoutes }
+  { path: 'dashboard', component: WebConsoleComponent, canActivate: [AuthGuard] , children:moduleRoutes },
+  {
+    path:"**",
+    component:PageNotFoundComponent
+  }
 ];
 
 @NgModule({
