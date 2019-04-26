@@ -121,7 +121,7 @@ export class AclRelationsDialogComponent implements OnInit, OnDestroy {
         this.prepare(entityType, dataItem);
     }
 
-    private onHide() {
+    public onHide() {
         this.dialogClose.emit(this.touched);
     }
 
