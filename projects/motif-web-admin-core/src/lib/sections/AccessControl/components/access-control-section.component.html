@@ -2,7 +2,7 @@
 
 <wa-access-control-section-new-acl-entity-dialog #newAclEntityDialog (confirm)='onNewAclEntityConfirm($event)'></wa-access-control-section-new-acl-entity-dialog>
 <wa-access-control-section-new-user-dialog #newUserDialog (confirm)='onNewUserConfirm($event)'></wa-access-control-section-new-user-dialog>
-<wa-access-control-section-acl-relations-dialog #aclRelationsDialog></wa-access-control-section-acl-relations-dialog>
+<wa-access-control-section-acl-relations-dialog #aclRelationsDialog (dialogClose)='onDialogClose($event)'></wa-access-control-section-acl-relations-dialog>
 
 <div class="row spread">
   <div class="flex-toolbar" style="display:flex;flex-direction: row;align-items: flex-start;">

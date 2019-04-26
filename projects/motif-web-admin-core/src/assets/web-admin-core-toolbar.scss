@@ -6,10 +6,12 @@ app-root nav * {
 
   nav {
     width:2.5rem;
-    height:calc(100% - 4rem);
+    /*height:calc(100% - 4rem);*/
     display:flex;
     flex-direction:column;
+    overflow-x: hidden;
   }
+
   nav div {
     padding:1rem .5rem;
     font-size:.8rem;
@@ -73,6 +75,7 @@ app-root nav * {
 
   nav a + a {
   }
+
   nav a.current + a {
   border:0;
   }
@@ -179,5 +182,27 @@ app-root nav * {
   }
 
 
+  .wc-nav-scrollbar-view {
+    overflow-x: hidden;
+  }
+
+  .main-toolbar-button-tooltip {
+    font-family:montserrat;
+    text-transform:uppercase;
+    font-size:.7rem;
+    color: #dadada !important;
+    opacity: 0.8 !important;
+  }
+
+  .wc-nav-scrollbar {
+    height: calc(100% - 4rem) !important;
+  }
+    
+/******* DEBUG PURPOSE ONLY ********/
+/*
+.wc-nav-scrollbar {
+  border: solid 1px red;
+}
+*/
 
 /** END TOOLBAR **/

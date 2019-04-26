@@ -21,7 +21,8 @@ const LOG_TAG = '[MainDashboardSectionComponent]';
     templateUrl: './main-dashboard-section-component.html'
   })
   @PluginView('Dashboard', {
-    iconName: 'wa-ico-dashboard'
+    iconName: 'wa-ico-dashboard',
+    index: 10
 })
 export class MainDashboardSectionComponent implements OnInit, OnDestroy {
 
@@ -106,7 +107,11 @@ export class MainDashboardSectionComponent implements OnInit, OnDestroy {
     }
 
     freeMem() {
-    }
+        this.statusUpdater.stop();
+        this.infoUpdater.stop();
+        this.usersInfoUpdater.stop();
+        this.oauth2InfoUpdater.stop();
+      }
 
 
     private itemChange(item, itemComponent) {

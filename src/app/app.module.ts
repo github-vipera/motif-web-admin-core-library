@@ -15,6 +15,7 @@ import { LayoutModule } from '@progress/kendo-angular-layout';
 import { HotkeyModule, HotkeysService, Hotkey } from 'angular2-hotkeys';
 
 // Motif Web Admin Modules
+import { PageNotFoundComponent, PageNotFoundModule } from 'motif-web-admin-core';
 import { WebAdminModulesProvider } from 'motif-web-admin-core';
 import { ConfigurationSectionModule } from 'motif-web-admin-core';
 import { OAuth2SectionModule } from 'motif-web-admin-core';
@@ -46,7 +47,11 @@ const LoggerModuleConfigured = LoggerModule.forRoot({
 const appRoutes: Routes = [
   { path: '', redirectTo: '/dashboard/Main%20Dashboard', pathMatch: 'full' },
   { path: 'login', component: WebConsoleLoginComponent },
-  { path: 'dashboard', component: WebConsoleComponent, canActivate: [AuthGuard] , children:moduleRoutes }
+  { path: 'dashboard', component: WebConsoleComponent, canActivate: [AuthGuard] , children:moduleRoutes },
+  {
+    path:"**",
+    component:PageNotFoundComponent, children:[]
+  }
 ];
 
 @NgModule({
@@ -68,6 +73,7 @@ const appRoutes: Routes = [
     ToolBarModule,
     BrowserAnimationsModule,
     WebConsoleCoreModule,
+    PageNotFoundModule,
     LayoutModule,
     DateInputsModule,
     TopMenuComponentModule,
