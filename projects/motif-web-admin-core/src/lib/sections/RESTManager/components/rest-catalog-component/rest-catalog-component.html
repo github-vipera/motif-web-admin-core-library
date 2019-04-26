@@ -54,6 +54,7 @@ class="rest-tree-filtered"
 
       <td class="service-catalog-row" [ngClass]="{ treeFiltered : tableModel.isFiltered, rowFiltered : rowData.filtered  }">
           <wc-grid-editor-command
+            [alignMode]="'left'"
             [rowIndex]="rowIndex"
             [hasConfirmation]="true"
             [confirmationTitleProvider]="statusConfirmationTitleProvider"

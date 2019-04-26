@@ -36,6 +36,7 @@
             <kendo-grid-column field="enabled" title="Status">
                 <ng-template kendoGridCellTemplate let-dataItem let-columnIndex="columnIndex" let-rowIndex="rowIndex" let-column="column">
                         <wc-grid-editor-command
+                        [alignMode]="'left'"
                         [rowIndex]="rowIndex" 
                         [hasConfirmation]="true"
                         [confirmationTitleProvider]="statusConfirmationTitleProvider"
