@@ -27,12 +27,13 @@ export class WebContentUpdateDialogComponent implements OnInit {
     domain: string;
     application: string;
     context: string;
+    dirty: boolean;
 
     selectedDomain: any;
     selectedApplication: any;
 
     contextEditingWarningDisplay = false;
-    
+
     @Output() confirm: EventEmitter<UpdateDialogResult> = new EventEmitter();
     @Output() cancel: EventEmitter<void> = new EventEmitter();
 
@@ -49,6 +50,7 @@ export class WebContentUpdateDialogComponent implements OnInit {
         this.logger.debug(LOG_TAG, 'show called for: ',bundleName, bundleVersion, domain, application, context);
         this.prepare(bundleName, bundleVersion, domain, application, context);
         this.display = true;
+        this.dirty = false;
     }
 
     public hide() {
@@ -60,7 +62,7 @@ export class WebContentUpdateDialogComponent implements OnInit {
         // fill the fields
         this.domain = domain;
         this.application = application;
-        this.context = context;
+        this.context = context ? '/' + context : undefined;
         this.bundleName = bundleName;
         this.bundleVersion = bundleVersion;
         if (domain){
@@ -91,4 +93,18 @@ export class WebContentUpdateDialogComponent implements OnInit {
         });
     }
 
+    onRemove(): void {
+        this.display = false;
+        this.confirm.emit({
+            application : undefined,
+            bundleName: this.bundleName,
+            bundleVersion : this.bundleVersion,
+            domain : undefined,
+            context : undefined
+        });
+    }
+
+    onContextChange(): void {
+        this.dirty = true;
+    }
 }

@@ -6,6 +6,7 @@ export enum DialogType {
 }
 
 export enum RowCommandType {
+    ChangePassword = 'ChangePassword',
     Relations = 'Relations',
     Edit = 'Edit',
     Delete = 'Delete'

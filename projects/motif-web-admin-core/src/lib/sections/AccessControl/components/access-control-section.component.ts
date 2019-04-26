@@ -11,7 +11,7 @@ import { UsersService, GroupsService, RolesService, ActionsService, PermissionsS
 import {
   UsersService as PlatformUsersService, ClientsService as PlatformClientsService, AdminsService as PlatformAdminsService,
   User, AdminUser, ClientUser, Domain, UserCreate, AdminUserCreate, ClientUserCreate, UserUpdate,
-  AdminUserUpdate, ClientUserUpdate } from '@wa-motif-open-api/platform-service';
+  AdminUserUpdate, ClientUserUpdate, CredentialsCreate } from '@wa-motif-open-api/platform-service';
 import * as _ from 'lodash';
 import { WCNotificationCenter, NotificationType, WCGridEditorCommandsConfig, WCConfirmationTitleProvider } from 'web-console-ui-kit';
 import { NewUserDialogComponent, UserDialogResult } from './dialogs/user/new-user-dialog';
@@ -23,6 +23,7 @@ import { takeUntil } from 'rxjs/operators';
 import { UsersListComponent } from './users-list/users-list.component';
 import { AclRelationsDialogComponent } from './dialogs/acl/relations/acl-relations-dialog';
 import { RowCommandType } from './editors/acl-editor-context';
+import { PasswordChangeDialogResult, PasswordChangeDialogComponent } from './dialogs/password/password-change-dialog';
 
 const LOG_TAG = '[AccessControlSection]';
 const BIT_LOAD_USERS = 1;
@@ -57,7 +58,37 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
   @ViewChild('newAclEntityDialog') _newAclEntityDialog: NewAclEntityDialogComponent;
   @ViewChild('newUserDialog') _newUserDialog: NewUserDialogComponent;
   @ViewChild('aclRelationsDialog') _aclRelationsDialog: AclRelationsDialogComponent;
+  @ViewChild('passwordChangeDialog') _passwordChangeDialog: PasswordChangeDialogComponent;
   @ViewChild('usersListGrid') _usersListGrid: UsersListComponent;
+
+  userCommands: WCGridEditorCommandsConfig = [
+    {
+      cssClass: 'k-icon',
+      commandIcon: 'wa-ico-links',
+      commandId: RowCommandType.ChangePassword,
+      title: 'Change Password'
+    },
+    {
+      cssClass: 'k-icon',
+      commandIcon: 'wa-ico-links',
+      commandId: RowCommandType.Relations,
+      title: 'Relations'
+    },
+    {
+      cssClass: 'k-icon',
+      commandIcon: 'wa-ico-edit',
+      commandId: RowCommandType.Edit,
+      title: 'Edit'
+    },
+    {
+      cssClass: 'k-icon',
+      commandIcon: 'wa-ico-no',
+      commandId: RowCommandType.Delete,
+      title: 'Delete',
+      hasConfirmation: true,
+      confirmationTitle: 'Delete?'
+    }
+  ];
 
   commands: WCGridEditorCommandsConfig = [
     {
@@ -399,7 +430,7 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
         this.rolesData = response;
         this.rolesLoading = false;
       }, error => {
-        this.logger.warn(LOG_TAG, "Error loading roles: ", error);
+        this.logger.warn(LOG_TAG, 'Error loading roles: ', error);
         this.rolesLoading = false;
       });
     }
@@ -411,7 +442,7 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
         this.loadActions();
         this.actionsLoading = false;
       }, error => {
-        this.logger.warn(LOG_TAG, "Error loading actions: ", error);
+        this.logger.warn(LOG_TAG, 'Error loading actions: ', error);
         this.actionsLoading = false;
       });
     }
@@ -423,7 +454,7 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
         this.loadPermissions();
         this.permissionsLoading = false;
       }, error => {
-        this.logger.warn(LOG_TAG, "Error loading permissions: ", error);
+        this.logger.warn(LOG_TAG, 'Error loading permissions: ', error);
         this.permissionsLoading = false;
       });
     }
@@ -454,8 +485,10 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
     }
   }
 
-  onEditAdminOKPressed(event): void {
-    if (event.id === RowCommandType.Edit) {
+  onAdminCommandClick(event): void {
+    if (event.id === RowCommandType.ChangePassword) {
+      this._passwordChangeDialog.show(EntityType.Admin, event.rowData.dataItem);
+    } else if (event.id === RowCommandType.Edit) {
       this._newUserDialog.show(DialogType.Edit, EntityType.Admin, event.rowData.dataItem);
     } else {
       this.selectedEntity = this.adminSelection[0];
@@ -463,8 +496,10 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
     }
   }
 
-  onEditClientOKPressed(event): void {
-    if (event.id === RowCommandType.Edit) {
+  onClientCommandClick(event): void {
+    if (event.id === RowCommandType.ChangePassword) {
+      this._passwordChangeDialog.show(EntityType.Client, event.rowData.dataItem);
+    } else if (event.id === RowCommandType.Edit) {
       this._newUserDialog.show(DialogType.Edit, EntityType.Client, event.rowData.dataItem);
     } else {
       this.selectedEntity = this.clientSelection[0];
@@ -472,7 +507,7 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
     }
   }
 
-  onEditGroupOKPressed(event): void {
+  onGroupCommandClick(event): void {
     if (event.id === RowCommandType.Edit) {
       this._newAclEntityDialog.show(DialogType.Edit, EntityType.Group, event.rowData.dataItem);
     } else {
@@ -481,7 +516,7 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
     }
   }
 
-  onEditRoleOKPressed(event): void {
+  onRoleCommandClick(event): void {
     if (event.id === RowCommandType.Edit) {
       this._newAclEntityDialog.show(DialogType.Edit, EntityType.Role, event.rowData.dataItem);
     } else {
@@ -490,7 +525,7 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
     }
   }
 
-  onEditActionOKPressed(event): void {
+  onActionCommandClick(event): void {
     if (event.id === RowCommandType.Edit) {
       this._newAclEntityDialog.show(DialogType.Edit, EntityType.Action, event.rowData.dataItem);
     } else {
@@ -499,32 +534,34 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
     }
   }
 
-  onDeleteAdminOKPressed(dataItem): void {
+  onAdminCommandConfirm(dataItem): void {
     this.deleteEntity(EntityType.Admin, dataItem);
   }
 
-  onDeleteClientOKPressed(dataItem): void {
+  onClientCommandConfirm(dataItem): void {
     this.deleteEntity(EntityType.Client, dataItem);
   }
 
-  onDeleteGroupOKPressed(dataItem): void {
+  onGroupCommandConfirm(dataItem): void {
     this.deleteEntity(EntityType.Group, dataItem);
   }
 
-  onDeleteRoleOKPressed(dataItem): void {
+  onRoleCommandConfirm(dataItem): void {
     this.deleteEntity(EntityType.Role, dataItem);
   }
 
-  onDeleteActionOKPressed(dataItem): void {
+  onActionCommandConfirm(dataItem): void {
     this.deleteEntity(EntityType.Action, dataItem);
   }
 
-  onDeletePermissionOKPressed(dataItem): void {
+  onPermissionCommandConfirm(dataItem): void {
     this.deleteEntity(EntityType.Permission, dataItem);
   }
 
   onUserRowCommandClick(event: any): void {
-    if (event.commandType === RowCommandType.Relations) {
+    if (event.commandType === RowCommandType.ChangePassword) {
+      this._passwordChangeDialog.show(EntityType.User, event.dataItem);
+    } else if (event.commandType === RowCommandType.Relations) {
       this._aclRelationsDialog.show(EntityType.User, event.dataItem);
     } if (event.commandType === RowCommandType.Edit) {
       this._newUserDialog.show(DialogType.Edit, EntityType.User, event.dataItem);
@@ -557,6 +594,10 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
     this.createOrUpdateEntity(event.dialogType, event.entityType, { userId: event.userId, userIdInt: event.userIdInt, state: event.state });
   }
 
+  onPasswordChangeConfirm(event: PasswordChangeDialogResult): void {
+    this.changePassword(event.entityType, event.userId, event.newPassword, event.verifyPassword);
+  }
+
   onTabChange(): void {
     this.onResetClicked();
   }
@@ -569,17 +610,17 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
 
     switch (entityType) {
       case EntityType.User:
-        deleteEntity = this.platformUsersService.deleteUser(this.selectedDomain, data.userId);
+        deleteEntity = this.platformUsersService.deleteUser(this.selectedDomain, data.rowData.dataItem.userId);
         entity = 'User';
         whatToReload = BIT_LOAD_USERS;
         break;
       case EntityType.Admin:
-        deleteEntity = this.platformAdminsService.deleteAdminUser(this.selectedDomain, data.userId);
+        deleteEntity = this.platformAdminsService.deleteAdminUser(this.selectedDomain, data.rowData.dataItem.userId);
         entity = 'Admin';
         whatToReload = BIT_LOAD_USERS;
         break;
       case EntityType.Client:
-        deleteEntity = this.platformClientsService.deleteClientUser(this.selectedDomain, data.userId);
+        deleteEntity = this.platformClientsService.deleteClientUser(this.selectedDomain, data.rowData.dataItem.userId);
         entity = 'Client';
         whatToReload = BIT_LOAD_USERS;
         break;
@@ -599,8 +640,8 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
         whatToReload = BIT_LOAD_ACTIONS;
         break;
       case EntityType.Permission:
-        deleteEntity = this.permissionsService.deletePermission(data.component, data.action,
-          data.target);
+        deleteEntity = this.permissionsService.deletePermission(data.rowData.dataItem.component, data.rowData.dataItem.action,
+          data.rowData.dataItem.target);
         entity = 'Permission';
         whatToReload = BIT_LOAD_PERMISSIONS;
         break;
@@ -804,6 +845,54 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
         closable: true
       });
 
+    });
+  }
+
+  private changePassword(entityType: EntityType, userId: string, newPassword: string, verifyPassword: string): void {
+    const cc: CredentialsCreate = {
+      password: newPassword,
+      passwordVerify: verifyPassword
+    };
+    switch (entityType) {
+      case EntityType.User:
+        this.platformUsersService.createUserCredentials(this.selectedDomain, userId, cc)
+            .pipe(takeUntil(this.destroy)).subscribe(
+              result => this.passwordChangeSuccessHandler(result),
+              error => this.passwordChangeErrorHandler(error));
+        break;
+      case EntityType.Admin:
+        this.platformAdminsService.createAdminUserCredentials(this.selectedDomain, userId, cc)
+            .pipe(takeUntil(this.destroy)).subscribe(
+              result => this.passwordChangeSuccessHandler(result),
+              error => this.passwordChangeErrorHandler(error));
+        break;
+      case EntityType.Client:
+        this.platformClientsService.createClientUserCredentials(this.selectedDomain, userId, cc)
+            .pipe(takeUntil(this.destroy)).subscribe(
+              result => this.passwordChangeSuccessHandler(result),
+              error => this.passwordChangeErrorHandler(error));
+        break;
+    }
+  }
+
+  private passwordChangeSuccessHandler(error: any): void {
+    this.notificationCenter.post({
+      name: 'PasswordChanged',
+      title: 'Password Changed',
+      message: 'Password changed successfully.',
+      type: NotificationType.Success
+    });
+  }
+
+  private passwordChangeErrorHandler(error: any): void {
+    this.logger.error(LOG_TAG, 'Error changing password: ', error);
+    this.notificationCenter.post({
+      name: 'PasswordChangeError',
+      title: 'Password Change Error',
+      message: 'Error setting new password:',
+      type: NotificationType.Error,
+      error: error,
+      closable: true
     });
   }
 }

@@ -13,6 +13,7 @@ import { UsersListComponent } from './components/users-list/users-list.component
 import { NewUserDialogComponent } from './components/dialogs/user/new-user-dialog';
 import { NewAclEntityDialogComponent } from './components/dialogs/acl/entities/new-acl-entity-dialog';
 import { AclRelationsDialogComponent } from './components/dialogs/acl/relations/acl-relations-dialog';
+import { PasswordChangeDialogComponent } from './components/dialogs/password/password-change-dialog';
 import { DialogModule } from 'primeng/dialog';
 
 @NgModule({
@@ -39,7 +40,8 @@ import { DialogModule } from 'primeng/dialog';
         UsersListComponent,
         NewUserDialogComponent,
         NewAclEntityDialogComponent,
-        AclRelationsDialogComponent
+        AclRelationsDialogComponent,
+        PasswordChangeDialogComponent
     ],
     exports: [ AccessControlSectionComponent ],
     providers: [
