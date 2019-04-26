@@ -8,3 +8,4 @@ export * from './ConfirmationDialog/confirmation-dialog-component';
 export * from './MessageCategories/index';
 export * from './TopMenu/index';
 export * from './UI/index';
+export * from './PageNotFound/index';

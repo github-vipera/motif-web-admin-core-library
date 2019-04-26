@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { RouterModule, Routes, RouteReuseStrategy } from '@angular/router'
-import { WebConsoleComponent, AuthGuard, WebConsoleCoreModule, PageNotFoundComponent } from 'web-console-core'
+import { WebConsoleComponent, AuthGuard, WebConsoleCoreModule } from 'web-console-core'
 import { WebConsoleLoginComponent } from 'web-console-login'
 import { ToolBarModule } from '@progress/kendo-angular-toolbar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -15,6 +15,7 @@ import { LayoutModule } from '@progress/kendo-angular-layout';
 import { HotkeyModule, HotkeysService, Hotkey } from 'angular2-hotkeys';
 
 // Motif Web Admin Modules
+import { PageNotFoundComponent, PageNotFoundModule } from 'motif-web-admin-core';
 import { WebAdminModulesProvider } from 'motif-web-admin-core';
 import { ConfigurationSectionModule } from 'motif-web-admin-core';
 import { OAuth2SectionModule } from 'motif-web-admin-core';
@@ -49,7 +50,7 @@ const appRoutes: Routes = [
   { path: 'dashboard', component: WebConsoleComponent, canActivate: [AuthGuard] , children:moduleRoutes },
   {
     path:"**",
-    component:PageNotFoundComponent
+    component:PageNotFoundComponent, children:[]
   }
 ];
 
@@ -72,6 +73,7 @@ const appRoutes: Routes = [
     ToolBarModule,
     BrowserAnimationsModule,
     WebConsoleCoreModule,
+    PageNotFoundModule,
     LayoutModule,
     DateInputsModule,
     TopMenuComponentModule,
