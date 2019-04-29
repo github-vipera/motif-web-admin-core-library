@@ -249,7 +249,7 @@ export class RESTManagerSectionComponent implements OnInit, OnDestroy {
     doDeleteContext(domain:string, application: string, contextName:string){
         this.logger.debug(LOG_TAG, 'deleteContext : ', domain, application, contextName);
         this._subHandler.add(
-            this.restCatalogService.deleteRESTContext(domain, application, name).subscribe((result)=>{
+            this.restCatalogService.deleteRESTContext(domain, application, contextName).subscribe((result)=>{
 
                 this.logger.info(LOG_TAG , 'REST context deleted:', result);
                 this.notificationCenter.post({
