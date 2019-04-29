@@ -71,13 +71,13 @@ export class UsersListComponent implements OnInit, OnDestroy {
   commands: WCGridEditorCommandsConfig = [
     {
       cssClass: 'k-icon',
-      commandIcon: 'wa-ico-links',
+      commandIcon: 'wa-ico-house-key',
       commandId: RowCommandType.ChangePassword,
       title: 'Change Password'
     },
     {
       cssClass: 'k-icon',
-      commandIcon: 'wa-ico-links',
+      commandIcon: 'wa-ico-relations-links',
       commandId: RowCommandType.Relations,
       title: 'Relations'
     },
