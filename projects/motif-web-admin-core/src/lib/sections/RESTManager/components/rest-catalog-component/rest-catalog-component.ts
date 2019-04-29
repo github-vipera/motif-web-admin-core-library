@@ -42,6 +42,15 @@ export interface RESTCatalogNodeCommandEvent {
 })
 export class RESTCatalogComponent implements OnInit, OnDestroy {
 
+    columns = [
+        { field: 'URL', header: 'URL', width: '30%' },
+        { field: 'name', header: 'Name', width: '30%' },
+        { field: 'domain', header: 'Domain', width: '10%' },
+        { field: 'application', header: 'Application', width: '10%' },
+        { field: 'status', header: 'Status', width: '80px' },
+        { field: 'cmd', header: '', width: '80px' }
+    ];
+
     private _loading:boolean = false;
     private _tableModel: RESTTreeTableModel;
     private _subHandler: WCSubscriptionHandler= new WCSubscriptionHandler();
