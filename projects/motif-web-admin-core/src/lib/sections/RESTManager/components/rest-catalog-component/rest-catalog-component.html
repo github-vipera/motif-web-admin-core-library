@@ -17,18 +17,18 @@ class="treetable-xss"
 [style]="{ 'height': '100%' }"
 [scrollable]="true" 
 scrollHeight="100%" 
-
 class="rest-tree-filtered"
+[columns]="columns"
 >
 
 <ng-template pTemplate="header" let-columns>
     <tr>
-      <th>URL</th>
-      <th>Name</th>
-      <th>Domain</th>
-      <th>Application</th>
-      <th>Status</th>
-      <th></th>
+      <th  width="40%">URL</th>
+      <th >Name</th>
+      <th >Domain</th>
+      <th >Application</th>
+      <th >Status</th>
+      <th  width="160px"></th>
     </tr>
   </ng-template>
   <ng-template
@@ -39,7 +39,7 @@ class="rest-tree-filtered"
     let-rowIndex="rowIndex"
   >
     <tr [ttRow]="rowNode" [ttContextMenuRow]="rowNode" [ttSelectableRow]="rowNode" style="height:30px" class="rest-tree-row-filtered">
-      <td class="service-catalog-row" [ngClass]="{ treeFiltered : tableModel.isFiltered, rowFiltered : rowData.filtered  }">
+      <td  width="40%" class="service-catalog-row" [ngClass]="{ treeFiltered : tableModel.isFiltered, rowFiltered : rowData.filtered  }">
         <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
         <i
           class="pi pi-fw {{rowData.nodeIcon}} node-icon-{{rowData.nodeType}}"
@@ -80,7 +80,7 @@ class="rest-tree-filtered"
 
       </td>
 
-      <td class="service-catalog-row" [ngClass]="{ treeFiltered : tableModel.isFiltered, rowFiltered : rowData.filtered  }">
+      <td  width="160px" class="service-catalog-row" [ngClass]="{ treeFiltered : tableModel.isFiltered, rowFiltered : rowData.filtered  }">
         <wc-grid-editor-commands-group *ngIf="rowData.canDelete"
           [commands]="commands"
           [alignMode]="'end'"

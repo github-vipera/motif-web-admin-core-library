@@ -23,7 +23,7 @@
 floatingLabel="Context"
 style="width: 100%;"
 >
-<input kendoTextBox [(ngModel)]="context" required />
+<input kendoTextBox [(ngModel)]="context" required (keydown)="onContextChange()"/>
 </kendo-textbox-container>
 <label class="warning-label" *ngIf="contextEditingWarningDisplay">Invalid Context</label>
 
@@ -31,6 +31,7 @@ style="width: 100%;"
   <kendo-buttongroup look="flat">
     <button kendoButton [toggleable]="false" (click)="onCancel();">Cancel</button>
     <button kendoButton [toggleable]="false" [primary]="true" (click)="onConfirm();">Update</button>
+    <button kendoButton [disabled]="(context&&!dirty)?false:true" [toggleable]="false" [primary]="true" (click)="onRemove();">Remove</button>
   </kendo-buttongroup>
 </p-footer>
 

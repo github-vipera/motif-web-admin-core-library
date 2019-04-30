@@ -133,27 +133,28 @@ export class RESTCatalogEditorComponent implements OnInit, OnDestroy {
 
     private buildPropertyItemForValueItem(valueItem: ServiceContextValue): WCPropertyEditorItem {
         this.logger.debug(LOG_TAG, 'buildPropertyItemForValueItem called for:', valueItem);
-        let valueType = this.propertyTypeForAttribute(valueItem.attribute);
-        let value:any = valueItem.value;
-        if (valueItem.attribute.type.toLowerCase()==="boolean"){
-            value = (valueItem.value === "true" ? true : false );
+        const valueType = this.propertyTypeForAttribute(valueItem.attribute);
+        let value: any = valueItem.value;
+        if (valueItem.attribute.type.toLowerCase() === 'boolean') {
+            value = (valueItem.value === 'true' ? true : false);
         }
-        let isInherited = this.isValueInherited(valueItem);
+        const isInherited = this.isValueInherited(valueItem);
         return {
             name : valueItem.attribute.name,
             field: valueItem.attribute.name,
             description: valueItem.attribute.name,
             type: valueType,
             value: value,
-            badge: (isInherited? "I" : null),
-            allowRemove: (isInherited? false:true)
-        }
+            badge: (isInherited ? 'I' : null),
+            // URL field is not removable. Room for improvement here.
+            allowRemove: !(valueItem.attribute.name === 'URL') && (isInherited ? false : true)
+        };
     }
 
     isValueInherited(valueItem: ServiceContextValue):boolean {
         if (valueItem.properties){
-            for (let i=0;i<valueItem.properties.length;i++){
-                if (valueItem.properties[i].key === "inherited"){
+            for (let i = 0; i < valueItem.properties.length; i++){
+                if (valueItem.properties[i].key === 'inherited') {
                     return this.stringToBool(valueItem.properties[i].value);
                 }
             }

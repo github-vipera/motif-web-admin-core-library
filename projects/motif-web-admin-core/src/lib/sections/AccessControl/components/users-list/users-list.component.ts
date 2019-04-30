@@ -71,7 +71,13 @@ export class UsersListComponent implements OnInit, OnDestroy {
   commands: WCGridEditorCommandsConfig = [
     {
       cssClass: 'k-icon',
-      commandIcon: 'wa-ico-links',
+      commandIcon: 'wa-ico-house-key',
+      commandId: RowCommandType.ChangePassword,
+      title: 'Change Password'
+    },
+    {
+      cssClass: 'k-icon',
+      commandIcon: 'wa-ico-relations-links',
       commandId: RowCommandType.Relations,
       title: 'Relations'
     },
@@ -277,6 +283,12 @@ export class UsersListComponent implements OnInit, OnDestroy {
   onCommandClick(event: WCGridEditorCommandComponentEvent) {
     this.logger.debug(LOG_TAG, 'onCommandClick event: ', event);
     switch (event.id) {
+      case RowCommandType.ChangePassword:
+        this.rowCommandClick.emit({
+          commandType: RowCommandType.ChangePassword,
+          dataItem: event.rowData.dataItem
+        });
+        break;
       case RowCommandType.Relations:
         this.rowCommandClick.emit({
           commandType: RowCommandType.Relations,

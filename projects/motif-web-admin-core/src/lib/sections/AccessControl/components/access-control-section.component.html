@@ -3,6 +3,7 @@
 <wa-access-control-section-new-acl-entity-dialog #newAclEntityDialog (confirm)='onNewAclEntityConfirm($event)'></wa-access-control-section-new-acl-entity-dialog>
 <wa-access-control-section-new-user-dialog #newUserDialog (confirm)='onNewUserConfirm($event)'></wa-access-control-section-new-user-dialog>
 <wa-access-control-section-acl-relations-dialog #aclRelationsDialog (dialogClose)='onDialogClose($event)'></wa-access-control-section-acl-relations-dialog>
+<wa-access-control-section-password-change-dialog #passwordChangeDialog (confirm)='onPasswordChangeConfirm($event)'></wa-access-control-section-password-change-dialog>
 
 <div class="row spread">
   <div class="flex-toolbar" style="display:flex;flex-direction: row;align-items: flex-start;">
@@ -78,9 +79,10 @@
                 <kendo-grid-column title="" width="50" minResizableWidth="40">
                   <ng-template kendoGridCellTemplate let-dataItem let-columnIndex="columnIndex" let-rowIndex="rowIndex"
                     let-column="column">
-                    <span class="badge badge-status user-status-{{dataItem[column.field]}}">
-                      {{dataItem[column.field]}}
-                    </span>
+                    <wc-grid-editor-commands-group [commands]="userCommands" [alignMode]="'end'" [rowIndex]="rowIndex"
+                      [columnIndex]="columnIndex" [column]="column" [value]="dataItem[column.field]" [dataItem]="dataItem"
+                      (commandConfirm)="onAdminCommandConfirm($event)" (commandClick)="onAdminCommandClick($event)">
+                    </wc-grid-editor-commands-group>
                   </ng-template>
                 </kendo-grid-column>
               </kendo-grid>
@@ -107,9 +109,9 @@
                 <kendo-grid-column title="" width="50" minResizableWidth="40">
                   <ng-template kendoGridCellTemplate let-dataItem let-columnIndex="columnIndex" let-rowIndex="rowIndex"
                     let-column="column">
-                    <wc-grid-editor-commands-group [commands]="commands" [alignMode]="'end'" [rowIndex]="rowIndex"
+                    <wc-grid-editor-commands-group [commands]="userCommands" [alignMode]="'end'" [rowIndex]="rowIndex"
                       [columnIndex]="columnIndex" [column]="column" [value]="dataItem[column.field]" [dataItem]="dataItem"
-                      (commandConfirm)="onDeleteClientOKPressed($event)" (commandClick)="onEditClientOKPressed($event)">
+                      (commandConfirm)="onClientCommandConfirm($event)" (commandClick)="onClientCommandClick($event)">
                     </wc-grid-editor-commands-group>
                   </ng-template>
                 </kendo-grid-column>
@@ -133,7 +135,7 @@
                   let-column="column">
                   <wc-grid-editor-commands-group [commands]="commands" [alignMode]="'end'" [rowIndex]="rowIndex"
                     [columnIndex]="columnIndex" [column]="column" [value]="dataItem[column.field]" [dataItem]="dataItem"
-                    (commandConfirm)="onDeleteGroupOKPressed($event)" (commandClick)="onEditGroupOKPressed($event)">
+                    (commandConfirm)="onGroupCommandConfirm($event)" (commandClick)="onGroupCommandClick($event)">
                   </wc-grid-editor-commands-group>
                 </ng-template>
               </kendo-grid-column>
@@ -160,7 +162,7 @@
                   let-column="column">
                   <wc-grid-editor-commands-group [commands]="commands" [alignMode]="'end'" [rowIndex]="rowIndex"
                     [columnIndex]="columnIndex" [column]="column" [value]="dataItem[column.field]" [dataItem]="dataItem"
-                    (commandConfirm)="onDeleteRoleOKPressed($event)" (commandClick)="onEditRoleOKPressed($event)">
+                    (commandConfirm)="onRoleCommandConfirm($event)" (commandClick)="onRoleCommandClick($event)">
                   </wc-grid-editor-commands-group>
                 </ng-template>
               </kendo-grid-column>
@@ -191,7 +193,7 @@
                   let-column="column">
                   <wc-grid-editor-commands-group [commands]="commands" [alignMode]="'end'" [rowIndex]="rowIndex"
                     [columnIndex]="columnIndex" [column]="column" [value]="dataItem[column.field]" [dataItem]="dataItem"
-                    (commandConfirm)="onDeleteActionOKPressed($event)" (commandClick)="onEditActionOKPressed($event)">
+                    (commandConfirm)="onActionCommandConfirm($event)" (commandClick)="onActionCommandClick($event)">
                   </wc-grid-editor-commands-group>
                 </ng-template>
               </kendo-grid-column>
@@ -225,7 +227,7 @@
                     let-column="column">
                     <wc-grid-editor-command [alignMode]="'end'" [hasConfirmation]="true" [confirmationTitle]="'Delete?'"
                         [rowIndex]="rowIndex" [columnIndex]="columnIndex" [column]="column" [commandIcon]="'wa-ico-no'"
-                        [dataItem]="dataItem" (commandConfirm)="onDeletePermissionOKPressed(dataItem)">
+                        [dataItem]="dataItem" (commandConfirm)="onPermissionCommandConfirm($event)">
                     </wc-grid-editor-command>
                 </ng-template>
               </kendo-grid-column>

@@ -423,9 +423,9 @@ export class WebContentSectionComponent implements OnInit, OnDestroy {
 
     onUpdateConfirm(event:UpdateDialogResult){
         this.logger.debug(LOG_TAG, 'onUpdateConfirm: ', event);
-        let bundleName = event.bundleName;
-        let bundleVersion = event.bundleVersion;
-        let bundleUpdate:BundleUpdate = {
+        const bundleName = event.bundleName;
+        const bundleVersion = event.bundleVersion;
+        const bundleUpdate: BundleUpdate = {
             application: event.application,
             context: event.context,
             domain: event.domain
