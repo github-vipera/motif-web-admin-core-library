@@ -1,3 +1,4 @@
+import { MotifACLModule } from './../../directives/acl/acl.module';
 import { CommonSelectorsModule } from './../../components/CommonsSelectorsModule';
 import { NgModule } from '@angular/core';
 import { GridModule } from '@progress/kendo-angular-grid';
@@ -31,7 +32,8 @@ import { InputSwitchModule } from 'primeng/inputswitch';
         WCUIKitDirectivesModule,
         DialogModule,
         CommonSelectorsModule,
-        InputSwitchModule
+        InputSwitchModule,
+        MotifACLModule
     ],
     entryComponents: [
         RESTManagerSectionComponent

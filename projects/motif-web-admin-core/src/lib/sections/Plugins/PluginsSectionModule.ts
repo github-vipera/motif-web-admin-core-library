@@ -17,6 +17,7 @@ import { DialogModule } from 'primeng/dialog';
 import { UninstallConfirmationDialogComponent } from './dialogs/uninstall-confirmation-dialog-component';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { WCUploadPanelModule } from '../../components/UI/wc-upload-panel-component/WCUploadPanelModule';
+import { MotifACLModule } from '../../directives/acl/acl.module';
 
 @NgModule({
     imports: [
@@ -35,7 +36,8 @@ import { WCUploadPanelModule } from '../../components/UI/wc-upload-panel-compone
         WCUIKitDirectivesModule,
         DialogModule,
         InputSwitchModule,
-        WCUploadPanelModule
+        WCUploadPanelModule,
+        MotifACLModule
     ],
     entryComponents:[
         PluginsSectionComponent

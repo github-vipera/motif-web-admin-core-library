@@ -1,5 +1,6 @@
 import { AclDirective } from './acl.directive';
 import { NgModule } from '@angular/core';
+import { MotifACLService } from './acl.service';
 
 @NgModule({
     imports: [
@@ -9,7 +10,10 @@ import { NgModule } from '@angular/core';
     declarations: [
         AclDirective
     ],
-    exports: [ AclDirective ]
+    exports: [ AclDirective ],
+    providers: [
+        MotifACLService
+    ]
   })
   export class MotifACLModule { }
   

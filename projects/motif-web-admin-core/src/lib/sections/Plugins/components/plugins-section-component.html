@@ -6,16 +6,16 @@
 
 <wc-loading-overlay [visible]='loading'></wc-loading-overlay>
 
-<div class="row spread">
+<div class="row spread" >
 
-    <div class="flex-toolbar" style="display:flex;align-items: center;">
+    <div class="flex-toolbar" style="display:flex;align-items: center;" [motif-acl]="['pippox']" [motif-acl-hidden]="false">
         <kendo-textbox-container floatingLabel="Filter">
-            <input #filterInput kendoTextBox  (afterValueChanged)="onFilterChange($event)" />
+            <input #filterInput kendoTextBox  (afterValueChanged)="onFilterChange($event)"/>
         </kendo-textbox-container>
         <div>
             <label>&nbsp;</label>
             <kendo-buttongroup look="flat">
-                <button kendoButton [toggleable]="false" (click)="installPluginSlideDownPanel.toggle()" ><fa-icon [icon]="faPuzzlePiece"></fa-icon>Install Plugin</button>
+                <button kendoButton [toggleable]="false" (click)="installPluginSlideDownPanel.toggle()"><fa-icon [icon]="faPuzzlePiece"></fa-icon>Install Plugin</button>
             </kendo-buttongroup>
         </div>
     </div>
