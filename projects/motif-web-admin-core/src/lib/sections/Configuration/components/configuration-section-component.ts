@@ -17,6 +17,7 @@ import { faFileImport, faDownload } from '@fortawesome/free-solid-svg-icons';
 import { WCNotificationCenter, NotificationType } from 'web-console-ui-kit';
 import { NewConfigurationParamDialogComponent, NewParamDialogResult } from './dialog/new-configuration-param-dialog';
 import { WCSubscriptionHandler } from '../../../components/Commons/wc-subscription-handler';
+import * as _ from 'lodash';
 
 const LOG_TAG = '[ConfigurationSection]';
 
@@ -41,6 +42,10 @@ export class ConfigurationSectionComponent implements OnInit, OnDestroy {
     };
     public changes: any = {};
 
+    public dropDownBooleanValues: Array<string> = [
+        'true',
+        'false'
+    ]
 
     // Data binding
     public loading = false;
@@ -106,8 +111,6 @@ export class ConfigurationSectionComponent implements OnInit, OnDestroy {
         this.logger.debug(LOG_TAG , 'onStateChange: ', state);
     }
 
-
-
     /**
      * Reload the list of parameters for a given service
      * @param service
@@ -118,6 +121,16 @@ export class ConfigurationSectionComponent implements OnInit, OnDestroy {
             this.loading = true;
             this._subHandler.add(this.settingsService.getSettings(service.name).subscribe((data) => {
                 this.logger.debug(LOG_TAG , 'reloadConfigurationParamsForService done: ', data);
+                _.forEach(data, item => {
+                    switch (item.type) {
+                        case 'java.lang.Integer':
+                        case 'java.lang.Long':
+                            item.value = Number(item.value);
+                            break;
+                        default:
+                            break;
+                    }
+                });
                 this.editService.cancelChanges();
                 this.editService.read(data, this._editServiceConfig);
                 this.loading = false;
@@ -346,7 +359,7 @@ export class ConfigurationSectionComponent implements OnInit, OnDestroy {
         if (this.editService.hasChanges()) {
             this.confirmationDialog.open('Pending Changes',
                 // tslint:disable-next-line:max-line-length
-                'Attention, in the configuration there are unsaved changes. Proceeding all these changes will be lost. Do you want to continue?',
+                'Attention, in the configuration there are unsaved changes. If you proceed all these changes will be lost.\n\nDo you want to continue?',
                 { 'action' : 'discardChanges' });
         } else {
             this.reloadConfigurationParams();

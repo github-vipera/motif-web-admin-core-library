@@ -45,17 +45,26 @@
 
                 <kendo-grid-column
                     field="name" title="Name" width="360">
-                        <ng-template kendoGridCellTemplate let-dataItem>
-                            <label class="k-icon grid-cell-dirty grid-cell-dirty-{{dataItem.dirty}}"></label>
-                            {{dataItem.name}}
-                        </ng-template>
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        <label class="k-icon grid-cell-dirty grid-cell-dirty-{{dataItem.dirty}}"></label>
+                        {{dataItem.name}}
+                    </ng-template>
                 </kendo-grid-column>
 
                 <kendo-grid-column field="value" title="Value" >
+                    <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-formGroup="formGroup">
+                        <input *ngIf="dataItem.type==='java.lang.String'" class="k-textbox" [formControl]="formGroup.get('value')">
+                        <kendo-numerictextbox *ngIf="dataItem.type==='java.lang.Integer' || dataItem.type==='java.lang.Long'" 
+                            format="n0" 
+                            [value]="dataItem.value" 
+                            [formControl]="formGroup.get('value')"></kendo-numerictextbox>
+                        <kendo-dropdownlist *ngIf="dataItem.type==='java.lang.Boolean'" 
+                            [data]="dropDownBooleanValues"
+                            [formControl]="formGroup.get('value')"></kendo-dropdownlist>
+                    </ng-template>
                 </kendo-grid-column>
                 <kendo-grid-column field="type" title="Type" width="150">
                 </kendo-grid-column>
-
                 <kendo-grid-column
                     media="(min-width: 80px)"
                     title="Dynamic" width="80">
