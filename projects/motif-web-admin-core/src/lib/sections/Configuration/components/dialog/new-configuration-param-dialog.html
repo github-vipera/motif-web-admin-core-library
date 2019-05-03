@@ -35,13 +35,13 @@
   <label class="switch-control-label"> 
       Dynamic
   </label>
-  <p-inputSwitch [motif-acl]="['pippox']" [disabled]="!this.aclService.isAuthorized('pippo')" [(ngModel)]="dynamic"></p-inputSwitch>
+  <p-inputSwitch [motif-acl]="['pippox']" [disabled]="!this.aclService.can('pippo')" [(ngModel)]="dynamic"></p-inputSwitch>
 
 
   <label class="switch-control-label"> 
       Encrypted
   </label>
-  <p-inputSwitch [motif-acl]="['pippox']" [disabled]="!this.aclService.isAuthorized('pippox')"   [(ngModel)]="encrypted"></p-inputSwitch>
+  <p-inputSwitch [motif-acl]="['pippox']" [disabled]="!this.aclService.can('pippox')"   [(ngModel)]="encrypted"></p-inputSwitch>
 
   <kendo-textbox-container
   floatingLabel="Value"

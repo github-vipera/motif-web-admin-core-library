@@ -36,6 +36,7 @@ import { RESTManagerSectionModule } from 'motif-web-admin-core';
 import { SchedulerSectionModule } from 'motif-web-admin-core';
 import { MainDashboardSectionModule } from 'motif-web-admin-core';
 import { moduleRoutes } from 'motif-web-admin-core';
+import { MotifACLService } from 'motif-web-admin-core';
 
 const LoggerModuleConfigured = LoggerModule.forRoot({
   level: (environment.production ? NgxLoggerLevel.OFF : NgxLoggerLevel.DEBUG),
@@ -105,7 +106,7 @@ const appRoutes: Routes = [
 })
 export class AppModule {
 
-  constructor(private logger: NGXLogger, private hotkeysService: HotkeysService, private themeDesignerService: WAThemeDesignerService){
+  constructor(private logger: NGXLogger, private hotkeysService: HotkeysService, private themeDesignerService: WAThemeDesignerService, private aclService:MotifACLService){
     this.logger.info('AppModule' , 'Starting application');
     this.logger.debug('AppModule' , 'Starting application DEBUG message');
 

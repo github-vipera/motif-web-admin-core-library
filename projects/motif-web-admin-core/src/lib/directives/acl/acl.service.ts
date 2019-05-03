@@ -1,25 +1,46 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { MyselfService, Action } from '@wa-motif-open-api/auth-access-control-service'
+import { NGXLogger } from 'web-console-core';
 import * as _ from 'lodash';
+
+const LOG_TAG = '[MotifACLService]';
 
 @Injectable({
     providedIn: 'root',
 })
 export class MotifACLService {
 
-    private _permissions: Array<string> = [
-        "pippo", "pluto", "paperino", "minnie"
-    ];
+    private _actions: Array<Action>;
+    private _permissions: Array<string> = [];
 
-    constructor() { 
+    constructor(private logger: NGXLogger, private myselfService:MyselfService) { 
         this.reloadPermissions();
     }
 
+    /**
+     * Remove all cached permissions
+     */
+    public flushPermissions():void{
+        this._actions = [];
+        this._permissions = [];
+    }
+
     public reloadPermissions(): Observable<any> {
+        this.logger.debug(LOG_TAG, 'reloadPermissions called.');
         return new Observable((observer) => {
-            //TODO!!
-            observer.next();
-            observer.complete();
+            this.myselfService.getMyselfActions().subscribe( (actions:Array<Action>) => {
+                this.logger.debug(LOG_TAG, 'reloadPermissions results: ', actions);
+                this._permissions = [];
+                actions.forEach(action => {
+                    this._permissions.push(action.name);
+                });
+                observer.next();
+                observer.complete();
+            }, (error) => {
+                this.logger.error(LOG_TAG, 'reloadPermissions error: ', error);
+                observer.error(error);
+            });
         });
     }
 
@@ -27,12 +48,25 @@ export class MotifACLService {
         return this._permissions;
     }
 
-    public isAuthorized(action: string): boolean {
+    private isAuthorized(action: string): boolean {
         return _.isEqual(_.intersection(this._permissions, [action]), [action]);
     }
 
-    public isAuthorizedForList(actions: Array<string>): boolean {
+    private isAuthorizedForList(actions: Array<string>): boolean {
         return _.isEqual(_.intersection(this._permissions, actions), actions);
+    }
+    
+    /**
+     * Does current user have permission to do something?
+     * 
+     * @param permission 
+     */
+    public can(action:string|string[]):boolean {
+        if (typeof action==='string'){
+            return this.isAuthorized(action);
+        } else {
+            return this.isAuthorizedForList(action);
+        }
     }
 
 
