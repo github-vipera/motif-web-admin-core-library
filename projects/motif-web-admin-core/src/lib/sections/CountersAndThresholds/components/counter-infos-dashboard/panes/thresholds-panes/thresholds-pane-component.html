@@ -4,11 +4,12 @@
         <kendo-buttongroup look="flat">
           <button
             kendoButton
+            [disabled]="!counterInfo"
             [toggleable]="false"
             (click)="onAddNewThresholdClicked()"
           >
           <fa-icon [icon]="faPlusCircle"></fa-icon>
-            Add New
+            Add New Threshold Info
           </button>
         </kendo-buttongroup>
       </div>

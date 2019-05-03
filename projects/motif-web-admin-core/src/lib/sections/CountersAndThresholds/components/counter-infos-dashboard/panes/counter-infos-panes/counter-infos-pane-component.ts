@@ -5,7 +5,7 @@ import { CounterInfoEntity, CountersService, CounterInfo, CounterInfoUpdatableFi
 import { WCNotificationCenter, NotificationType } from 'web-console-ui-kit';
 import { Component, OnInit, OnDestroy, EventEmitter, Output, Input, forwardRef, ViewChild } from '@angular/core';
 import { NGXLogger} from 'web-console-core';
-import { faFileImport, faDownload, faPlusCircle, faLessThanEqual } from '@fortawesome/free-solid-svg-icons';
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { SelectionEvent, CounterInfosComponent } from '../../../counter-infos/counter-infos-component'
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { WCSubscriptionHandler } from '../../../../../../components/Commons/wc-subscription-handler';
@@ -30,8 +30,6 @@ export class CounterInfosPaneComponent implements OnInit, OnDestroy {
 
     private _subHandler: WCSubscriptionHandler = new WCSubscriptionHandler();
     faPlusCircle = faPlusCircle;
-    faDownload = faDownload;
-    faFileImport = faFileImport;
     private _selectedCounterInfo: CounterInfoEntity;
     @ViewChild('counterInfosComponent') _counterInfosComponent: CounterInfosComponent;
     @ViewChild('editDialog') _editDialog: CounterInfoEditDialogComponent;
@@ -249,29 +247,6 @@ export class CounterInfosPaneComponent implements OnInit, OnDestroy {
     private buildPattern(item: CounterInfoEntity): string {
         return CountersAndThresholdUtils.buildServiceCatalogEntryPattern(item.channel, 
             item.domain, item.application, item.service, item.operation);
-    }
-
-    onExportClicked(): void {
-        this.notificationCenter.post({
-            name: 'ExportCounterInfoWarn',
-            title: 'Export Counter Info',
-            message: 'This functionality is not yet implemented.',
-            type: NotificationType.Warning,
-            closable: false
-        });
-
-        //alert("TODO!! onExportClicked");
-    }
-
-    onImportClicked(): void {
-        this.notificationCenter.post({
-            name: 'ExportCounterInfoWarn',
-            title: 'Import Counter Info',
-            message: 'This functionality is not yet implemented.',
-            type: NotificationType.Warning,
-            closable: false
-        });
-        //alert("TODO!! onImportClicked");
     }
 
     propagateChange: any = () => {};
