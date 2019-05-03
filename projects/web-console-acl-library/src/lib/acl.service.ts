@@ -1,7 +1,8 @@
+import { NGXLogger } from 'ngx-logger';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { MyselfService, Action } from '@wa-motif-open-api/auth-access-control-service'
-import { NGXLogger, EventBusService } from 'web-console-core';
+//import { NGXLogger, EventBusService } from 'web-console-core';
 import * as _ from 'lodash';
 
 const LOG_TAG = '[MotifACLService]';
@@ -15,13 +16,14 @@ export class MotifACLService {
     private _permissions: Array<string> = [];
 
     constructor(private logger: NGXLogger, 
-        private myselfService:MyselfService,
-        private eventBus: EventBusService) { 
+        private myselfService:MyselfService) { 
+        /*
         this.eventBus.on('AuthService:LoginEvent').subscribe( (message) => {
             this.logger.debug("on AuthService:LoginEvent: ", message);
             this.reloadPermissions().subscribe();
         })
-        this.reloadPermissions().subscribe();
+        */
+        //this.reloadPermissions().subscribe();
     }
 
     /**

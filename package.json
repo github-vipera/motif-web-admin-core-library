@@ -99,7 +99,8 @@
     "web-console-core": "^0.8.0",
     "web-console-login": "^0.1.1",
     "web-console-ui-kit": "^0.8.1",
-    "zone.js": "~0.8.26"
+    "zone.js": "~0.8.26",
+    "lodash": "^4.17.11"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.11.0",

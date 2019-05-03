@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, ViewChild, ElementRef, Renderer2, EventEmitter, Output } from '@angular/core';
 import { NGXLogger } from 'web-console-core';
-import { MotifACLService } from 'projects/motif-web-admin-core/src/lib/directives/acl/acl.service';
+import { MotifACLService } from 'web-console-acl-library';
+
 
 const LOG_TAG = '[NewConfigurationParamDialogComponent]';
 

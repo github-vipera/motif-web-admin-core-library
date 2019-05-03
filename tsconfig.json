@@ -27,10 +27,10 @@
         "projects/motif-web-admin-core/src/public_api"
       ],
       "web-console-acl-library": [
-        "dist/web-console-acl-library"
+        "projects/web-console-acl-library/src/public_api"
       ],
       "web-console-acl-library/*": [
-        "dist/web-console-acl-library/*"
+        "projects/web-console-acl-library/src/public_api"
       ]
     }
   }

@@ -12,7 +12,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { DialogModule } from 'primeng/dialog';
 import { NewConfigurationParamDialogComponent } from './components/dialog/new-configuration-param-dialog'
 import { InputSwitchModule } from 'primeng/inputswitch';
-import { MotifACLModule } from '../../directives/acl/acl.module';
+import { MotifACLModule } from 'web-console-acl-library';
 
 @NgModule({
     imports: [

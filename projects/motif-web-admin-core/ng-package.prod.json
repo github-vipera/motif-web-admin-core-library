@@ -66,9 +66,11 @@
     "web-console-core",
     "web-console-login",
     "web-console-ui-kit",
+    "web-console-acl-library",
     "zone.js",
     "color-parse",
     "color-string",
-    "ngx-scrollbar"
+    "ngx-scrollbar",
+    "lodash"
   ]
 }
