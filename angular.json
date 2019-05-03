@@ -154,7 +154,7 @@
             "project": "projects/motif-web-admin-core/ng-package.json"
           },
           "configurations": {
-            "production" : {
+            "production": {
               "project": "projects/motif-web-admin-core/ng-package.prod.json"
             }
           }

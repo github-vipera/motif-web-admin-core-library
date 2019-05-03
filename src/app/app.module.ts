@@ -14,7 +14,7 @@ import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
 import { LayoutModule } from '@progress/kendo-angular-layout';
 import { HotkeyModule, HotkeysService, Hotkey } from 'angular2-hotkeys';
 
-// Motif Web Admin Modules
+import { WebAdminCoreModule } from 'motif-web-admin-core';
 import { PageNotFoundComponent, PageNotFoundModule } from 'motif-web-admin-core';
 import { WebAdminModulesProvider } from 'motif-web-admin-core';
 import { ConfigurationSectionModule } from 'motif-web-admin-core';
@@ -32,10 +32,12 @@ import { TopMenuComponentModule } from 'motif-web-admin-core';
 import { WebContentSectionModule } from 'motif-web-admin-core';
 import { WAThemeDesignerModule } from 'motif-web-admin-core';
 import { WAThemeDesignerService } from 'motif-web-admin-core';
+import { WebAdminCoreService } from 'motif-web-admin-core';
 import { RESTManagerSectionModule } from 'motif-web-admin-core';
 import { SchedulerSectionModule } from 'motif-web-admin-core';
 import { MainDashboardSectionModule } from 'motif-web-admin-core';
 import { moduleRoutes } from 'motif-web-admin-core';
+import { MotifACLService } from 'ngx-motif-acl';
 
 const LoggerModuleConfigured = LoggerModule.forRoot({
   level: (environment.production ? NgxLoggerLevel.OFF : NgxLoggerLevel.DEBUG),
@@ -69,6 +71,7 @@ const appRoutes: Routes = [
     }),
     EEHookModule,
     LoggerModuleConfigured,
+    WebAdminCoreModule,
     WebAdminModulesProvider,
     ToolBarModule,
     BrowserAnimationsModule,
@@ -105,9 +108,15 @@ const appRoutes: Routes = [
 })
 export class AppModule {
 
-  constructor(private logger: NGXLogger, private hotkeysService: HotkeysService, private themeDesignerService: WAThemeDesignerService){
+  constructor(private logger: NGXLogger, 
+              private webAdminCore:WebAdminCoreService,
+              private hotkeysService: HotkeysService, 
+              private themeDesignerService: WAThemeDesignerService){
     this.logger.info('AppModule' , 'Starting application');
     this.logger.debug('AppModule' , 'Starting application DEBUG message');
+
+    // THIS IS VERY IMPORTANT
+    this.webAdminCore.start();
 
     this.hotkeysService.add(new Hotkey('alt+shift+t', (event: KeyboardEvent): boolean => {
       this.themeDesignerService.show();
