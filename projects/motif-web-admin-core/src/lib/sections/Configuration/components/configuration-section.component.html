@@ -54,8 +54,10 @@
                 <kendo-grid-column field="value" title="Value" >
                     <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-formGroup="formGroup">
                         <input *ngIf="dataItem.type==='java.lang.String'" class="k-textbox" [formControl]="formGroup.get('value')">
-                        <kendo-numerictextbox *ngIf="dataItem.type==='java.lang.Integer' || dataItem.type==='java.lang.Long'" 
-                            format="n0" 
+                        <kendo-numerictextbox *ngIf="dataItem.type==='java.lang.Short' || dataItem.type==='java.lang.Integer' || 
+                            dataItem.type==='java.lang.Long' || dataItem.type==='java.lang.Float' || dataItem.type==='java.lang.Double'" 
+                            [format]="typesInfo[dataItem.type].format" 
+                            [decimals]="typesInfo[dataItem.type].decimals" 
                             [value]="dataItem.value" 
                             [formControl]="formGroup.get('value')"></kendo-numerictextbox>
                         <kendo-dropdownlist *ngIf="dataItem.type==='java.lang.Boolean'" 

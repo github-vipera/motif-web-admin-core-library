@@ -18,6 +18,7 @@ import { WCNotificationCenter, NotificationType } from 'web-console-ui-kit';
 import { NewConfigurationParamDialogComponent, NewParamDialogResult } from './dialog/new-configuration-param-dialog';
 import { WCSubscriptionHandler } from '../../../components/Commons/wc-subscription-handler';
 import * as _ from 'lodash';
+import { dataTypesInfo } from './shared/shared';
 
 const LOG_TAG = '[ConfigurationSection]';
 
@@ -33,6 +34,7 @@ export class ConfigurationSectionComponent implements OnInit, OnDestroy {
 
     faFileImport = faFileImport;
     faDownload = faDownload;
+    typesInfo = dataTypesInfo;
 
     public view: Observable<GridDataResult>;
     public gridState: State = {
@@ -45,7 +47,7 @@ export class ConfigurationSectionComponent implements OnInit, OnDestroy {
     public dropDownBooleanValues: Array<string> = [
         'true',
         'false'
-    ]
+    ];
 
     // Data binding
     public loading = false;
@@ -123,8 +125,11 @@ export class ConfigurationSectionComponent implements OnInit, OnDestroy {
                 this.logger.debug(LOG_TAG , 'reloadConfigurationParamsForService done: ', data);
                 _.forEach(data, item => {
                     switch (item.type) {
+                        case 'java.lang.Short':
                         case 'java.lang.Integer':
                         case 'java.lang.Long':
+                        case 'java.lang.Double':
+                        case 'java.lang.Float':
                             item.value = Number(item.value);
                             break;
                         default:

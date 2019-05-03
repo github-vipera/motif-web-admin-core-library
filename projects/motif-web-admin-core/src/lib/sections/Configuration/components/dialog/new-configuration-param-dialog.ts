@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, ViewChild, ElementRef, Renderer2, EventEmitter, Output } from '@angular/core';
 import { NGXLogger } from 'web-console-core';
+import { dataTypesInfo } from '../shared/shared';
 
 const LOG_TAG = '[NewConfigurationParamDialogComponent]';
 
@@ -23,13 +24,22 @@ interface DataTypeItem {
 })
 export class NewConfigurationParamDialogComponent implements OnInit {
 
+    public dropDownBooleanValues: Array<string> = [
+        'true',
+        'false'
+    ];
+
+    numericDecimals: undefined;
+    numericFormat: undefined;
+
     dataTypes: DataTypeItem[] = [
         { name: 'java.lang.String', code: 'java.lang.String'},
         { name: 'java.lang.Double', code: 'java.lang.Double'},
+        { name: 'java.lang.Float', code: 'java.lang.Float'},
+        { name: 'java.lang.Short', code: 'java.lang.Short'},
         { name: 'java.lang.Integer', code: 'java.lang.Integer'},
         { name: 'java.lang.Long', code: 'java.lang.Long'},
-        { name: 'java.lang.Boolean', code: 'java.lang.Boolean'},
-        { name: 'Password', code: 'password'}
+        { name: 'java.lang.Boolean', code: 'java.lang.Boolean'}
     ];
     defaultDataType: DataTypeItem = { name: 'Choose a data type...', code: null };
 
@@ -116,6 +126,9 @@ export class NewConfigurationParamDialogComponent implements OnInit {
     }
 
     onTypeValueChange(event) {
+        this.value = undefined;
+        this.numericDecimals = dataTypesInfo[this.type.code].decimals;
+        this.numericFormat = dataTypesInfo[this.type.code].format;
         this.validate();
     }
 
