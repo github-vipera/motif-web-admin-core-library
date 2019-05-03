@@ -194,7 +194,7 @@ kendo-popup {
     color: $notification_color;
 }
 
-
+/** Drop down lists **/
 .k-dropdown-wrap>.k-input, .k-dropdown .k-dropdown-wrap .k-select, .k-list, .k-reset {
   background-color: $input_background_color;
   color: $input_color;
@@ -204,3 +204,27 @@ kendo-popup {
 .k-dropdown-wrap {
   border:none;
 }
+/** End Drop down lists **/
+
+
+/** Numeric Inputs **/
+.k-numerictextbox .k-numeric-wrap {
+  background-color: $input_background_color;
+  color: $input_color;
+  border: none;
+}
+
+ .k-numerictextbox .k-select  {
+   background: none;
+   color: #adadad;
+ }
+
+ .k-numerictextbox .k-select:hover  {
+  background: none;
+  color: #adadad;
+}
+
+.k-numerictextbox {
+  border: none;
+}
+/** EndNumeric Inputs **/
