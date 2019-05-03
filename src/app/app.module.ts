@@ -37,7 +37,7 @@ import { RESTManagerSectionModule } from 'motif-web-admin-core';
 import { SchedulerSectionModule } from 'motif-web-admin-core';
 import { MainDashboardSectionModule } from 'motif-web-admin-core';
 import { moduleRoutes } from 'motif-web-admin-core';
-import { MotifACLService } from 'web-console-acl-library';
+import { MotifACLService } from 'ngx-motif-acl';
 
 const LoggerModuleConfigured = LoggerModule.forRoot({
   level: (environment.production ? NgxLoggerLevel.OFF : NgxLoggerLevel.DEBUG),

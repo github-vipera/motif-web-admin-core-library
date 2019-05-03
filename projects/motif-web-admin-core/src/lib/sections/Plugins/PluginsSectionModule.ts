@@ -17,7 +17,7 @@ import { DialogModule } from 'primeng/dialog';
 import { UninstallConfirmationDialogComponent } from './dialogs/uninstall-confirmation-dialog-component';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { WCUploadPanelModule } from '../../components/UI/wc-upload-panel-component/WCUploadPanelModule';
-import { MotifACLModule } from 'web-console-acl-library';
+import { MotifACLModule } from 'ngx-motif-acl';
 
 @NgModule({
     imports: [

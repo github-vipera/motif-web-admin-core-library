@@ -81,11 +81,13 @@
     "core-js": "^2.6.5",
     "file-saver": "^2.0.1",
     "install": "^0.12.2",
+    "lodash": "^4.17.11",
     "moment": "^2.24.0",
     "ng2-tooltip-directive": "^2.1.9",
     "ngx-clipboard": "^11.1.9",
     "ngx-color": "^2.0.6",
     "ngx-logger": "^3.3.12",
+    "ngx-motif-acl": "0.0.1",
     "ngx-scrollbar": "^4.1.1",
     "ngx-toastr": "^9.2.0",
     "npm": "^6.9.0",
@@ -99,8 +101,7 @@
     "web-console-core": "^0.8.0",
     "web-console-login": "^0.1.1",
     "web-console-ui-kit": "^0.8.1",
-    "zone.js": "~0.8.26",
-    "lodash": "^4.17.11"
+    "zone.js": "~0.8.26"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.11.0",

@@ -1,4 +1,4 @@
-import { MotifACLModule } from 'web-console-acl-library';
+import { MotifACLModule } from 'ngx-motif-acl';
 import { CommonSelectorsModule } from './../../components/CommonsSelectorsModule';
 import { NgModule } from '@angular/core';
 import { GridModule } from '@progress/kendo-angular-grid';

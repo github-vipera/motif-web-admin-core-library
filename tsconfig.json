@@ -25,12 +25,6 @@
       ],
       "motif-web-admin-core/*": [
         "projects/motif-web-admin-core/src/public_api"
-      ],
-      "web-console-acl-library": [
-        "projects/web-console-acl-library/src/public_api"
-      ],
-      "web-console-acl-library/*": [
-        "projects/web-console-acl-library/src/public_api"
       ]
     }
   }

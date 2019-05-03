@@ -2,7 +2,7 @@ import { PKGINFO } from '../../pkginfo';
 import { Injectable } from '@angular/core';
 import { NGXLogger } from 'web-console-core';
 import { EventBusService } from 'web-console-core';
-import { MotifACLService } from 'web-console-acl-library';
+import { MotifACLService } from 'ngx-motif-acl';
 import { AuthService } from 'web-console-core';
 import { WCTopBarService, WCTopBarItem, WCTopBarLocation } from 'web-console-core';
 import { TopMenuComponent, TopInfoComponent, TopLogoComponent } from '../../components/TopMenu/index';
