@@ -193,3 +193,14 @@ kendo-popup {
 .k-notification-wrap {
     color: $notification_color;
 }
+
+
+.k-dropdown-wrap>.k-input, .k-dropdown .k-dropdown-wrap .k-select, .k-list, .k-reset {
+  background-color: $input_background_color;
+  color: $input_color;
+  border: none;
+}
+
+.k-dropdown-wrap {
+  border:none;
+}
