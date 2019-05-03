@@ -21,16 +21,10 @@
     ],
     "paths": {
       "motif-web-admin-core": [
-        "projects/motif-web-admin-core/src/public_api"
+        "dist/motif-web-admin-core"
       ],
       "motif-web-admin-core/*": [
-        "projects/motif-web-admin-core/src/public_api"
-      ],
-      "web-console-acl-library": [
-        "dist/web-console-acl-library"
-      ],
-      "web-console-acl-library/*": [
-        "dist/web-console-acl-library/*"
+        "dist/motif-web-admin-core/*"
       ]
     }
   }

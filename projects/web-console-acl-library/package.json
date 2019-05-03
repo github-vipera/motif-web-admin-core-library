@@ -1,0 +1,10 @@
+{
+  "name": "web-console-acl-library",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^7.1.0",
+    "@angular/core": "^7.1.0",
+    "web-console-core": "^0.7.0",
+    "@wa-motif-open-api/auth-access-control-service": "^0.2.7"
+  }
+}

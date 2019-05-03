@@ -154,7 +154,7 @@
             "project": "projects/motif-web-admin-core/ng-package.json"
           },
           "configurations": {
-            "production" : {
+            "production": {
               "project": "projects/motif-web-admin-core/ng-package.prod.json"
             }
           }
@@ -173,6 +173,46 @@
             "tsConfig": [
               "projects/motif-web-admin-core/tsconfig.lib.json",
               "projects/motif-web-admin-core/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "web-console-acl-library": {
+      "root": "projects/web-console-acl-library",
+      "sourceRoot": "projects/web-console-acl-library/src",
+      "projectType": "library",
+      "prefix": "wcacl",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/web-console-acl-library/tsconfig.lib.json",
+            "project": "projects/web-console-acl-library/ng-package.json"
+          },
+          "configurations": {
+            "production" : {
+              "project": "projects/web-console-acl-library/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/web-console-acl-library/src/test.ts",
+            "tsConfig": "projects/web-console-acl-library/tsconfig.spec.json",
+            "karmaConfig": "projects/web-console-acl-library/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/web-console-acl-library/tsconfig.lib.json",
+              "projects/web-console-acl-library/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
