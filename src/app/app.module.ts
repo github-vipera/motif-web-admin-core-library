@@ -1,4 +1,3 @@
-import { EEHookModule } from './eehook/EEHookModule';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
@@ -13,8 +12,9 @@ import { WC_API_BASE_PATH, WC_OAUTH_BASE_PATH } from 'web-console-core'
 import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
 import { LayoutModule } from '@progress/kendo-angular-layout';
 import { HotkeyModule, HotkeysService, Hotkey } from 'angular2-hotkeys';
+import { EEHookModule } from './eehook/EEHookModule';
 
-import { WebAdminCoreModule } from 'motif-web-admin-core';
+import { WebAdminCoreModule /*, WebAdminSecurityModule*/ } from 'motif-web-admin-core';
 import { PageNotFoundComponent, PageNotFoundModule } from 'motif-web-admin-core';
 import { WebAdminModulesProvider } from 'motif-web-admin-core';
 import { ConfigurationSectionModule } from 'motif-web-admin-core';
@@ -37,7 +37,6 @@ import { RESTManagerSectionModule } from 'motif-web-admin-core';
 import { SchedulerSectionModule } from 'motif-web-admin-core';
 import { MainDashboardSectionModule } from 'motif-web-admin-core';
 import { moduleRoutes } from 'motif-web-admin-core';
-import { MotifACLService } from 'ngx-motif-acl';
 
 const LoggerModuleConfigured = LoggerModule.forRoot({
   level: (environment.production ? NgxLoggerLevel.OFF : NgxLoggerLevel.DEBUG),
@@ -46,6 +45,17 @@ const LoggerModuleConfigured = LoggerModule.forRoot({
 });
 
 
+/*
+const appRoutes: Routes = [
+  { path: '', redirectTo: '/dashboard/Main%20Dashboard', pathMatch: 'full' },
+  { path: 'login', component: WebConsoleLoginComponent },
+  { path: 'dashboard', component: WebConsoleComponent, canActivate: [AuthGuard, WebAdminACLGuard] , canActivateChild: [WebAdminACLGuard], children:moduleRoutes },
+  {
+    path:"**",
+    component:PageNotFoundComponent, children:[]
+  }
+];
+*/
 const appRoutes: Routes = [
   { path: '', redirectTo: '/dashboard/Main%20Dashboard', pathMatch: 'full' },
   { path: 'login', component: WebConsoleLoginComponent },
@@ -55,6 +65,14 @@ const appRoutes: Routes = [
     component:PageNotFoundComponent, children:[]
   }
 ];
+
+
+
+/*
+export function WebAdminCoreServiceFactory(service: WebAdminCoreService) {
+  return () => service.start();
+}
+*/
 
 @NgModule({
   declarations: [
@@ -72,6 +90,7 @@ const appRoutes: Routes = [
     EEHookModule,
     LoggerModuleConfigured,
     WebAdminCoreModule,
+    //WebAdminSecurityModule,
     WebAdminModulesProvider,
     ToolBarModule,
     BrowserAnimationsModule,
