@@ -20,7 +20,7 @@ import { CounterInfosComponent } from './components/counter-infos/counter-infos-
 import { CountersThresholdsServiceModule } from '@wa-motif-open-api/counters-thresholds-service';
 import { CounterInfoDetailsComponent } from './components/counter-infos/details/counter-info-details-component';
 import { InputSwitchModule } from 'primeng/inputswitch';
-import { WCUploadPanelModule } from '../../components/UI/wc-upload-panel-component';
+import { WCUploadPanelModule } from '../../components/UI/wc-upload-panel-component/WCUploadPanelModule';
 
 @NgModule({
     imports: [
