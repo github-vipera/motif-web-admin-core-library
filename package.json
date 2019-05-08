@@ -87,7 +87,7 @@
     "ngx-clipboard": "^11.1.9",
     "ngx-color": "^2.0.7",
     "ngx-logger": "^3.3.13",
-    "ngx-motif-acl": "file:../ngx-motif-acl-library/ngx-motif-acl-1.0.0-dev.tgz",
+    "ngx-motif-acl": "^1.0.0",
     "ngx-scrollbar": "^4.1.1",
     "ngx-toastr": "^9.2.0",
     "npm": "^6.9.0",
