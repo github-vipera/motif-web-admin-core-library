@@ -14,7 +14,7 @@ import { LayoutModule } from '@progress/kendo-angular-layout';
 import { HotkeyModule, HotkeysService, Hotkey } from 'angular2-hotkeys';
 import { EEHookModule } from './eehook/EEHookModule';
 
-import { WebAdminCoreModule, WebAdminSecurityModule } from 'motif-web-admin-core';
+import { WebAdminCoreModule, WebAdminSecurityModule, WebAdminACLGuard } from 'motif-web-admin-core';
 import { PageNotFoundComponent, PageNotFoundModule } from 'motif-web-admin-core';
 import { WebAdminModulesProvider } from 'motif-web-admin-core';
 import { ConfigurationSectionModule } from 'motif-web-admin-core';

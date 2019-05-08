@@ -1,5 +1,5 @@
 
-import { Injectable, Component } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { CanActivate, CanActivateChild, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { NGXLogger, AbstractPluginValidator, PluginRegistrationEntry, WebConsolePluginManagerService } from 'web-console-core';
