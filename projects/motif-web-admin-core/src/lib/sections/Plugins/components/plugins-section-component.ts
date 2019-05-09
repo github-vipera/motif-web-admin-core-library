@@ -33,7 +33,7 @@ const LOG_TAG = '[PluginsSection]';
     iconName: 'wa-ico-plugins',
     userData: {
         acl: {
-            permissions: ["WEBADMIN_ACTIONS", "TECMAN_ACTIONSx"]
+            permissions: ["WEBADMIN_ACTIONS", "TECMAN_ACTIONS"]
         }
     }
 })
