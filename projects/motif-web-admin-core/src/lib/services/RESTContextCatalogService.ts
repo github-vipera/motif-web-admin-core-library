@@ -14,7 +14,6 @@ import { ContextsService } from '@wa-motif-open-api/context-service';
 
 import { Observable } from 'rxjs';
 import { NGXLogger } from 'web-console-core';
-import { WCSubscriptionHandler } from '../components';
 
 const LOG_TAG = '[RESTContextCatalogService]';
 

@@ -7,7 +7,6 @@ import { process, State } from '@progress/kendo-data-query';
 import { WCSubscriptionHandler } from '../../../components/Commons/wc-subscription-handler';
 import * as _ from 'lodash'
 import { WCNotificationCenter, NotificationType } from 'web-console-ui-kit';
-
 import { faPuzzlePiece } from '@fortawesome/free-solid-svg-icons';
 
 
@@ -31,7 +30,12 @@ const LOG_TAG = '[PluginsSection]';
     templateUrl: './plugins-section-component.html'
   })
   @PluginView('Plugins', {
-    iconName: 'wa-ico-plugins'
+    iconName: 'wa-ico-plugins',
+    userData: {
+        acl: {
+            permissions: ["WEBADMIN_ACTIONS", "TECMAN_ACTIONSx"]
+        }
+    }
 })
 export class PluginsSectionComponent implements OnInit, OnDestroy {
 
