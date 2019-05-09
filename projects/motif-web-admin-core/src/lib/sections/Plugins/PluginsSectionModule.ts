@@ -17,8 +17,7 @@ import { DialogModule } from 'primeng/dialog';
 import { UninstallConfirmationDialogComponent } from './dialogs/uninstall-confirmation-dialog-component';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { WCUploadPanelModule } from '../../components/UI/wc-upload-panel-component/WCUploadPanelModule';
-import { MotifACLModule } from 'ngx-motif-acl';
-import { WebAdminSecurityModule } from '../../services/security/WebAdminSecurityModule';
+import { MotifACLModule } from 'web-console-motif-acl';
 
 @NgModule({
     imports: [
@@ -39,7 +38,7 @@ import { WebAdminSecurityModule } from '../../services/security/WebAdminSecurity
         InputSwitchModule,
         WCUploadPanelModule,
         MotifACLModule,
-        WebAdminSecurityModule
+        MotifACLModule
     ],
     entryComponents:[
         PluginsSectionComponent

@@ -1,7 +1,8 @@
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { NGXLogger, AuthService, EventBusService } from 'web-console-core';
-import { MotifACLService } from 'ngx-motif-acl';
+import { MotifACLService } from 'web-console-motif-acl';
+
 import { WCTopBarService, WCTopBarItem, WCTopBarLocation } from 'web-console-core';
 import { TopMenuComponent, TopInfoComponent, TopLogoComponent } from '../../components/TopMenu/index';
 

@@ -14,7 +14,8 @@ import { LayoutModule } from '@progress/kendo-angular-layout';
 import { HotkeyModule, HotkeysService, Hotkey } from 'angular2-hotkeys';
 import { EEHookModule } from './eehook/EEHookModule';
 
-import { WebAdminCoreModule, WebAdminSecurityModule, WebAdminACLGuard } from 'motif-web-admin-core';
+import { WebAdminCoreModule } from 'motif-web-admin-core';
+import { MotifACLModule, WebAdminMotifACLGuard } from 'web-console-motif-acl'
 import { PageNotFoundComponent, PageNotFoundModule } from 'motif-web-admin-core';
 import { WebAdminModulesProvider } from 'motif-web-admin-core';
 import { ConfigurationSectionModule } from 'motif-web-admin-core';
@@ -49,7 +50,7 @@ const LoggerModuleConfigured = LoggerModule.forRoot({
 const appRoutes: Routes = [
   { path: '', redirectTo: '/dashboard/Main%20Dashboard', pathMatch: 'full' },
   { path: 'login', component: WebConsoleLoginComponent },
-  { path: 'dashboard', component: WebConsoleComponent, canActivate: [AuthGuard, WebAdminACLGuard] , canActivateChild: [WebAdminACLGuard], children:moduleRoutes },
+  { path: 'dashboard', component: WebConsoleComponent, canActivate: [AuthGuard, WebAdminMotifACLGuard] , canActivateChild: [WebAdminMotifACLGuard], children:moduleRoutes },
   {
     path:"**",
     component:PageNotFoundComponent, children:[]
@@ -79,7 +80,7 @@ export function WebAdminCoreServiceFactory(service: WebAdminCoreService) {
     EEHookModule,
     LoggerModuleConfigured,
     WebAdminCoreModule,
-    WebAdminSecurityModule,
+    MotifACLModule,
     WebAdminModulesProvider,
     ToolBarModule,
     BrowserAnimationsModule,
