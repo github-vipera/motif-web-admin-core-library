@@ -8,7 +8,8 @@ import { WebAdminACLGuard } from './acl/webadmin.acl.guard';
     ],
     entryComponents:[
     ],
-    declarations: [
+    declarations: [ 
+        
     ],
     exports: [],
     providers: [

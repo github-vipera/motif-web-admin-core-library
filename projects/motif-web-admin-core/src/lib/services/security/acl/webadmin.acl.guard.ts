@@ -1,9 +1,11 @@
+import { AclEntityEditorChangesEvent } from './../../../sections/AccessControl/components/editors/acl-editor-context';
 
 import { Injectable } from '@angular/core';
 import { CanActivate, CanActivateChild, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { NGXLogger, AbstractPluginValidator, PluginRegistrationEntry, WebConsolePluginManagerService } from 'web-console-core';
 import { MotifACLService } from 'ngx-motif-acl';
+                                 //web-console-motif-acl 
 
 const LOG_TAG = "[WebAdminACLGuard]"
 
@@ -45,22 +47,29 @@ export class WebAdminACLGuard extends AbstractPluginValidator implements CanActi
   /**
    * Called by WebConsolePluginManagerService for display/hide button in toolbar
    */
-  validatePluginEntry(entry: PluginRegistrationEntry): boolean {
+  validatePluginEntry(entry: PluginRegistrationEntry): Observable<boolean> {
     console.log(LOG_TAG, "validatePluginEntry called for:", entry);
-    return true; //TODO!!;
+    return this.checkPermissions(entry);
   }
 
-  private checkPermissions(entry: PluginRegistrationEntry):Observable<boolean> | boolean {
+  private checkPermissions(entry: PluginRegistrationEntry):Observable<boolean> {
     if (entry && entry.userData && entry.userData["acl"]) {
       let permissions = entry.userData["acl"]["permissions"];
       if (permissions) {
         return this.aclService.can(permissions); 
       } else {
         console.log(LOG_TAG, "Invalid plugin ACL specification. Permissions not found:", entry, entry.userData["acl"]);
-        return false;
+        return new Observable((observer)=>{
+          observer.next(false);
+          observer.complete();
+        });
       }
     } else {
-      return true;
+      return new Observable((observer)=>{
+        observer.next(true);
+        observer.complete();
+      });
+;
     }
   }
 

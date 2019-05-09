@@ -32,8 +32,8 @@ const LOG_TAG = '[PluginsSection]';
   @PluginView('Plugins', {
     iconName: 'wa-ico-plugins',
     userData: {
-        aclx: {
-            permissions: ["uno", "due"]
+        acl: {
+            permissions: ["WEBADMIN_ACTIONS", "TECMAN_ACTIONS"]
         }
     }
 })
