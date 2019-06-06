@@ -6,7 +6,8 @@ import { SortDescriptor, DataResult, FilterDescriptor,
 import { PageChangeEvent, GridComponent } from '@progress/kendo-angular-grid';
 import { MotifQueryFilter, MotifQuerySort, MotifQueryResults, MotifQueryService } from 'web-console-core';
 import { SelectableSettings, SelectionEvent } from '@progress/kendo-angular-grid';
-import { DomainsService, Domain, UsersService, User } from '@wa-motif-open-api/platform-service';
+import { DomainsService, Domain } from '@wa-motif-open-api/platform-service';
+import { UsersService, User } from '@wa-motif-open-api/user-mgr-service';
 import { String } from 'typescript-string-operations';
 import * as _ from 'lodash';
 import { HttpParams } from '@angular/common/http';

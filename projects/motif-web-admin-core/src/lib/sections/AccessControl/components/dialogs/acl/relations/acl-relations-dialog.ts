@@ -1,17 +1,16 @@
 import { Component, OnInit, Renderer2, NgZone, OnDestroy, EventEmitter, Output } from '@angular/core';
 import { NGXLogger } from 'web-console-core';
 import { EntityType } from '../../../editors/acl-editor-context';
-import { process, State, CompositeFilterDescriptor } from '@progress/kendo-data-query';
+import { process, State, CompositeFilterDescriptor, GroupDescriptor } from '@progress/kendo-data-query';
 import {
     SelectableSettings, SelectionEvent, RowArgs, PageChangeEvent, GridDataResult,
     DataStateChangeEvent, RowClassArgs
 } from '@progress/kendo-angular-grid';
 import {
-    UsersService, GroupsService, RolesService, ActionsService,
+    UsersService, GroupsService, RolesService,
     PermissionsService,
     GroupAssign,
     RoleAssign,
-    ActionAssign,
     Permission
 } from '@wa-motif-open-api/auth-access-control-service';
 import { forkJoin, Observable, concat } from 'rxjs';
@@ -99,7 +98,6 @@ export class AclRelationsDialogComponent implements OnInit, OnDestroy {
         private usersService: UsersService,
         private groupsService: GroupsService,
         private rolesService: RolesService,
-        private actionsService: ActionsService,
         private permissionsService: PermissionsService,
         private renderer: Renderer2,
         private zone: NgZone
@@ -129,8 +127,8 @@ export class AclRelationsDialogComponent implements OnInit, OnDestroy {
         return this._currentEntityType;
     }
 
-    public get isCurrentEntityAction(): boolean {
-        return this._currentEntityType === EntityType.Action;
+    public get isCurrentEntityRole(): boolean {
+        return this._currentEntityType === EntityType.Role;
     }
 
     public permissionKey(context: RowArgs): string {
@@ -166,12 +164,7 @@ export class AclRelationsDialogComponent implements OnInit, OnDestroy {
                 this.progressTitle = 'Setting Roles on ' + this.entityName;
                 break;
             case EntityType.Role:
-                this.dialogTitle = 'Actions of Role';
-                this.entityName = dataItem.name;
-                this.progressTitle = 'Setting Actions on ' + this.entityName;
-                break;
-            case EntityType.Action:
-                this.dialogTitle = 'Permissions of Action';
+                this.dialogTitle = 'Permissions of Role';
                 this.entityName = dataItem.name;
                 this.progressTitle = 'Setting Permissions on ' + this.entityName;
                 break;
@@ -199,11 +192,7 @@ export class AclRelationsDialogComponent implements OnInit, OnDestroy {
                 getAvailable = this.rolesService.getRoles();
                 break;
             case EntityType.Role:
-                getCurrent = this.rolesService.getRoleActions(dataItem.name);
-                getAvailable = this.actionsService.getActions();
-                break;
-            case EntityType.Action:
-                getCurrent = this.actionsService.getActionPermissions(dataItem.name);
+                getCurrent = this.rolesService.getRolePermissions(dataItem.name);
                 getAvailable = this.permissionsService.getPermissions();
                 break;
         }
@@ -227,10 +216,10 @@ export class AclRelationsDialogComponent implements OnInit, OnDestroy {
         // Filter out current records
         const currentDataMap: any = {};
         this.currentData.forEach(r => {
-            currentDataMap[this.isCurrentEntityAction ? (r.component + '|' + r.action + '|' + r.target) : r.name] = r;
+            currentDataMap[this.isCurrentEntityRole ? (r.component + '|' + r.action + '|' + r.target) : r.name] = r;
         }, this);
         this.availableData = this.availableData.filter((value: any, index: number, array: any[]) => {
-            const key: string = this.isCurrentEntityAction ? (value.component + '|' + value.action + '|' + value.target) : value.name;
+            const key: string = this.isCurrentEntityRole ? (value.component + '|' + value.action + '|' + value.target) : value.name;
             return currentDataMap[key] ? false : value;
         }, this);
     }
@@ -323,7 +312,7 @@ export class AclRelationsDialogComponent implements OnInit, OnDestroy {
 
     private mapSelectionToItems(selection: any[]): any[] {
         return selection.map((value: any, index: number, array: any[]) => {
-            if (!this.isCurrentEntityAction) {
+            if (!this.isCurrentEntityRole) {
                 return {
                     name: value
                 }
@@ -370,21 +359,13 @@ export class AclRelationsDialogComponent implements OnInit, OnDestroy {
                 break;
             case EntityType.Role:
                 itemsToAdd.forEach(i => {
-                    const aa: ActionAssign = {
-                        name: i.name
-                    };
-                    addToCurrent.push(this.rolesService.assignActionToRole(this.currentItem.name, aa)
-                        .pipe(tap(value => this.updateProgress(++done, total))));
-                }, this);
-                break;
-            case EntityType.Action:
-                itemsToAdd.forEach(i => {
                     const p: Permission = {
                         component: i.component,
                         action: i.action,
-                        target: i.target
+                        target: i.target,
+                        description: i.description
                     };
-                    addToCurrent.push(this.actionsService.assignPermissionToAction(this.currentItem.name, p)
+                    addToCurrent.push(this.rolesService.assignPermissionToRole(this.currentItem.name, p)
                         .pipe(tap(value => this.updateProgress(++done, total))));
                 }, this);
                 break;
@@ -436,14 +417,8 @@ export class AclRelationsDialogComponent implements OnInit, OnDestroy {
                 break;
             case EntityType.Role:
                 itemsToRemove.forEach(i => {
-                    removeFromCurrent.push(this.rolesService.removeActionFromRole(this.currentItem.name, i.name)
-                        .pipe(tap(value => this.updateProgress(++done, total))));
-                }, this);
-                break;
-            case EntityType.Action:
-                itemsToRemove.forEach(i => {
-                    removeFromCurrent.push(this.actionsService.
-                        removePermissionFromAction(this.currentItem.name, i.component, i.action, i.target)
+                    removeFromCurrent.push(this.rolesService.
+                        removePermissionFromRole(this.currentItem.name, i.component, i.action, i.target)
                             .pipe(tap(value => this.updateProgress(++done, total))));
                 }, this);
                 break;

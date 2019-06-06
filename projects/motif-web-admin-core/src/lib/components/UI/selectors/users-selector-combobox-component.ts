@@ -3,7 +3,7 @@ import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, forwardRef, 
 import { NGXLogger} from 'web-console-core'
 import { WCNotificationCenter, NotificationType } from 'web-console-ui-kit'
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { UsersService, User } from '@wa-motif-open-api/platform-service';
+import { UsersService, User } from '@wa-motif-open-api/user-mgr-service';
 import { WCSubscriptionHandler } from '../../Commons/wc-subscription-handler';
 
 const LOG_TAG = '[UsersSelectorComboBoxComponent]';

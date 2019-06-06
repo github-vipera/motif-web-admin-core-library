@@ -19,7 +19,6 @@ export enum EntityType {
     Client,
     Group,
     Role,
-    Action,
     Permission
 }
 

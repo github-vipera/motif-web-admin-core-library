@@ -29,7 +29,7 @@ const LOG_TAG = '[ServicesSection]';
     styleUrls: ['./services-section-component.scss'],
     templateUrl: './services-section-component.html'
 })
-@PluginView('Services', {
+@PluginView('JSON Channel', {
     iconName: 'wa-ico-services'
 })
 export class ServicesSectionComponent implements OnInit, OnDestroy {

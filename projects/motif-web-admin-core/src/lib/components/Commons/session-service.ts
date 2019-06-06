@@ -2,7 +2,7 @@ import { AuthService } from 'web-console-core';
 import { Injectable, OnInit } from '@angular/core';
 import * as _ from 'lodash'
 import { NGXLogger } from 'ngx-logger';
-import { AdminsService, AdminUser } from '@wa-motif-open-api/platform-service';
+import { AdminsService, AdminUser } from '@wa-motif-open-api/user-mgr-service';
 
 const LOG_TAG = '[SessionService]';
 

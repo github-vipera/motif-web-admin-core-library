@@ -18,7 +18,7 @@ const LOG_TAG = '[RESTManagerSectionComponent]';
     styleUrls: ['./rest-manager-section-component.scss'],
     templateUrl: './rest-manager-section-component.html'
 })
-@PluginView('REST Manager', {
+@PluginView('REST Channel', {
     iconName: 'wa-ico-services'
 })
 export class RESTManagerSectionComponent implements OnInit, OnDestroy {
