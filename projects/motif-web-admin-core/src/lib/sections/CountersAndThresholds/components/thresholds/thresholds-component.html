@@ -23,6 +23,8 @@
       let-column="column"
     >
     <wc-grid-editor-command
+    [motif-acl]="['com.vipera.osgi.bss.countersthresholds.api.rest.CountersThresholdsApi:CREATE:enableThresholdInfo', 
+                  'com.vipera.osgi.bss.countersthresholds.api.rest.CountersThresholdsApi:DELETE:disableThresholdInfo']"
     [rowIndex]="rowIndex" 
     [hasConfirmation]="true"
     [confirmationTitleProvider]="statusConfirmationTitleProvider"
@@ -69,6 +71,9 @@
       let-column="column"
     >
       <wc-grid-editor-commands-group
+      [motif-acl]="['com.vipera.osgi.bss.countersthresholds.api.rest.CountersThresholdsApi:UPDATE:updateThresholdInfo',
+                    'com.vipera.osgi.bss.countersthresholds.api.rest.CountersThresholdsApi:DELETE:deleteThresholdInfo']"
+      motif-acl-hidden="true"
       [rowIndex]="rowIndex"
       [columnIndex]="columnIndex" 
       [column]="column" 

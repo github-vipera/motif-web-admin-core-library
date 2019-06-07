@@ -4,7 +4,7 @@
         <kendo-buttongroup look="flat">
           <button
             kendoButton
-            [disabled]="!counterInfo"
+            [disabled]="!counterInfo || !canAddThreshold"
             [toggleable]="false"
             (click)="onAddNewThresholdClicked()"
           >

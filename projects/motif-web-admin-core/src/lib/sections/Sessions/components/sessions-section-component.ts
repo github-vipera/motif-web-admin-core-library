@@ -22,7 +22,14 @@ const LOG_TAG = '[SessionsSection]';
     templateUrl: './sessions-section.component.html'
 })
 @PluginView('Sessions', {
-    iconName: 'wa-ico-sessions'
+    iconName: 'wa-ico-sessions',
+    userData: {
+        acl: {
+            permissions: ['com.vipera.osgi.core.platform.api.rest.PlatformApi:READ:getDomains',
+                            'com.vipera.osgi.core.platform.api.rest.PlatformApi:READ:getApplications',
+                            'com.vipera.osgi.core.platform.api.rest.SecurityApi:READ:getSessions']
+        }
+    }
 })
 export class SessionsSectionComponent implements OnInit, OnDestroy {
 

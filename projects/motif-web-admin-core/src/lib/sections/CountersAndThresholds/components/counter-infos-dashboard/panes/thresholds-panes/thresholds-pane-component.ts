@@ -7,6 +7,7 @@ import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { ThresholdsComponent } from '../../../thresholds/thresholds-component';
 import { ThresholdDialogResult, ThresholdEditDialogComponent, EditType as DialogEditType } from '../../../dialogs/threshold-edit-dialog-component/threshold-edit-dialog-component';
 import { WCSubscriptionHandler } from '../../../../../../components/Commons/wc-subscription-handler';
+import { MotifACLService } from 'web-console-motif-acl';
 
 const LOG_TAG = '[ThresholdsPaneComponent]';
 
@@ -18,6 +19,8 @@ const LOG_TAG = '[ThresholdsPaneComponent]';
 })
 export class ThresholdsPaneComponent implements OnInit, OnDestroy {
 
+    public canAddThreshold = false;
+
     private _subHandler: WCSubscriptionHandler = new WCSubscriptionHandler();
     faPlusCircle = faPlusCircle;    
     @ViewChild('thresholdsComponent') _thresholdsComponent: ThresholdsComponent;
@@ -27,9 +30,19 @@ export class ThresholdsPaneComponent implements OnInit, OnDestroy {
 
     constructor(
         private logger: NGXLogger,
+        private motifACLService: MotifACLService,
         private notificationCenter: WCNotificationCenter,
         private thresholdsService: ThresholdsService
-    ) {}
+    ) {
+        this._subHandler.add(
+            this.motifACLService.can('com.vipera.osgi.bss.countersthresholds.api.rest.CountersThresholdsApi:CREATE:createThresholdInfo')
+            .subscribe((canDoIt: boolean) => {
+                this.canAddThreshold = canDoIt;
+            }, error => {
+                this.canAddThreshold = false;
+                this.logger.warn('cannot retrieve permissions: ' + error);
+            }));
+    }
 
     ngOnInit() {
     }

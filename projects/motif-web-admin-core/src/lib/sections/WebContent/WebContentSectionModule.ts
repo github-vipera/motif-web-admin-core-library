@@ -12,6 +12,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { WebContentSectionComponent } from './components/webcontent-section-component';
 import { WebContentServiceModule } from '@wa-motif-open-api/web-content-service';
 import { DialogModule } from 'primeng/dialog';
+import { MotifACLModule } from 'web-console-motif-acl';
 
 @NgModule({
     imports: [
@@ -29,7 +30,8 @@ import { DialogModule } from 'primeng/dialog';
         DialogModule,
         WCUploadPanelModule,
         WCUIKitGridModule,
-        WCNotificationCenterModule
+        WCNotificationCenterModule,
+        MotifACLModule
     ],
     entryComponents: [
         WebContentSectionComponent

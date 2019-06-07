@@ -80,6 +80,8 @@
         <kendo-grid-column title="" width="150" minResizableWidth="140">
             <ng-template kendoGridCellTemplate let-dataItem let-columnIndex="columnIndex" let-rowIndex="rowIndex" let-column="column">
                     <wc-grid-editor-command 
+                        motif-acl="com.vipera.osgi.core.platform.api.rest.SecurityApi:DELETE:closeSession"
+                        motif-acl-hidden="true"
                         [alignMode]="'end'"
                         [hasConfirmation]="true"
                         [confirmationTitle]="'Delete ?'"

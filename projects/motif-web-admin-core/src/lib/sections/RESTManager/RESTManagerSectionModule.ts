@@ -15,7 +15,6 @@ import { TreeTableModule } from 'primeng/treetable';
 import { DialogModule } from 'primeng/dialog';
 import { InputSwitchModule } from 'primeng/inputswitch';
 
-
 @NgModule({
     imports: [
         LogServiceModule,

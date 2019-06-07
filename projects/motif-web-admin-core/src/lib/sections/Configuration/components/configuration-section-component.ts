@@ -19,6 +19,7 @@ import { NewConfigurationParamDialogComponent, NewParamDialogResult } from './di
 import { WCSubscriptionHandler } from '../../../components/Commons/wc-subscription-handler';
 import * as _ from 'lodash';
 import { dataTypesInfo } from './shared/shared';
+import { MotifACLService } from 'web-console-motif-acl';
 
 const LOG_TAG = '[ConfigurationSection]';
 
@@ -28,7 +29,13 @@ const LOG_TAG = '[ConfigurationSection]';
     templateUrl: './configuration-section.component.html'
   })
   @PluginView('Configuration', {
-    iconName: 'wa-ico-configuration'
+    iconName: 'wa-ico-configuration',
+    userData: {
+        acl: {
+            permissions: ["com.vipera.osgi.core.config.service.api.rest.CfgApi:READ:getServices",
+                            "com.vipera.osgi.core.config.service.api.rest.CfgApi:READ:getSettings"]
+        }
+    }
   })
 export class ConfigurationSectionComponent implements OnInit, OnDestroy {
 
@@ -62,7 +69,6 @@ export class ConfigurationSectionComponent implements OnInit, OnDestroy {
     // Buttons
     public canSave = false;
     public canRefresh = false;
-    public canExport = true;
     public canAddProperty = false;
 
     // internal
@@ -71,6 +77,7 @@ export class ConfigurationSectionComponent implements OnInit, OnDestroy {
     private _subHandler: WCSubscriptionHandler = new WCSubscriptionHandler();
 
     constructor(private logger: NGXLogger,
+        private motifACLService: MotifACLService,
         private settingsService: SettingsService,
         private configurationService: ConfigurationsService,
         public editService: WCEditService,
@@ -156,7 +163,7 @@ export class ConfigurationSectionComponent implements OnInit, OnDestroy {
         } else {
             this.editService.read([], this._editServiceConfig);
         }
-        this.setOptions(true, true, true, true);
+        this.setOptions(true, true, true);
     }
 
     /**
@@ -167,9 +174,9 @@ export class ConfigurationSectionComponent implements OnInit, OnDestroy {
         this._selectedService = service;
         this.reloadConfigurationParams();
         if (service) {
-            this.setOptions(true, true, true, true);
+            this.setOptions(true, true, true);
         } else {
-            this.setOptions(false, false, true, false);
+            this.setOptions(false, false, false);
         }
     }
 
@@ -432,16 +439,18 @@ export class ConfigurationSectionComponent implements OnInit, OnDestroy {
 
     /**
      * Enable or disable buttons
-     * @param canSave
-     * @param canRefresh
-     * @param canExport
-     * @param canAddProperty
      */
-    private setOptions(canSave: boolean, canRefresh: boolean, canExport: boolean, canAddProperty: boolean): void {
-        this.canSave = canSave;
+    private setOptions(canSave: boolean, canRefresh: boolean, canAddProperty: boolean): void {
         this.canRefresh = canRefresh;
-        this.canExport = canExport;
-        this.canAddProperty = canAddProperty;
+
+        this._subHandler.add(forkJoin(this.motifACLService.can('com.vipera.osgi.core.config.service.api.rest.CfgApi:UPDATE:updateSetting'),
+                                    this.motifACLService.can('com.vipera.osgi.core.config.service.api.rest.CfgApi:CREATE:createSetting'))
+            .subscribe((canDoIt: Array<boolean>) => {
+            this.canSave = canSave && canDoIt[0];
+            this.canAddProperty = canAddProperty && canDoIt[1];
+        }, error => {
+            this.logger.error(LOG_TAG , 'cannot retrieve permissions: ', error);
+        }));
     }
 
     /**
@@ -531,5 +540,4 @@ export class ConfigurationSectionComponent implements OnInit, OnDestroy {
         newConfigurationRow.value = dialogResult.value;
         this.onEditCommit(newConfigurationRow);
     }
-
 }

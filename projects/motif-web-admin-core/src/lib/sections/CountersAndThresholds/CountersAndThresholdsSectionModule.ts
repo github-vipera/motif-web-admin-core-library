@@ -21,6 +21,7 @@ import { CountersThresholdsServiceModule } from '@wa-motif-open-api/counters-thr
 import { CounterInfoDetailsComponent } from './components/counter-infos/details/counter-info-details-component';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { WCUploadPanelModule } from '../../components/UI/wc-upload-panel-component/WCUploadPanelModule';
+import { MotifACLModule } from 'web-console-motif-acl';
 
 @NgModule({
     imports: [
@@ -38,7 +39,8 @@ import { WCUploadPanelModule } from '../../components/UI/wc-upload-panel-compone
         CommonSelectorsModule,
         WCUIKitGridModule,
         WCNotificationCenterModule,
-        WCUploadPanelModule
+        WCUploadPanelModule,
+        MotifACLModule
     ],
     entryComponents: [
         CountersAndThresholdsSectionComponent

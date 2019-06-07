@@ -37,7 +37,6 @@ import { MotifACLModule } from 'web-console-motif-acl';
         DialogModule,
         InputSwitchModule,
         WCUploadPanelModule,
-        MotifACLModule,
         MotifACLModule
     ],
     entryComponents:[

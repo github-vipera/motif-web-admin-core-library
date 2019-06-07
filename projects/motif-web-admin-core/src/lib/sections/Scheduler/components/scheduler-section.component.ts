@@ -15,7 +15,13 @@ const LOG_TAG = '[SchedulerSection]';
   templateUrl: './scheduler-section.component.html'
 })
 @PluginView('Scheduler', {
-  iconName: 'wa-ico-scheduler'
+  iconName: 'wa-ico-scheduler',
+  userData: {
+      acl: {
+          permissions: ['com.vipera.osgi.foundation.scheduler.api.rest.SchedulerApi:READ:getTaskList',
+                        'com.vipera.osgi.foundation.scheduler.api.rest.SchedulerApi:READ:getTaskExecutionsList']
+      }
+  }
 })
 export class SchedulerSectionComponent implements OnInit, OnDestroy {
 

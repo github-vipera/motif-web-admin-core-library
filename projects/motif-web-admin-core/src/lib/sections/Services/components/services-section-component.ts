@@ -19,10 +19,9 @@ import { Service, ServiceOperation } from '@wa-motif-open-api/catalog-service';
 import { ConfirmationService } from 'primeng/api';
 import { WCSubscriptionHandler } from '../../../components/Commons/wc-subscription-handler';
 import { WCStatsInfoModel } from '../../../components/Stats/stats-info-component';
+import { MotifACLService } from 'web-console-motif-acl';
 
 const LOG_TAG = '[ServicesSection]';
-
-
 
 @Component({
     selector: 'wa-services-section',
@@ -30,7 +29,15 @@ const LOG_TAG = '[ServicesSection]';
     templateUrl: './services-section-component.html'
 })
 @PluginView('JSON Channel', {
-    iconName: 'wa-ico-services'
+    iconName: 'wa-ico-services',
+    userData: {
+        acl: {
+            permissions: ['com.vipera.osgi.core.platform.api.rest.PlatformApi:READ:getDomains',
+                            'com.vipera.osgi.core.platform.api.rest.PlatformApi:READ:getApplications',
+                            'com.vipera.osgi.bss.catalog.api.rest.CatalogApi:READ:getServiceList',
+                            'com.vipera.osgi.bss.catalog.api.rest.CatalogApi:READ:getServiceOperation']
+        }
+    }
 })
 export class ServicesSectionComponent implements OnInit, OnDestroy {
 
@@ -65,7 +72,7 @@ export class ServicesSectionComponent implements OnInit, OnDestroy {
     private _subHandler: WCSubscriptionHandler = new WCSubscriptionHandler();
 
     constructor(private logger: NGXLogger,
-        private registryService: RegistryService,
+        private motifACLService: MotifACLService,
         private serviceCatalogService: ServiceCatalogService,
         private notificationCenter: WCNotificationCenter,
         private renderer2: Renderer2,
@@ -74,48 +81,54 @@ export class ServicesSectionComponent implements OnInit, OnDestroy {
         ) {
         this.logger.debug(LOG_TAG, 'Opening...');
 
-        this._deleteMenuItem = {
-            id: 'delete',
-            label: 'Delete',
-            disabled: true,
-            command: (event) => { this.onDeleteSelectedNode(); }
-        };
-        this._addDomainMenuItem = {
-            id: 'newDomain',
-            label: 'New Domain',
-            command: (event) => { this.onAddDomainClick(); }
-        };
-        this._addApplicationMenuItem = {
-            id: 'newApplication',
-            label: 'New Application',
-            disabled: true,
-            command: (event) => { this.onAddApplicationClick(); }
-        };
-        this._addServiceMenuItem =  {
-            id: 'newService',
-            label: 'New Service',
-            disabled: true,
-            command: (event) => { this.onAddServiceClick(); }
-        };
-        this._addOperationMenuItem =  {
-            id: 'newOperation',
-            label: 'New Operation',
-            disabled: true,
-            command: (event) => { this.onAddOperationClick(); }
-        };
-        this._addMenuItem = {
-            label: 'New...',
-            items: [
-                this._addDomainMenuItem,
-                this._addApplicationMenuItem,
-                this._addServiceMenuItem,
-                this._addOperationMenuItem
-            ]
-        };
-        this.menuItems = [
-            this._addMenuItem,
-            this._deleteMenuItem
-        ];
+        this._subHandler.add(this.motifACLService.can('com.vipera.osgi.core.platform.api.rest.PlatformApi:CREATE:createDomain')
+            .subscribe(canDeleteDomain => {
+            this._deleteMenuItem = {
+                id: 'delete',
+                label: 'Delete',
+                disabled: true,
+                command: (event) => { this.onDeleteSelectedNode(); }
+            };
+            this._addDomainMenuItem = {
+                id: 'newDomain',
+                label: 'New Domain',
+                disabled: !canDeleteDomain,
+                command: (event) => { this.onAddDomainClick(); }
+            };
+            this._addApplicationMenuItem = {
+                id: 'newApplication',
+                label: 'New Application',
+                disabled: true,
+                command: (event) => { this.onAddApplicationClick(); }
+            };
+            this._addServiceMenuItem =  {
+                id: 'newService',
+                label: 'New Service',
+                disabled: true,
+                command: (event) => { this.onAddServiceClick(); }
+            };
+            this._addOperationMenuItem =  {
+                id: 'newOperation',
+                label: 'New Operation',
+                disabled: true,
+                command: (event) => { this.onAddOperationClick(); }
+            };
+            this._addMenuItem = {
+                label: 'New...',
+                items: [
+                    this._addDomainMenuItem,
+                    this._addApplicationMenuItem,
+                    this._addServiceMenuItem,
+                    this._addOperationMenuItem
+                ]
+            };
+            this.menuItems = [
+                this._addMenuItem,
+                this._deleteMenuItem
+            ];
+            }, error => {
+                this.logger.error('Cannot load permissions!');
+        }));
     }
 
     /**
@@ -214,7 +227,7 @@ export class ServicesSectionComponent implements OnInit, OnDestroy {
     }
 
     private updateCommands(nodeType: string) {
-        const deleteEnabled = true;
+        let deleteEnabled = true;
         const addDomainEnabled = true;
         let addApplicationEnabled = false;
         let addServiceEnabled = false;
@@ -223,16 +236,68 @@ export class ServicesSectionComponent implements OnInit, OnDestroy {
         let deleteButtonCaption = '';
         if (nodeType === 'Domain') {
             deleteButtonCaption = 'Delete selected Domain';
-            addApplicationEnabled = true;
+            this._subHandler.add(this.motifACLService.can('com.vipera.osgi.core.platform.api.rest.PlatformApi:CREATE:createApplication')
+                .subscribe(canDoIt => {
+                addApplicationEnabled = canDoIt;
+            }, error => {
+                addApplicationEnabled = false;
+                this.logger.warn(LOG_TAG, 'Cannot check if user can add application: ' + error);
+            }));
+            this._subHandler.add(this.motifACLService.can('com.vipera.osgi.core.platform.api.rest.PlatformApi:DELETE:deleteDomain')
+                .subscribe(canDoIt => {
+                deleteEnabled = canDoIt;
+            }, error => {
+                deleteEnabled = false;
+                this.logger.warn(LOG_TAG, 'Cannot check if user can delete domain: ' + error);
+            }));
         } else if (nodeType === 'Application') {
             deleteButtonCaption = 'Delete selected Application';
-            addServiceEnabled = true;
+            this._subHandler.add(this.motifACLService.can('com.vipera.osgi.bss.catalog.api.rest.CatalogApi:CREATE:createService')
+                .subscribe(canDoIt => {
+                addServiceEnabled = canDoIt;
+            }, error => {
+                addServiceEnabled = false;
+                this.logger.warn(LOG_TAG, 'Cannot check if user can add service: ' + error);
+            }));
+            this._subHandler.add(this.motifACLService.can('com.vipera.osgi.core.platform.api.rest.PlatformApi:DELETE:deleteApplication')
+                .subscribe(canDoIt => {
+                deleteEnabled = canDoIt;
+            }, error => {
+                deleteEnabled = false;
+                this.logger.warn(LOG_TAG, 'Cannot check if user can delete application: ' + error);
+            }));
         } else if (nodeType === 'Service') {
             deleteButtonCaption = 'Delete selected Service';
-            addOperationEnabled = true;
+            this._subHandler.add(this.motifACLService.can('com.vipera.osgi.bss.catalog.api.rest.CatalogApi:CREATE:createServiceOperation')
+                .subscribe(canDoIt => {
+                addOperationEnabled = canDoIt;
+            }, error => {
+                addOperationEnabled = false;
+                this.logger.warn(LOG_TAG, 'Cannot check if user can add operation: ' + error);
+            }));
+            this._subHandler.add(this.motifACLService.can('com.vipera.osgi.bss.catalog.api.rest.CatalogApi:DELETE:deleteService')
+                .subscribe(canDoIt => {
+                deleteEnabled = canDoIt;
+            }, error => {
+                deleteEnabled = false;
+                this.logger.warn(LOG_TAG, 'Cannot check if user can delete service: ' + error);
+            }));
         } else if (nodeType === 'Operation') {
             deleteButtonCaption = 'Delete selected Operation';
-            addOperationEnabled = true;
+            this._subHandler.add(this.motifACLService.can('com.vipera.osgi.bss.catalog.api.rest.CatalogApi:CREATE:createServiceOperation')
+                .subscribe(canDoIt => {
+                addOperationEnabled = canDoIt;
+            }, error => {
+                addOperationEnabled = false;
+                this.logger.warn(LOG_TAG, 'Cannot check if user can add operation: ' + error);
+            }));
+            this._subHandler.add(this.motifACLService.can('com.vipera.osgi.bss.catalog.api.rest.CatalogApi:DELETE:deleteServiceOperation')
+                .subscribe(canDoIt => {
+                deleteEnabled = canDoIt;
+            }, error => {
+                deleteEnabled = false;
+                this.logger.warn(LOG_TAG, 'Cannot check if user can delete service operation: ' + error);
+            }));
         }
 
         // update menu items

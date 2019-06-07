@@ -7,7 +7,9 @@
         <div>
             <label>&nbsp;</label>
             <kendo-buttongroup look="flat">
-                <button kendoButton [toggleable]="false" (click)="uploadSlideDownPanelEx.toggle()" ><fa-icon [icon]="faFileImport"></fa-icon>Import License</button>
+                <button kendoButton 
+                    motif-acl="com.vipera.osgi.foundation.license.api.rest.LicensesApi:UPDATE:uploadLicense"
+                    [toggleable]="false" (click)="uploadSlideDownPanelEx.toggle()" ><fa-icon [icon]="faFileImport"></fa-icon>Import License</button>
             </kendo-buttongroup>
         </div>
     </div>
@@ -49,7 +51,9 @@
 
                 <kendo-grid-column title="" width="150" minResizableWidth="140">
                     <ng-template kendoGridCellTemplate let-dataItem let-columnIndex="columnIndex" let-rowIndex="rowIndex" let-column="column">
-                            <wc-grid-editor-command 
+                            <wc-grid-editor-command
+                                motif-acl="com.vipera.osgi.foundation.license.api.rest.LicensesApi:DELETE:deleteLicense"
+                                motif-acl-hidden="true" 
                                 [cssClass]="'k-icon'"
                                 [stopPropagation]="true"
                                 [alignMode]="'end'"

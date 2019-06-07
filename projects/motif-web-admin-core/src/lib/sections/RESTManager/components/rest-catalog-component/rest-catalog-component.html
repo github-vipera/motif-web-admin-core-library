@@ -54,6 +54,8 @@ class="rest-tree-filtered"
 
       <td class="service-catalog-row" [ngClass]="{ treeFiltered : tableModel.isFiltered, rowFiltered : rowData.filtered  }">
           <wc-grid-editor-command
+            [motif-acl]="['com.vipera.osgi.core.platform.api.rest.ContextServiceApi:CREATE:enableContext',
+                          'com.vipera.osgi.core.platform.api.rest.ContextServiceApi:DELETE:disableContext']"
             [alignMode]="'left'"
             [rowIndex]="rowIndex"
             [hasConfirmation]="true"
@@ -82,6 +84,9 @@ class="rest-tree-filtered"
 
       <td  width="160px" class="service-catalog-row" [ngClass]="{ treeFiltered : tableModel.isFiltered, rowFiltered : rowData.filtered  }">
         <wc-grid-editor-commands-group *ngIf="rowData.canDelete"
+          [motif-acl]="['com.vipera.osgi.foundation.restcontent.api.rest.RestContentApi:UPDATE:updateContext',
+                        'com.vipera.osgi.foundation.restcontent.api.rest.RestContentApi:DELETE:deleteContext']"
+          motif-acl-hidden="true"
           [commands]="commands"
           [alignMode]="'end'"
           [rowIndex]="rowIndex"

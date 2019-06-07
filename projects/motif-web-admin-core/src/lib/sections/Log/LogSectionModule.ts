@@ -8,6 +8,7 @@ import { ClipboardModule } from 'ngx-clipboard';
 import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CommonsUIModule } from '../../components/CommonsUIModule';
+import { MotifACLModule } from 'web-console-motif-acl';
 
 @NgModule({
     imports: [
@@ -22,7 +23,8 @@ import { CommonsUIModule } from '../../components/CommonsUIModule';
         FontAwesomeModule,
         CommonsUIModule,
         WCUIKitGridModule,
-        WCNotificationCenterModule
+        WCNotificationCenterModule,
+        MotifACLModule
     ],
     entryComponents: [
         LogSectionComponent

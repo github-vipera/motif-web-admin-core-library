@@ -3,6 +3,7 @@
       <kendo-buttongroup look="flat">
         <button
           kendoButton
+          motif-acl="com.vipera.osgi.bss.countersthresholds.api.rest.CountersThresholdsApi:UPDATE:uploadXml"
           [toggleable]="false"
           (click)="onExportClicked()"
         >
@@ -10,6 +11,7 @@
         </button>
         <button
           kendoButton
+          motif-acl="com.vipera.osgi.bss.countersthresholds.api.rest.CountersThresholdsApi:READ:downloadXml"
           kendofileselect
           tyle="file"
           [toggleable]="false"

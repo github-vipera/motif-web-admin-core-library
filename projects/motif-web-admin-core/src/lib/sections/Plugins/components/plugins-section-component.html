@@ -15,7 +15,12 @@
         <div>
             <label>&nbsp;</label>
             <kendo-buttongroup look="flat">
-                <button kendoButton [toggleable]="false" (click)="installPluginSlideDownPanel.toggle()"><fa-icon [icon]="faPuzzlePiece"></fa-icon>Install Plugin</button>
+                <button kendoButton 
+                    motif-acl="com.vipera.osgi.core.registry.api.rest.RegistryApi:UPDATE:installPlugin"
+                    [toggleable]="false" 
+                    (click)="installPluginSlideDownPanel.toggle()">
+                    <fa-icon [icon]="faPuzzlePiece"></fa-icon>Install Plugin
+                </button>
             </kendo-buttongroup>
         </div>
     </div>
@@ -61,6 +66,8 @@
                 <kendo-grid-column title="" width="150" minResizableWidth="140">
                     <ng-template kendoGridCellTemplate let-dataItem let-columnIndex="columnIndex" let-rowIndex="rowIndex" let-column="column">
                             <wc-grid-editor-command 
+                                motif-acl="com.vipera.osgi.core.registry.api.rest.RegistryApi:DELETE:uninstallPlugin"
+                                motif-acl-hidden="true"
                                 [alignMode]="'end'"
                                 [hasConfirmation]="true"
                                 [confirmationTitle]="'Uninstall ?'"

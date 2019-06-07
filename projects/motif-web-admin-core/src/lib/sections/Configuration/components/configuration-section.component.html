@@ -17,7 +17,7 @@
         <div>
             <label>&nbsp;</label>
             <kendo-buttongroup look="flat">
-                <button kendoButton [toggleable]="false" [icon]="'save'" (click)="onSaveClicked()" [disabled]="!editService.hasChanges()">Save</button>
+                <button kendoButton [toggleable]="false" [icon]="'save'" (click)="onSaveClicked()" [disabled]="!editService.hasChanges() || !canSave">Save</button>
                 <button kendoButton [toggleable]="false" [icon]="'track-changes-reject'" (click)="onDiscardClicked()" [disabled]="!editService.hasChanges()">Discard Changes</button>
                 <button kendoButton [toggleable]="false" [icon]="'filter-add-expression'" (click)="onAddPropertyClicked()" [disabled]="!canAddProperty">Add Property</button>
             </kendo-buttongroup>
@@ -26,8 +26,12 @@
 
     <div class="flex-cmd">
         <kendo-buttongroup look="flat">
-            <button kendoButton [toggleable]="false" (click)="onExportClicked()" [disabled]="!canExport"><fa-icon [icon]="faDownload"></fa-icon>Export</button>
-            <button kendoButton kendofileselect tyle="file" [toggleable]="false" (click)="onImportClicked()"><fa-icon [icon]="faFileImport"></fa-icon>Import</button>
+            <button kendoButton 
+                motif-acl="com.vipera.osgi.core.config.service.api.rest.CfgApi:READ:downloadXml"
+                [toggleable]="false" (click)="onExportClicked()"><fa-icon [icon]="faDownload"></fa-icon>Export</button>
+            <button kendoButton 
+                motif-acl="com.vipera.osgi.core.config.service.api.rest.CfgApi:UPDATE:uploadXml"
+                kendofileselect tyle="file" [toggleable]="false" (click)="onImportClicked()"><fa-icon [icon]="faFileImport"></fa-icon>Import</button>
             <button kendoButton [toggleable]="false" [icon]="'refresh'" (click)="onRefreshClicked()" [disabled]="!canRefresh">Refresh</button>
         </kendo-buttongroup>
     </div>
@@ -85,7 +89,9 @@
 
                 <kendo-grid-column title="" width="150" minResizableWidth="140">
                     <ng-template kendoGridCellTemplate let-dataItem let-columnIndex="columnIndex" let-rowIndex="rowIndex" let-column="column">
-                            <wc-grid-editor-command 
+                            <wc-grid-editor-command
+                                motif-acl="com.vipera.osgi.core.config.service.api.rest.CfgApi:DELETE:deleteSetting"
+                                motif-acl-hidden="true"
                                 [alignMode]="'end'"
                                 [hasConfirmation]="true"
                                 [confirmationTitle]="'Delete ?'"

@@ -1,6 +1,9 @@
 <div class="wc-service-catalog-editor-main-container">
     <div class='wc-service-catalog-editor-title wc-truncate-text'>{{title}}</div>
-    <div class='wc-service-catalog-editor-container'>
+    <div class='wc-service-catalog-editor-container'
+        [motif-acl]="['com.vipera.osgi.core.platform.api.rest.ContextServiceApi:CREATE:createValue',
+            'com.vipera.osgi.core.platform.api.rest.ContextServiceApi:UPDATE:updateValue',
+            'com.vipera.osgi.core.platform.api.rest.ContextServiceApi:DELETE:deleteValue']">
 
         <wc-loading-overlay [visible]='isBusy'></wc-loading-overlay>
 

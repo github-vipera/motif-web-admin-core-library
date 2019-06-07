@@ -23,6 +23,8 @@
   <kendo-grid-column field="enabled" title="Status">
         <ng-template kendoGridCellTemplate let-dataItem let-columnIndex="columnIndex" let-rowIndex="rowIndex" let-column="column">
                 <wc-grid-editor-command
+                [motif-acl]="['com.vipera.osgi.bss.countersthresholds.api.rest.CountersThresholdsApi:CREATE:enableCounterInfo', 
+                                'com.vipera.osgi.bss.countersthresholds.api.rest.CountersThresholdsApi:DELETE:disableCounterInfo']"
                 [rowIndex]="rowIndex" 
                 [hasConfirmation]="true"
                 [confirmationTitleProvider]="statusConfirmationTitleProvider"
@@ -44,7 +46,10 @@
 
         <kendo-grid-column title="">
                 <ng-template kendoGridCellTemplate let-dataItem let-columnIndex="columnIndex" let-rowIndex="rowIndex" let-column="column">
-                        <wc-grid-editor-commands-group 
+                        <wc-grid-editor-commands-group
+                                [motif-acl]="['com.vipera.osgi.bss.countersthresholds.api.rest.CountersThresholdsApi:UPDATE:updateCounterInfo',
+                                                'com.vipera.osgi.bss.countersthresholds.api.rest.CountersThresholdsApi:DELETE:deleteCounterInfo']"
+                                motif-acl-hidden="true"
                                 [commands]="commands" 
                                 [alignMode]="'end'" 
                                 [rowIndex]="rowIndex"

@@ -32,8 +32,8 @@ const LOG_TAG = '[PluginsSection]';
   @PluginView('Plugins', {
     iconName: 'wa-ico-plugins',
     userData: {
-        acl_placeholder: {
-            permissions: ["WEBADMIN_ACTIONS", "TECMAN_ACTIONS"]
+        acl: {
+            permissions: ["com.vipera.osgi.core.registry.api.rest.RegistryApi:READ:getPlugins"]
         }
     }
 })
