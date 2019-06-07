@@ -22,7 +22,17 @@ const LOG_TAG = '[MainDashboardSectionComponent]';
   })
   @PluginView('Dashboard', {
     iconName: 'wa-ico-dashboard',
-    index: 10
+    index: 10,
+    userData: {
+        acl: {
+            permissions: ['com.vipera.osgi.foundation.scheduler.api.rest.InfoApiServiceRestApi:READ:getUsersInfo',
+                          'com.vipera.osgi.foundation.scheduler.api.rest.InfoApiServiceRestApi:READ:getSessionsInfo',
+                          'com.vipera.osgi.foundation.scheduler.api.rest.InfoApiServiceRestApi:READ:getServerStatus',
+                          'com.vipera.osgi.foundation.scheduler.api.rest.InfoApiServiceRestApi:READ:getServerInfo',
+                          'com.vipera.osgi.foundation.scheduler.api.rest.InfoApiServiceRestApi:READ:getOAuth2Info',
+                          'com.vipera.osgi.foundation.scheduler.api.rest.InfoApiServiceRestApi:READ:getChannelInfo']
+        }
+    }
 })
 export class MainDashboardSectionComponent implements OnInit, OnDestroy {
 

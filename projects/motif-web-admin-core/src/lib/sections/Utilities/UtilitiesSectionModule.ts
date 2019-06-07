@@ -10,6 +10,7 @@ import { OTPUtilityComponent } from './components/tabs/otp/utilities-otp-tab-com
 import { NewOtpDialogComponent } from './components/tabs/otp/dialog/new-otp-dialog';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DialogModule } from 'primeng/dialog';
+import { MotifACLModule } from 'web-console-motif-acl';
 
 @NgModule({
     imports: [
@@ -24,7 +25,8 @@ import { DialogModule } from 'primeng/dialog';
         DialogModule,
         CommonSelectorsModule,
         WCUIKitGridModule,
-        WCNotificationCenterModule
+        WCNotificationCenterModule,
+        MotifACLModule
     ],
     entryComponents: [
         UtilitiesSectionComponent

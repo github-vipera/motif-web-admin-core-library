@@ -1,7 +1,8 @@
 import { OnInit, Input, EventEmitter } from '@angular/core';
 import { NGXLogger} from 'web-console-core';
 import { OtpService, OtpEntity } from '@wa-motif-open-api/otp-service';
-import { Domain, User } from '@wa-motif-open-api/platform-service';
+import { Domain } from '@wa-motif-open-api/platform-service';
+import { User } from '@wa-motif-open-api/user-mgr-service';
 import * as _ from 'lodash';
 import { WCSubscriptionHandler } from '../../../../../components/Commons/wc-subscription-handler';
 

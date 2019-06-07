@@ -18,8 +18,17 @@ const LOG_TAG = '[RESTManagerSectionComponent]';
     styleUrls: ['./rest-manager-section-component.scss'],
     templateUrl: './rest-manager-section-component.html'
 })
-@PluginView('REST Manager', {
-    iconName: 'wa-ico-services'
+@PluginView('REST Channel', {
+    iconName: 'wa-ico-services',
+    userData: {
+        acl: {
+            permissions: ["com.vipera.osgi.core.platform.api.rest.PlatformApi:READ:getDomains",
+                            "com.vipera.osgi.core.platform.api.rest.PlatformApi:READ:getApplications",
+                            "com.vipera.osgi.foundation.restcontent.api.rest.RestContentApi:READ:getContexts",
+                            "com.vipera.osgi.foundation.restcontent.api.rest.RestContentApi:READ:getSupportedAttributes",
+                            "com.vipera.osgi.foundation.restcontent.api.rest.RestContentApi:READ:getContext"]
+        }
+    }
 })
 export class RESTManagerSectionComponent implements OnInit, OnDestroy {
 

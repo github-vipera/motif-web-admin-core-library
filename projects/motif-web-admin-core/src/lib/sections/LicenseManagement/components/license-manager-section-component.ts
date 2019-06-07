@@ -16,7 +16,12 @@ const LOG_TAG = '[LicenseManagerSection]';
     templateUrl: './license-manager-section-component.html'
   })
   @PluginView('License Manager', {
-    iconName: 'wa-ico-key'
+    iconName: 'wa-ico-key',
+    userData: {
+        acl: {
+            permissions: ['com.vipera.osgi.foundation.license.api.rest.LicensesApi:READ:listLicenses']
+        }
+    }
 })
 export class LicenseManagerSectionComponent implements OnInit, OnDestroy {
 

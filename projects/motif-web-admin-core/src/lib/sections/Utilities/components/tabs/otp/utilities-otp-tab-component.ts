@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { NGXLogger } from 'web-console-core';
-import { Application, Domain, User } from '@wa-motif-open-api/platform-service';
+import { Application, Domain } from '@wa-motif-open-api/platform-service';
+import { User } from '@wa-motif-open-api/user-mgr-service';
 import { faCube, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { OTPDataSourceComponent } from './otp-data-source-component';
 import { OtpService, Otp, OtpCreate, OtpEntity } from '@wa-motif-open-api/otp-service';

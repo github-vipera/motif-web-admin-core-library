@@ -11,19 +11,27 @@
         </div>
         <div>
             <label>ROOT Log Level</label>
-            <kendo-dropdownlist [data]="logLevels" [textField]="'level'" [valueField]="'level'" [(ngModel)]="rootLogLevel" [popupSettings]="{ 'popupClass' : 'wa-kui-combobox-popup', 'animate' : false }"
+            <kendo-dropdownlist 
+                motif-acl="com.vipera.osgi.core.platform.api.rest.LogsApi:UPDATE:setRootLogLevel"
+                [data]="logLevels" [textField]="'level'" [valueField]="'level'" [(ngModel)]="rootLogLevel" [popupSettings]="{ 'popupClass' : 'wa-kui-combobox-popup', 'animate' : false }"
                 [valuePrimitive]="false"></kendo-dropdownlist>
         </div>
     </div>
 
     <div class="flex-cmd">
         <kendo-buttongroup look="flat">
-            <button kendoButton [toggleable]="false" (click)="onExportClicked()">
+            <button kendoButton 
+                [motif-acl]="['com.vipera.osgi.foundation.datarecords.api.rest.DatarecordsApi:READ:exportDatarecords',
+                                'com.vipera.osgi.foundation.datarecords.api.rest.DatarecordsApi:READ:verifyDatarecordsExport',
+                                'com.vipera.osgi.foundation.datarecords.api.rest.DatarecordsApi:READ:getDatarecordsTypes']"
+                [toggleable]="false" (click)="onExportClicked()">
                 <fa-icon [icon]="faExternalLinkSquareAlt"></fa-icon>Export
             </button>
         </kendo-buttongroup>
         <kendo-buttongroup look="flat">
-            <button kendoButton [toggleable]="false" (click)="onDownloadClicked()">
+            <button kendoButton 
+                motif-acl="com.vipera.osgi.core.platform.api.rest.LogsApi:READ:downloadCurrentLog"
+                [toggleable]="false" (click)="onDownloadClicked()">
                 <fa-icon [icon]="faDownload"></fa-icon>Download
             </button>
         </kendo-buttongroup>

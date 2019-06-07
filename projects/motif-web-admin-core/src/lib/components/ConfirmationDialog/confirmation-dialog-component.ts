@@ -3,7 +3,8 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 @Component({
     selector: 'wc-confirmation-dialog',
     styles: [
-      'input[type=text] { width: 100%; }'
+      'input[type=text] { width: 100%; }',
+      '.dialog-text { line-height: 18px; white-space: pre-line; }'
     ],
     template: `
     <p-dialog
@@ -11,12 +12,12 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
         [(visible)]="opened"
         [modal]="true"
         [responsive]="true"
-        [style]="{ width: '300px', minWidth: '300px', minHeight:'250px' }"
+        [style]="{ width: '500px', minWidth: '300px', minHeight:'10px' }"
         [minY]="70"
         [baseZIndex]="10000"
         >
             <p-header>{{title}}</p-header>
-            <div>
+            <div class="dialog-text">
                 {{message}}
             </div>
             <p-footer>

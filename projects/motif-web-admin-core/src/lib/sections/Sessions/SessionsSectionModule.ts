@@ -6,6 +6,7 @@ import { SessionsSectionComponent } from './components/sessions-section-componen
 import { LoggerModule } from 'ngx-logger';
 import { WCUIKitCoreModule, WCUIKitDataModule, WCUIKitKendoProviderModule, WCUIKitGridModule, WCNotificationCenterModule } from 'web-console-ui-kit';
 import { CommonsUIModule } from '../../components/CommonsUIModule';
+import { MotifACLModule } from 'web-console-motif-acl';
 
 @NgModule({
     imports: [
@@ -18,7 +19,8 @@ import { CommonsUIModule } from '../../components/CommonsUIModule';
         CommonsUIModule,
         CommonSelectorsModule,
         WCUIKitGridModule,
-        WCNotificationCenterModule
+        WCNotificationCenterModule,
+        MotifACLModule
     ],
     entryComponents:[
         SessionsSectionComponent

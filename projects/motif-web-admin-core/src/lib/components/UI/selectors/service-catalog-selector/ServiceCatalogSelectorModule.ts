@@ -7,6 +7,7 @@ import { TreeTableModule } from 'primeng/treetable';
 import { WCUIKitCoreModule, WCUIKitDataModule, WCUIKitKendoProviderModule, WCUIKitGridModule, WCNotificationCenterModule } from 'web-console-ui-kit';
 import { ServiceCatalogSelectorDialogComponent } from './service-catalog-selector-dialog';
 import { DialogModule } from 'primeng/dialog';
+import { MotifACLModule } from 'web-console-motif-acl';
 
 @NgModule({
     imports: [
@@ -17,7 +18,8 @@ import { DialogModule } from 'primeng/dialog';
       WebAdminCommonServicesModule,
       DialogModule,
       WCUIKitGridModule,
-      WCNotificationCenterModule
+      WCNotificationCenterModule,
+      MotifACLModule
     ],
     entryComponents: [
     ],

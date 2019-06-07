@@ -14,7 +14,6 @@ import { ContextsService } from '@wa-motif-open-api/context-service';
 
 import { Observable } from 'rxjs';
 import { NGXLogger } from 'web-console-core';
-import { WCSubscriptionHandler } from '../components';
 
 const LOG_TAG = '[RESTContextCatalogService]';
 
@@ -45,7 +44,7 @@ export class RESTContextCatalogService {
         return this.restContextService.createContext(domain, application, createObj);
     }
 
-    public enableRESTContext(domain:string, application:string, contextName:string, enabled: boolean) : Observable<ServiceContext> {
+    public enableRESTContext(domain:string, application:string, contextName:string, enabled: boolean) : Observable<any> {
         this.logger.debug(LOG_TAG, 'enableRESTContext called for ', domain, application, contextName, enabled );
         if (enabled){
             return this.contextService.enableContext(domain, application, contextName);
@@ -54,7 +53,7 @@ export class RESTContextCatalogService {
         }
     }
 
-    public updateRESTContext(domain:string, application:string, contextName:string, url:string) : Observable<ServiceContext> {
+    public updateRESTContext(domain:string, application:string, contextName:string, url:string) : Observable<any> {
         this.logger.debug(LOG_TAG, 'updateRESTContext called for ', domain, application, contextName, url );
         let updateObj: RestContextUpdate = {
             url: url

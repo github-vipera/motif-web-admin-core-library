@@ -31,12 +31,7 @@ export class NewItemDialogComponent implements OnInit {
     public defaultChannelItem: Channel = { name: 'Select a Channel...', code: null };
 
     channels: Channel[] = [
-        { name: 'JSON', code: 'JSON'},
-        { name: 'Browser', code: 'BROWSER'},
-        { name: 'REST', code: 'REST'},
-        { name: 'SMS', code: 'SMS'},
-        { name: 'WebAdmin', code: 'WEBADMIN'},
-        { name: 'WebContent', code: 'WEBCONTENT'},
+        { name: 'JSON', code: 'JSON'}
     ];
     selectedChannel: Channel;
     private _channelEditingWarningDisplay: boolean;

@@ -19,6 +19,7 @@ import { ServerInfoWidgetPanelComponent } from './components/widgets/ServerInfo/
 import { MemoryInfoWidgetPanelComponent } from './components/widgets/MemoryInfo/memory-info-widget-panel';
 import { UsersInfoWidgetPanelComponent } from './components/widgets/UsersInfo/users-info-widget-panel';
 import { OAuth2InfoWidgetPanelComponent } from './components/widgets/OAuth2Info/oauth2-info-widget-panel';
+import { MotifACLModule } from 'web-console-motif-acl';
 
 @NgModule({
     imports: [
@@ -36,7 +37,8 @@ import { OAuth2InfoWidgetPanelComponent } from './components/widgets/OAuth2Info/
         WCUIKitGridModule,
         WCUIKitDirectivesModule,
         DialogModule,
-        WCUIKitGridsterProviderModule
+        WCUIKitGridsterProviderModule,
+        MotifACLModule
     ],
     entryComponents:[
         MainDashboardSectionComponent, ServerInfoWidgetPanelComponent, MemoryInfoWidgetPanelComponent, UsersInfoWidgetPanelComponent, OAuth2InfoWidgetPanelComponent

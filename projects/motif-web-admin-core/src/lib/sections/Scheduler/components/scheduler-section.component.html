@@ -36,6 +36,8 @@
             <kendo-grid-column field="enabled" title="Status">
                 <ng-template kendoGridCellTemplate let-dataItem let-columnIndex="columnIndex" let-rowIndex="rowIndex" let-column="column">
                         <wc-grid-editor-command
+                        [motif-acl]="['com.vipera.osgi.foundation.scheduler.api.rest.SchedulerApi:CREATE:enableTask',
+                                        'com.vipera.osgi.foundation.scheduler.api.rest.SchedulerApi:DELETE:disableTask']"
                         [alignMode]="'left'"
                         [rowIndex]="rowIndex" 
                         [hasConfirmation]="true"
@@ -67,10 +69,12 @@
             
             <kendo-grid-column title="" width="150" minResizableWidth="140">
                 <ng-template kendoGridCellTemplate let-dataItem let-columnIndex="columnIndex" let-rowIndex="rowIndex" let-column="column">
-                        <wc-grid-editor-command 
+                        <wc-grid-editor-command
+                            motif-acl="com.vipera.osgi.foundation.scheduler.api.rest.SchedulerApi:DELETE:deleteTask"
+                            motif-acl-hidden="true" 
                             [alignMode]="'end'"
                             [hasConfirmation]="true"
-                            [confirmationTitle]="'Revoke ?'"
+                            [confirmationTitle]="'Remove ?'"
                             [rowIndex]="rowIndex" 
                             [columnIndex]="columnIndex" 
                             [column]="column" 

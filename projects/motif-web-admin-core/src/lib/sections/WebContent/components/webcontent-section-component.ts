@@ -26,9 +26,14 @@ enum CommandType {
     styleUrls: [ './webcontent-section-component.scss' ],
     templateUrl: './webcontent-section-component.html'
   })
-  @PluginView('WebContent', {
+@PluginView('WebContent', {
     iconName: 'wa-ico-web',
-  })
+    userData: {
+        acl: {
+            permissions: ["com.vipera.osgi.foundation.webcontent.api.rest.WebContentApi:READ:getBundlesList"]
+        }
+    }
+})
 export class WebContentSectionComponent implements OnInit, OnDestroy {
 
     statsModel: WCStatsInfoModel = { items: [] };

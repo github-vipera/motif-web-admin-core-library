@@ -15,7 +15,16 @@ const LOG_TAG = '[CountersAndThresholdsSection]';
     templateUrl: './counters-and-thresholds-section-component.html'
 })
 @PluginView('Counters & Thresholds', {
-    iconName: 'wa-ico-thresholds'
+    iconName: 'wa-ico-thresholds',
+    userData: {
+        acl: {
+            permissions: ['com.vipera.osgi.bss.countersthresholds.api.rest.CountersThresholdsApi:READ:getCounterInfoList',
+                            'com.vipera.osgi.bss.countersthresholds.api.rest.CountersThresholdsApi:READ:getThresholdInfoList',
+                            'com.vipera.osgi.core.platform.api.rest.PlatformApi:READ:getDomains',
+                            'com.vipera.osgi.core.platform.api.rest.UserMgrApi:READ:getUsersList',
+                            'com.vipera.osgi.bss.countersthresholds.api.rest.CountersThresholdsApi:READ:getUserCounters']
+        }
+    }
 })
 export class CountersAndThresholdsSectionComponent implements OnInit {
 

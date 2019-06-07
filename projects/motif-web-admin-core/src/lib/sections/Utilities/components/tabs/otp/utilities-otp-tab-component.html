@@ -18,7 +18,9 @@
             </div>
 
             <kendo-buttongroup look="flat">
-                <button kendoButton [toggleable]="false" (click)="onCreateClicked()" style="margin-top: 10%;" title="Create a new OTP fo a User">
+                <button kendoButton 
+                    motif-acl="com.vipera.osgi.foundation.otp.api.rest.OtpApi:CREATE:createOtp"
+                    [toggleable]="false" (click)="onCreateClicked()" style="margin-top: 10%;" title="Create a new OTP fo a User">
                         <fa-icon [icon]="faPlusCircle" class="left-icon-button"></fa-icon>Create New OTP
                 </button>
             </kendo-buttongroup>
@@ -66,7 +68,9 @@
 
                 <kendo-grid-column title="" width="150" minResizableWidth="140">
                     <ng-template kendoGridCellTemplate let-dataItem let-columnIndex="columnIndex" let-rowIndex="rowIndex" let-column="column">
-                            <wc-grid-editor-command 
+                            <wc-grid-editor-command
+                                motif-acl="com.vipera.osgi.foundation.otp.api.rest.OtpApi:DELETE:deleteOtp"
+                                motif-acl-hidden="true" 
                                 [alignMode]="'end'"
                                 [hasConfirmation]="true"
                                 [confirmationTitle]="'Delete ?'"

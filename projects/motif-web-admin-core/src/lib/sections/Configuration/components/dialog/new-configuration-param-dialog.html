@@ -37,18 +37,25 @@
   </label>
   <p-inputSwitch [(ngModel)]="dynamic"></p-inputSwitch>
 
+
   <label class="switch-control-label"> 
       Encrypted
   </label>
   <p-inputSwitch [(ngModel)]="encrypted"></p-inputSwitch>
 
-  <kendo-textbox-container
-  floatingLabel="Value"
-  style="width: 100%;"
->
-  <input kendoTextBox [(ngModel)]="value" required />
-  </kendo-textbox-container>
-
+  <label *ngIf="type && type.code" class="switch-control-label"> 
+      Value
+  </label>
+  <input kendoTextBox *ngIf="type && type.code==='java.lang.String'" [(ngModel)]="value" required />
+  <kendo-numerictextbox *ngIf="type && (type.code==='java.lang.Short' ||
+      type.code==='java.lang.Integer'|| type.code==='java.lang.Long' || type.code==='java.lang.Float' || type.code==='java.lang.Double')" 
+    title="Value"
+    [decimals]="numericDecimals"  
+    [format]="numericFormat"
+    [(ngModel)]="value" required></kendo-numerictextbox>
+  <kendo-dropdownlist *ngIf="type && type.code==='java.lang.Boolean'" 
+    [data]="dropDownBooleanValues"
+    [(ngModel)]="value" required></kendo-dropdownlist>
 
 </div>
 

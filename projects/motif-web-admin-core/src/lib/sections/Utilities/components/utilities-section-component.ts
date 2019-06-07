@@ -10,7 +10,14 @@ const LOG_TAG = '[UtilitiesSection]';
     templateUrl: './utilities-section.component.html'
 })
 @PluginView('Utilities', {
-    iconName: 'wa-ico-toolbox-big'
+    iconName: 'wa-ico-toolbox-big',
+    userData: {
+        acl: {
+            permissions: ['com.vipera.osgi.core.platform.api.rest.PlatformApi:READ:getDomains',
+                            'com.vipera.osgi.core.platform.api.rest.UserMgrApi:READ:getUsersList',
+                            'com.vipera.osgi.foundation.otp.api.rest.OtpApi:READ:getOtpList']
+        }
+    }
 })
 export class UtilitiesSectionComponent implements OnInit {
 

@@ -5,13 +5,12 @@ import { NGXLogger } from 'web-console-core';
 import { SelectableSettings, SelectionEvent, RowArgs, PageChangeEvent, GridDataResult,
   DataStateChangeEvent,
   RowClassArgs} from '@progress/kendo-angular-grid';
-import { UsersService, GroupsService, RolesService, ActionsService, PermissionsService, Group, Permission,
-  Action, Role, GroupCreate, RoleCreate, ActionCreate, GroupUpdate, RoleUpdate,
-  ActionUpdate } from '@wa-motif-open-api/auth-access-control-service';
-import {
-  UsersService as PlatformUsersService, ClientsService as PlatformClientsService, AdminsService as PlatformAdminsService,
-  User, AdminUser, ClientUser, Domain, UserCreate, AdminUserCreate, ClientUserCreate, UserUpdate,
-  AdminUserUpdate, ClientUserUpdate, CredentialsCreate } from '@wa-motif-open-api/platform-service';
+import { UsersService, GroupsService, RolesService, PermissionsService, Group, Permission,
+  Role, GroupCreate, RoleCreate, GroupUpdate, RoleUpdate } from '@wa-motif-open-api/auth-access-control-service';
+import { Domain } from '@wa-motif-open-api/platform-service';
+import { UsersService as PlatformUsersService, AdminsService as PlatformAdminsService,
+  ClientsService as PlatformClientsService, User, AdminUser, ClientUser, UserCreate, AdminUserCreate, ClientUserCreate, UserUpdate,
+  AdminUserUpdate, ClientUserUpdate, CredentialsCreate } from '@wa-motif-open-api/user-mgr-service';
 import * as _ from 'lodash';
 import { WCNotificationCenter, NotificationType, WCGridEditorCommandsConfig, WCConfirmationTitleProvider } from 'web-console-ui-kit';
 import { NewUserDialogComponent, UserDialogResult } from './dialogs/user/new-user-dialog';
@@ -29,9 +28,8 @@ const LOG_TAG = '[AccessControlSection]';
 const BIT_LOAD_USERS = 1;
 const BIT_LOAD_GROUPS = 8;
 const BIT_LOAD_ROLES = 16;
-const BIT_LOAD_ACTIONS = 32;
-const BIT_LOAD_PERMISSIONS = 64;
-const BIT_LOAD_ALL = BIT_LOAD_USERS | BIT_LOAD_GROUPS | BIT_LOAD_ROLES | BIT_LOAD_ACTIONS | BIT_LOAD_PERMISSIONS;
+const BIT_LOAD_PERMISSIONS = 32;
+const BIT_LOAD_ALL = BIT_LOAD_USERS | BIT_LOAD_GROUPS | BIT_LOAD_ROLES | BIT_LOAD_PERMISSIONS;
 
 @Component({
   selector: 'wa-access-control-section',
@@ -47,7 +45,6 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
   public clientsLoading = false;
   public groupsLoading = false;
   public rolesLoading = false;
-  public actionsLoading = false;
   public permissionsLoading = false;
 
   public size = '450px';
@@ -128,9 +125,6 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
   }, {
     text: 'Role',
     disabled: false
-  }, {
-    text: 'Action',
-    disabled: false
   }];
 
   public selectedDomain: string;
@@ -144,22 +138,14 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
   public clientSelection: string[] = [];
   public groupSelection: string[] = [];
   public roleSelection: string[] = [];
-  public actionSelection: string[] = [];
-  public permissionSelection: string[] = [];
 
-  public actionsGridView: GridDataResult;
-  public actionsDataState: State = {
-    skip: 0,
-    take: 10,
-
-    sort: [],
-
+  public rolesGridView: GridDataResult;
+  public rolesDataState: State = {
     filter: {
       logic: 'and',
       filters: []
     }
   };
-
   public permissionsGridView: GridDataResult;
   public permissionsDataState: State = {
     skip: 0,
@@ -178,16 +164,11 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
   public clientsData: ClientUser[];
   public groupsData: Group[];
   public rolesData: Role[];
-  public actionsData: Action[];
   public permissionsData: Permission[];
   public selectableSettings: SelectableSettings = {
     checkboxOnly: false,
     mode: 'single'
   };
-
-  public permissionKey(context: RowArgs): string {
-    return context.dataItem.component + ':' + context.dataItem.action + ':' + context.dataItem.target;
-  }
 
   constructor(private logger: NGXLogger,
     private platformUsersService: PlatformUsersService,
@@ -196,7 +177,6 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
     private usersService: UsersService,
     private groupsService: GroupsService,
     private rolesService: RolesService,
-    private actionsService: ActionsService,
     private permissionsService: PermissionsService,
     private notificationCenter: WCNotificationCenter,
     private renderer: Renderer2,
@@ -209,7 +189,7 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
   ngOnInit() {
     this.logger.debug(LOG_TAG, 'Initializing...');
 
-    this.loadGrids(BIT_LOAD_ROLES | BIT_LOAD_ACTIONS | BIT_LOAD_PERMISSIONS);
+    this.loadGrids(BIT_LOAD_ROLES | BIT_LOAD_PERMISSIONS);
 
   }
 
@@ -221,24 +201,13 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
   public ngAfterViewInit(): void {
   }
 
-  public rowCallback(context: RowClassArgs) {
-    return {
-      dragging: context.dataItem.dragging
-    };
+  public onRolesDataStateChange(state: DataStateChangeEvent): void {
+    this.rolesDataState = state;
+    this.loadRoles();
   }
 
-  public actionsPageChange(event: PageChangeEvent): void {
-    this.actionsDataState.skip = event.skip;
-    this.loadActions();
-  }
-
-  public onActionsDataStateChange(state: DataStateChangeEvent): void {
-    this.actionsDataState = state;
-    this.loadActions();
-  } 
-
-  private loadActions(): void {
-    this.actionsGridView = process(this.actionsData, this.actionsDataState);
+  private loadRoles(): void {
+    this.rolesGridView = process(this.rolesData, this.rolesDataState);
   }
 
   public permissionsPageChange(event: PageChangeEvent): void {
@@ -257,51 +226,37 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
 
   public onUserSelectionChange(e: SelectionEvent) {
     if (this.userSelection.length === 1 || this.adminSelection.length === 1 || this.clientSelection.length === 1) {
-      this.groupSelection.length = this.roleSelection.length = this.actionSelection.length = this.permissionSelection.length = 0;
-      this.loadGrids(BIT_LOAD_GROUPS | BIT_LOAD_ROLES | BIT_LOAD_ACTIONS | BIT_LOAD_PERMISSIONS);
+      this.groupSelection.length = this.roleSelection.length = 0;
+      this.loadGrids(BIT_LOAD_GROUPS | BIT_LOAD_ROLES | BIT_LOAD_PERMISSIONS);
     } else {
       this.clearAllGridSelections();
-      this.loadGrids(BIT_LOAD_GROUPS | BIT_LOAD_ROLES | BIT_LOAD_ACTIONS | BIT_LOAD_PERMISSIONS);
+      this.loadGrids(BIT_LOAD_GROUPS | BIT_LOAD_ROLES | BIT_LOAD_PERMISSIONS);
     }
   }
 
   public onGroupSelectionChange(e: SelectionEvent) {
     if (this.groupSelection.length === 1) {
-      this.roleSelection.length = this.actionSelection.length = this.permissionSelection.length = 0;
-      this.loadGrids(BIT_LOAD_ROLES | BIT_LOAD_ACTIONS | BIT_LOAD_PERMISSIONS);
+      this.roleSelection.length = 0;
+      this.loadGrids(BIT_LOAD_ROLES | BIT_LOAD_PERMISSIONS);
     } else {
       this.clearAllGridSelections();
-      this.loadGrids(BIT_LOAD_ROLES | BIT_LOAD_ACTIONS | BIT_LOAD_PERMISSIONS);
+      this.loadGrids(BIT_LOAD_ROLES | BIT_LOAD_PERMISSIONS);
     }
   }
 
   public onRoleSelectionChange(e: SelectionEvent) {
     if (this.roleSelection.length === 1) {
-      this.actionSelection.length = this.permissionSelection.length = 0;
-      this.loadGrids(BIT_LOAD_ACTIONS | BIT_LOAD_PERMISSIONS);
-    } else {
-      this.clearAllGridSelections();
-      this.loadGrids(BIT_LOAD_ACTIONS | BIT_LOAD_PERMISSIONS);
-    }
-  }
-
-  public onActionSelectionChange(e: SelectionEvent) {
-    if (this.actionSelection.length === 1) {
-      this.permissionSelection.length = 0;
       this.loadGrids(BIT_LOAD_PERMISSIONS);
     } else {
       this.clearAllGridSelections();
       this.loadGrids(BIT_LOAD_PERMISSIONS);
     }
-  }
-
-  public onPermissionSelectionChange(e: SelectionEvent) {
   }
 
   onDomainSelected(domain: Domain) {
     this.selectedDomain = domain ? domain.name : null;
     this.clearAllGridSelections();
-    this.loadGrids(BIT_LOAD_USERS | BIT_LOAD_GROUPS | BIT_LOAD_ROLES | BIT_LOAD_ACTIONS | BIT_LOAD_PERMISSIONS);
+    this.loadGrids(BIT_LOAD_USERS | BIT_LOAD_GROUPS | BIT_LOAD_ROLES | BIT_LOAD_PERMISSIONS);
     this.toggleDropDownItem(domain != null, 'User', 'Admin', 'Client', 'Group');
   }
 
@@ -318,15 +273,15 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
 
   clearAllGridSelections() {
     this.userSelection.length = this.adminSelection.length = this.clientSelection.length = this.groupSelection.length =
-      this.roleSelection.length = this.actionSelection.length = this.permissionSelection.length = 0;
+      this.roleSelection.length = 0;
   }
 
   clearAllGridData() {
-    this.usersData = this.adminsData = this.clientsData = this.groupsData = this.rolesData = this.actionsData = this.permissionsData = null;
+    this.usersData = this.adminsData = this.clientsData = this.groupsData = this.rolesData = this.permissionsData = null;
   }
 
   loadGrids(gridsToLoadBitfield: number) {
-    let getGroups, getRoles, getActions, getPermissions;
+    let getGroups, getRoles, getPermissions;
     let selectedUser: string = this.userSelection.length === 1 ? this.userSelection[0] : null;
     if (!selectedUser) {
       selectedUser = this.adminSelection.length === 1 ? this.adminSelection[0] : null;
@@ -337,7 +292,6 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
 
     const selectedGroup: string = this.groupSelection.length === 1 ? this.groupSelection[0] : null;
     const selectedRole: string = this.roleSelection.length === 1 ? this.roleSelection[0] : null;
-    const selectedAction: string = this.actionSelection.length === 1 ? this.actionSelection[0] : null;
 
     if (!this.selectedDomain) {
       this.userSelection.length = this.adminSelection.length = this.clientSelection.length = this.groupSelection.length = 0;
@@ -400,21 +354,8 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
       getRoles = this.rolesService.getRoles();
     }
 
-    // Actions
-    if (selectedRole) {
-      getActions = this.rolesService.getRoleActions(selectedRole);
-    } else if (selectedGroup) {
-      getActions = this.groupsService.getGroupActions(this.selectedDomain, selectedGroup);
-    } else if (selectedUser) {
-      getActions = this.usersService.getUserActions(this.selectedDomain, selectedUser);
-    } else {
-      getActions = this.actionsService.getActions();
-    }
-
     // Permissions
-    if (selectedAction) {
-      getPermissions = this.actionsService.getActionPermissions(selectedAction);
-    } else if (selectedRole) {
+    if (selectedRole) {
       getPermissions = this.rolesService.getRolePermissions(selectedRole);
     } else if (selectedGroup) {
       getPermissions = this.groupsService.getGroupPermissions(this.selectedDomain, selectedGroup);
@@ -428,22 +369,11 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
       this.rolesLoading = true;
       getRoles.pipe(takeUntil(this.destroy)).subscribe(response => {
         this.rolesData = response;
+        this.loadRoles();
         this.rolesLoading = false;
       }, error => {
         this.logger.warn(LOG_TAG, 'Error loading roles: ', error);
         this.rolesLoading = false;
-      });
-    }
-
-    if (BIT_LOAD_ACTIONS & gridsToLoadBitfield) {
-      this.actionsLoading = true;
-      getActions.pipe(takeUntil(this.destroy)).subscribe(response => {
-        this.actionsData = response;
-        this.loadActions();
-        this.actionsLoading = false;
-      }, error => {
-        this.logger.warn(LOG_TAG, 'Error loading actions: ', error);
-        this.actionsLoading = false;
       });
     }
 
@@ -460,11 +390,6 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
     }
   }
 
-  onSelect({ dataItem, item }): void {
-    //    const index = this.gridData.indexOf(dataItem);
-    console.log('selected');
-  }
-
   onResetClicked(): void {
     this.clearAllGridSelections();
     this.loadGrids(BIT_LOAD_ALL);
@@ -474,8 +399,7 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
     console.log('layout changed: ' + this.size);
     const intHeight: number = (parseInt(this.size.replace(/px/, '')) - 120);
     this.height = '' + intHeight;
-    this.actionsDataState.take = this.permissionsDataState.take = Math.ceil(intHeight / 35) * 3;
-    this.loadActions();
+    this.permissionsDataState.take = Math.ceil(intHeight / 35) * 3;
     this.loadPermissions();
   }
 
@@ -525,15 +449,6 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
     }
   }
 
-  onActionCommandClick(event): void {
-    if (event.id === RowCommandType.Edit) {
-      this._newAclEntityDialog.show(DialogType.Edit, EntityType.Action, event.rowData.dataItem);
-    } else {
-      this.selectedEntity = this.actionSelection[0];
-      this._aclRelationsDialog.show(EntityType.Action, event.rowData.dataItem);
-    }
-  }
-
   onAdminCommandConfirm(dataItem): void {
     this.deleteEntity(EntityType.Admin, dataItem);
   }
@@ -548,10 +463,6 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
 
   onRoleCommandConfirm(dataItem): void {
     this.deleteEntity(EntityType.Role, dataItem);
-  }
-
-  onActionCommandConfirm(dataItem): void {
-    this.deleteEntity(EntityType.Action, dataItem);
   }
 
   onPermissionCommandConfirm(dataItem): void {
@@ -581,8 +492,6 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
       this._newAclEntityDialog.show(DialogType.Create, EntityType.Group);
     } else if (event.text === 'Role') {
       this._newAclEntityDialog.show(DialogType.Create, EntityType.Role);
-    } else if (event.text === 'Action') {
-      this._newAclEntityDialog.show(DialogType.Create, EntityType.Action);
     }
   }
 
@@ -633,11 +542,6 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
         deleteEntity = this.rolesService.deleteRole(data.rowData.dataItem.name);
         entity = 'Role';
         whatToReload = BIT_LOAD_ROLES;
-        break;
-      case EntityType.Action:
-        deleteEntity = this.actionsService.deleteAction(data.rowData.dataItem.name);
-        entity = 'Action';
-        whatToReload = BIT_LOAD_ACTIONS;
         break;
       case EntityType.Permission:
         deleteEntity = this.permissionsService.deletePermission(data.rowData.dataItem.component, data.rowData.dataItem.action,
@@ -798,24 +702,6 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
         }
         entity = 'Role';
         whatToReload = BIT_LOAD_ROLES;
-        break;
-      case EntityType.Action:
-        if (dialogType === DialogType.Create) {
-          const ac: ActionCreate = {
-            name: data.name,
-            description:
-              data.description.length > 0 ? data.description : undefined
-          };
-          action = this.actionsService.createAction(ac);
-        } else {
-          const au: ActionUpdate = {
-            description:
-              data.description.length > 0 ? data.description : undefined
-          };
-          action = this.actionsService.updateAction(data.name, au);
-        }
-        entity = 'Action';
-        whatToReload = BIT_LOAD_ACTIONS;
         break;
     }
 

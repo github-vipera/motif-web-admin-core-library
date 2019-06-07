@@ -9,6 +9,7 @@ import { ClipboardModule } from 'ngx-clipboard';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CommonsUIModule } from '../../components/CommonsUIModule';
 import { WCUploadPanelModule } from '../../components/UI/wc-upload-panel-component/WCUploadPanelModule';
+import { MotifACLModule } from 'web-console-motif-acl';
 
 @NgModule({
     imports: [
@@ -23,7 +24,8 @@ import { WCUploadPanelModule } from '../../components/UI/wc-upload-panel-compone
         CommonsUIModule,
         WCUploadPanelModule,
         WCUIKitGridModule,
-        WCNotificationCenterModule
+        WCNotificationCenterModule,
+        MotifACLModule
     ],
     entryComponents: [
         LicenseManagerSectionComponent

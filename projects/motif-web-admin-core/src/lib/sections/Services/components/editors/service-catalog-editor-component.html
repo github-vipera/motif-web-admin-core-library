@@ -7,14 +7,26 @@
         <div class='wc-service-catalog-editor-namespace wc-truncate-text'>{{namespace}}</div>
 
         <div class='wc-service-catalog-editor-commands'>
-            <button kendoButton look="flat" icon="save" class='right-button' (click)="onSaveButtonClick($event)" >Save</button>
+            <button kendoButton *ngIf="isDomainEditing()" 
+               motif-acl="com.vipera.osgi.core.platform.api.rest.PlatformApi:UPDATE:updateDomain"
+               look="flat" icon="save" class='right-button' (click)="onSaveButtonClick($event)" >Save</button>
+            <button kendoButton *ngIf="isApplicationEditing()" 
+                motif-acl="com.vipera.osgi.core.platform.api.rest.PlatformApi:UPDATE:updateApplication" 
+                look="flat" icon="save" class='right-button' (click)="onSaveButtonClick($event)" >Save</button>
+            <button kendoButton *ngIf="isServiceEditing()" 
+                motif-acl="com.vipera.osgi.bss.catalog.api.rest.CatalogApi:UPDATE:updateService" 
+                look="flat" icon="save" class='right-button' (click)="onSaveButtonClick($event)" >Save</button>
+            <button kendoButton *ngIf="isOperationEditing()" 
+                motif-acl="com.vipera.osgi.bss.catalog.api.rest.CatalogApi:UPDATE:updateServiceOperation" 
+                look="flat" icon="save" class='right-button' (click)="onSaveButtonClick($event)" >Save</button>
             <button kendoButton look="flat" icon="reload" (click)='onReloadButtonClick($event)' >Reload</button>
         </div>
 
         <div class="wc-service-catalog-editor-scrollable-content">
 
             <wa-services-domain-editor  
-            #domainEditor *ngIf="isDomainEditing()" 
+                #domainEditor *ngIf="isDomainEditing()"
+                motif-acl="com.vipera.osgi.core.platform.api.rest.PlatformApi:UPDATE:updateDomain" 
                 [editorContext]="editorContext" 
                 (startLoading)='isBusy=true'
                 (endLoading)='isBusy=false'
@@ -25,6 +37,7 @@
 
             <wa-services-application-editor #applicationEditor 
             *ngIf="isApplicationEditing()"
+            motif-acl="com.vipera.osgi.core.platform.api.rest.PlatformApi:UPDATE:updateApplication" 
             [editorContext]="editorContext" 
             (startLoading)='isBusy=true'
             (endLoading)='isBusy=false'
@@ -36,6 +49,7 @@
             <wa-services-service-editor 
                 #serviceEditor
                 *ngIf="isServiceEditing()" 
+                motif-acl="com.vipera.osgi.bss.catalog.api.rest.CatalogApi:UPDATE:updateService" 
                 [editorContext]="editorContext" 
                 (startLoading)='isBusy=true'
                 (endLoading)='isBusy=false'
@@ -47,6 +61,7 @@
             <wa-services-operation-editor 
             #operationEditor
             *ngIf="isOperationEditing()" 
+            motif-acl="com.vipera.osgi.bss.catalog.api.rest.CatalogApi:UPDATE:updateServiceOperation" 
             [editorContext]="editorContext" 
             (startLoading)='isBusy=true'
             (endLoading)='isBusy=false'

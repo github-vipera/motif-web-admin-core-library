@@ -48,7 +48,49 @@
           }}</span>
         </td>
         <td *ngIf="editable" class="service-catalog-row">
-          <wc-grid-editor-commands-group 
+          <wc-grid-editor-commands-group
+            *ngIf="rowData.nodeType === 'Domain'"
+            motif-acl="com.vipera.osgi.core.platform.api.rest.PlatformApi:DELETE:deleteDomain"
+            motif-acl-hidden="true"
+            [commands]="commands"
+            [alignMode]="'end'"
+            [rowIndex]="rowIndex"
+            [columnIndex]="5"
+            [column]="{}"
+            [value]="rowData"
+            [dataItem]="rowData"
+            (commandConfirm)="onGridCommandConfirm($event)"
+          ></wc-grid-editor-commands-group>        
+          <wc-grid-editor-commands-group
+            *ngIf="rowData.nodeType === 'Application'"
+            motif-acl="com.vipera.osgi.core.platform.api.rest.PlatformApi:DELETE:deleteApplication"
+            motif-acl-hidden="true"
+            [commands]="commands"
+            [alignMode]="'end'"
+            [rowIndex]="rowIndex"
+            [columnIndex]="5"
+            [column]="{}"
+            [value]="rowData"
+            [dataItem]="rowData"
+            (commandConfirm)="onGridCommandConfirm($event)"
+          ></wc-grid-editor-commands-group>        
+          <wc-grid-editor-commands-group
+            *ngIf="rowData.nodeType === 'Service'"
+            motif-acl="com.vipera.osgi.bss.catalog.api.rest.CatalogApi:DELETE:deleteService"
+            motif-acl-hidden="true"
+            [commands]="commands"
+            [alignMode]="'end'"
+            [rowIndex]="rowIndex"
+            [columnIndex]="5"
+            [column]="{}"
+            [value]="rowData"
+            [dataItem]="rowData"
+            (commandConfirm)="onGridCommandConfirm($event)"
+          ></wc-grid-editor-commands-group>        
+          <wc-grid-editor-commands-group
+            *ngIf="rowData.nodeType === 'Operation'"
+            motif-acl="com.vipera.osgi.bss.catalog.api.rest.CatalogApi:DELETE:deleteServiceOperation"
+            motif-acl-hidden="true"
             [commands]="commands"
             [alignMode]="'end'"
             [rowIndex]="rowIndex"

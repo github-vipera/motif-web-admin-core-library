@@ -4,11 +4,12 @@
         <kendo-buttongroup look="flat">
           <button
             kendoButton
+            motif-acl="com.vipera.osgi.bss.countersthresholds.api.rest.CountersThresholdsApi:CREATE:createCounterInfo"
             [toggleable]="false"
             (click)="onAddNewCounterInfoClicked()"
           >
           <fa-icon [icon]="faPlusCircle"></fa-icon>
-            Add New
+            Add New Counter Info
           </button>
         </kendo-buttongroup>
       </div>
@@ -16,22 +17,6 @@
 
     <div class="flex-cmd">
       <kendo-buttongroup look="flat">
-        <button
-          kendoButton
-          [toggleable]="false"
-          (click)="onExportClicked()"
-        >
-          <fa-icon [icon]="faDownload"></fa-icon>Export
-        </button>
-        <button
-          kendoButton
-          kendofileselect
-          tyle="file"
-          [toggleable]="false"
-          (click)="onImportClicked()"
-        >
-          <fa-icon [icon]="faFileImport"></fa-icon>Import
-        </button>
         <button
           kendoButton
           [toggleable]="false"
@@ -43,7 +28,7 @@
       </kendo-buttongroup>
     </div>
   </div>
-
+    
   <wa-counter-infos-component #counterInfosComponent (edit)="onGridEdit($event)"
     (selectionChange)="onCounterInfoSelectionChange($event)"></wa-counter-infos-component>
 

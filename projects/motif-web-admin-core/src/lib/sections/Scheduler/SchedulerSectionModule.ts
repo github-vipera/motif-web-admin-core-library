@@ -9,6 +9,7 @@ import { SchedulerSectionComponent } from './components/scheduler-section.compon
 import { ScheduledTaskDetailsComponent } from './components/scheduled-task-details.component';
 import { PlatformServiceModule } from '@wa-motif-open-api/platform-service';
 import { CommonsUIModule } from '../../components/CommonsUIModule';
+import { MotifACLModule } from 'web-console-motif-acl';
 
 @NgModule({
     imports: [
@@ -22,7 +23,8 @@ import { CommonsUIModule } from '../../components/CommonsUIModule';
         CommonsUIModule,
         CommonSelectorsModule,
         WCUIKitGridModule,
-        WCNotificationCenterModule
+        WCNotificationCenterModule,
+        MotifACLModule
     ],
     entryComponents: [
         SchedulerSectionComponent

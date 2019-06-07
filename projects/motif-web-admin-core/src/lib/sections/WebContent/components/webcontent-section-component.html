@@ -12,6 +12,7 @@
       <kendo-buttongroup look="flat">
         <button
           kendoButton
+          motif-acl="com.vipera.osgi.foundation.webcontent.api.rest.WebContentApi:UPDATE:uploadBundle"
           [toggleable]="false"
           (click)="uploadSlideDownPanelEx.toggle()"
         >
@@ -84,6 +85,8 @@
           let-column="column"
         >
           <wc-grid-editor-command
+            [motif-acl]="['com.vipera.osgi.foundation.webcontent.api.rest.WebContentApi:CREATE:publishBundle',
+                          'com.vipera.osgi.foundation.webcontent.api.rest.WebContentApi:CREATE:unpublishBundle']"
             [alignMode]="'left'"
             [rowIndex]="rowIndex"
             [hasConfirmation]="true"
@@ -137,6 +140,10 @@
           let-column="column"
         >
           <wc-grid-editor-commands-group
+            [motif-acl]="['com.vipera.osgi.foundation.webcontent.api.rest.WebContentApi:UPDATE:updateBundle',
+                          'com.vipera.osgi.foundation.webcontent.api.rest.WebContentApi:READ:downloadBundle',
+                          'com.vipera.osgi.foundation.webcontent.api.rest.WebContentApi:DELETE:deleteBundle']"
+            motif-acl-hidden="true"
             [commands]="commands"
             [alignMode]="'end'"
             [rowIndex]="rowIndex"

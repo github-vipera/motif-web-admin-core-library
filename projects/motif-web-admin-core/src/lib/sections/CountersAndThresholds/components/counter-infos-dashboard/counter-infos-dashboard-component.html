@@ -1,13 +1,40 @@
-<div class="row fill">
+<div class="row spread" title="">
+    <div class="flex-toolbar" style="display:flex;align-items: center;">
+      <kendo-buttongroup look="flat">
+        <button
+          kendoButton
+          motif-acl="com.vipera.osgi.bss.countersthresholds.api.rest.CountersThresholdsApi:UPDATE:uploadXml"
+          [toggleable]="false"
+          (click)="onExportClicked()"
+        >
+        <fa-icon [icon]="faDownload"></fa-icon>Export
+        </button>
+        <button
+          kendoButton
+          motif-acl="com.vipera.osgi.bss.countersthresholds.api.rest.CountersThresholdsApi:READ:downloadXml"
+          kendofileselect
+          tyle="file"
+          [toggleable]="false"
+          (click)="uploadSlideDownPanelEx.toggle()">
+          <fa-icon [icon]="faFileImport"></fa-icon>Import
+        </button>
+      </kendo-buttongroup>
+    </div>
+  </div>
 
+<div class="row">
+  <wc-upload-panel #uploadSlideDownPanelEx (upload)="uploadCT($event)" (uploadError)="onUploadCTError($event)"></wc-upload-panel>
+</div>
+
+<div class="row fill">
   <kendo-splitter orientation="vertical" style="border: none;">
     
     <kendo-splitter-pane [scrollable]="false" style="display:flex;">
-        <wa-counter-infos-pane-component [(ngModel)]="selectedCounterInfo" style="flex:1;"></wa-counter-infos-pane-component>
+        <wa-counter-infos-pane-component #countersPane [(ngModel)]="selectedCounterInfo" style="flex:1;"></wa-counter-infos-pane-component>
       </kendo-splitter-pane>
       
       <kendo-splitter-pane [scrollable]="false" style="display:flex;">
-          <wa-thresholds-pane-component [counterInfo]="selectedCounterInfo" style="flex:1;"></wa-thresholds-pane-component>
+          <wa-thresholds-pane-component #thresholdsPane [counterInfo]="selectedCounterInfo" style="flex:1;"></wa-thresholds-pane-component>
         </kendo-splitter-pane>
 
     </kendo-splitter>

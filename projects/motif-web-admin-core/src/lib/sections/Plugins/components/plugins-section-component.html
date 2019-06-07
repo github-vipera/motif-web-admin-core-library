@@ -6,16 +6,21 @@
 
 <wc-loading-overlay [visible]='loading'></wc-loading-overlay>
 
-<div class="row spread">
+<div class="row spread" >
 
     <div class="flex-toolbar" style="display:flex;align-items: center;">
         <kendo-textbox-container floatingLabel="Filter">
-            <input #filterInput kendoTextBox  (afterValueChanged)="onFilterChange($event)" />
+            <input #filterInput kendoTextBox  (afterValueChanged)="onFilterChange($event)"/>
         </kendo-textbox-container>
         <div>
             <label>&nbsp;</label>
             <kendo-buttongroup look="flat">
-                <button kendoButton [toggleable]="false" (click)="installPluginSlideDownPanel.toggle()" ><fa-icon [icon]="faPuzzlePiece"></fa-icon>Install Plugin</button>
+                <button kendoButton 
+                    motif-acl="com.vipera.osgi.core.registry.api.rest.RegistryApi:UPDATE:installPlugin"
+                    [toggleable]="false" 
+                    (click)="installPluginSlideDownPanel.toggle()">
+                    <fa-icon [icon]="faPuzzlePiece"></fa-icon>Install Plugin
+                </button>
             </kendo-buttongroup>
         </div>
     </div>
@@ -41,7 +46,7 @@
             </div>
         </wc-upload-panel>
 
-        <kendo-grid #datagrid [data]="gridData"> 
+        <kendo-grid #datagrid [data]="gridData" style="height: 100%;"> 
 
                 <kendo-grid-column
                     field="name" title="Name" >
@@ -61,6 +66,8 @@
                 <kendo-grid-column title="" width="150" minResizableWidth="140">
                     <ng-template kendoGridCellTemplate let-dataItem let-columnIndex="columnIndex" let-rowIndex="rowIndex" let-column="column">
                             <wc-grid-editor-command 
+                                motif-acl="com.vipera.osgi.core.registry.api.rest.RegistryApi:DELETE:uninstallPlugin"
+                                motif-acl-hidden="true"
                                 [alignMode]="'end'"
                                 [hasConfirmation]="true"
                                 [confirmationTitle]="'Uninstall ?'"

@@ -1,3 +1,4 @@
+import { MotifACLModule } from 'web-console-motif-acl';
 import { CommonSelectorsModule } from './../../components/CommonsSelectorsModule';
 import { NgModule } from '@angular/core';
 import { GridModule } from '@progress/kendo-angular-grid';
@@ -13,7 +14,6 @@ import { RESTContextDialogComponent } from './components/dialogs/new-context-dia
 import { TreeTableModule } from 'primeng/treetable';
 import { DialogModule } from 'primeng/dialog';
 import { InputSwitchModule } from 'primeng/inputswitch';
-
 
 @NgModule({
     imports: [
@@ -31,7 +31,8 @@ import { InputSwitchModule } from 'primeng/inputswitch';
         WCUIKitDirectivesModule,
         DialogModule,
         CommonSelectorsModule,
-        InputSwitchModule
+        InputSwitchModule,
+        MotifACLModule
     ],
     entryComponents: [
         RESTManagerSectionComponent

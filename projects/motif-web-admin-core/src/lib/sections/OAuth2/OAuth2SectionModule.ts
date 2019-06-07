@@ -8,6 +8,7 @@ import { OAuth2SectionComponent } from './components/oauth2-section.component'
 import { RefreshTokenDetailsComponent } from './components/refresh-token-details.component'
 import { PlatformServiceModule } from '@wa-motif-open-api/platform-service'
 import { CommonsUIModule } from '../../components/CommonsUIModule'
+import { MotifACLModule } from 'web-console-motif-acl';
 
 @NgModule({
     imports: [
@@ -21,7 +22,8 @@ import { CommonsUIModule } from '../../components/CommonsUIModule'
         CommonsUIModule,
         CommonSelectorsModule,
         WCUIKitGridModule,
-        WCNotificationCenterModule
+        WCNotificationCenterModule,
+        MotifACLModule
     ],
     entryComponents:[
         OAuth2SectionComponent

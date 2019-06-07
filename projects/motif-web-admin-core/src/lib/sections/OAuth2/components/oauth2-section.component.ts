@@ -20,7 +20,14 @@ const LOG_TAG = "[OAuth2Section]";
   templateUrl: './oauth2-section.component.html'
 })
 @PluginView("OAuth2", {
-  iconName: "wa-ico-users"
+  iconName: "wa-ico-users",
+  userData: {
+      acl: {
+          permissions: ['com.vipera.osgi.core.platform.api.rest.PlatformApi:READ:getDomains',
+                        'com.vipera.osgi.foundation.oauth2.api.rest.Oauth2Api:READ:getRefreshTokenList',
+                        'com.vipera.osgi.foundation.oauth2.api.rest.Oauth2Api:READ:getAccessTokenList']
+      }
+  }
 })
 export class OAuth2SectionComponent implements OnInit, OnDestroy {
 

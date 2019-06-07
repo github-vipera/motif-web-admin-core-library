@@ -30,7 +30,7 @@ import { ConfirmationService } from 'primeng/api';
 import { MessageCategoriesDialogComponent } from './components/dialogs/message-categories/message-categories-dialog';
 import { MessageCategoriesModule } from '../../components/MessageCategoriesModule';
 import { ServiceCatalogSelectorModule } from '../../components/UI/selectors/service-catalog-selector/ServiceCatalogSelectorModule';
-
+import { MotifACLModule } from 'web-console-motif-acl';
 
 @NgModule({
     imports: [
@@ -58,7 +58,8 @@ import { ServiceCatalogSelectorModule } from '../../components/UI/selectors/serv
         MessageCategoriesModule,
         ServiceCatalogSelectorModule,
         WCUIKitGridModule,
-        WCNotificationCenterModule
+        WCNotificationCenterModule,
+        MotifACLModule
     ],
     entryComponents: [
         ServicesSectionComponent

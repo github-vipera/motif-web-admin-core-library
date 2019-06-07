@@ -23,7 +23,13 @@ const LOG_TAG = '[LogSection]';
     templateUrl: './log-section-component.html'
   })
   @PluginView('Log', {
-    iconName: 'wa-ico-log'
+    iconName: 'wa-ico-log',
+    userData: {
+        acl: {
+            permissions: ['com.vipera.osgi.core.platform.api.rest.LogsApi:READ:tailCurrentLog',
+                            'com.vipera.osgi.core.platform.api.rest.LogsApi:READ:getRootLogLevel']
+        }
+    }
 })
 export class LogSectionComponent implements OnInit, OnDestroy {
 

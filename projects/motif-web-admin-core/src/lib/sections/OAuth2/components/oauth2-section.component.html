@@ -50,7 +50,9 @@
             
             <kendo-grid-column title="" width="150" minResizableWidth="140">
                 <ng-template kendoGridCellTemplate let-dataItem let-columnIndex="columnIndex" let-rowIndex="rowIndex" let-column="column">
-                        <wc-grid-editor-command 
+                        <wc-grid-editor-command
+                            motif-acl="com.vipera.osgi.foundation.oauth2.api.rest.Oauth2Api:CREATE:revoke"
+                            motif-acl-hidden="true" 
                             [alignMode]="'end'"
                             [hasConfirmation]="true"
                             [confirmationTitle]="'Revoke ?'"
