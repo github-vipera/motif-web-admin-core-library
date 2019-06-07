@@ -15,6 +15,7 @@ import { NewAclEntityDialogComponent } from './components/dialogs/acl/entities/n
 import { AclRelationsDialogComponent } from './components/dialogs/acl/relations/acl-relations-dialog';
 import { PasswordChangeDialogComponent } from './components/dialogs/password/password-change-dialog';
 import { DialogModule } from 'primeng/dialog';
+import { MotifACLModule } from 'web-console-motif-acl';
 
 @NgModule({
     imports: [
@@ -29,7 +30,8 @@ import { DialogModule } from 'primeng/dialog';
         CommonSelectorsModule,
         WCUIKitGridModule,
         WCNotificationCenterModule,
-        DialogModule
+        DialogModule,
+        MotifACLModule
     ],
     entryComponents:[
         AccessControlSectionComponent

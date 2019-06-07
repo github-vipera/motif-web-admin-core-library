@@ -23,6 +23,8 @@ import { UsersListComponent } from './users-list/users-list.component';
 import { AclRelationsDialogComponent } from './dialogs/acl/relations/acl-relations-dialog';
 import { RowCommandType } from './editors/acl-editor-context';
 import { PasswordChangeDialogResult, PasswordChangeDialogComponent } from './dialogs/password/password-change-dialog';
+import { MotifACLService } from 'web-console-motif-acl';
+import { forkJoin } from 'rxjs/observable/forkJoin';
 
 const LOG_TAG = '[AccessControlSection]';
 const BIT_LOAD_USERS = 1;
@@ -37,7 +39,24 @@ const BIT_LOAD_ALL = BIT_LOAD_USERS | BIT_LOAD_GROUPS | BIT_LOAD_ROLES | BIT_LOA
   templateUrl: './access-control-section.component.html'
 })
 @PluginView('AccessControl', {
-  iconName: 'wa-ico-users'
+  iconName: 'wa-ico-users',
+  userData: {
+      acl: {
+          permissions: ['com.vipera.osgi.core.platform.api.rest.PlatformApi:READ:getDomains',
+                        'com.vipera.osgi.core.platform.api.rest.UserMgrApi:READ:getUsersList',
+                        'com.vipera.osgi.core.platform.api.rest.UserMgrApi:READ:getAdminUsersList',
+                        'com.vipera.osgi.core.platform.api.rest.UserMgrApi:READ:getClientUsersList',
+                        'com.vipera.osgi.core.platform.api.rest.AcsApi:READ:getGroups',
+                        'com.vipera.osgi.core.platform.api.rest.AcsApi:READ:getRoles',
+                        'com.vipera.osgi.core.platform.api.rest.AcsApi:READ:getPermissions',
+                        'com.vipera.osgi.core.platform.api.rest.AcsApi:READ:getUserGroups',
+                        'com.vipera.osgi.core.platform.api.rest.AcsApi:READ:getUserRoles',
+                        'com.vipera.osgi.core.platform.api.rest.AcsApi:READ:getUserPermissions',
+                        'com.vipera.osgi.core.platform.api.rest.AcsApi:READ:getGroupRoles',
+                        'com.vipera.osgi.core.platform.api.rest.AcsApi:READ:getGroupPermissions',
+                        'com.vipera.osgi.core.platform.api.rest.AcsApi:READ:getRolePermissions']
+      }
+  }
 })
 export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnDestroy  {
 
@@ -171,6 +190,7 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
   };
 
   constructor(private logger: NGXLogger,
+    private motifACLService: MotifACLService,
     private platformUsersService: PlatformUsersService,
     private platformAdminsService: PlatformAdminsService,
     private platformClientsService: PlatformClientsService,
@@ -182,6 +202,13 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
     private renderer: Renderer2,
     private zone: NgZone
   ) {
+
+    this.motifACLService.can('com.vipera.osgi.core.platform.api.rest.AcsApi:CREATE:createRole')
+      .pipe(takeUntil(this.destroy)).subscribe((canDoIt: boolean) => {
+        this.dropDownButtonItems[4].disabled = !canDoIt;
+    }, error => {
+      this.logger.warn('cannot load permissions: ' + error);
+    });
 
     this.logger.debug(LOG_TAG, 'Opening...');
   }
@@ -257,18 +284,34 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
     this.selectedDomain = domain ? domain.name : null;
     this.clearAllGridSelections();
     this.loadGrids(BIT_LOAD_USERS | BIT_LOAD_GROUPS | BIT_LOAD_ROLES | BIT_LOAD_PERMISSIONS);
-    this.toggleDropDownItem(domain != null, 'User', 'Admin', 'Client', 'Group');
+    this.enableDropDownItems(domain != null);
   }
 
-  toggleDropDownItem(enabled: Boolean, ...itemsToToggle: string[]) {
-    this.dropDownButtonItems.forEach(item => {
-      itemsToToggle.forEach(itemToToggle => {
-        if (item.text === itemToToggle) {
-          item.disabled = !enabled;
-          return;
-        }
-      })
-    });
+  enableDropDownItems(enabled: Boolean) {
+    if (!enabled) {
+      this.disableAllDropDownItems();
+    } else {
+      forkJoin(this.motifACLService.can('com.vipera.osgi.core.platform.api.rest.UserMgrApi:CREATE:createUser'),
+              this.motifACLService.can('com.vipera.osgi.core.platform.api.rest.UserMgrApi:CREATE:createAdminUser'),
+              this.motifACLService.can('com.vipera.osgi.core.platform.api.rest.UserMgrApi:CREATE:createClientUser'),
+              this.motifACLService.can('com.vipera.osgi.core.platform.api.rest.AcsApi:CREATE:createGroup'))
+              .pipe(takeUntil(this.destroy)).subscribe((canDoIt: Array<boolean>) => {
+        this.dropDownButtonItems[0].disabled = !canDoIt[0];
+        this.dropDownButtonItems[1].disabled = !canDoIt[1];
+        this.dropDownButtonItems[2].disabled = !canDoIt[2];
+        this.dropDownButtonItems[3].disabled = !canDoIt[3];
+      }, error => {
+        this.disableAllDropDownItems();
+        this.logger.warn('cannot load permissions: ' + error);
+      });
+    }
+  }
+
+  disableAllDropDownItems() {
+    this.dropDownButtonItems[0].disabled =
+      this.dropDownButtonItems[1].disabled =
+      this.dropDownButtonItems[2].disabled =
+      this.dropDownButtonItems[3].disabled = true;
   }
 
   clearAllGridSelections() {
