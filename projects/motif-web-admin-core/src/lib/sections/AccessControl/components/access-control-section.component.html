@@ -79,7 +79,14 @@
                 <kendo-grid-column title="" width="50" minResizableWidth="40">
                   <ng-template kendoGridCellTemplate let-dataItem let-columnIndex="columnIndex" let-rowIndex="rowIndex"
                     let-column="column">
-                    <wc-grid-editor-commands-group [commands]="userCommands" [alignMode]="'end'" [rowIndex]="rowIndex"
+                    <wc-grid-editor-commands-group 
+                      [motif-acl]="['com.vipera.osgi.core.platform.api.rest.UserMgrApi:CREATE:createAdminUserCredentials',
+                                    'com.vipera.osgi.core.platform.api.rest.AcsApi:DELETE:removeGroupFromUser',
+                                    'com.vipera.osgi.core.platform.api.rest.AcsApi:CREATE:assignGroupToUser',
+                                    'com.vipera.osgi.core.platform.api.rest.UserMgrApi:UPDATE:updateUser',
+                                    'com.vipera.osgi.core.platform.api.rest.UserMgrApi:DELETE:deleteUser']"
+                      motif-acl-hidden="true"
+                      [commands]="userCommands" [alignMode]="'end'" [rowIndex]="rowIndex"
                       [columnIndex]="columnIndex" [column]="column" [value]="dataItem[column.field]" [dataItem]="dataItem"
                       (commandConfirm)="onAdminCommandConfirm($event)" (commandClick)="onAdminCommandClick($event)">
                     </wc-grid-editor-commands-group>
@@ -109,7 +116,14 @@
                 <kendo-grid-column title="" width="50" minResizableWidth="40">
                   <ng-template kendoGridCellTemplate let-dataItem let-columnIndex="columnIndex" let-rowIndex="rowIndex"
                     let-column="column">
-                    <wc-grid-editor-commands-group [commands]="userCommands" [alignMode]="'end'" [rowIndex]="rowIndex"
+                    <wc-grid-editor-commands-group
+                      [motif-acl]="['com.vipera.osgi.core.platform.api.rest.UserMgrApi:CREATE:createClientUserCredentials',
+                                    'com.vipera.osgi.core.platform.api.rest.AcsApi:DELETE:removeGroupFromUser',
+                                    'com.vipera.osgi.core.platform.api.rest.AcsApi:CREATE:assignGroupToUser',
+                                    'com.vipera.osgi.core.platform.api.rest.UserMgrApi:UPDATE:updateUser',
+                                    'com.vipera.osgi.core.platform.api.rest.UserMgrApi:DELETE:deleteUser']"
+                      motif-acl-hidden="true"
+                      [commands]="userCommands" [alignMode]="'end'" [rowIndex]="rowIndex"
                       [columnIndex]="columnIndex" [column]="column" [value]="dataItem[column.field]" [dataItem]="dataItem"
                       (commandConfirm)="onClientCommandConfirm($event)" (commandClick)="onClientCommandClick($event)">
                     </wc-grid-editor-commands-group>
@@ -133,7 +147,13 @@
               <kendo-grid-column title="" width="50" minResizableWidth="40">
                 <ng-template kendoGridCellTemplate let-dataItem let-columnIndex="columnIndex" let-rowIndex="rowIndex"
                   let-column="column">
-                  <wc-grid-editor-commands-group [commands]="commands" [alignMode]="'end'" [rowIndex]="rowIndex"
+                  <wc-grid-editor-commands-group 
+                    [motif-acl]="['com.vipera.osgi.core.platform.api.rest.AcsApi:DELETE:removeRoleFromGroup',
+                                  'com.vipera.osgi.core.platform.api.rest.AcsApi:CREATE:assignRoleToGroup',
+                                  'com.vipera.osgi.core.platform.api.rest.AcsApi:UPDATE:updateGroup',
+                                  'com.vipera.osgi.core.platform.api.rest.AcsApi:DELETE:deleteGroup']"
+                    motif-acl-hidden="true"
+                    [commands]="commands" [alignMode]="'end'" [rowIndex]="rowIndex"
                     [columnIndex]="columnIndex" [column]="column" [value]="dataItem[column.field]" [dataItem]="dataItem"
                     (commandConfirm)="onGroupCommandConfirm($event)" (commandClick)="onGroupCommandClick($event)">
                   </wc-grid-editor-commands-group>
@@ -161,7 +181,13 @@
               <kendo-grid-column title="" width="25" minResizableWidth="25">
                 <ng-template kendoGridCellTemplate let-dataItem let-columnIndex="columnIndex" let-rowIndex="rowIndex"
                   let-column="column">
-                  <wc-grid-editor-commands-group [commands]="commands" [alignMode]="'end'" [rowIndex]="rowIndex"
+                  <wc-grid-editor-commands-group 
+                    [motif-acl]="['com.vipera.osgi.core.platform.api.rest.AcsApi:DELETE:removePermissionFromRole',
+                                  'com.vipera.osgi.core.platform.api.rest.AcsApi:CREATE:assignPermissionToRole',
+                                  'com.vipera.osgi.core.platform.api.rest.AcsApi:UPDATE:updateRole',
+                                  'com.vipera.osgi.core.platform.api.rest.AcsApi:DELETE:deleteRole']"
+                    motif-acl-hidden="true"
+                    [commands]="commands" [alignMode]="'end'" [rowIndex]="rowIndex"
                     [columnIndex]="columnIndex" [column]="column" [value]="dataItem[column.field]" [dataItem]="dataItem"
                     (commandConfirm)="onRoleCommandConfirm($event)" (commandClick)="onRoleCommandClick($event)">
                   </wc-grid-editor-commands-group>
@@ -196,7 +222,10 @@
               <kendo-grid-column title="" width="25" minResizableWidth="25" [filterable]="false">
                 <ng-template kendoGridCellTemplate let-dataItem let-columnIndex="columnIndex" let-rowIndex="rowIndex"
                     let-column="column">
-                    <wc-grid-editor-command [alignMode]="'end'" [hasConfirmation]="true" [confirmationTitle]="'Delete?'"
+                    <wc-grid-editor-command 
+                        motif-acl="com.vipera.osgi.core.platform.api.rest.AcsApi:DELETE:deletePermission"
+                        motif-acl-hidden="true"
+                        [alignMode]="'end'" [hasConfirmation]="true" [confirmationTitle]="'Delete?'"
                         [rowIndex]="rowIndex" [columnIndex]="columnIndex" [column]="column" [commandIcon]="'wa-ico-no'"
                         [dataItem]="dataItem" (commandConfirm)="onPermissionCommandConfirm($event)">
                     </wc-grid-editor-command>
