@@ -27,16 +27,10 @@ export class SessionService  {
         }
 
     private init(){
-        this.logger.debug(LOG_TAG, 'init invoked', this.authService.logonInfo);
-        const abbr = this.buildAbbr(this.authService.currentUserName);
-        this._currentUser = {
-            userName: this.authService.currentUserName,
-            userAbbr: abbr,
-            lastAccess: this.authService.logonInfo.accessTime
-        }
-        this.loadCurrentUserInformations();
+        this.logger.debug(LOG_TAG, 'init invoked');
     }
     
+/*
     private loadCurrentUserInformations(){
         this.logger.debug(LOG_TAG, 'loadCurrentUserInformations invoked');
         this.adminsService.getCurrentAdminUser().subscribe( (data: AdminUser) => {
@@ -45,6 +39,7 @@ export class SessionService  {
             this.logger.error(LOG_TAG, 'loadCurrentUserInformations error:', error);
         });
     }
+*/
 
     public get currentUser(): Observable<CurrentUserInfo> {
         return new Observable<CurrentUserInfo>((observer) => {
@@ -57,14 +52,15 @@ export class SessionService  {
                     }
                     this._currentUser.details = data;
                     observer.next(this._currentUser);
+                    observer.complete();
                 }, (error) => {
                     this.logger.error(LOG_TAG, 'retrieve currentUser error:', error);
                     observer.error(error);
                 });
             } else {
                 observer.next(this._currentUser);
+                observer.complete();
             }
-            observer.complete();
         });
     }
 
