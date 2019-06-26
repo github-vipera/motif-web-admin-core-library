@@ -3,6 +3,7 @@ import { Injectable, OnInit } from '@angular/core';
 import * as _ from 'lodash'
 import { NGXLogger } from 'ngx-logger';
 import { AdminsService, AdminUser } from '@wa-motif-open-api/user-mgr-service';
+import { Observable } from 'rxjs/Observable';
 
 const LOG_TAG = '[SessionService]';
 
@@ -38,19 +39,38 @@ export class SessionService  {
     
     private loadCurrentUserInformations(){
         this.logger.debug(LOG_TAG, 'loadCurrentUserInformations invoked');
-        this.adminsService.getAdminUser('Default', this._currentUser.userName).subscribe( (data: AdminUser) => {
+        this.adminsService.getCurrentAdminUser().subscribe( (data: AdminUser) => {
             this._currentUser.details = data;
         }, (error) => {
             this.logger.error(LOG_TAG, 'loadCurrentUserInformations error:', error);
         });
     }
 
-    public get currentUserName(): string {
-        return this.authService.currentUserName;
+    public get currentUser(): Observable<CurrentUserInfo> {
+        return new Observable<CurrentUserInfo>((observer) => {
+            if (!this._currentUser) {
+                this.adminsService.getCurrentAdminUser().subscribe( (data: AdminUser) => {
+                    this._currentUser = {
+                        userName: this.authService.currentUserName,
+                        userAbbr: this.buildAbbr(this.authService.currentUserName),
+                        lastAccess: this.authService.logonInfo.accessTime
+                    }
+                    this._currentUser.details = data;
+                    observer.next(this._currentUser);
+                }, (error) => {
+                    this.logger.error(LOG_TAG, 'retrieve currentUser error:', error);
+                    observer.error(error);
+                });
+            } else {
+                observer.next(this._currentUser);
+            }
+            observer.complete();
+        });
     }
 
-    public get currentUser(): CurrentUserInfo {
-        return this._currentUser;
+    public invalidateCache(): void {
+        this._currentUser = undefined;
+        this.logger.debug(LOG_TAG, 'cache invalidated');
     }
 
     private buildAbbr(userName: string): string {
