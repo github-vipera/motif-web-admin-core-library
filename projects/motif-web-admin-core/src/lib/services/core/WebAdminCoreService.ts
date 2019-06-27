@@ -2,9 +2,9 @@ import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { NGXLogger, AuthService, EventBusService } from 'web-console-core';
 import { MotifACLService } from 'web-console-motif-acl';
-
 import { WCTopBarService, WCTopBarItem, WCTopBarLocation } from 'web-console-core';
 import { TopMenuComponent, TopInfoComponent, TopLogoComponent } from '../../components/TopMenu/index';
+import { SessionService } from '../../components/Commons/session-service';
 
 
 const LOG_TAG = "[WebAdminCoreService]"
@@ -20,6 +20,7 @@ export class WebAdminCoreService {
         private eventBus: EventBusService,
         private authService: AuthService,
         private aclService: MotifACLService,
+        private sessionService: SessionService,
         private topBarService: WCTopBarService) {
             this.logger.debug(LOG_TAG, "ctor");
     }
@@ -34,7 +35,7 @@ export class WebAdminCoreService {
 
         this.initTopBar();
         
-        this.startACLService()
+        this.startACLService();
     }
 
     private startACLService() {
@@ -42,7 +43,10 @@ export class WebAdminCoreService {
         this.eventBus.on('AuthService:LoginEvent').subscribe((message) => {
             this.logger.debug(LOG_TAG, "on AuthService:LoginEvent received");
             this.aclService.reloadPermissions().subscribe();
-        })
+            this.sessionService.invalidateCache();
+            this.topBarService.clear();
+            this.initTopBar();
+        });
         // if is already authenticated retrive immediatly
         if (this.authService.isAuthenticated()) {
             this.aclService.reloadPermissions().subscribe((results)=>{

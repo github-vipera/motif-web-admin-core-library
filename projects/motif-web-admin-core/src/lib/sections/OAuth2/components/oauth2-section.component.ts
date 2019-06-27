@@ -4,7 +4,7 @@ import { NGXLogger } from 'web-console-core';
 import { SortDescriptor, GroupDescriptor, DataResult } from '@progress/kendo-data-query';
 import { PageChangeEvent, GridComponent } from '@progress/kendo-angular-grid';
 import { MotifQuerySort, MotifQueryResults } from 'web-console-core';
-import { Oauth2Service, OAuthRequest, RefreshToken, AccessToken } from '@wa-motif-open-api/oauth2-service';
+import { Oauth2Service, Validate, RefreshToken, AccessToken } from '@wa-motif-open-api/oauth2-service';
 import { HttpParams } from '@angular/common/http';
 import * as _ from 'lodash';
 import { DomainSelectorComboBoxComponent } from '../../../components/UI/selectors/domain-selector-combobox-component';
@@ -175,13 +175,8 @@ freeMem() {
 
   onDeleteOKPressed(dataItem: any): void {
     this.logger.debug(LOG_TAG, 'onDeleteOKPressed token=', dataItem.token);
-    const oauthReq: OAuthRequest = {
-      clientId: '123456789',
-      token: dataItem.token,
-      tokenType: 'REFRESH_TOKEN'
-    };
 
-    this._subHandler.add(this.oauth2Service.revoke(oauthReq).subscribe(value => {
+    this._subHandler.add(this.oauth2Service.revokeRefreshToken(dataItem.token).subscribe(value => {
       this.refreshData();
       this.notificationCenter.post({
         name: 'RevokeRefreshTokenSuccess',

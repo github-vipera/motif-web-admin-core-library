@@ -4,15 +4,18 @@
 
     <gridster [options]="options">
 
-        <gridster-item [item]="motifSeriverInstanceItem">
+        <gridster-item [item]="motifServerInstanceItem">
             <wc-panel [title]="'MOTIF Instance'">
                 <wa-server-info-widget-panel></wa-server-info-widget-panel>
             </wc-panel>
         </gridster-item>
 
-        <gridster-item [item]="motifSeriverInstanceNameItem">
+        <gridster-item [item]="motifServerInstanceItem">
             <wc-panel [title]="'Current MOTIF Instance'">
-                <wc-data-counter  [class]="'serverInstanceInfo'" [title]="serverInfo.motifVersion" [value]="serverInfo.instanceName"></wc-data-counter>
+                <wc-data-counter
+                    [class]="'serverInstanceInfo'" 
+                    [title]="serverInfo ? serverInfo.motifVersion : 'N/A'" 
+                    [value]="serverInfo ? serverInfo.instanceName : 'N/A'"></wc-data-counter>
             </wc-panel>
         </gridster-item>
 

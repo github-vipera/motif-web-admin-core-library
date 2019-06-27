@@ -45,9 +45,7 @@ export class ConfigurationSectionComponent implements OnInit, OnDestroy {
 
     public view: Observable<GridDataResult>;
     public gridState: State = {
-        sort: [],
-        skip: 0,
-        take: 10
+        sort: []
     };
     public changes: any = {};
 

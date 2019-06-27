@@ -35,7 +35,7 @@ export class RefreshTokenDetailsComponent implements OnInit {
   private loadData(refreshToken:string){
     this.logger.debug(LOG_TAG, "loadData refreshToken=", refreshToken);
 
-    this.oauth2Service.getAccessTokenList(refreshToken).subscribe((results)=>{
+    this.oauth2Service.getAccessTokenListByRefreshToken(refreshToken).subscribe((results)=>{
 
       this.accessTokenList = results;
 

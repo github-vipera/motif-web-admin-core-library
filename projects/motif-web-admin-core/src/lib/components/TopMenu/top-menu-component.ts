@@ -1,8 +1,8 @@
 import { SessionService } from './../Commons/session-service';
 import { Component, Input, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { AuthService, StatusBarService, NGXLogger } from 'web-console-core';
-import * as moment from 'moment';
+import { AuthService, NGXLogger, EventBusService } from 'web-console-core';
+import { CurrentUserInfo } from '../Commons/session-service';
 
 const LOG_TAG = '[TopMenuComponent]';
 
@@ -15,30 +15,60 @@ export class TopMenuComponent implements OnInit {
 
     private _mainMenuLabel: string;
     items: MenuItem[];
+    private currentUserInfo: CurrentUserInfo;
 
     @Input() public visible: boolean;
 
     constructor(private logger: NGXLogger,
-        private authService:AuthService,
+        private authService: AuthService,
+        private eventBus: EventBusService,
         private sessionService: SessionService
         ) {}
 
     ngOnInit(): void {
-        this.logger.debug(LOG_TAG, 'Initializing...', this.sessionService.currentUser);
-        this._mainMenuLabel = this.sessionService.currentUser.userAbbr;
-        const lastAccessStr = "Last Login: " + this.getLastAccessStr();
-        const currentUserDesc = this.getCurrentUserDesc();
+        this.logger.debug(LOG_TAG, 'Initializing...');
+
+        this.eventBus.on('AuthService:LoginEvent').subscribe((message) => {
+            this.logger.debug(LOG_TAG, 'on AuthService:LoginEvent received');
+            this.updateInfo();
+        });
+
+        // Fallback info
+        this.currentUserInfo = {
+            userName: 'N/A',
+            userAbbr: 'NA',
+            lastAccess: new Date()
+        };
+        this._mainMenuLabel = this.currentUserInfo.userAbbr;
         this.items = [
-            {label: currentUserDesc, disabled: true }, 
-            {label: lastAccessStr, disabled: true }, 
-            {separator: true }, 
-            {label: 'Logout', icon: 'pi pi-fw pi-angle-right', command: (event) => { this.onLogout(); } } 
+            { label: this.getCurrentUserDesc(), disabled: true },
+            { label: 'Last Login: ' + this.getLastAccessStr(), disabled: true },
+            { separator: true },
+            { label: 'Logout', icon: 'pi pi-fw pi-angle-right', command: (event) => { this.onLogout(); } }
         ];
+
+        // Retrieve from server
+        this.updateInfo();
+    }
+
+    private updateInfo(): void {
+        this.sessionService.currentUser.subscribe((currentUserInfo: CurrentUserInfo) => {
+            this.currentUserInfo = currentUserInfo;
+            this._mainMenuLabel = currentUserInfo.userAbbr;
+            this.items = [
+                { label: this.getCurrentUserDesc(), disabled: true },
+                { label: 'Last Login: ' + this.getLastAccessStr(), disabled: true },
+                { separator: true },
+                { label: 'Logout', icon: 'pi pi-fw pi-angle-right', command: (event) => { this.onLogout(); } }
+            ];
+        }, (error) => {
+            this.logger.warn('error while retrieving current user info from sessions service: ', error);
+        });
     }
 
     private getCurrentUserDesc(): string {
-        this.logger.debug(LOG_TAG, 'getCurrentUserDesc for:', this.sessionService.currentUser);
-        return 'Current user: ' + this.sessionService.currentUser.userName;
+        this.logger.debug(LOG_TAG, 'getCurrentUserDesc for:', this.currentUserInfo);
+        return 'Current user: ' + this.currentUserInfo.userName;
     }
 
     private formatDate(date) {
@@ -58,13 +88,13 @@ export class TopMenuComponent implements OnInit {
       
 
     private getLastAccessStr(): string {
-        this.logger.debug(LOG_TAG, 'getLastAccessStr for:', this.sessionService.currentUser.lastAccess);
+        this.logger.debug(LOG_TAG, 'getLastAccessStr for:', this.currentUserInfo.lastAccess);
         try {
             //let now = moment().format('LLLL');
             //moment("20111031", "YYYYMMDD").fromNow();// this.sessionService.currentUser.lastAccess);
             //return myMoment.format('ddd, h:mm A');
             //return moment(this.sessionService.currentUser.lastAccess).format('ddd, h:mm A');
-            return this.formatDate(new Date(this.sessionService.currentUser.lastAccess));
+            return this.formatDate(new Date(this.currentUserInfo.lastAccess));
         } catch (err) {
             this.logger.error(LOG_TAG, 'getLastAccessStr error:', err);
             return 'n.a.'
@@ -73,7 +103,10 @@ export class TopMenuComponent implements OnInit {
 
     onLogout() {
         this.logger.debug(LOG_TAG, 'Logout invoked.');
-        this.authService.logout();
+        this.authService.logout().subscribe((resp) => {
+        }, (err) => {
+            this.logger.warn('Logout revoke request failed');
+        });
     }
 
     public get mainMenuLabel(): string {

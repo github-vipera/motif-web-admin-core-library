@@ -83,8 +83,8 @@ export class MainDashboardSectionComponent implements OnInit, OnDestroy {
           };
     }
 
-    motifSeriverInstanceNameItem:Gridster.GridsterItem = {cols: 8, rows: 2, y: 0, x: 0};
-    motifSeriverInstanceItem:Gridster.GridsterItem = {cols: 8, rows: 3, y: 2, x: 0};
+    motifServerInstanceNameItem:Gridster.GridsterItem = {cols: 8, rows: 2, y: 0, x: 0};
+    motifServerInstanceItem:Gridster.GridsterItem = {cols: 8, rows: 3, y: 2, x: 0};
     processLoadGaugeItem:Gridster.GridsterItem = {cols: 3, rows: 3, y: 0, x: 8};
     cpuLoadGaugeItem:Gridster.GridsterItem = {cols: 3, rows: 3, y: 0, x: 11};
     memoryInfoGaugeItem:Gridster.GridsterItem = {cols: 3, rows: 3, y: 2, x: 8 };
