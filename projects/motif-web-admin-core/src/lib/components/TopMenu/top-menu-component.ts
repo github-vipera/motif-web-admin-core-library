@@ -27,12 +27,27 @@ export class TopMenuComponent implements OnInit {
 
     ngOnInit(): void {
         this.logger.debug(LOG_TAG, 'Initializing...');
-        
+
         this.eventBus.on('AuthService:LoginEvent').subscribe((message) => {
             this.logger.debug(LOG_TAG, 'on AuthService:LoginEvent received');
             this.updateInfo();
         });
 
+        // Fallback info
+        this.currentUserInfo = {
+            userName: 'N/A',
+            userAbbr: 'NA',
+            lastAccess: new Date()
+        };
+        this._mainMenuLabel = this.currentUserInfo.userAbbr;
+        this.items = [
+            { label: this.getCurrentUserDesc(), disabled: true },
+            { label: 'Last Login: ' + this.getLastAccessStr(), disabled: true },
+            { separator: true },
+            { label: 'Logout', icon: 'pi pi-fw pi-angle-right', command: (event) => { this.onLogout(); } }
+        ];
+
+        // Retrieve from server
         this.updateInfo();
     }
 
