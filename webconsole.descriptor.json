@@ -1,7 +1,7 @@
 {
   "name": "MotifWebAdmin",
   "description": "MOTIF Web Admin",
-  "version": "0.1.1",
+  "version": "0.2.2",
   "main-pages": [
     "index.html"
   ]
