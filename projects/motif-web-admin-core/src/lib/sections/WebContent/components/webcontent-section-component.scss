@@ -11,3 +11,8 @@
 .wc-web-content-url:hover {
     text-decoration: underline;
 }
+
+:host ::ng-deep tr.k-grid-norecords.ng-star-inserted {
+    text-align: left;
+    display: contents;
+}
