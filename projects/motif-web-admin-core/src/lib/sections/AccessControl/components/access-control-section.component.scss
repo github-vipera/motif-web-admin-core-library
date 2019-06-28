@@ -39,3 +39,7 @@
               user-select: text; /* Non-prefixed version, currently
                                     supported by Chrome and Opera */
 }
+
+:host ::ng-deep tr.k-state-selected > td {
+    background-color: #9a0000;
+}

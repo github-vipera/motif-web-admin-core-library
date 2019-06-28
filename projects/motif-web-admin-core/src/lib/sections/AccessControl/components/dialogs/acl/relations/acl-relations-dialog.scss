@@ -20,3 +20,7 @@
     align-content: center;
     flex-direction: column;
 }
+
+:host ::ng-deep tr.k-state-selected > td {
+    background-color: #505050;
+}
