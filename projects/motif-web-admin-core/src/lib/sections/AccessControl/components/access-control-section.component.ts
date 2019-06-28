@@ -248,7 +248,6 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
   }
 
   private loadPermissions(): void {
-    this.permissionsDataState.skip = 0;
     this.permissionsGridView = process(this.permissionsData, this.permissionsDataState);
   }
 
@@ -425,6 +424,7 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
       this.permissionsLoading = true;
       getPermissions.pipe(takeUntil(this.destroy)).subscribe(response => {
         this.permissionsData = response;
+        this.permissionsDataState.skip = 0;
         this.loadPermissions();
         this.permissionsLoading = false;
       }, error => {

@@ -205,18 +205,19 @@
               [selectable]="false" [skip]="permissionsDataState.skip" [pageSize]="permissionsDataState.take"
               [scrollable]="'virtual'" [rowHeight]="35" [height]="height" (pageChange)="permissionsPageChange($event)"
               [filterable]="true" [filter]="permissionsDataState.filter" (dataStateChange)="onPermissionsDataStateChange($event)"
+              [resizable]="true"
               [sortable]="{
                 allowUnsort: false,
                 mode: 'single'
                 }"
               [sort]="permissionsDataState.sort">
-              <kendo-grid-column field="component" title="Component" width="100">
+              <kendo-grid-column field="component" title="Component" width="90">
               </kendo-grid-column>
-              <kendo-grid-column field="action" title="Action" width="40" [sortable]="false">
+              <kendo-grid-column field="action" title="Action" width="28" [sortable]="false">
               </kendo-grid-column>
-              <kendo-grid-column field="target" title="Target" width="60">
+              <kendo-grid-column field="target" title="Target" width="48">
               </kendo-grid-column>
-              <kendo-grid-column field="description" title="Description" width="60">
+              <kendo-grid-column field="description" title="Description" width="100">
               </kendo-grid-column>
 
               <kendo-grid-column title="" width="25" minResizableWidth="25" [filterable]="false">
