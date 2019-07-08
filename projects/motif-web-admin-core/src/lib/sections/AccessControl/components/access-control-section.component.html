@@ -4,6 +4,7 @@
 <wa-access-control-section-new-user-dialog #newUserDialog (confirm)='onNewUserConfirm($event)'></wa-access-control-section-new-user-dialog>
 <wa-access-control-section-acl-relations-dialog #aclRelationsDialog (dialogClose)='onDialogClose($event)'></wa-access-control-section-acl-relations-dialog>
 <wa-access-control-section-password-change-dialog #passwordChangeDialog (confirm)='onPasswordChangeConfirm($event)'></wa-access-control-section-password-change-dialog>
+<wc-confirmation-dialog (cancel)="onInvalidationCancel($event)" (confirm)="onInvalidationOK($event)"></wc-confirmation-dialog>
 
 <div class="row spread">
   <div class="flex-toolbar" style="display:flex;flex-direction: row;align-items: flex-start;">
@@ -12,17 +13,22 @@
       <wc-domain-selector-combobox #domainSelector (domainSelected)="onDomainSelected($event)"
         (selectionCancelled)="onDomainSelected(null)"></wc-domain-selector-combobox>
     </div>
-    <div class="row fill add-button">
+    <div class="row add-button">
       <kendo-dropdownbutton [data]="dropDownButtonItems" [icon]="'plus'" (itemClick)="onAddButtonItemClick($event)">
         Add...
       </kendo-dropdownbutton>
     </div>
-    <div class="row refresh-button">
+    <div class="row fill refresh-button">
       <kendo-buttongroup look="flat">
         <button kendoButton [toggleable]="false" [icon]="'refresh'" (click)="onResetClicked()">
-          Reset
+          Reset Selections
         </button>
       </kendo-buttongroup>
+    </div>
+    <div class="row delete-button">
+      <button kendoButton look="flat" [toggleable]="false" [icon]="'delete'" (click)="onInvalidateCacheClicked()">
+        Invalidate Cache
+      </button>
     </div>
   </div>
 </div>
