@@ -225,12 +225,14 @@ export class AclRelationsDialogComponent implements OnInit, OnDestroy {
     }
 
     private refreshCurrent(): void {
+        this.currentDataState.skip = 0;
         this.currentGridView = process(this.currentData, this.currentDataState);
         this.currentSelection = [];
         this.isRemoveAllDisabled = this.isRemoveSelectedDisabled = true;
     }
 
     private refreshAvailable(): void {
+        this.availableDataState.skip = 0;
         this.availableGridView = process(this.availableData, this.availableDataState);
         this.availableSelection = [];
         this.isAddAllDisabled = this.isAddSelectedDisabled = true;

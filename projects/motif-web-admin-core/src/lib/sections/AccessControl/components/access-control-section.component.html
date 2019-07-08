@@ -26,7 +26,11 @@
       </kendo-buttongroup>
     </div>
     <div class="row delete-button">
-      <button kendoButton look="flat" [toggleable]="false" [icon]="'delete'" (click)="onInvalidateCacheClicked()">
+      <button kendoButton look="flat" 
+                          [toggleable]="false" 
+                          [icon]="'delete'" 
+                          (click)="onInvalidateCacheClicked()"
+                          motif-acl="com.vipera.osgi.core.platform.api.rest.AcsApi:CREATE:invalidateCache">
         Invalidate Cache
       </button>
     </div>
