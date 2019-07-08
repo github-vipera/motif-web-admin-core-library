@@ -6,7 +6,7 @@ import { SelectableSettings, SelectionEvent, RowArgs, PageChangeEvent, GridDataR
   DataStateChangeEvent,
   RowClassArgs} from '@progress/kendo-angular-grid';
 import { UsersService, GroupsService, RolesService, PermissionsService, Group, Permission,
-  Role, GroupCreate, RoleCreate, GroupUpdate, RoleUpdate } from '@wa-motif-open-api/auth-access-control-service';
+  Role, GroupCreate, RoleCreate, GroupUpdate, RoleUpdate, CacheService } from '@wa-motif-open-api/auth-access-control-service';
 import { Domain } from '@wa-motif-open-api/platform-service';
 import { UsersService as PlatformUsersService, AdminsService as PlatformAdminsService,
   ClientsService as PlatformClientsService, User, AdminUser, ClientUser, UserCreate, AdminUserCreate, ClientUserCreate, UserUpdate,
@@ -25,6 +25,7 @@ import { RowCommandType } from './editors/acl-editor-context';
 import { PasswordChangeDialogResult, PasswordChangeDialogComponent } from './dialogs/password/password-change-dialog';
 import { MotifACLService } from 'web-console-motif-acl';
 import { forkJoin } from 'rxjs/observable/forkJoin';
+import { ConfirmationDialogComponent } from '../../../components/ConfirmationDialog/confirmation-dialog-component';
 
 const LOG_TAG = '[AccessControlSection]';
 const BIT_LOAD_USERS = 1;
@@ -76,6 +77,7 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
   @ViewChild('aclRelationsDialog') _aclRelationsDialog: AclRelationsDialogComponent;
   @ViewChild('passwordChangeDialog') _passwordChangeDialog: PasswordChangeDialogComponent;
   @ViewChild('usersListGrid') _usersListGrid: UsersListComponent;
+  @ViewChild(ConfirmationDialogComponent) confirmationDialog: ConfirmationDialogComponent;
 
   userCommands: WCGridEditorCommandsConfig = [
     {
@@ -198,6 +200,7 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
     private groupsService: GroupsService,
     private rolesService: RolesService,
     private permissionsService: PermissionsService,
+    private cacheService: CacheService,
     private notificationCenter: WCNotificationCenter,
     private renderer: Renderer2,
     private zone: NgZone
@@ -437,6 +440,28 @@ export class AccessControlSectionComponent implements OnInit, AfterViewInit, OnD
   onResetClicked(): void {
     this.clearAllGridSelections();
     this.loadGrids(BIT_LOAD_ALL);
+  }
+
+  onInvalidateCacheClicked(): void {
+    this.confirmationDialog.open('Cache Invalidation',
+    // tslint:disable-next-line:max-line-length
+    'Attention: invalidating Access Control cache might have a performance overhead when running in a production environment.\n\nDo you want to continue?',
+    { 'action' : 'discardChanges' });
+  }
+
+  onInvalidationCancel(userData): void {
+    this.logger.debug(LOG_TAG , 'onInvalidationCancel for:', userData);
+  }
+
+  onInvalidationOK(userData): void {
+    this.logger.debug(LOG_TAG , 'onInvalidationOK for:', userData);
+
+    this.cacheService.invalidateCache().subscribe(value => {
+      this.onResetClicked();
+      this.logger.info(LOG_TAG , 'ACS Cache invalidation succeeded');
+    }, error => {
+      this.logger.warn(LOG_TAG , 'ACS Cache invalidation failed: ' + error);
+    });
   }
 
   onLayoutChange(): void {
