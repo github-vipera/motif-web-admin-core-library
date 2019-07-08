@@ -58,7 +58,6 @@ export class ApplicationEditorComponent  extends BaseEditorComponent implements 
             name: 'OTP expiry',
             field: 'otpExpiry',
             type: WCPropertyEditorItemType.String,
-            htmlInputType: 'number',
             value: '-1'
           },
           {
@@ -122,8 +121,7 @@ export class ApplicationEditorComponent  extends BaseEditorComponent implements 
             name: 'Password Expiry',
             field: 'passwordExpiry',
             type: WCPropertyEditorItemType.String,
-            value: '32',
-            htmlInputType: 'number',
+            value: '-1',
             disabled: false
           },
           {
