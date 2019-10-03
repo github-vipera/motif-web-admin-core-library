@@ -15,6 +15,7 @@ const LOG_TAG = "[WebAdminCoreService]"
 export class WebAdminCoreService {
 
     private env: any;
+    private _useAcl = false;
 
     constructor(private logger: NGXLogger,
         private eventBus: EventBusService,
@@ -25,8 +26,9 @@ export class WebAdminCoreService {
             this.logger.debug(LOG_TAG, "ctor");
     }
 
-    public start() {
+    public start(useAcl: boolean) {
         this.logger.debug(LOG_TAG, "start called...");
+        this._useAcl = useAcl;
         return this._startWebAdmin();
     }
 
@@ -35,35 +37,45 @@ export class WebAdminCoreService {
 
         this.initTopBar();
         
-        this.startACLService();
+        if (this._useAcl){
+            this.startACLService();
+        }
     }
 
     private startACLService() {
         //Subscribe for Login events
         this.eventBus.on('AuthService:LoginEvent').subscribe((message) => {
             this.logger.debug(LOG_TAG, "on AuthService:LoginEvent received");
-            this.aclService.reloadPermissions().subscribe();
+            if (this._useAcl){
+                this.aclService.reloadPermissions().subscribe();
+            }
             this.sessionService.invalidateCache();
             this.topBarService.clear();
             this.initTopBar();
         });
         // if is already authenticated retrive immediatly
         if (this.authService.isAuthenticated()) {
-            this.aclService.reloadPermissions().subscribe((results)=>{
-                this.logger.debug(LOG_TAG, "ACL service started.", results);
-            }, (error) => {
-                this.logger.error(LOG_TAG, "ACL service error:", error);
-            })
+            if (this._useAcl){
+                this.aclService.reloadPermissions().subscribe((results)=>{
+                    this.logger.debug(LOG_TAG, "ACL service started.", results);
+                }, (error) => {
+                    this.logger.error(LOG_TAG, "ACL service error:", error);
+                })
+            }
         } else {
             //nop
         }
-}
+    }
 
     private initTopBar(){
         this.logger.debug(LOG_TAG, "Initializing top bar...");
         this.topBarService.registerItem(new WCTopBarItem('appInfo', TopInfoComponent), WCTopBarLocation.Left);
         this.topBarService.registerItem(new WCTopBarItem('mainMenu', TopMenuComponent), WCTopBarLocation.Right);
         this.topBarService.registerItem(new WCTopBarItem('logoTop', TopLogoComponent), WCTopBarLocation.Center);  
+    }
+
+    public aclEnabled():boolean {
+        return this._useAcl;
     }
 
 }
